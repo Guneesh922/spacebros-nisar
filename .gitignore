@@ -1,0 +1,22 @@
+# Big / private data stays out of git
+data/raw/
+data/subsets/
+*.h5
+*.nc
+
+# Credentials - never commit
+.netrc
+_netrc
+.env
+
+# Python / notebooks
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+data/events/*/browse/

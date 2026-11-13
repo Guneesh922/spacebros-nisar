@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpaceBros NISAR Viewer</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  :root { --bg:#0f1420; --panel:#171e2e; --text:#e8ecf3; --muted:#93a0b8; --accent:#7cc4ff; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--text);
+               font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+  #map { position:absolute; inset:0; }
+  .panel { position:absolute; z-index:1000; left:12px; bottom:12px; right:12px; max-width:560px;
+           background:var(--panel); border-radius:10px; padding:12px 14px; box-shadow:0 4px 18px #0008; }
+  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:6px 0; }
+  h1 { font-size:15px; margin:0 0 4px; }
+  .muted { color:var(--muted); font-size:12px; }
+  #date { font-size:20px; font-weight:600; color:var(--accent); min-width:120px; }
+  input[type=range] { flex:1; min-width:140px; }
+  select, button { background:#243049; color:var(--text); border:1px solid #33415f; border-radius:6px; padding:5px 9px; font:inherit; }
+  button { cursor:pointer; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="panel">
+  <h1>NISAR L-band radar &middot; <span id="aoi"></span></h1>
+  <div class="row">
+    <label>Track <select id="track"></select></label>
+    <span id="date">&ndash;</span>
+    <button id="play">&#9654; Play</button>
+  </div>
+  <div class="row"><input id="slider" type="range" min="0" value="0"></div>
+  <div class="row">
+    <span class="muted">Radar opacity</span><input id="opacity" type="range" min="0" max="100" value="85">
+    <label class="muted"><input type="checkbox" id="satellite"> Satellite basemap</label>
+  </div>
+  <div class="muted">Colours: NISAR quick-look composite (green ≈ HV volume scattering e.g. vegetation,
+    magenta/white ≈ HH strong returns e.g. buildings, dark ≈ smooth surfaces like water).
+    Quick-looks are for display, not measurement &ndash; use <code>src/gcov_subset.py</code> for real values.</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="scenes.js"></script>
+<script>
+const data = window.SCENES;
+document.getElementById('aoi').textContent = data.aoi;
+const [w, s, e, n] = data.bbox;
+const map = L.map('map').fitBounds([[s, w], [n, e]]);
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  { maxZoom: 18, attribution: '&copy; OpenStreetMap' }).addTo(map);
+const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  { maxZoom: 18, attribution: 'Esri World Imagery' });
+L.rectangle([[s, w], [n, e]], { color: '#ffd84d', weight: 2, fill: false }).addTo(map);
+
+const tracks = [...new Set(data.scenes.map(x => x.track))].sort((a, b) => a - b);
+const trackSel = document.getElementById('track');
+tracks.forEach(t => {
+  const sc = data.scenes.filter(x => x.track === t);
+  trackSel.add(new Option(`${t} ${sc[0].direction.slice(0, 4).toLowerCase()} (${sc.length} dates)`, t));
+});
+
+const slider = document.getElementById('slider');
+const dateEl = document.getElementById('date');
+const opacity = document.getElementById('opacity');
+let list = [], overlay = null, timer = null;
+
+function show(i) {
+  const sc = list[i];
+  dateEl.textContent = sc.date;
+  const next = L.imageOverlay(sc.browse_png, sc.bounds, { opacity: opacity.value / 100 }).addTo(map);
+  next.on('load', () => { if (overlay && overlay !== next) map.removeLayer(overlay); overlay = next; });
+}
+function setTrack() {
+  list = data.scenes.filter(x => x.track === +trackSel.value);
+  slider.max = list.length - 1;
+  slider.value = list.length - 1;
+  show(list.length - 1);
+}
+trackSel.onchange = setTrack;
+slider.oninput = () => show(+slider.value);
+opacity.oninput = () => overlay && overlay.setOpacity(opacity.value / 100);
+document.getElementById('satellite').onchange = ev => {
+  if (ev.target.checked) { map.removeLayer(osm); sat.addTo(map); } else { map.removeLayer(sat); osm.addTo(map); }
+  if (overlay) overlay.bringToFront();
+};
+document.getElementById('play').onclick = ev => {
+  if (timer) { clearInterval(timer); timer = null; ev.target.innerHTML = '&#9654; Play'; return; }
+  ev.target.innerHTML = '&#10074;&#10074; Pause';
+  timer = setInterval(() => { slider.value = (+slider.value + 1) % list.length; show(+slider.value); }, 1200);
+};
+trackSel.value = tracks.includes(106) ? 106 : tracks[0];
+setTrack();
+</script>
+</body>
+</html>
