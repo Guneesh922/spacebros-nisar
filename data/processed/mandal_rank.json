@@ -1,0 +1,469 @@
+{
+  "analysis_id": "ap_delta_oct_nov_2026",
+  "period": [
+    "2026-10-16",
+    "2026-11-09"
+  ],
+  "normal_period": [
+    "2026-10-04",
+    "2026-10-16"
+  ],
+  "placeholder": {
+    "is": true,
+    "tag": "Sample values",
+    "replaced_by": "data/processed/mandal_rank.json (real zonal stats)"
+  },
+  "note": "Invented but plausible numbers; share of each mandal in percent. Mandal names are geoBoundaries spellings.",
+  "rows": [
+    {
+      "mandal": "Narasapuram",
+      "district": "West Godavari",
+      "water_pct": 12.0,
+      "water_err": 2.4,
+      "crops_pct": 19.0,
+      "crops_err": 3.2,
+      "normal_pct": 5.0,
+      "rank": 1
+    },
+    {
+      "mandal": "Mogalthur",
+      "district": "West Godavari",
+      "water_pct": 10.0,
+      "water_err": 3.0,
+      "crops_pct": 18.0,
+      "crops_err": 4.0,
+      "normal_pct": 6.0,
+      "rank": 2
+    },
+    {
+      "mandal": "Razole",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 9.0,
+      "water_err": 2.4,
+      "crops_pct": 15.0,
+      "crops_err": 3.2,
+      "normal_pct": 4.0,
+      "rank": 3
+    },
+    {
+      "mandal": "Sakhinetipalle",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 7.0,
+      "water_err": 1.8,
+      "crops_pct": 12.0,
+      "crops_err": 2.4,
+      "normal_pct": 3.0,
+      "rank": 4
+    },
+    {
+      "mandal": "Malikipuram",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 6.0,
+      "water_err": 1.8,
+      "crops_pct": 9.0,
+      "crops_err": 2.4,
+      "normal_pct": 4.0,
+      "rank": 5
+    },
+    {
+      "mandal": "Kajuluru",
+      "district": "Kakinada",
+      "water_pct": 4.6,
+      "water_err": 1.3,
+      "crops_pct": 9.4,
+      "crops_err": 1.8,
+      "normal_pct": 2.7,
+      "rank": 6
+    },
+    {
+      "mandal": "Kothapeta",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 7.5,
+      "water_err": 2.0,
+      "crops_pct": 6.4,
+      "crops_err": 2.6,
+      "normal_pct": 4.4,
+      "rank": 7
+    },
+    {
+      "mandal": "Veeravasaram",
+      "district": "West Godavari",
+      "water_pct": 4.7,
+      "water_err": 1.4,
+      "crops_pct": 9.2,
+      "crops_err": 1.9,
+      "normal_pct": 2.4,
+      "rank": 8
+    },
+    {
+      "mandal": "Kakinada (Urban)",
+      "district": "Kakinada",
+      "water_pct": 6.9,
+      "water_err": 1.9,
+      "crops_pct": 6.8,
+      "crops_err": 2.6,
+      "normal_pct": 1.9,
+      "rank": 9
+    },
+    {
+      "mandal": "Tadepalligudem",
+      "district": "West Godavari",
+      "water_pct": 3.2,
+      "water_err": 1.4,
+      "crops_pct": 10.4,
+      "crops_err": 1.9,
+      "normal_pct": 2.7,
+      "rank": 10
+    },
+    {
+      "mandal": "Penugonda",
+      "district": "West Godavari",
+      "water_pct": 4.0,
+      "water_err": 1.6,
+      "crops_pct": 9.6,
+      "crops_err": 2.1,
+      "normal_pct": 2.1,
+      "rank": 11
+    },
+    {
+      "mandal": "P.Gannavaram",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 5.6,
+      "water_err": 2.3,
+      "crops_pct": 7.9,
+      "crops_err": 3.0,
+      "normal_pct": 2.1,
+      "rank": 12
+    },
+    {
+      "mandal": "Jaggampeta",
+      "district": "Kakinada",
+      "water_pct": 7.0,
+      "water_err": 2.3,
+      "crops_pct": 6.4,
+      "crops_err": 3.0,
+      "normal_pct": 1.6,
+      "rank": 13
+    },
+    {
+      "mandal": "Alamuru",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 7.0,
+      "water_err": 1.4,
+      "crops_pct": 6.3,
+      "crops_err": 1.8,
+      "normal_pct": 3.9,
+      "rank": 14
+    },
+    {
+      "mandal": "Thallarevu",
+      "district": "Kakinada",
+      "water_pct": 7.8,
+      "water_err": 2.0,
+      "crops_pct": 5.3,
+      "crops_err": 2.6,
+      "normal_pct": 3.5,
+      "rank": 15
+    },
+    {
+      "mandal": "Palacole",
+      "district": "West Godavari",
+      "water_pct": 5.9,
+      "water_err": 1.4,
+      "crops_pct": 6.6,
+      "crops_err": 1.8,
+      "normal_pct": 4.5,
+      "rank": 16
+    },
+    {
+      "mandal": "Achanta",
+      "district": "West Godavari",
+      "water_pct": 2.5,
+      "water_err": 1.5,
+      "crops_pct": 9.9,
+      "crops_err": 2.0,
+      "normal_pct": 1.7,
+      "rank": 17
+    },
+    {
+      "mandal": "Karapa",
+      "district": "Kakinada",
+      "water_pct": 7.2,
+      "water_err": 1.4,
+      "crops_pct": 4.7,
+      "crops_err": 1.9,
+      "normal_pct": 4.8,
+      "rank": 18
+    },
+    {
+      "mandal": "Penumantra",
+      "district": "West Godavari",
+      "water_pct": 1.1,
+      "water_err": 1.4,
+      "crops_pct": 10.8,
+      "crops_err": 1.9,
+      "normal_pct": 2.7,
+      "rank": 19
+    },
+    {
+      "mandal": "Atreyapuram",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 6.8,
+      "water_err": 1.3,
+      "crops_pct": 4.9,
+      "crops_err": 1.7,
+      "normal_pct": 2.1,
+      "rank": 20
+    },
+    {
+      "mandal": "Kakinada (Rural)",
+      "district": "Kakinada",
+      "water_pct": 4.7,
+      "water_err": 1.9,
+      "crops_pct": 6.9,
+      "crops_err": 2.5,
+      "normal_pct": 1.4,
+      "rank": 21
+    },
+    {
+      "mandal": "Poduru",
+      "district": "West Godavari",
+      "water_pct": 7.5,
+      "water_err": 2.2,
+      "crops_pct": 4.0,
+      "crops_err": 2.9,
+      "normal_pct": 1.5,
+      "rank": 22
+    },
+    {
+      "mandal": "Iragavaram",
+      "district": "West Godavari",
+      "water_pct": 1.7,
+      "water_err": 2.2,
+      "crops_pct": 9.6,
+      "crops_err": 3.0,
+      "normal_pct": 1.9,
+      "rank": 23
+    },
+    {
+      "mandal": "Uppalaguptam",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 1.2,
+      "water_err": 1.3,
+      "crops_pct": 9.9,
+      "crops_err": 1.7,
+      "normal_pct": 4.4,
+      "rank": 24
+    },
+    {
+      "mandal": "Katrenikona",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 2.0,
+      "water_err": 1.3,
+      "crops_pct": 8.9,
+      "crops_err": 1.7,
+      "normal_pct": 3.7,
+      "rank": 25
+    },
+    {
+      "mandal": "Mummidivaram",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 3.0,
+      "water_err": 1.6,
+      "crops_pct": 7.9,
+      "crops_err": 2.1,
+      "normal_pct": 2.5,
+      "rank": 26
+    },
+    {
+      "mandal": "Ainavilli",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 1.8,
+      "water_err": 1.7,
+      "crops_pct": 8.6,
+      "crops_err": 2.3,
+      "normal_pct": 1.3,
+      "rank": 27
+    },
+    {
+      "mandal": "K Gangavaram",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 5.6,
+      "water_err": 1.6,
+      "crops_pct": 4.8,
+      "crops_err": 2.2,
+      "normal_pct": 1.1,
+      "rank": 28
+    },
+    {
+      "mandal": "Attili",
+      "district": "West Godavari",
+      "water_pct": 4.3,
+      "water_err": 1.6,
+      "crops_pct": 5.8,
+      "crops_err": 2.2,
+      "normal_pct": 1.0,
+      "rank": 29
+    },
+    {
+      "mandal": "Kothapalle",
+      "district": "Kakinada",
+      "water_pct": 6.2,
+      "water_err": 1.6,
+      "crops_pct": 3.9,
+      "crops_err": 2.1,
+      "normal_pct": 3.4,
+      "rank": 30
+    },
+    {
+      "mandal": "Yelamanchili",
+      "district": "West Godavari",
+      "water_pct": 7.9,
+      "water_err": 1.9,
+      "crops_pct": 2.1,
+      "crops_err": 2.6,
+      "normal_pct": 1.7,
+      "rank": 31
+    },
+    {
+      "mandal": "Pedapudi",
+      "district": "Kakinada",
+      "water_pct": 2.1,
+      "water_err": 2.2,
+      "crops_pct": 7.7,
+      "crops_err": 2.9,
+      "normal_pct": 2.5,
+      "rank": 32
+    },
+    {
+      "mandal": "Samalkota",
+      "district": "Kakinada",
+      "water_pct": 4.2,
+      "water_err": 2.2,
+      "crops_pct": 5.4,
+      "crops_err": 2.9,
+      "normal_pct": 1.2,
+      "rank": 33
+    },
+    {
+      "mandal": "Ravulapalem",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 2.6,
+      "water_err": 2.2,
+      "crops_pct": 6.6,
+      "crops_err": 2.9,
+      "normal_pct": 3.5,
+      "rank": 34
+    },
+    {
+      "mandal": "Peddapuram",
+      "district": "Kakinada",
+      "water_pct": 4.8,
+      "water_err": 1.8,
+      "crops_pct": 3.7,
+      "crops_err": 2.4,
+      "normal_pct": 3.6,
+      "rank": 35
+    },
+    {
+      "mandal": "Ambajipeta",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 3.5,
+      "water_err": 1.5,
+      "crops_pct": 4.9,
+      "crops_err": 2.0,
+      "normal_pct": 2.0,
+      "rank": 36
+    },
+    {
+      "mandal": "Tanuku",
+      "district": "West Godavari",
+      "water_pct": 4.5,
+      "water_err": 1.3,
+      "crops_pct": 2.1,
+      "crops_err": 1.7,
+      "normal_pct": 3.8,
+      "rank": 37
+    },
+    {
+      "mandal": "Palacoderu",
+      "district": "West Godavari",
+      "water_pct": 4.0,
+      "water_err": 1.9,
+      "crops_pct": 2.3,
+      "crops_err": 2.6,
+      "normal_pct": 2.3,
+      "rank": 38
+    },
+    {
+      "mandal": "I. Polavaram",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 2.3,
+      "water_err": 2.1,
+      "crops_pct": 3.9,
+      "crops_err": 2.8,
+      "normal_pct": 3.8,
+      "rank": 39
+    },
+    {
+      "mandal": "Amalapuram",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 1.7,
+      "water_err": 2.0,
+      "crops_pct": 3.7,
+      "crops_err": 2.7,
+      "normal_pct": 4.1,
+      "rank": 40
+    },
+    {
+      "mandal": "Pithapuram",
+      "district": "Kakinada",
+      "water_pct": 2.7,
+      "water_err": 1.7,
+      "crops_pct": 2.5,
+      "crops_err": 2.2,
+      "normal_pct": 4.2,
+      "rank": 41
+    },
+    {
+      "mandal": "Gandepalle",
+      "district": "Kakinada",
+      "water_pct": 1.4,
+      "water_err": 1.6,
+      "crops_pct": 3.2,
+      "crops_err": 2.2,
+      "normal_pct": 4.3,
+      "rank": 42
+    },
+    {
+      "mandal": "Allavaram",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 1.1,
+      "water_err": 2.0,
+      "crops_pct": 3.4,
+      "crops_err": 2.7,
+      "normal_pct": 1.2,
+      "rank": 43
+    },
+    {
+      "mandal": "Mamidikuduru",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 2.5,
+      "water_err": 1.4,
+      "crops_pct": 2.0,
+      "crops_err": 1.9,
+      "normal_pct": 2.7,
+      "rank": 44
+    },
+    {
+      "mandal": "Ramachandrapuram",
+      "district": "Dr. B.R. Ambedkar Konaseema",
+      "water_pct": 1.6,
+      "water_err": 1.3,
+      "crops_pct": 2.1,
+      "crops_err": 1.7,
+      "normal_pct": 2.5,
+      "rank": 45
+    }
+  ]
+}

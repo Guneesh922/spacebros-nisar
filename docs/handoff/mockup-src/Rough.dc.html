@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Eye of the Storm · chapter 3, how rough</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wdth,wght@75..125,400..700&family=Anek+Telugu:wght@500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#17635F}a:hover{color:#0E4542}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="height: 100vh; min-height: 860px; display: flex; flex-direction: column; background: #F1F4F3; color: #131E22; font-family: 'Anek Latin', system-ui, sans-serif">
+
+<header style="display: flex; align-items: center; gap: 20px; padding: 0 24px; height: 56px; border-bottom: 1px solid #D3DAD8; background: #FFFFFF; flex-wrap: wrap">
+  <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #131E22">
+    <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="none" stroke="#17635F" stroke-width="2" stroke-dasharray="52 8"></circle><circle cx="14" cy="14" r="6.5" fill="none" stroke="#17635F" stroke-width="2" stroke-dasharray="26 6"></circle><circle cx="14" cy="14" r="2" fill="#131E22"></circle></svg>
+    <span style="font-size: 17px; font-weight: 600; font-stretch: 88%; letter-spacing: -0.01em">Eye of the Storm</span>
+  </a>
+  <span style="font-size: 13px; color: #586469; border-left: 1px solid #D3DAD8; padding-left: 16px">Godavari coast, Andhra Pradesh · Cyclone Arnab</span>
+  <div style="flex: 1"></div>
+  <div role="group" aria-label="Language" style="display: flex; border: 1px solid #D3DAD8; border-radius: 8px; overflow: hidden; font-size: 13px">
+    <button style="border: 0; padding: 0 12px; min-height: 44px; background: #131E22; color: #FFFFFF; font-size: 13px">English</button>
+    <button style="border: 0; padding: 0 12px; min-height: 44px; background: #FFFFFF; color: #586469; font-size: 13px; font-family: 'Anek Telugu', 'Anek Latin', sans-serif">తెలుగు <span style="font-size: 13px">· soon</span></button>
+  </div>
+  <a href="#" style="font-size: 14px">About and data</a>
+  <button style="display: flex; align-items: center; gap: 8px; border: 0; border-radius: 8px; padding: 0 14px; min-height: 44px; background: #131E22; color: #FFFFFF; font-size: 14px; font-weight: 500">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Download brief</button>
+</header>
+
+<div style="display: flex; align-items: center; gap: 14px; padding: 0 24px; min-height: 36px; background: #E6EBEA; border-bottom: 1px solid #D3DAD8; font-size: 13px; flex-wrap: wrap">
+  <span style="font-weight: 600">Alerts</span>
+  <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; box-sizing: border-box; border-radius: 5px; border: 2px solid #586469; flex: none"></span>SACHET · <span style="font-family: 'IBM Plex Mono', monospace">snapshot 27 Oct 2026, 17:30 IST</span> · [headline from saved snapshot]</span>
+  <span style="color: #586469">|</span>
+  <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 5px; background: #17635F; flex: none"></span>GDACS · live · [current event title]</span>
+  <div style="flex: 1"></div>
+  <a href="#" style="font-size: 13px">Why a snapshot?</a>
+</div>
+
+<div style="flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(420px, 38%) minmax(0, 1fr)">
+
+  <section style="overflow-y: auto; padding: 20px 32px 24px; display: flex; flex-direction: column; gap: 18px; border-right: 1px solid #D3DAD8">
+    <nav aria-label="Story chapters">
+      <ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+        <sc-for list="{{segs}}" as="s" hint-placeholder-count="7">
+          <li style="min-width: 0">
+            <a href="{{s.href}}" aria-label="{{s.aria}}" aria-current="{{s.cur}}" style="display: flex; flex-direction: column; gap: 4px; padding: 8px 0 4px; min-height: 44px; box-sizing: border-box; text-decoration: none; color: #131E22">
+              <span style="{{s.barStyle}}"></span>
+              <span style="{{s.numStyle}}">{{s.num}}</span>
+              <span style="{{s.nameStyle}}">{{s.name}}</span>
+            </a>
+          </li>
+        </sc-for>
+      </ol>
+    </nav>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <h2 style="margin: 0; font-size: 32px; line-height: 1.1; font-weight: 600; font-stretch: 88%; letter-spacing: -0.01em">How much rougher the sea got</h2>
+      <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #3F4D53">Storm minus calm: radar brightness on 27 Oct compared with 15 Oct. Move along the chart and the ring on the map follows the same distance from the eye.</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px">
+      <span style="font-size: 13px; padding: 1px 8px; border-radius: 6px; background: transparent; border: 1px dashed #586469; color: #3F4D53">Sample values</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: -8px">
+      <div style="background: #FFFFFF; border: 1px solid #D3DAD8; border-radius: 8px; padding: 12px"><div style="font-size: 24px; font-weight: 600; font-family: 'IBM Plex Mono', monospace">18 km</div><div style="font-size: 13px; color: #3F4D53">±3 · eye radius</div></div>
+      <div style="background: #FFFFFF; border: 1px solid #D3DAD8; border-radius: 8px; padding: 12px"><div style="font-size: 24px; font-weight: 600; font-family: 'IBM Plex Mono', monospace; color: #0E4542">+6.2 dB</div><div style="font-size: 13px; color: #3F4D53">±0.8 · peak roughening</div></div>
+      <div style="background: #FFFFFF; border: 1px solid #D3DAD8; border-radius: 8px; padding: 12px"><div style="font-size: 24px; font-weight: 600; font-family: 'IBM Plex Mono', monospace">22 km</div><div style="font-size: 13px; color: #3F4D53">eye vs IMD fix</div></div>
+    </div>
+
+    <figure style="margin: 0; background: #FFFFFF; border: 1px solid #D3DAD8; border-radius: 10px; padding: 14px 14px 8px; display: flex; flex-direction: column; gap: 6px">
+      <figcaption style="display: flex; justify-content: space-between; gap: 8px; font-size: 14px">
+        <span style="font-weight: 600; font-size: 17px; line-height: 1.2; font-stretch: 88%; letter-spacing: -0.01em">Roughening by distance from the eye (relative dB)</span>
+      </figcaption>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E4542">{{readout}}</span>
+      <svg viewBox="0 0 420 220" role="img" aria-label="Radial profile: change in radar brightness against distance from the eye" style="width: 100%; height: auto; font-family: 'IBM Plex Mono', monospace">
+        <line x1="40" y1="156" x2="410" y2="156" stroke="#586469" stroke-width="1" stroke-dasharray="3 3"></line>
+        <line x1="40" y1="20" x2="40" y2="190" stroke="#D3DAD8" stroke-width="1"></line>
+        <line x1="40" y1="190" x2="410" y2="190" stroke="#D3DAD8" stroke-width="1"></line>
+        <text x="34" y="160" font-size="12" fill="#586469" text-anchor="end">0</text>
+        <text x="34" y="92" font-size="12" fill="#586469" text-anchor="end">+4</text>
+        <text x="0" y="12" font-size="12" fill="#586469" text-anchor="start">+8 dB rel.</text>
+        <text x="40" y="208" font-size="12" fill="#586469" text-anchor="middle">0</text>
+        <text x="225" y="208" font-size="12" fill="#586469" text-anchor="middle">100</text>
+        <text x="410" y="208" font-size="12" fill="#586469" text-anchor="end">200 km</text>
+        <polygon points="{{band}}" fill="#D8EAE7"></polygon>
+        <polyline points="{{line}}" fill="none" stroke="#17635F" stroke-width="2.5"></polyline>
+        <line x1="{{cx}}" y1="20" x2="{{cx}}" y2="190" stroke="#131E22" stroke-width="1.5"></line>
+        <circle cx="{{cx}}" cy="{{cy}}" r="5" fill="#FFFFFF" stroke="#131E22" stroke-width="2"></circle>
+        <sc-for list="{{hits}}" as="h" hint-placeholder-count="20">
+          <rect x="{{h.x}}" y="20" width="{{h.w}}" height="170" fill="transparent" onMouseEnter="{{h.go}}" onClick="{{h.go}}"></rect>
+        </sc-for>
+      </svg>
+      <span style="font-size: 13px; color: #586469">Shaded band = ± uncertainty. Dashed line = calm-sea level.</span>
+    </figure>
+
+    <div style="display: flex; justify-content: space-between; font-size: 14px">
+      <a href="#" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>2 Under the clouds</a>
+      <a href="Shore.dc.html" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px">4 The shore <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+    </div>
+  </section>
+
+  <section aria-label="Map: storm minus calm" style="position: relative; overflow: hidden; background: #0F1B1F">
+    <img src="/_blob/8b144236201a282bc430fe768747ab24" alt="NISAR radar of the storm sea, standing in for the difference map" style="position: absolute; width: 1100px; left: calc(55% - 451px); top: calc(52% - 451px)">
+    <div style="{{ringStyle}}"></div>
+    <div style="{{ringLabelStyle}}">{{ringLabel}}</div>
+    <div style="position: absolute; left: 55%; top: 52%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 4px; background: #FFFFFF"></div>
+    <button style="position: absolute; top: 16px; right: 16px; display: flex; align-items: center; gap: 8px; height: 44px; border: 1px solid #D3DAD8; border-radius: 8px; padding: 0 14px; background: #FFFFFF; color: #131E22; font-size: 14px; font-weight: 500">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"></path></svg>Layers <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #586469">2 on</span></button>
+    <div style="position: absolute; left: 16px; bottom: 16px; max-width: 560px; background: #FFFFFF; border: 1px solid #D3DAD8; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.45; color: #3F4D53">
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px; align-items: baseline">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #586469">Shows</span>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <span>Storm minus calm: change in radar brightness, VV (relative dB), 27 Oct − 15 Oct</span>
+          <span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><span style="font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: #D8EAE7; color: #0E4542">NISAR L-band</span><span style="font-family: 'IBM Plex Mono', monospace; color: #586469; font-size: 12px">T48 F80 · 27 Oct − 15 Oct · VV</span></span>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px; align-items: baseline">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #586469">Can't show</span>
+        <span>Wind speed in m/s. Rain cells also change brightness.</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px; align-items: baseline">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #586469">Source</span>
+        <span>NASA/JPL-Caltech and ISRO via ASF DAAC · [credit line from manifest]. Mockup shows the eye pass in place of the difference map.</span>
+      </div>
+    </div>
+  </section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { r: 60 }; }
+  rail(cur) {
+    var names = ['Start', 'From above', 'Under the clouds', 'How rough', 'The shore', "What radar can't show", 'About'];
+    var hrefs = ['Main.dc.html', '#', '#', 'Rough.dc.html', 'Shore.dc.html', '#', '#'];
+    return names.map(function (n, i) {
+      var reached = i <= cur, isCur = i === cur;
+      return {
+        href: hrefs[i],
+        aria: i === 0 ? n : i + ' ' + n,
+        cur: isCur ? 'step' : 'false',
+        num: String(i),
+        name: isCur ? n : '',
+        barStyle: 'display:block;height:4px;border-radius:2px;background:' + (reached ? '#17635F' : '#D3DAD8'),
+        numStyle: "font-family:'IBM Plex Mono',monospace;font-size:12px;color:" + (isCur ? '#131E22' : '#586469'),
+        nameStyle: isCur ? 'font-size:13px;font-weight:600;color:#131E22;white-space:nowrap' : 'display:none'
+      };
+    });
+  }
+  // end rail
+  renderVals() {
+    var self = this, r = this.state.r;
+    function v(d) { return d < 15 ? -1 + d * 0.25 : 6.2 * Math.exp(-Math.pow((d - 35) / (d < 35 ? 22 : 75), 2)); }
+    function e(d) { return 0.5 + d * 0.004; }
+    function X(d) { return 40 + d * 1.85; }
+    function Y(db) { return 156 - db * 17; }
+    var top = [], bot = [], line = [];
+    for (var d = 0; d <= 200; d += 5) {
+      line.push(X(d).toFixed(1) + ',' + Y(v(d)).toFixed(1));
+      top.push(X(d).toFixed(1) + ',' + Y(v(d) + e(d)).toFixed(1));
+      bot.unshift(X(d).toFixed(1) + ',' + Y(v(d) - e(d)).toFixed(1));
+    }
+    var hits = [];
+    for (var k = 0; k < 20; k++) {
+      (function (k) { hits.push({ x: X(k * 10), w: 18.5, go: function () { self.setState({ r: k * 10 + 5 }); } }); })(k);
+    }
+    var px = r * 2.47;
+    return {
+      segs: this.rail(3),
+      line: line.join(' '), band: top.concat(bot).join(' '),
+      cx: X(r), cy: Y(v(r)), hits: hits,
+      readout: r + ' km: ' + (v(r) >= 0 ? '+' : '') + v(r).toFixed(1) + ' dB ±' + e(r).toFixed(1),
+      ringStyle: 'position:absolute;left:55%;top:52%;border:2.5px solid #5FD0C3;border-radius:50%;width:' + (2 * px) + 'px;height:' + (2 * px) + 'px;margin-left:' + (-px) + 'px;margin-top:' + (-px) + 'px',
+      ringLabelStyle: "position:absolute;left:55%;top:52%;transform:translate(-50%,0);margin-top:" + (-px - 32) + "px;background:#FFFFFF;color:#131E22;border-radius:6px;padding:3px 8px;font-size:13px;font-weight:600;font-family:'IBM Plex Mono',monospace",
+      ringLabel: r + ' km from the eye'
+    };
+  }
+}
+</script>
+</body>
+</html>

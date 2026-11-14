@@ -1,96 +1,373 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SpaceBros NISAR Viewer</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<style>
-  :root { --bg:#0f1420; --panel:#171e2e; --text:#e8ecf3; --muted:#93a0b8; --accent:#7cc4ff; }
-  * { box-sizing: border-box; }
-  html, body { margin:0; height:100%; background:var(--bg); color:var(--text);
-               font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
-  #map { position:absolute; inset:0; }
-  .panel { position:absolute; z-index:1000; left:12px; bottom:12px; right:12px; max-width:560px;
-           background:var(--panel); border-radius:10px; padding:12px 14px; box-shadow:0 4px 18px #0008; }
-  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:6px 0; }
-  h1 { font-size:15px; margin:0 0 4px; }
-  .muted { color:var(--muted); font-size:12px; }
-  #date { font-size:20px; font-weight:600; color:var(--accent); min-width:120px; }
-  input[type=range] { flex:1; min-width:140px; }
-  select, button { background:#243049; color:var(--text); border:1px solid #33415f; border-radius:6px; padding:5px 9px; font:inherit; }
-  button { cursor:pointer; }
-</style>
+<title>SpaceBros NISAR workspace</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<link rel="stylesheet" href="css/tokens.css?v=1">
+<link rel="stylesheet" href="css/app.css?v=2">
+<link rel="stylesheet" href="css/map.css?v=2">
+<link rel="stylesheet" href="css/panels.css?v=1">
+<link rel="stylesheet" href="css/layers.css?v=1">
+<link rel="stylesheet" href="css/events.css?v=1">
+<link rel="stylesheet" href="css/brief.css?v=1">
+<link rel="stylesheet" href="css/case.css?v=1">
+<link rel="stylesheet" href="css/responsive.css?v=2">
 </head>
 <body>
-<div id="map"></div>
-<div class="panel">
-  <h1>NISAR L-band radar &middot; <span id="aoi"></span></h1>
-  <div class="row">
-    <label>Track <select id="track"></select></label>
-    <span id="date">&ndash;</span>
-    <button id="play">&#9654; Play</button>
+<a class="skip-link" href="#main" data-i18n="shell.skip"></a>
+
+<header class="app-header" id="app-header">
+  <div class="brand">
+    <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="52 8"></circle><circle cx="14" cy="14" r="6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="26 6"></circle><circle cx="14" cy="14" r="2" fill="var(--ink)"></circle></svg>
+    <span class="brand-name" id="app-name" data-i18n="app.name"></span>
   </div>
-  <div class="row"><input id="slider" type="range" min="0" value="0"></div>
-  <div class="row">
-    <span class="muted">Radar opacity</span><input id="opacity" type="range" min="0" max="100" value="85">
-    <label class="muted"><input type="checkbox" id="satellite"> Satellite basemap</label>
+
+  <div class="hdr-menu" id="hdr-menu">
+    <div id="region-picker" class="hdr-slot hdr-region"></div>
+    <div id="date-control" class="hdr-slot hdr-date"></div>
+    <nav class="tabs-nav" aria-label="Sections" data-i18n-aria="header.tabs_label">
+      <div class="tabs" role="tablist" aria-label="Sections" data-i18n-aria="header.tabs_label">
+        <button type="button" role="tab" class="tab" id="tab-workspace" data-view="workspace" aria-selected="true" aria-controls="view-workspace" data-i18n="header.tab.workspace"></button>
+        <button type="button" role="tab" class="tab" id="tab-events" data-view="events" aria-selected="false" tabindex="-1" aria-controls="view-events" data-i18n="header.tab.events"></button>
+        <button type="button" role="tab" class="tab" id="tab-case" data-view="case" aria-selected="false" tabindex="-1" aria-controls="view-case" data-i18n="header.tab.case"></button>
+      </div>
+    </nav>
+    <button type="button" class="hdr-link" id="about-btn" aria-haspopup="dialog" data-i18n="header.about"></button>
+    <button type="button" class="hdr-download" id="download-brief">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
+      <span data-i18n="header.brief"></span>
+    </button>
   </div>
-  <div class="muted">Colours: NISAR quick-look composite (green ≈ HV volume scattering e.g. vegetation,
-    magenta/white ≈ HH strong returns e.g. buildings, dark ≈ smooth surfaces like water).
-    Quick-looks are for display, not measurement &ndash; use <code>src/gcov_subset.py</code> for real values.</div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="scenes.js"></script>
+
+  <div class="lang-group" role="group" aria-label="Language" data-i18n-aria="header.lang.label">
+    <button type="button" class="lang-btn is-active" id="lang-en" aria-pressed="true" lang="en">
+      <span class="lang-full" data-i18n="header.lang.en"></span><span class="lang-short" aria-hidden="true" data-i18n="shell.lang_en_short"></span>
+    </button>
+    <button type="button" class="lang-btn" id="lang-te" aria-disabled="true" aria-pressed="false" lang="te" data-i18n-aria="shell.lang_te_aria">
+      <span class="lang-full"><span data-i18n="header.lang.te"></span> <span class="lang-soon">· <span data-i18n="header.lang.soon"></span></span></span><span class="lang-short" aria-hidden="true" data-i18n="shell.lang_te_short"></span>
+    </button>
+  </div>
+
+  <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="hdr-menu" aria-label="Menu" data-i18n-aria="shell.menu_label">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+  </button>
+</header>
+
+<div id="banner" class="banner" role="alert" hidden></div>
+<div id="boot-fail" class="banner" role="alert" hidden>The page could not start. Reload to try again.</div>
+<noscript><div class="banner">This page needs JavaScript to show the map.</div></noscript>
+
+<div id="alerts" class="alerts" aria-label="Alerts" data-i18n-aria="alerts.title"></div>
+
+<main id="main" tabindex="-1">
+  <div id="view-workspace" class="view view--workspace" role="tabpanel" aria-labelledby="tab-workspace">
+    <aside id="left-panel" class="left-panel" aria-label="Ranking and selected mandal" data-i18n-aria="shell.left_panel"></aside>
+    <section id="map-wrap" class="map-wrap map-dark" aria-label="Map" data-i18n-aria="map.label">
+      <div id="map"></div>
+      <button type="button" id="layers-btn" class="map-btn layers-btn" aria-controls="drawer" aria-expanded="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"></path></svg>
+        <span data-i18n="layers.button"></span>
+        <span class="layers-count mono" id="layers-count"></span>
+      </button>
+      <aside id="drawer" class="drawer" aria-label="Layers" data-i18n-aria="layers.title" hidden></aside>
+    </section>
+  </div>
+
+  <section id="view-events" class="view view--scroll" role="tabpanel" aria-labelledby="tab-events" aria-label="Events" data-i18n-aria="header.tab.events" hidden>
+    <div id="events-root"></div>
+  </section>
+
+  <section id="view-case" class="view view--scroll" role="tabpanel" aria-labelledby="tab-case" aria-label="Case study" data-i18n-aria="header.tab.case" hidden>
+    <div id="case-root"></div>
+  </section>
+</main>
+
+<dialog id="about-dialog" class="about" aria-labelledby="about-title">
+  <div class="about-head">
+    <h2 id="about-title" data-i18n="header.about"></h2>
+    <button type="button" class="about-close" id="about-close" data-i18n="common.close"></button>
+  </div>
+  <div class="about-body" id="about-body"></div>
+</dialog>
+
+<div id="brief-root"></div>
+
 <script>
-const data = window.SCENES;
-document.getElementById('aoi').textContent = data.aoi;
-const [w, s, e, n] = data.bbox;
-const map = L.map('map').fitBounds([[s, w], [n, e]]);
-const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  { maxZoom: 18, attribution: '&copy; OpenStreetMap' }).addTo(map);
-const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-  { maxZoom: 18, attribution: 'Esri World Imagery' });
-L.rectangle([[s, w], [n, e]], { color: '#ffd84d', weight: 2, fill: false }).addTo(map);
+(function () {
+  'use strict';
 
-const tracks = [...new Set(data.scenes.map(x => x.track))].sort((a, b) => a - b);
-const trackSel = document.getElementById('track');
-tracks.forEach(t => {
-  const sc = data.scenes.filter(x => x.track === t);
-  trackSel.add(new Option(`${t} ${sc[0].direction.slice(0, 4).toLowerCase()} (${sc.length} dates)`, t));
-});
+  window.APP_CONFIG = Object.assign({ extraStrings: ['case', 'shell'] }, window.APP_CONFIG || {});
 
-const slider = document.getElementById('slider');
-const dateEl = document.getElementById('date');
-const opacity = document.getElementById('opacity');
-let list = [], overlay = null, timer = null;
+  var VIEWS = ['workspace', 'events', 'case'];
+  var LEAFLET = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js';
+  var CHART = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+  var MODULES = ['js/map.js?v=2', 'js/panels.js?v=1', 'js/layers.js?v=1', 'js/live.js?v=2', 'js/compare.js?v=2',
+                 'js/events.js?v=1', 'js/brief.js?v=1', 'js/case.js?v=2'];
 
-function show(i) {
-  const sc = list[i];
-  dateEl.textContent = sc.date;
-  const next = L.imageOverlay(sc.browse_png, sc.bounds, { opacity: opacity.value / 100 }).addTo(map);
-  next.on('load', () => { if (overlay && overlay !== next) map.removeLayer(overlay); overlay = next; });
-}
-function setTrack() {
-  list = data.scenes.filter(x => x.track === +trackSel.value);
-  slider.max = list.length - 1;
-  slider.value = list.length - 1;
-  show(list.length - 1);
-}
-trackSel.onchange = setTrack;
-slider.oninput = () => show(+slider.value);
-opacity.oninput = () => overlay && overlay.setOpacity(opacity.value / 100);
-document.getElementById('satellite').onchange = ev => {
-  if (ev.target.checked) { map.removeLayer(osm); sat.addTo(map); } else { map.removeLayer(sat); osm.addTo(map); }
-  if (overlay) overlay.bringToFront();
-};
-document.getElementById('play').onclick = ev => {
-  if (timer) { clearInterval(timer); timer = null; ev.target.innerHTML = '&#9654; Play'; return; }
-  ev.target.innerHTML = '&#10074;&#10074; Pause';
-  timer = setInterval(() => { slider.value = (+slider.value + 1) % list.length; show(+slider.value); }, 1200);
-};
-trackSel.value = tracks.includes(106) ? 106 : tracks[0];
-setTrack();
+  function $(id) { return document.getElementById(id); }
+
+  function loadScript(src) {
+    return new Promise(function (resolve) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.async = false;
+      s.onload = function () { resolve(true); };
+      s.onerror = function () { resolve(false); };
+      document.head.appendChild(s);
+    });
+  }
+
+  /* ---- strings into static markup ---- */
+  function applyStrings() {
+    var App = window.App;
+    Array.prototype.forEach.call(document.querySelectorAll('[data-i18n]'), function (el) {
+      el.textContent = App.t(el.getAttribute('data-i18n'));
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-i18n-aria]'), function (el) {
+      el.setAttribute('aria-label', App.t(el.getAttribute('data-i18n-aria')));
+    });
+    $('lang-te').title = App.t('header.lang.soon');
+    updateLayersCount();
+  }
+
+  function updateLayersCount() {
+    var App = window.App, el = $('layers-count');
+    if (!App || !el) return;
+    var n = App.state.layersOn ? App.state.layersOn.size : 0;
+    el.textContent = App.t('layers.count', { n: n });
+  }
+
+  /* ---- views and tabs ---- */
+  function viewFromHash() {
+    var h = (location.hash || '').replace(/^#/, '');
+    return VIEWS.indexOf(h) >= 0 ? h : null;
+  }
+
+  function applyView(view) {
+    if (VIEWS.indexOf(view) < 0) view = 'workspace';
+    VIEWS.forEach(function (v) {
+      var sec = $('view-' + v), tab = $('tab-' + v), on = v === view;
+      if (sec) sec.hidden = !on;
+      if (tab) {
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        tab.tabIndex = on ? 0 : -1;
+      }
+    });
+    if (('#' + view) !== location.hash) {
+      try { history.replaceState(null, '', '#' + view); } catch (e) { location.hash = view; }
+    }
+  }
+
+  function wireTabs() {
+    var App = window.App;
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab[data-view]'));
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () {
+        App.setState({ view: tab.getAttribute('data-view') });
+        closeMenu();
+      });
+      tab.addEventListener('keydown', function (e) {
+        var j = null;
+        if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
+        else if (e.key === 'ArrowLeft') j = (i + tabs.length - 1) % tabs.length;
+        else if (e.key === 'Home') j = 0;
+        else if (e.key === 'End') j = tabs.length - 1;
+        if (j == null) return;
+        e.preventDefault();
+        tabs[j].focus();
+        App.setState({ view: tabs[j].getAttribute('data-view') });
+      });
+    });
+    App.on('view', applyView);
+    window.addEventListener('hashchange', function () {
+      var v = viewFromHash();
+      if (v) App.setState({ view: v });
+    });
+  }
+
+  /* ---- phone menu ---- */
+  function closeMenu() {
+    var h = $('app-header');
+    if (h.getAttribute('data-menu') === 'open') {
+      h.setAttribute('data-menu', 'closed');
+      $('menu-btn').setAttribute('aria-expanded', 'false');
+    }
+  }
+  function wireMenu() {
+    var h = $('app-header'), b = $('menu-btn');
+    b.addEventListener('click', function () {
+      var open = h.getAttribute('data-menu') !== 'open';
+      h.setAttribute('data-menu', open ? 'open' : 'closed');
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && h.getAttribute('data-menu') === 'open') { closeMenu(); b.focus(); }
+    });
+  }
+
+  /* ---- language group ---- */
+  function wireLang() {
+    $('lang-te').addEventListener('click', function (e) { e.preventDefault(); });
+  }
+
+  /* ---- Layers button ---- */
+  function wireLayersBtn() {
+    var App = window.App, btn = $('layers-btn'), drawer = $('drawer');
+    btn.addEventListener('click', function () {
+      if (App.layers && typeof App.layers.toggle === 'function') {
+        App.layers.toggle();
+      } else {
+        drawer.hidden = !drawer.hidden;
+      }
+      btn.setAttribute('aria-expanded', drawer.hidden ? 'false' : 'true');
+    });
+    App.on('layers', updateLayersCount);
+    App.on('manifest', updateLayersCount);
+  }
+
+  /* ---- Download brief ---- */
+  function wireBrief() {
+    var App = window.App;
+    $('download-brief').addEventListener('click', function () {
+      if (App.brief && typeof App.brief.open === 'function') App.brief.open(App.state.mandal);
+    });
+  }
+
+  /* ---- About dialog ---- */
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function renderAbout() {
+    var App = window.App, body = $('about-body'), m = App.manifest || {};
+    body.textContent = '';
+    body.appendChild(el('p', 'about-intro', App.t('shell.about.intro')));
+    if (m.generated_utc) {
+      body.appendChild(el('p', 'about-updated mono', App.t('app.data_updated', { time: App.fmt.dateTime(m.generated_utc, 'both') })));
+    }
+    body.appendChild(el('h3', null, App.t('shell.about.sources')));
+    var sources = Array.isArray(m.sources) ? m.sources : [];
+    if (!sources.length) {
+      body.appendChild(el('p', 'muted', App.t('shell.about.no_sources')));
+      return;
+    }
+    var list = el('ul', 'source-list');
+    var none = App.t('shell.about.not_stated');
+    sources.forEach(function (s) {
+      var li = el('li', 'source');
+      li.appendChild(el('h4', 'source-name', s.provider || s.id || none));
+      var dl = el('dl', 'source-fields');
+      function row(label, value, link) {
+        dl.appendChild(el('dt', null, label));
+        var dd = el('dd');
+        if (link && value) {
+          var a = el('a', null, value);
+          a.href = value; a.target = '_blank'; a.rel = 'noopener noreferrer';
+          dd.appendChild(a);
+        } else {
+          dd.textContent = value || none;
+        }
+        dl.appendChild(dd);
+      }
+      var accessKey = 'shell.access.' + s.access;
+      row(App.t('shell.about.access'), s.access ? (App.hasString(accessKey) ? App.t(accessKey) : String(s.access)) : null);
+      row(App.t('shell.about.licence'), s.licence);
+      row(App.t('shell.about.credit'), s.credit_line);
+      row(App.t('shell.about.link'), s.url || s.link, true);
+      li.appendChild(dl);
+      list.appendChild(li);
+    });
+    body.appendChild(list);
+  }
+  function wireAbout() {
+    var dlg = $('about-dialog');
+    $('about-btn').addEventListener('click', function () {
+      renderAbout();
+      closeMenu();
+      if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+    });
+    function close() { if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
+    $('about-close').addEventListener('click', close);
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
+  }
+
+  /* ---- banner ---- */
+  function showBanner(parts) {
+    var App = window.App, b = $('banner');
+    b.textContent = '';
+    parts.forEach(function (p) { b.appendChild(el('span', null, p)); });
+    var r = el('button', 'banner-btn', App.t('shell.reload'));
+    r.type = 'button';
+    r.addEventListener('click', function () { location.reload(); });
+    b.appendChild(r);
+    b.hidden = false;
+  }
+
+  /* ---- module init ---- */
+  var INITS = [
+    ['map', function () { return $('map'); }],
+    ['panels', function () { return document; }],
+    ['layers', function () { return $('drawer'); }],
+    ['live', function () { return undefined; }],
+    ['compare', function () { return $('map-wrap'); }],
+    ['events', function () { return $('events-root'); }],
+    ['brief', function () { return $('brief-root'); }],
+    ['case', function () { return $('case-root'); }]
+  ];
+  function initModules() {
+    var App = window.App;
+    INITS.forEach(function (pair) {
+      var mod = App[pair[0]];
+      if (mod && typeof mod.init === 'function') {
+        try { mod.init(pair[1]()); }
+        catch (e) { console.error('[shell] App.' + pair[0] + '.init failed', e); }
+      }
+    });
+  }
+
+  /* ---- boot ---- */
+  function boot() {
+    return Promise.all([loadScript(LEAFLET), loadScript(CHART)]).then(function (r) {
+      var leafletOk = r[0] && typeof window.L !== 'undefined';
+      return loadScript('js/core.js?v=1').then(function (coreOk) {
+        if (!coreOk || !window.App) { $('boot-fail').hidden = false; return null; }
+        return MODULES.reduce(function (p, src) {
+          return p.then(function () { return loadScript(src); });
+        }, Promise.resolve()).then(function () { return leafletOk; });
+      });
+    }).then(function (leafletOk) {
+      if (leafletOk === null) return;
+      var App = window.App;
+      return App.load().then(function () {
+        applyStrings();
+        wireTabs(); wireMenu(); wireLang(); wireLayersBtn(); wireBrief(); wireAbout();
+        App.on('lang', function () { applyStrings(); });
+
+        var fromHash = viewFromHash();
+        if (fromHash) App.state.view = fromHash;
+        applyView(App.state.view);
+        try { document.documentElement.lang = App.state.lang || 'en'; } catch (e) { /* ignore */ }
+
+        var msgs = [];
+        if (App.manifestStatus && App.manifestStatus.ok === false) msgs.push(App.t('state.manifest_failed'));
+        if (!leafletOk) msgs.push(App.t('app.cdn_failed'));
+        if (msgs.length) showBanner(msgs);
+
+        initModules();
+        updateLayersCount();
+      });
+    }).catch(function (e) {
+      console.error('[shell] boot failed', e);
+      $('boot-fail').hidden = false;
+    });
+  }
+
+  boot();
+})();
 </script>
 </body>
 </html>

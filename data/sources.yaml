@@ -1,0 +1,350 @@
+# Machine-readable source list for "Eye of the Storm" (see docs/DATA_ACQUISITION_PLAN.md).
+# status: pending | blocked_credentials | done   (agents update status + add `log:` when finished)
+# Boxes (W,S,E,N): delta 81.6,16.2,82.6,17.1 | sea 81,15,85,18 | context 78,12,88,20 | clip_vectors 81,15.8,83,17.6
+version: 2026-11-14
+boxes:
+  delta: [81.6, 16.2, 82.6, 17.1]
+  sea: [81.0, 15.0, 85.0, 18.0]
+  context: [78.0, 12.0, 88.0, 20.0]
+  clip_vectors: [81.0, 15.8, 83.0, 17.6]
+sources:
+  # ---------- NISAR L-band GCOV (ASF) : Earthdata login -> human runs src/fetch/subset_arnab.py ----------
+  - id: L_SEA_CALM_1015
+    group: nisar_l
+    url: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_048_D_080_2005_DVDV_A_20261015T130150_20261015T130208_P05023_N_P_J_001/NISAR_L2_PR_GCOV_033_048_D_080_2005_DVDV_A_20261015T130150_20261015T130208_P05023_N_P_J_001.h5
+    auth: earthdata
+    priority: P0
+    dest: data/raw/nisar_l/sea/2026-10-15_T48_{VVVV,VHVH}.tif
+    method: "python src/fetch/subset_arnab.py --ids L_SEA_CALM_1015  (stream, sea box, 100 m)"
+    verify: "rasterio opens; EPSG UTM; median VV -15..-25 dB; nan<0.3 within frame"
+    status: blocked_credentials
+  - id: L_SEA_EYE_1027
+    group: nisar_l
+    url: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_048_D_080_2005_DVDV_A_20261027T130151_20261027T130208_P05036_N_P_J_001/NISAR_L2_PR_GCOV_034_048_D_080_2005_DVDV_A_20261027T130151_20261027T130208_P05036_N_P_J_001.h5
+    fallback_url: https://nisar.asf.earthdatacloud.nasa.gov/NISAR-UR/UR_L2_L_GCOV/NISAR_L2_UR_GCOV_034_048_D_080_2005_DVDV_A_20261027T130151_20261027T130208_P05036_F_P_J_001/NISAR_L2_UR_GCOV_034_048_D_080_2005_DVDV_A_20261027T130151_20261027T130208_P05036_F_P_J_001.h5
+    auth: earthdata
+    priority: P0
+    dest: data/raw/nisar_l/sea/2026-10-27_T48_{VVVV,VHVH}.tif
+    method: "python src/fetch/subset_arnab.py --ids L_SEA_EYE_1027"
+    verify: "eye visible as low-backscatter disc near 16.3N 82.5E; same grid as 15 Oct"
+    status: blocked_credentials
+  - id: L_COAST_1004
+    group: nisar_l
+    url: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_055_A_010_4005_DHDH_A_20261004T000106_20261004T000129_P05023_N_P_J_001/NISAR_L2_PR_GCOV_032_055_A_010_4005_DHDH_A_20261004T000106_20261004T000129_P05023_N_P_J_001.h5
+    auth: earthdata
+    priority: P0
+    dest: data/raw/nisar_l/coast/2026-10-04_T55_{HHHH,HVHV,mask,numberOfLooks,rtcGammaToSigmaFactor}.tif
+    method: "python src/fetch/subset_arnab.py --ids L_COAST_1004  (delta box, native res)"
+    verify: "covers ~80% of delta box; Godavari river < -18 dB HH"
+    status: blocked_credentials
+  - id: L_COAST_1016
+    group: nisar_l
+    url: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_055_A_010_4005_DHDH_A_20261016T000106_20261016T000129_P05023_N_P_J_001/NISAR_L2_PR_GCOV_033_055_A_010_4005_DHDH_A_20261016T000106_20261016T000129_P05023_N_P_J_001.h5
+    auth: earthdata
+    priority: P0
+    dest: data/raw/nisar_l/coast/2026-10-16_T55_*.tif
+    method: "python src/fetch/subset_arnab.py --ids L_COAST_1016"
+    verify: "same grid/shape as 2026-10-04"
+    status: blocked_credentials
+  - id: L_COAST_1028
+    group: nisar_l
+    url: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_055_A_010_4005_DHDH_A_20261028T000107_20261028T000129_P05036_N_P_J_001/NISAR_L2_PR_GCOV_034_055_A_010_4005_DHDH_A_20261028T000107_20261028T000129_P05036_N_P_J_001.h5
+    fallback_url: https://nisar.asf.earthdatacloud.nasa.gov/NISAR-UR/UR_L2_L_GCOV/NISAR_L2_UR_GCOV_034_055_A_010_4005_DHDH_A_20261028T000107_20261028T000129_P05036_F_P_J_001/NISAR_L2_UR_GCOV_034_055_A_010_4005_DHDH_A_20261028T000107_20261028T000129_P05036_F_P_J_001.h5
+    auth: earthdata
+    priority: P0
+    dest: data/raw/nisar_l/coast/2026-10-28_T55_*.tif
+    method: "python src/fetch/subset_arnab.py --ids L_COAST_1028"
+    verify: "same grid as 16 Oct"
+    status: blocked_credentials
+  - id: L_COAST_1109
+    group: nisar_l
+    note: "replaces master-plan T156 4 Nov (T156 does not intersect the delta box)"
+    url: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_035_055_A_010_4005_DHDH_A_20261109T000107_20261109T000130_P05036_N_P_J_001/NISAR_L2_PR_GCOV_035_055_A_010_4005_DHDH_A_20261109T000107_20261109T000130_P05036_N_P_J_001.h5
+    fallback_url: https://nisar.asf.earthdatacloud.nasa.gov/NISAR-UR/UR_L2_L_GCOV/NISAR_L2_UR_GCOV_035_055_A_010_4005_DHDH_A_20261109T000107_20261109T000130_P05036_F_P_J_001/NISAR_L2_UR_GCOV_035_055_A_010_4005_DHDH_A_20261109T000107_20261109T000130_P05036_F_P_J_001.h5
+    auth: earthdata
+    priority: P0
+    dest: data/raw/nisar_l/coast/2026-11-09_T55_*.tif
+    method: "python src/fetch/subset_arnab.py --ids L_COAST_1109"
+    verify: "same grid as 16 Oct"
+    status: blocked_credentials
+  - id: L_SEA_AFTER_1108
+    group: nisar_l
+    url: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_035_048_D_080_2005_DVDV_A_20261108T130151_20261108T130208_P05036_N_P_J_001/NISAR_L2_PR_GCOV_035_048_D_080_2005_DVDV_A_20261108T130151_20261108T130208_P05036_N_P_J_001.h5
+    auth: earthdata
+    priority: P1
+    dest: data/raw/nisar_l/sea/2026-11-08_T48_*.tif
+    method: "python src/fetch/subset_arnab.py --ids L_SEA_AFTER_1108"
+    verify: "same grid as 15 Oct"
+    status: blocked_credentials
+  - id: L_SEA_CALM_1003
+    group: nisar_l
+    url: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_048_D_080_2005_QPDH_A_20261003T130133_20261003T130207_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_048_D_080_2005_QPDH_A_20261003T130133_20261003T130207_P05023_N_F_J_001.h5
+    auth: earthdata
+    priority: P1
+    dest: data/raw/nisar_l/sea/2026-10-03_T48_{VVVV,HVHV}.tif
+    method: "python src/fetch/subset_arnab.py --ids L_SEA_CALM_1003  (quad-pol 7.5 GB, stream only)"
+    verify: "calm-sea VV close to 15 Oct (difference = baseline uncertainty)"
+    status: blocked_credentials
+  - id: L_COAST_T149
+    group: nisar_l
+    url: "see docs/DATA_ACQUISITION_PLAN.md 3a (10 Oct, 22 Oct, 3 Nov T149 F80 DHDH)"
+    auth: earthdata
+    priority: P2
+    dest: data/raw/nisar_l/coast/<date>_T149_*.tif
+    method: "python src/fetch/subset_arnab.py --ids P2"
+    verify: "covers only west ~33% of delta box"
+    status: blocked_credentials
+  # ---------- NASA GIBS (no login) : package A ----------
+  - id: GIBS_VIIRS_TC
+    group: gibs
+    url: "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=VIIRS_SNPP_CorrectedReflectance_TrueColor&CRS=EPSG:4326&BBOX={S},{W},{N},{E}&WIDTH={w}&HEIGHT={h}&FORMAT=image/jpeg&TIME={YYYY-MM-DD}"
+    layers: [VIIRS_SNPP_CorrectedReflectance_TrueColor, VIIRS_NOAA20_CorrectedReflectance_TrueColor, VIIRS_NOAA21_CorrectedReflectance_TrueColor]
+    tiles: "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/{layer}/default/{date}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg"
+    auth: none
+    priority: P0
+    dest: data/raw/gibs/viirs_<sat>_truecolor_<date>_<box>.jpg (+ .json bounds)
+    method: curl WMS GetMap, dates 2026-10-26..29, boxes context/sea/delta
+    verify: "JPEG opens, pixel std > 5, bounds sidecar written"
+    status: done
+  - id: GIBS_IMERG
+    group: gibs
+    url: https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi
+    layers: [IMERG_Precipitation_Rate, IMERG_Precipitation_Rate_30min]
+    auth: none
+    priority: P1
+    dest: data/raw/gibs/imerg_<daily|30min>_<time>_<box>.png
+    method: curl WMS GetMap FORMAT=image/png, daily 26..29 Oct; 30min 2026-10-27T12:30/13:00/13:30Z, 2026-10-28T00:00Z
+    verify: "PNG with alpha, not fully transparent"
+    status: done
+  - id: GIBS_HIMAWARI_IR
+    group: gibs
+    url: https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi
+    layers: [Himawari_AHI_Band13_Clean_Infrared]
+    auth: none
+    priority: P1
+    urgent: "GIBS keeps a rolling window for Himawari - fetch today"
+    dest: data/raw/gibs/himawari_b13_<YYYYMMDDTHHMM>Z_<box>.png
+    method: curl WMS TIME=2026-10-27T12:50:00Z,13:00,13:10 and 2026-10-28T00:00:00Z
+    verify: "pixel std > 20 (probe at 13:00Z gave std 94)"
+    status: done
+  - id: GIBS_VIIRS_I5_NIGHT
+    group: gibs
+    url: https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi
+    layers: [VIIRS_SNPP_Brightness_Temp_BandI5_Night, VIIRS_NOAA20_Brightness_Temp_BandI5_Night]
+    auth: none
+    priority: P2
+    dest: data/raw/gibs/viirs_i5night_<sat>_2026-10-27_context.png
+    method: curl WMS
+    verify: "non-empty"
+    status: done
+  - id: GIBS_REF
+    group: gibs
+    url: https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi
+    layers: [Coastlines_15m, Reference_Labels_15m]
+    auth: none
+    priority: P2
+    dest: data/raw/gibs/ref_<layer>_<box>.png
+    method: curl WMS (no TIME)
+    verify: "non-empty"
+    status: failed  # Coastlines_15m ok; Reference_Labels_15m returned fully transparent PNG, see data/logs/package_A.md
+  # ---------- IMD / RSMC (no login) : package B ----------
+  - id: IMD_BULLETINS
+    group: imd
+    url: https://rsmcnewdelhi.imd.gov.in/report.php?internal_menu=MzQ=
+    other_urls: ["https://rsmcnewdelhi.imd.gov.in/report.php?internal_menu=MjY=", "https://rsmcnewdelhi.imd.gov.in/report.php?internal_menu=MzM=", "https://rsmcnewdelhi.imd.gov.in/archive-information.php?internal_menu=MjI=&menu_id=OQ==", "https://rsmcnewdelhi.imd.gov.in/archive-information.php?internal_menu=NzM=&menu_id=OQ==", "https://mausam.imd.gov.in/"]
+    auth: none
+    priority: P0
+    dest: docs/imd_bulletins/<YYYYMMDD>_<HHMM>UTC_<type>.pdf
+    method: "browser/WebFetch; RSMC report pages list items after POST search_year=2026"
+    verify: "PDF opens, text mentions ARNAB and the date"
+    status: done
+    log: data/logs/package_B.md
+  - id: IMD_TRACK_CSV
+    group: imd
+    url: "derived from IMD_BULLETINS"
+    auth: none
+    priority: P0
+    dest: data/reference/imd_track_arnab.csv
+    method: typed by hand from PDFs, one row per fix
+    verify: "every row has source_pdf + page; lat 10-20N, lon 80-90E; times monotonic"
+    status: done
+    log: data/logs/package_B.md
+  # ---------- boundaries / water / coast (no login) : package C ----------
+  - id: GB_ADM3
+    group: boundaries
+    url: https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/IND/ADM3/geoBoundaries-IND-ADM3.geojson
+    api: https://www.geoboundaries.org/api/current/gbOpen/IND/ADM3/
+    licence: ODbL-1.0 (boundary year 2018, source Pathways Data / lgdirectory.gov.in)
+    auth: none
+    priority: P0
+    dest: data/reference/mandals_delta.geojson (raw 106 MB in data/raw/boundaries/)
+    method: curl -L + geopandas clip to clip_vectors box
+    verify: "EPSG:4326, >=30 polygons, shapeName present"
+    status: done
+    log: data/logs/package_C.md
+  - id: GB_ADM2
+    group: boundaries
+    url: https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/IND/ADM2/geoBoundaries-IND-ADM2.geojson
+    api: https://www.geoboundaries.org/api/current/gbOpen/IND/ADM2/
+    licence: ODbL-1.0 (boundary year 2021, pre-2022 AP split)
+    auth: none
+    priority: P0
+    dest: data/reference/districts_delta_gb2021.geojson
+    method: curl -L + geopandas clip
+    verify: "East Godavari / West Godavari present"
+    status: done
+    log: data/logs/package_C.md
+  - id: JRC_GSW
+    group: water
+    url: https://storage.googleapis.com/global-surface-water/downloads2021/occurrence/occurrence_80E_20Nv1_4_2021.tif
+    licence: "free, cite Pekel et al. 2016 Nature / EC JRC-Google"
+    auth: none
+    priority: P0
+    dest: data/interim/gsw_occurrence_delta.tif (raw tile in data/raw/water/)
+    method: curl + rasterio window to clip_vectors box
+    verify: "EPSG:4326, values 0-100 (+255 nodata), Godavari channels > 80"
+    status: done
+    log: data/logs/package_C.md
+  - id: NE_COAST
+    group: coast
+    url: https://naciscdn.org/naturalearth/10m/physical/ne_10m_coastline.zip
+    auth: none
+    priority: P0
+    dest: data/reference/coastline_ne10m_clip.geojson
+    method: curl + geopandas clip to context box
+    verify: "line features inside box"
+    status: done
+    log: data/logs/package_C.md
+  - id: OSM_COAST
+    group: coast
+    url: https://osmdata.openstreetmap.de/download/coastlines-split-4326.zip
+    other_urls: ["https://osmdata.openstreetmap.de/download/land-polygons-split-4326.zip"]
+    licence: ODbL-1.0
+    auth: none
+    priority: P1
+    dest: data/reference/coastline_osm_clip.geojson, data/reference/land_osm_clip.geojson
+    method: curl + geopandas (bbox filter on read)
+    verify: "clip non-empty, matches NE roughly"
+    status: done
+    log: data/logs/package_C.md
+  # ---------- ASF / CMR metadata (no login) : package D ----------
+  - id: ASF_MANIFEST
+    group: nisar_meta
+    url: https://api.daac.asf.alaska.edu/services/search/param?dataset=NISAR&processingLevel=GCOV&output=geojson
+    auth: none
+    priority: P0
+    dest: data/reference/scene_manifest.csv
+    method: asf_search / curl, delta + sea boxes, 2026-10-01..2026-11-14
+    verify: "all P0 ids above present with PR versions; footprint coverage fraction per box"
+    status: done
+  - id: NISAR_BROWSE_NEW
+    group: nisar_meta
+    url: "browse PNG URLs from ASF search results (properties.browse, *_LATLON.png)"
+    auth: none
+    priority: P1
+    dest: data/events/cyclones_bay_of_bengal_2026/browse/<YYYY-MM-DDTHHMMZ>_T<track>_F<frame>.png
+    method: requests (as src/event_scenes.py --download)
+    verify: "PNG opens; KML bounds recorded"
+    status: done
+  - id: NISAR_S_CMR_CHECK
+    group: nisar_meta
+    url: https://cmr.earthdata.nasa.gov/search/collections.json?keyword=NISAR
+    auth: none
+    priority: P1
+    dest: data/logs/D_asf_cmr.md (finding only)
+    method: CMR keyword search for S-band collections
+    verify: "expected: none on CMR (S-band is Bhoonidhi-only)"
+    status: done
+  # ---------- context (no login) : package E ----------
+  - id: ERA5_WIND
+    group: context
+    url: "https://archive-api.open-meteo.com/v1/archive?latitude={lat}&longitude={lon}&start_date=2026-10-15&end_date=2026-10-15&hourly=wind_speed_10m,wind_direction_10m&models=era5&wind_speed_unit=ms"
+    licence: "ERA5 (Copernicus/ECMWF) via Open-Meteo, CC BY 4.0"
+    auth: none
+    priority: P1
+    dest: data/raw/era5/openmeteo_era5_<date>.json + data/reference/era5_wind_summary.csv
+    method: curl 5x5 grid over sea box, 15 Oct and 27 Oct
+    verify: "24 hourly values per point; caption number only"
+    status: done
+  - id: DOCS_SUBMISSION
+    group: context
+    url: https://www.spaceappschallenge.org/2026/challenges/dancing-with-the-sars/
+    auth: none
+    priority: P0
+    dest: docs/SUBMISSION_GUIDE_NOTES.md
+    method: WebFetch / WebSearch (host unreachable from device shell)
+    verify: "quoted fields with source URLs"
+    status: partial
+  - id: DOCS_CROP
+    group: context
+    url: "web search"
+    auth: none
+    priority: P1
+    dest: docs/CROP_CALENDAR_NOTES.md
+    method: WebSearch
+    verify: ">=2 independent cited sources"
+    status: done
+  - id: DOCS_DISTRICTS
+    group: context
+    url: "web search (AP district portals / lgdirectory.gov.in)"
+    auth: none
+    priority: P1
+    dest: data/reference/mandal_district_2022.csv
+    method: WebSearch / WebFetch
+    verify: "row for each mandal in mandals_delta.geojson, with source URL"
+    status: done
+  # ---------- login-only : human ----------
+  - id: S_GCOV_DELTA
+    group: nisar_s
+    url: https://bhoonidhi.nrsc.gov.in/NISAR/NisarProducts.html
+    auth: bhoonidhi
+    priority: P1
+    dest: data/raw/nisar_s/ + data/reference/nisar_s_candidates.csv
+    method: Bhoonidhi search + HDF->GeoTIFF subset tool (human)
+    verify: "scene over delta box between 16 Oct and 10 Nov"
+    status: blocked_credentials
+  - id: SCAT3_1015
+    group: scat3
+    url: https://bhoonidhi.nrsc.gov.in
+    auth: bhoonidhi
+    priority: P1
+    dest: data/raw/scat3/
+    method: Bhoonidhi EOS-06 SCAT-3 binned wind vectors, 15 Oct (human)
+    verify: "wind values over 15-18N 81-85E"
+    status: blocked_credentials
+  - id: INSAT_IR_1027
+    group: insat
+    url: https://mosdac.gov.in/node/2070
+    auth: mosdac
+    priority: P1
+    dest: data/raw/insat/
+    method: MOSDAC web/API (human; host unreachable from device shell)
+    verify: "IR1 image nearest 13:00 UTC 27 Oct"
+    status: blocked_credentials
+  - id: EOS04_MRS
+    group: other_sar
+    url: https://bhoonidhi.nrsc.gov.in
+    auth: bhoonidhi
+    priority: P2
+    dest: data/raw/eos04/
+    method: human, only if an MRS pass exists 16 Oct-10 Nov (never buy FRS)
+    verify: ""
+    status: blocked_credentials
+  - id: RS2_LISS3
+    group: optical
+    url: https://bhoonidhi.nrsc.gov.in
+    auth: bhoonidhi
+    priority: P2
+    dest: data/raw/resourcesat/
+    method: human, cloud-free delta pass after 4 Nov
+    verify: ""
+    status: blocked_credentials
+  - id: IMERG_NUMERIC
+    group: gibs
+    url: https://gpm1.gesdisc.eosdis.nasa.gov
+    auth: earthdata
+    priority: P2
+    dest: data/raw/imerg/
+    method: earthaccess (human) - only if a numeric rain mask is needed
+    verify: ""
+    status: blocked_credentials

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Eye of the Storm · phone chapter 4, the shore</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wdth,wght@75..125,400..700&family=Anek+Telugu:wght@500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#17635F}a:hover{color:#0E4542}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; overflow: hidden; display: flex; flex-direction: column; background: #F1F4F3; color: #131E22; font-family: 'Anek Latin', system-ui, sans-serif">
+  <header style="display: flex; align-items: center; gap: 10px; padding: 0 8px 0 14px; height: 52px; box-sizing: border-box; background: #FFFFFF; border-bottom: 1px solid #D3DAD8; flex: none">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #17635F; font-weight: 500">4 / 6</span>
+    <span style="font-size: 15px; font-weight: 600; font-stretch: 88%; letter-spacing: -0.01em; flex: 1">The shore</span>
+    <button aria-label="Layers" style="width: 44px; height: 44px; border: 0; background: transparent; color: #131E22"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"></path></svg></button>
+    <button aria-label="Menu" style="width: 44px; height: 44px; border: 0; background: transparent; color: #131E22"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+  </header>
+
+  <div style="padding: 10px 16px 8px; display: flex; flex-direction: column; gap: 8px; flex: none">
+    <h2 style="margin: 0; font-size: 23px; line-height: 1.1; font-weight: 600; font-stretch: 88%; letter-spacing: -0.01em">A week later, where water likely stayed</h2>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <sc-for list="{{bars}}" as="b" hint-placeholder-count="2">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 13px; line-height: 1.2; color: #3F4D53">{{b.title}}</span>
+          <span style="position: relative; display: block; height: 10px; border-radius: 3px; background: #E6EBEA">
+            <span style="{{b.waterStyle}}"></span>
+            <span style="{{b.cropsStyle}}"></span>
+            <span style="{{b.endStyle}}">{{b.end}}</span>
+          </span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 1px; font-size: 13px; line-height: 1.3">
+      <span style="display: flex; align-items: center; gap: 8px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #2A6FB0; flex: none"></span><span style="flex: 1">Likely new open water</span><span style="font-family: 'IBM Plex Mono', monospace">{{water}}</span></span>
+      <span style="display: flex; align-items: center; gap: 8px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #E09A2B; flex: none"></span><span style="flex: 1">Likely wet or flooded crops</span><span style="font-family: 'IBM Plex Mono', monospace">{{crops}}</span></span>
+      <span style="display: flex; align-items: center; gap: 8px"><span style="width: 12px; height: 12px; box-sizing: border-box; border-radius: 3px; background: #FFFFFF; border: 1.5px solid #586469; flex: none"></span><span style="flex: 1">Likely no change</span><span style="font-family: 'IBM Plex Mono', monospace">{{noChange}}</span></span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px">
+      <div role="group" aria-label="Radar band" style="display: flex; border: 1px solid #D3DAD8; border-radius: 8px; overflow: hidden">
+        <button onClick="{{pickL}}" aria-pressed="{{isL}}" style="{{lStyle}}">L · 24 cm</button>
+        <button onClick="{{pickS}}" aria-pressed="{{isS}}" style="{{sStyle}}">S · 9 cm</button>
+      </div>
+      <span style="font-size: 13px; padding: 0 7px; border-radius: 6px; background: transparent; border: 1px dashed #586469; color: #3F4D53">Sample values</span>
+    </div>
+    <p style="margin: 0; font-size: 13px; line-height: 1.35; color: #3F4D53">{{bandNote}}</p>
+  </div>
+
+  <section aria-label="Map: delta before and after" style="position: relative; height: 300px; flex: none; overflow: hidden; background: #0F1B1F">
+    <img src="/_blob/c9798b7d7d1e9b846c0a89f2aeba49c7" alt="NISAR radar of the Godavari delta before the cyclone" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+    <div style="{{clipStyle}}">
+      <img src="/_blob/04464072ded924c6e21ecbdaa2db7000" alt="NISAR radar of the Godavari delta seven days after landfall" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+      <svg viewBox="0 0 1180 1090" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%">
+        <sc-for list="{{blobs}}" as="b" hint-placeholder-count="6">
+          <ellipse cx="{{b.x}}" cy="{{b.y}}" rx="{{b.rx}}" ry="{{b.ry}}" fill="{{b.fill}}" fill-opacity="0.8" stroke="#FFFFFF" stroke-width="2"></ellipse>
+        </sc-for>
+      </svg>
+    </div>
+    <svg viewBox="0 0 1180 1090" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none">
+      <polygon points="470,800 592,790 612,900 480,930" fill="none" stroke="#0F1B1F" stroke-width="8"></polygon>
+      <polygon points="215,885 322,862 330,962 262,1004 208,962" fill="none" stroke="#0F1B1F" stroke-width="8"></polygon>
+      <polygon points="470,800 592,790 612,900 480,930" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="12 8"></polygon>
+      <polygon points="215,885 322,862 330,962 262,1004 208,962" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="12 8"></polygon>
+      <polygon points="332,860 452,850 472,962 384,1012 330,962" fill="none" stroke="#0F1B1F" stroke-width="10"></polygon>
+      <polygon points="332,860 452,850 472,962 384,1012 330,962" fill="none" stroke="#5FD0C3" stroke-width="6"></polygon>
+    </svg>
+    <div style="{{lineStyle}}">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 36px; height: 36px; border-radius: 18px; background: #FFFFFF; border: 2px solid #131E22; display: flex; align-items: center; justify-content: center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#131E22" stroke-width="2" aria-hidden="true"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"></path></svg>
+      </div>
+    </div>
+    <div style="position: absolute; top: 8px; left: 8px; background: #FFFFFF; color: #131E22; border-radius: 6px; padding: 3px 7px; font-size: 13px"><span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500">23 Oct</span></div>
+    <div style="position: absolute; top: 8px; right: 8px; background: #FFFFFF; color: #131E22; border-radius: 6px; padding: 3px 7px; font-size: 13px"><span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500">4 Nov</span> · +7 d</div>
+    <div style="position: absolute; left: 8px; right: 8px; bottom: 8px; display: flex; align-items: center; gap: 8px; background: #FFFFFF; color: #131E22; border-radius: 8px; padding: 0 10px; font-size: 13px">
+      <span style="font-size: 12px; font-weight: 600; padding: 2px 6px; border-radius: 6px; background: #D8EAE7; color: #0E4542; white-space: nowrap">{{bandChip}}</span>
+      <label for="swipe-m" style="white-space: nowrap">Compare</label>
+      <input id="swipe-m" type="range" min="5" max="95" step="1" value="{{pos}}" onChange="{{onPos}}" style="flex: 1; min-width: 0; height: 44px; margin: 0; accent-color: #131E22">
+    </div>
+  </section>
+
+  <div style="margin: 8px 16px 0; background: #FFFFFF; border: 1px solid #131E22; border-radius: 10px; padding: 8px 12px; display: flex; align-items: center; gap: 10px; flex: none">
+    <div style="display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0">
+      <span style="font-size: 15px; font-weight: 600">Narsapur <span style="font-size: 13px; font-weight: 400; color: #586469">· rank 1 of 14</span></span>
+      <span style="font-size: 12px; font-family: 'IBM Plex Mono', monospace"><span style="color: #1D4E7C">12% ±3 water</span> · <span style="color: #7A4A06">19% ±5 crops</span> · <span style="color: #586469">5% normal</span></span>
+      <span style="font-size: 13px; color: #586469">Not a warning. Not a flooded area in km².</span>
+    </div>
+    <button style="height: 44px; border: 0; border-radius: 8px; background: #131E22; color: #FFFFFF; font-size: 14px; font-weight: 500; padding: 0 12px">Brief</button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { pos: 46, band: 'L' }; }
+  renderVals() {
+    var self = this, pos = this.state.pos, L = this.state.band === 'L';
+    var on = 'border:0;padding:0 12px;height:44px;font-size:13px;font-weight:500;background:#131E22;color:#FFFFFF;';
+    var off = 'border:0;padding:0 12px;height:44px;font-size:13px;background:#FFFFFF;color:#131E22;';
+    var W = '#2A6FB0', A = '#E09A2B';
+    var blobsL = [
+      { x: 420, y: 880, rx: 70, ry: 40, fill: A }, { x: 560, y: 840, rx: 60, ry: 38, fill: A },
+      { x: 280, y: 920, rx: 50, ry: 30, fill: A }, { x: 660, y: 910, rx: 40, ry: 34, fill: A },
+      { x: 470, y: 960, rx: 46, ry: 22, fill: W }, { x: 365, y: 930, rx: 34, ry: 20, fill: W },
+      { x: 600, y: 960, rx: 30, ry: 16, fill: W }, { x: 235, y: 960, rx: 36, ry: 18, fill: W }
+    ];
+    var blobsS = [
+      { x: 470, y: 960, rx: 46, ry: 22, fill: W }, { x: 365, y: 930, rx: 34, ry: 20, fill: W },
+      { x: 600, y: 960, rx: 30, ry: 16, fill: W }, { x: 235, y: 960, rx: 36, ry: 18, fill: W },
+      { x: 420, y: 880, rx: 28, ry: 16, fill: A }
+    ];
+    var max = 40;
+    function p(x) { return (x / max * 100) + '%'; }
+    function bar(title, w, c) {
+      var t = w + c;
+      return {
+        title: title, end: t + '%',
+        waterStyle: 'position:absolute;left:0;top:0;bottom:0;border-radius:3px 0 0 3px;background:#2A6FB0;width:' + p(w),
+        cropsStyle: 'position:absolute;top:0;bottom:0;border-radius:0 3px 3px 0;background:#E09A2B;left:' + p(w) + ';width:' + p(c),
+        endStyle: "position:absolute;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:#131E22;left:calc(" + p(t) + " + 6px)"
+      };
+    }
+    return {
+      bars: [
+        bar('Cyclone fortnight (23 Oct → 4 Nov)', L ? 9 : 8, L ? 14 : 3),
+        bar('Normal fortnight (4 → 16 Oct)', 1, 2)
+      ],
+      pos: pos,
+      onPos: function (e) { self.setState({ pos: Number(e.target.value) }); },
+      clipStyle: 'position:absolute;inset:0;clip-path:inset(0 0 0 ' + pos + '%)',
+      lineStyle: 'position:absolute;top:0;bottom:0;width:2px;background:#FFFFFF;left:' + pos + '%',
+      isL: L, isS: !L, lStyle: L ? on : off, sStyle: L ? off : on,
+      pickL: function () { self.setState({ band: 'L' }); },
+      pickS: function () { self.setState({ band: 'S' }); },
+      bandNote: L ? 'L-band passes through crops, so flooded fields show up.' : 'S-band bounces off crops, so flooded fields mostly hide. Only if an S-band scene exists.',
+      bandChip: L ? 'NISAR L-band' : 'NISAR S-band',
+      water: L ? '9% ±2' : '8% ±2', crops: L ? '14% ±4' : '3% ±2', noChange: L ? '77% ±4' : '89% ±3',
+      blobs: L ? blobsL : blobsS
+    };
+  }
+}
+</script>
+</body>
+</html>

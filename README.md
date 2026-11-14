@@ -61,6 +61,15 @@ or put `machine urs.earthdata.nasa.gov login USER password PASS` in `~/.netrc`.
 3. **Urban growth / construction**: new bright HH returns (Dwarka Expressway, Noida, Jewar airport).
 4. **Land subsidence** (GUNW): parts of Delhi-NCR are documented as sinking from groundwater extraction.
 
+## Web app (app/)
+
+A static page (plain HTML, CSS and JS, no build step): a daily NISAR-centred coastal-hazard workspace for the Andhra Pradesh coast, with a saved Cyclone Arnab event and a Case study tab.
+
+- **Run it:** from the repo root run `python3 -m http.server 8000`, then open <http://localhost:8000/app/>.
+- **What it reads:** everything comes from `data/processed/manifest.json` (regions, layers, events, sources, analyses) and the files it points to (`mandals.geojson`, `mandal_rank.json`, `profile.json`, `alerts.json`, `img/*`). Adding a layer, event or region means editing the manifest only. Schema: `docs/MANIFEST_SCHEMA.md`.
+- **Sample values:** anything that is not real data yet is tagged on screen ("Sample values", "Quick-look sample", "Draft: to be reviewed"). The list is in `docs/PLACEHOLDERS.md`; what the backend still owes is in `docs/BACKEND_GAPS.md` (section 13 was added during the frontend review).
+- **Needs internet:** Leaflet, Chart.js, Scrollama, Google Fonts, Esri basemap tiles and the live GIBS, Open-Meteo and GDACS feeds are loaded from the web; live feeds fail soft with an "unavailable" message.
+
 ## Community & links
 
 - Delhi WhatsApp community: <https://chat.whatsapp.com/G51kBazKRdnHrRxi5VPRoS>

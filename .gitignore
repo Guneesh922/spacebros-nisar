@@ -20,3 +20,18 @@ venv/
 .DS_Store
 Thumbs.db
 data/events/*/browse/
+
+# --- data acquisition plan (14 Nov 2026) ---
+# data/raw/ above stays ignored wholesale. Large rasters / binaries anywhere else under data/ are ignored too;
+# sources.yaml, small CSV/JSON/GeoJSON, logs and docs/imd_bulletins/*.pdf stay tracked.
+data/**/*.h5
+data/**/*.hdf
+data/**/*.he5
+data/**/*.nc
+data/**/*.tif
+data/**/*.tiff
+data/**/*.zip
+data/**/*.npy
+data/**/*.npz
+data/**/*.vrt
+.venv/

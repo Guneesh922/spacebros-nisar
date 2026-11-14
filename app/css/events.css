@@ -1,0 +1,118 @@
+/* events.css: the Events tab, the event banner on the map, and the landfall tooltip.
+   Tokens only (css/tokens.css). Reuses .card, .btn and .btn--primary from panels.css. */
+
+/* ---------- Events tab ---------- */
+.events-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--s-5) var(--s-4) var(--s-7);
+  min-width: 0;
+}
+.events-head { display: flex; flex-direction: column; gap: var(--s-1); }
+.events-title { font-size: var(--fs-h1); letter-spacing: -0.01em; }
+.events-section { display: flex; flex-direction: column; gap: var(--s-3); min-width: 0; }
+.events-section__title { font-size: var(--fs-h2); letter-spacing: -0.01em; }
+.events-section__sub { font-size: var(--fs-caption); color: var(--muted); overflow-wrap: anywhere; }
+.events-note { font-size: var(--fs-small); color: var(--ink-2); }
+.events-note.is-fail { color: var(--ink); }
+.events-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: var(--s-3);
+  min-width: 0;
+}
+
+.event-card { min-width: 0; }
+.event-card.is-loaded { border-color: var(--teal); }
+.event-card__title { font-size: var(--fs-h3); letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.event-card__meta { font-size: var(--fs-small); color: var(--ink-2); overflow-wrap: anywhere; }
+.event-card__dates { font-size: var(--fs-caption); color: var(--muted); overflow-wrap: anywhere; }
+.event-card__actions { display: flex; align-items: center; gap: var(--s-2); flex-wrap: wrap; margin-top: auto; }
+.event-card__btn,
+.event-card__link { max-width: 100%; text-align: center; }
+.event-card__link { align-self: flex-start; text-decoration: none; }
+.event-card__badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch);
+  padding: 0 var(--s-3);
+  border-radius: var(--r-md);
+  background: var(--teal-tint);
+  color: var(--teal-hover);
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+/* ---------- banner over the map (#map-wrap) ---------- */
+.event-banner {
+  position: absolute;
+  left: 16px;
+  top: 76px;
+  z-index: 940;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  /* stay clear of the Layers button (top right) and the zoom buttons (top right, under it) */
+  max-width: calc(100% - 96px);
+  min-height: var(--touch);
+  padding: 0 var(--s-2) 0 var(--s-3);
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  font-size: var(--fs-small);
+}
+.event-banner__text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.event-banner__dates {
+  flex: none;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-caption);
+  color: var(--muted);
+}
+.event-banner__btn {
+  flex: none;
+  min-height: var(--touch);
+  padding: 0 var(--s-3);
+  border: 1px solid var(--ink);
+  border-radius: var(--r-sm);
+  background: var(--ink);
+  color: var(--white);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.event-banner__btn:hover { background: var(--ink-2); border-color: var(--ink-2); }
+.event-banner__btn:focus-visible,
+.event-card__btn:focus-visible,
+.event-card__link:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+
+/* phones: one compact line, the dates drop away */
+@media (max-width: 767px) {
+  .event-banner {
+    left: 12px;
+    max-width: calc(100% - 84px);
+    gap: var(--s-1);
+    padding: 0 var(--s-1) 0 var(--s-2);
+    font-size: var(--fs-caption);
+  }
+  .event-banner__dates { display: none; }
+  .event-banner__btn { padding: 0 var(--s-2); font-size: var(--fs-caption); }
+}
+
+/* ---------- landfall tooltip (permanent, on the map) ---------- */
+.event-landfall-tip { display: flex; flex-direction: column; gap: 2px; white-space: nowrap; }
+.event-landfall-tip__title { font-weight: 600; }
+.event-landfall-tip__time { font-weight: 400; }
