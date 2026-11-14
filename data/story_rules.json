@@ -42,6 +42,9 @@
     "cap_words": "more than ten times",
     "cap_above": 10
   },
+  "radar_finding": {
+    "rule_text": "A radar pass is recorded as 'change_seen' only if at least one mandal meets the flooded rule above, or at least one mandal went up since the previous pass. Otherwise it is 'no_clear_change'. The public headline and the event record use this same basis. 'numbers_coming', 'no_baseline' and 'sea_no_public_finding' are unchanged."
+  },
   "monitor_window_days": 45,
   "stale_after_days": 16,
   "stale_note": "NISAR repeat is 12 days; 16 = 12 + 4 days grace. After that the page says 'No new radar pass in {days} days' and shows the last pass date.",
@@ -49,7 +52,8 @@
   "states": [
     "event",
     "recovery",
-    "watch"
+    "watch",
+    "stale"
   ],
   "state_rules": {
     "event": "an event file with status 'active' and landfall within monitor_window_days",
@@ -97,5 +101,37 @@
   "site_url": "https://guneesh922.github.io/spacebros-nisar/app/dashboard-mockup/",
   "archive": {
     "sea_scenes_from_days_before_landfall": 1
-  }
+  },
+  "quiet": {
+    "max_times_control": 2,
+    "rule_text": "A pass is 'quiet' if no mandal crosses the flooded rule, AND no mandal went up or down since the previous pass (change inside the error band), AND the likely new open water share of land is at most 2 times the normal-fortnight control. If all three hold the page says there is no clear change; no story is invented."
+  },
+  "event_publishable_status": [
+    "active",
+    "radar_linked",
+    "closed"
+  ],
+  "default_aftermath_days": 30,
+  "season_policy": {
+    "same": "normal confidence",
+    "adjacent": "lower confidence, caveat shown",
+    "other": "no_baseline: the baseline is never reused across a distant season",
+    "rule_text": "Seasons come from data/seasons.json (month ranges, cyclic order). Same season as the baseline: normal. The next or previous season: numbers are shown with lower confidence and a caveat. Any other season: no baseline, no change numbers. A different track always has no baseline unless config/areas.json lists one."
+  },
+  "default_baseline": {
+    "track": 55,
+    "season": "post_monsoon",
+    "dates": [
+      "2026-10-04",
+      "2026-10-16"
+    ],
+    "note": "Used only when config/areas.json is absent."
+  },
+  "template_states": [
+    "big_change",
+    "quiet",
+    "no_new_pass",
+    "numbers_coming",
+    "no_baseline"
+  ]
 }

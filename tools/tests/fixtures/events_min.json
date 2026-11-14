@@ -1,0 +1,10 @@
+{"schema": "events-v1", "updated_utc": "2026-11-14T00:00:00Z", "events": [{
+  "id": "test_cyclone_2026", "name": "Cyclone Test", "type": "cyclone", "area_id": "godavari",
+  "start": "2026-10-24", "end": "2026-10-28", "aftermath_days": 30,
+  "window_source": "fixture",
+  "status": "radar_linked", "reviewed_by_human": true,
+  "landfall": {"date": "2026-10-28"},
+  "confounders": [{"id": "murasu_test", "name": "Cyclone Other", "affects_dates": ["2026-11-09"],
+                   "text": "Cyclone Other also put water on the land. This radar picture shows all of it together."}],
+  "story": {}, "official_links": [{"name": "IMD", "url": "https://mausam.imd.gov.in/"}],
+  "linked_passes": [], "edit_log": []}]}

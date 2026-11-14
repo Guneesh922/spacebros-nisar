@@ -5784,7 +5784,7 @@
   }
  },
  "provenance": {
-  "created_utc": "2026-11-14T11:29:00Z",
+  "created_utc": "2026-11-14T15:34:25Z",
   "tool": "tools/build_web.py (build_mandal_rank)",
   "h5_sources": {
    "20261004": "data/h5/L_COAST_20261004_T055.h5",

@@ -834,7 +834,7 @@
       "time_utc": "2026-11-08T13:01:51Z",
       "latest_of": "nisar_sea_diff",
       "shows": "Change in sea-surface radar brightness, 8 Nov minus calm day 15 Oct (dB); difference of two calibrated backscatter images; wind-roughened sea appears brighter",
-      "limit": "wind speed (it is a brightness change); the 15 Oct calm reference is provisional and patchy, so the level may be overstated",
+      "limit": "wind speed (it is a brightness change). Calibration check: 27 Oct read about 4 dB brighter in VV than the PROVISIONAL 15 Oct reference; 8 Nov differed by about 0.1 dB, so most of the 27 Oct brightening is likely storm signal.",
       "source": "SpaceBros difference map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",

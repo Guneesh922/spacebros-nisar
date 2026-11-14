@@ -1288,7 +1288,7 @@
   ]
  },
  "provenance": {
-  "created_utc": "2026-11-14T11:29:01Z",
+  "created_utc": "2026-11-14T15:34:27Z",
   "tool": "tools/build_web.py (build_profile)",
   "h5_sources": [
    "data/h5/L_SEA_20261027_T048.h5"

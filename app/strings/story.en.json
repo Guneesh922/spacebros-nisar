@@ -38,17 +38,24 @@
     },
     "worse": "More land is probably flooded than on the last radar pass.",
     "first_pass": "First radar picture after {event}: some land was probably under water.",
-    "no_new_pass": "No new radar picture yet. This page shows the last one, from {date}.",
+    "no_new_pass": "No new radar pass in {days} days.",
     "watch": "Calm on the coast. No active storm.",
     "practice_prefix": "Practice numbers: ",
-    "no_flood": "No land looks probably flooded in this radar picture."
+    "no_flood": "No mandal looks probably flooded in this radar picture.",
+    "quiet": "This pass shows no clear change since {prev_date}.",
+    "no_baseline": "No baseline yet for this track, so no change numbers."
   },
   "lead": {
     "recovery": "The satellite looked again on {date}, {days_after} days after landfall. The numbers are likely to change as more radar pictures arrive.",
     "first_pass": "NISAR looked at the coast on {date}. Radar change points to places that were probably under water.",
     "watch": "No storm is being tracked right now. The latest radar picture is from {date}.",
     "landfall_day": "NISAR looked at the coast on {date}, the day {event} reached land. Radar change points to places that were probably under water.",
-    "confounder": "{text}"
+    "no_flood": "NISAR looked at the coast on {date}. Radar shows only small patches of likely new open water, too few to call any mandal flooded.",
+    "no_flood_landfall_day": "NISAR looked at the coast on {date}, the day {event} reached land. Radar shows only small patches of likely new open water, too few to call any mandal flooded.",
+    "confounder": "{text}",
+    "quiet": "NISAR looked at the coast on {date}. Radar shows no likely new open water beyond a normal fortnight.",
+    "numbers_coming_event": "NISAR looked at the coast on {date}. The radar picture is on the map. The numbers are still being worked out.",
+    "no_baseline": "NISAR looked at the coast on {date}. The radar picture is on the map."
   },
   "since_last": {
     "title": "Since the last pass",
@@ -56,12 +63,17 @@
     "chip_same": "about the same",
     "chip_up": "went up",
     "text": "Between {prev_date} and {date}, {n_prev} mandals were probably flooded and now {n_now} are. {receded} went down, {still} stayed about the same, {worse} went up.",
-    "since_landfall": "Since the landfall pass, the share in {top_mandal} has gone from about {lik_then} to about {lik} in every 100 acres."
+    "since_landfall": "Since the landfall pass, the share in {top_mandal} has changed. It was about {lik_then} then and is about {lik} now, in every 100 acres."
   },
   "bignums": {
     "top_mandal": {
       "unit": "in every 100 acres",
       "label": "of {top_mandal} was probably under water, give or take {err}",
+      "value": "{lik}"
+    },
+    "top_mandal_calm": {
+      "unit": "in every 100 acres",
+      "label": "of {top_mandal} is likely new open water, the most of any mandal, give or take {err}",
       "value": "{lik}"
     },
     "change": {
@@ -109,6 +121,7 @@
   "provisional": "Early data. NISAR has not finished checking it. Numbers may change.",
   "missing_numbers": "Pictures are ready, numbers are coming.",
   "stale": "No new radar pass in {days} days. This page shows the last one, from {date}.",
+  "stale_sub": "This page shows the last radar picture, from {date}.",
   "next_pass": "Next radar pass expected about {next_date}. This is a schedule estimate. It can shift.",
   "watch": {
     "normal_check": "Every mandal is inside its normal range on the latest pass.",
@@ -118,19 +131,68 @@
   },
   "timestamps": {
     "picture": "Radar picture taken {date}, IST",
-    "built": "Page updated {built}"
+    "built": "Summary updated {built}"
   },
   "official_banner": "This is not an official warning. For alerts, follow IMD, APSDMA and your district officers.",
   "feed": {
     "title": "{event}: radar updates",
     "item": "{headline} ({status})"
   },
-  "next_pass_overdue": "The next radar pass was expected about {next_date}. It can shift.",
+  "next_pass_overdue": "A radar pass was expected about {expected} but is not in the catalogue yet. The next one is about {next_date}. Dates can shift.",
   "update": {
     "coast_first": "Radar picture of the coast on {date}.",
     "coast_summary": "Radar points to about {km2} square km of new open water ({lo} to {hi} with other settings). That is {times} a normal fortnight.",
     "sea_eye": "Radar picture of the sea on {date}, with the calm centre (eye) of {event}.",
     "sea_after": "Radar picture of the sea on {date}.",
     "sea_diff": "The sea looks brighter than on a calm day ({ref_date}). That is where wind roughened the water."
+  },
+  "numbers_coming": "Pictures from {date} are in. Numbers are coming.",
+  "no_new_pass_age": "No new radar pass in {days} days. This page shows the last one, from {date}.",
+  "chip": {
+    "during": "During {event}",
+    "after": "After {event}"
+  },
+  "chip_draft": {
+    "during": "During {event} (alert, not reviewed)",
+    "after": "After {event} (alert, not reviewed)"
+  },
+  "comparison": {
+    "first": "About {km2} square km of likely new open water, give or take {err}.",
+    "prev_up": "That is up from about {prev_km2} km² on {prev_date}.",
+    "prev_down": "That is down from about {prev_km2} km² on {prev_date}.",
+    "prev_same": "That is about the same as the {prev_km2} km² on {prev_date}.",
+    "normal": "That is {times} a normal fortnight (about {normal_km2} km²)."
+  },
+  "three": {
+    "new_water": {
+      "unit": "km²",
+      "label": "of likely new open water, give or take {err}"
+    },
+    "flooded": {
+      "unit": "mandals",
+      "label": "mandals probably flooded"
+    },
+    "normal": {
+      "unit": "km²",
+      "label": "of likely new open water in a normal fortnight, for comparison"
+    }
+  },
+  "confidence": {
+    "provisional_baseline": "The baseline radar pictures are early data that NISAR has not finished checking.",
+    "provisional_pass": "This radar picture is early data that NISAR has not finished checking.",
+    "season": "The rules were tuned on {baseline_season} pictures. This pass is in the {season}.",
+    "season_unknown": "The season of this pass or of its baseline is not known, so numbers are likely less reliable.",
+    "no_baseline": "There is no baseline for this track or season, so no change numbers are given."
+  },
+  "caveat": {
+    "season": "Fields look different in another season, so these numbers are likely less reliable."
+  },
+  "age": {
+    "days": "Last radar pass {days} days ago.",
+    "one": "Last radar pass 1 day ago.",
+    "today": "Last radar pass today."
+  },
+  "sea": {
+    "none": "No plain-language sea finding yet: the method is not validated (docs/METHODS.md)."
   }
 }

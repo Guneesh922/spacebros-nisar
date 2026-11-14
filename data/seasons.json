@@ -1,12 +1,105 @@
 {
   "schema": "seasons-v1",
   "region": "Andhra Pradesh coast (Godavari delta and nearby)",
-  "note": "Plain-text seasonal lines for the quiet-period (watch) state. General climate background, not a forecast. To be checked against IMD before publishing.",
+  "note": "Plain-text seasonal lines for the quiet-period (watch) state and the season check for baselines (findings confidence). General climate background, not a forecast. To be checked against IMD before publishing. List order is the cyclic order of the year (used for 'adjacent').",
   "seasons": [
-    { "id": "pre_monsoon_cyclone", "months": [4, 5], "label": "Early cyclone season", "line": "April and May can bring early cyclones to the Bay of Bengal. They are less common than in the autumn." },
-    { "id": "southwest_monsoon", "months": [6, 7, 8, 9], "label": "Monsoon", "line": "June to September is the main monsoon. Heavy rain and river floods in the Godavari are most likely now." },
-    { "id": "post_monsoon_cyclone", "months": [10, 11, 12], "label": "Cyclone season", "line": "October to December is the main cyclone season on this coast. Storms from the Bay of Bengal are most likely now." },
-    { "id": "dry", "months": [1, 2, 3], "label": "Dry season", "line": "January to March is usually dry and calm. Floods and cyclones are rare." }
+    {
+      "id": "pre_monsoon_cyclone",
+      "aliases": [
+        "pre_monsoon"
+      ],
+      "months": [
+        4,
+        5
+      ],
+      "label": "early cyclone season",
+      "line": "April and May can bring early cyclones to the Bay of Bengal. They are less common than in the autumn."
+    },
+    {
+      "id": "southwest_monsoon",
+      "aliases": [
+        "monsoon"
+      ],
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "label": "monsoon",
+      "line": "June to September is the main monsoon. Heavy rain and river floods in the Godavari are most likely now."
+    },
+    {
+      "id": "post_monsoon",
+      "aliases": [
+        "post_monsoon_cyclone"
+      ],
+      "months": [
+        10,
+        11,
+        12
+      ],
+      "label": "post-monsoon cyclone season",
+      "line": "October to December is the main cyclone season on this coast. Storms from the Bay of Bengal are most likely now."
+    },
+    {
+      "id": "dry",
+      "aliases": [
+        "dry_season"
+      ],
+      "months": [
+        1,
+        2,
+        3
+      ],
+      "label": "dry season",
+      "line": "January to March is usually dry and calm. Floods and cyclones are rare."
+    }
   ],
+  "crop_stages": {
+    "note": "Informational only (does not change confidence). Kharif stages: docs/CROP_CALENDAR_NOTES.md (standing paddy in mid/late Oct, eastern-delta harvest from the first week of Nov, all harvested by Dec; AP Agriculture weekly Kharif reports, Deccan Chronicle 16 Oct 2021). Rabi stages are the typical calendar from general knowledge, NOT in the notes: verify with AP Agriculture before quoting.",
+    "stages": [
+      {
+        "id": "kharif_wet_paddy",
+        "months": [
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "label": "kharif paddy growing in wet fields",
+        "source": "docs/CROP_CALENDAR_NOTES.md"
+      },
+      {
+        "id": "kharif_harvest",
+        "months": [
+          11,
+          12
+        ],
+        "label": "kharif paddy harvest",
+        "source": "docs/CROP_CALENDAR_NOTES.md"
+      },
+      {
+        "id": "rabi_growing",
+        "months": [
+          1,
+          2
+        ],
+        "label": "rabi crop growing",
+        "source": "typical calendar, unverified"
+      },
+      {
+        "id": "rabi_harvest",
+        "months": [
+          3,
+          4,
+          5
+        ],
+        "label": "rabi harvest and dry fields",
+        "source": "typical calendar, unverified"
+      }
+    ]
+  },
   "official_source": "IMD (https://mausam.imd.gov.in/)"
 }

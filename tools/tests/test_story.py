@@ -121,10 +121,11 @@ def test_stale():
     inp = inputs({"2026-11-09": block("2026-11-09", flooded_rows(3))}, ev=event("2026-10-28"))
     s = run(inp, now("2026-11-29T12:00:00Z"))           # 20 days after the pass
     assert s["state"] == "stale" and s["base_state"] in ("event", "recovery"), (s["state"], s["base_state"])
-    assert s["headline"] == B.fill(STRINGS["headline"]["no_new_pass"], date="9 Nov")
-    assert s["sub"].startswith(B.fill(STRINGS["stale"], days=20, date="9 Nov")), s["sub"]
+    assert s["headline"] == B.fill(STRINGS["headline"]["no_new_pass"], days=20)
+    assert s["sub"].startswith(B.fill(STRINGS["stale_sub"], date="9 Nov")), s["sub"]
     assert s["stale"] is True
-    assert s["next_pass"]["overdue"] is True and "was expected" in s["next_pass"]["text"]
+    assert s["next_pass"]["overdue"] is True and "was expected" in s["next_pass"]["text"] and "not in the catalogue" in s["next_pass"]["text"]
+    assert s["next_pass"]["date"] >= "2026-11-29" and s["next_pass"]["days_until"] >= 0 and s["next_pass"]["first_expected"] == "2026-11-21"
     assert "today" not in s["headline"].lower() and " now" not in s["headline"].lower()
     fresh = run(inp, now("2026-11-14T12:00:00Z"))
     assert fresh["state"] != "stale" and fresh["stale"] is False
@@ -133,9 +134,11 @@ def test_stale():
 def test_missing_numbers():
     s = run(inputs({}, scenes=[scene("2026-11-09")], ev=event()))
     assert s["numbers_ready"] is False
-    assert s["headline"] == STRINGS["missing_numbers"]
+    assert s["headline"] == B.fill(STRINGS["numbers_coming"], date="9 Nov")      # a coast pass is in the catalogue, no numbers yet
     assert s["big_numbers"] == [] and s["mandal_sentences"] == {} and s["updates"] == []
     assert s["badges"]["sample"] is True
+    only_sea = run(inputs({}, scenes=[scene("2026-11-08", "SEA", 48)], ev=event()))
+    assert only_sea["headline"] == STRINGS["missing_numbers"]                     # no coast pass at all: the old generic line
 
 
 def test_sample_badge_prefix():
@@ -268,6 +271,44 @@ def test_real_data_if_present():
     s = B.build(inp, now("2026-11-14T12:00:00Z"))
     B.validate(s, inp["rules"])
     assert s["state"] in ("event", "recovery", "watch", "stale") and len(s["big_numbers"]) <= 3
+
+
+def test_long_mandal_name_and_filled_text_guard():
+    """Filled text is checked, not only templates: a long two/three-word mandal name must not push any sentence over 20 words,
+    and a 21-word sentence on a since_last path must be caught by validate()."""
+    long_name = "Kakinada Rural Urban"
+    lf = [row(long_name, 0.3), row("D0", 0.2)]
+    nw = [row(long_name, 0.1), row("D0", 0.2)]
+    inp = inputs({"2026-10-28": block("2026-10-28", lf), "2026-11-09": block("2026-11-09", copy.deepcopy(nw)), "2026-11-21": block("2026-11-21", copy.deepcopy(nw))}, ev=event())
+    s = run(inp, now("2026-11-22T12:00:00Z"))
+    txt = s["since_last"].get("since_landfall")
+    assert txt, "since_landfall sentence expected"
+    for sent in txt.replace("\n", " ").split(". "):
+        assert len(sent.split()) <= 20, sent
+    bad = copy.deepcopy(s)
+    bad["since_last"]["since_landfall"] = " ".join(["word"] * 21) + "."
+    try:
+        B.validate(bad, inp["rules"])
+        raise AssertionError("21-word filled sentence not caught")
+    except B.StoryError as e:
+        assert "over 20 words" in str(e)
+
+
+def test_top_mandal_number_respects_flood_rule():
+    calm_rows = [row("Katrenikona", 0.8, err=1.0), row("D0", 0.2)]
+    s = run(inputs({"2026-10-28": block("2026-10-28", calm_rows)}, ev=event("2026-10-28")))
+    top = s["big_numbers"][0]
+    assert top["id"] == "top_mandal" and "under water" not in top["label"] and "flooded" not in top["label"], top["label"]
+    s = run(inputs({"2026-10-28": block("2026-10-28", flooded_rows(2))}, ev=event("2026-10-28")))
+    assert "under water" in s["big_numbers"][0]["label"]
+
+
+def test_analysis_failed_sub_fits_state():
+    inp = inputs({"2026-10-28": block("2026-10-28", flooded_rows(2))}, scenes=[scene("2026-10-28"), scene("2026-11-21")], ev=event())
+    inp["_override"] = "numbers_coming"
+    inp["_pass_date"] = "2026-11-21"
+    s = B.build(inp, now("2026-11-22T12:00:00Z"))
+    assert s["state"] == "event" and "No storm is being tracked" not in s["sub"], s["sub"]
 
 
 def main():
