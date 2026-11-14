@@ -1,20 +1,29 @@
 name: Update NISAR data
 
-# Daily: look for new NISAR L2 GCOV passes over the study area (NASA CMR, no login), subset them into data/h5/,
-# refresh data/h5/catalog.json and the manifest layers, commit, then redeploy Pages.
-# One-time setup: repo secret EARTHDATA_TOKEN (see docs/PIPELINE.md). Without new scenes nothing is committed.
+# Daily (and on demand): run tools/pipeline/run_all.py, the ONE place that holds the step order
+# (discover -> ingest -> catalog -> manifest -> alerts -> events -> build_web -> tests -> findings -> radar findings -> events again).
+# docs/PIPELINE.md explains the gating:
+#   exit 0  all good   -> commit data of record AND findings/events/alerts/rank/profile; redeploy Pages if anything changed
+#   exit 2  tests fail -> commit ONLY data of record (H5, catalogue, manifest); no findings, no deploy; the job turns red
+#   exit 1  other error-> commit ONLY data of record; no deploy; the job turns red
+# One-time setup: repo secret EARTHDATA_TOKEN (only needed on days with new scenes), Pages source = GitHub Actions,
+# Settings -> Actions -> General -> Workflow permissions = read and write.
 on:
   schedule:
     - cron: "23 5 * * *"        # 05:23 UTC = 10:53 IST, off the :00 peak
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Only list what would be ingested (no download, no commit)"
+        description: "Only report what would change (no download, no commit, no deploy)"
+        type: boolean
+        default: false
+      offline:
+        description: "No network: skip discovery and ingest, keep the old alerts (test the rest of the chain)"
         type: boolean
         default: false
 
 permissions:
-  contents: write     # commit the new subsets
+  contents: write     # commit the data
   actions: write      # start the Pages workflow (a push made with GITHUB_TOKEN does not trigger it)
 
 concurrency:
@@ -24,9 +33,11 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+        with:
+          lfs: true   # data/h5/*.h5 may be in Git LFS
 
       - uses: actions/setup-python@v5
         with:
@@ -35,48 +46,93 @@ jobs:
       - name: Install deps
         run: pip install h5py numpy pyproj Pillow
 
-      - name: Discover new scenes (CMR, public)
-        id: discover
-        run: |
-          python tools/pipeline/discover.py --json /tmp/new_scenes.json
-          n=$(python -c "import json; d=json.load(open('/tmp/new_scenes.json')); print(len(d['new'])+len(d['upgrades']))")
-          echo "count=$n" >> "$GITHUB_OUTPUT"
-          echo "$n new/upgraded scene(s)"
-
-      - name: Dry run (list only)
-        if: ${{ steps.discover.outputs.count != '0' && inputs.dry_run }}
-        run: python tools/pipeline/ingest.py --from /tmp/new_scenes.json --dry-run
-
-      - name: Ingest (stream-subset, 90 MB guard, rebuild catalog)
-        if: ${{ steps.discover.outputs.count != '0' && !inputs.dry_run }}
+      # EARTHDATA_TOKEN is in the environment of this one step only; run_all.py removes it from every sub-step except ingest.
+      # It is only required when discover finds new scenes: run_all stops that step with a clear error if it is missing.
+      - name: Run the pipeline (run_all.py)
+        id: run
         env:
           EARTHDATA_TOKEN: ${{ secrets.EARTHDATA_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          OFFLINE: ${{ inputs.offline }}
         run: |
-          if [ -z "$EARTHDATA_TOKEN" ]; then echo "::error::secret EARTHDATA_TOKEN is not set (docs/PIPELINE.md)"; exit 1; fi
-          python tools/pipeline/ingest.py --from /tmp/new_scenes.json
+          args=""
+          [ "$DRY_RUN" = "true" ] && args="$args --dry-run"
+          [ "$OFFLINE" = "true" ] && args="$args --offline"
+          set +e
+          python tools/pipeline/run_all.py --summary "$RUNNER_TEMP/run_summary.json" $args
+          code=$?
+          set -e
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "run_all exit code: $code (0 ok, 2 tests failed, 1 other error)"
 
-      - name: Catalog + manifest sync + validation
-        if: ${{ steps.discover.outputs.count != '0' && !inputs.dry_run }}
+      - name: Job summary
+        if: ${{ always() }}
         run: |
-          python tools/pipeline/catalog.py
-          python tools/pipeline/sync_manifest.py
-          python tools/check_manifest.py
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          p = os.path.join(os.environ["RUNNER_TEMP"], "run_summary.json")
+          if not os.path.exists(p):
+              print("run_all wrote no summary (it did not start)."); raise SystemExit
+          s = json.load(open(p))
+          print("### NISAR update: exit %s (%s)" % (s["exit_code"], "deployable" if s["deployable"] else "NOT deployable"))
+          print("| step | result | seconds | detail |\n|---|---|---|---|")
+          for x in s["steps"]:
+              print("| %s | %s | %s | %s |" % (x["step"], x["result"], x["seconds"], (x["detail"] or "").replace("|", "/")[:120]))
+          for w in s.get("warnings", []): print("\n- warning: " + w)
+          for e in s.get("errors", []): print("\n- error: " + e)
+          print("\n%d file(s) changed" % len(s["changed"]))
+          PY
 
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: run-summary
+          path: ${{ runner.temp }}/run_summary.json
+          if-no-files-found: ignore
+
+      # Data of record (H5, catalogue, manifest) is committed whenever it changed, whatever the exit code.
+      # Findings, events, alerts, rank and profile are committed ONLY when run_all exited 0.
       - name: Commit and push
         id: commit
-        if: ${{ steps.discover.outputs.count != '0' && !inputs.dry_run }}
+        if: ${{ !inputs.dry_run }}
+        env:
+          CODE: ${{ steps.run.outputs.code }}
         run: |
-          git add -A data/h5 data/processed/manifest.json
-          if git diff --cached --quiet; then echo "nothing to commit"; echo "pushed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
           git config user.name  "nisar-update-bot"
           git config user.email "nisar-update-bot@users.noreply.github.com"
-          git commit -m "data: add new NISAR scenes (automatic update)" -m "$(git diff --cached --name-status | cut -c1-120 | head -20)"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git add -A data/h5 data/processed/manifest.json
+          # an H5 that does not open is never committed
+          python - <<'PY' > "$RUNNER_TEMP/bad_h5.txt"
+          import json, os
+          p = os.path.join(os.environ["RUNNER_TEMP"], "run_summary.json")
+          print("\n".join(json.load(open(p)).get("unreadable_h5", [])) if os.path.exists(p) else "")
+          PY
+          while read -r f; do [ -n "$f" ] && git reset -q -- "data/h5/$f"; done < "$RUNNER_TEMP/bad_h5.txt"
+          if [ "$CODE" = "0" ]; then
+            git add -A data/processed/findings data/processed/events.json data/processed/alerts.json \
+                       data/processed/mandal_rank.json data/processed/profile.json
+          else
+            echo "::warning::run_all exit $CODE: only data of record is committed, findings/events/alerts/rank/profile are not"
+          fi
+          if git diff --cached --quiet; then echo "nothing to commit"; echo "pushed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          git commit -m "data: automatic update (run_all exit $CODE)" -m "$(git diff --cached --name-status | cut -c1-120 | head -25)"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
           echo "pushed=true" >> "$GITHUB_OUTPUT"
 
+      # Deploy only when everything passed AND something was committed.
       - name: Redeploy Pages
-        if: ${{ steps.commit.outputs.pushed == 'true' }}
+        if: ${{ steps.run.outputs.code == '0' && steps.commit.outputs.pushed == 'true' && !inputs.dry_run }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run pages.yml --ref "${GITHUB_REF_NAME}"   # workflow_dispatch is allowed with GITHUB_TOKEN
+
+      # Red job on any failure, AFTER the data of record was committed.
+      - name: Fail the job if the pipeline did not pass
+        if: ${{ steps.run.outputs.code != '0' }}
+        env:
+          CODE: ${{ steps.run.outputs.code }}
+        run: |
+          if [ "$CODE" = "2" ]; then echo "::error::Tests failed. Data of record was committed; findings were NOT published and Pages was NOT redeployed. See the step log."
+          else echo "::error::run_all.py failed (exit $CODE). Data of record was committed if it changed; nothing was deployed. See the step log."; fi
+          exit 1

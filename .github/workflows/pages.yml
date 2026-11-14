@@ -31,18 +31,26 @@ jobs:
         run: pip install h5py numpy pyproj Pillow
 
       - name: Build display assets from data/h5 (writes data/web/)
-        run: python tools/build_web.py   # also retargets the class + sea difference layers of data/processed/manifest.json at the newest scene
+        # a layer or class map that cannot be built (unreadable H5) must not block the deploy: that pass then shows 'numbers_coming' (same rule as run_all.py)
+        run: python tools/build_web.py || echo "::warning::build_web.py reported failures (see the log above)"   # also retargets the class + sea difference layers of data/processed/manifest.json at the newest scene
 
-      - name: Build the live story (story.json, feed.json, atom.xml) and run its tests
+      # ALL tests gate the deploy: a failure here stops the job before the site is assembled (nothing is deployed).
+      - name: Tests (story, findings, events, manifest)
         run: |
           python tools/tests/test_story.py
-          python tools/build_story.py
+          python tools/tests/test_findings.py
+          python tools/tests/test_events.py
+          python tools/check_manifest.py
+
+      - name: Build the live story (findings/*.json, story.json, feed.json, atom.xml)
+        run: python tools/build_story.py
 
       - name: Assemble site
         run: |
           mkdir -p _site/data
           cp -r app _site/app
-          cp -r data/processed _site/data/processed
+          cp -r data/processed _site/data/processed   # includes data/processed/findings/ (latest.json + one file per pass)
+          cp -r config _site/config                    # the page reads config/areas.json
           # reference: small files only (< 1 MB each)
           mkdir -p _site/data/reference
           find data/reference -type f -size -1024k | while read -r f; do

@@ -3,27 +3,62 @@
 Goal: new NISAR L-band passes over the study area appear on the dashboard without anyone downloading anything.
 
 ## What runs when
-`.github/workflows/update.yml` runs **daily at 05:23 UTC** (10:53 IST) and on demand (Actions -> "Update NISAR data" -> Run workflow; tick *dry_run* to only list). Runs never overlap (concurrency group `nisar-update`).
+`.github/workflows/update.yml` runs **daily at 05:23 UTC** (10:53 IST) and on demand (Actions -> "Update NISAR data" -> Run workflow; inputs *dry_run* = only report, *offline* = skip discovery/ingest and keep the old alerts). Runs never overlap (concurrency group `nisar-update`). The workflow only calls **`tools/pipeline/run_all.py`**, the one file that holds the step order; the local simulations (`tools/sim/`) call the same file.
 
-| step | tool | what it does |
-|---|---|---|
-| 1 discover | `tools/pipeline/discover.py` | Asks NASA CMR (public, no login) for NISAR_L2_GCOV_V1 (validated) and NISAR_L2_GCOV_PROVISIONAL_V1 granules from 2026-10-01 that touch the delta box or the sea box. COAST = covers >= 50 % of the delta box with HH; SEA = covers >= 20 % of the sea box with VV. Duplicates of one pass (validated vs provisional, PR vs UR, several modes) collapse to one: validated > PR > coverage > smaller. Compares with `data/h5/catalog.json`: NEW scenes, and UPGRADES (provisional we hold, validated now available). |
-| 2 ingest | `tools/pipeline/ingest.py` | For each new scene runs `src/fetch/subset_h5.py` on the ASF HTTPS URL with range requests (only the box window is read; nothing large on disk). COAST 20 m (2x2 of 10 m), SEA 100 m. Output goes to a temp dir; a subset > 90 MB is refused and discarded. Max 6 scenes per run, the rest next day. |
-| 3 catalog | `tools/pipeline/catalog.py` | Rebuilds `data/h5/catalog.json` from the H5 attributes (file, scene_id, band, role, date, track, frame, direction, product_status, source_granule, posting_m, size_bytes, sha256, bounds_latlon...). `--check` tells whether it is current. |
-| 4 manifest | `tools/pipeline/sync_manifest.py` | Adds a layer `nisar_l_<coast|sea>_YYYYMMDD_t<track>_<hh|vv>` per new scene; for existing layers only touches `h5`, `png`, `bounds`, `status`. A no-op when nothing changed. Then `tools/check_manifest.py` validates. |
-| 5 commit + deploy | workflow | Bot commit of `data/h5/` + manifest to `main`, then `gh workflow run pages.yml` (a push by `GITHUB_TOKEN` does not trigger other workflows, but `workflow_dispatch` is allowed). Pages runs `tools/build_web.py`, which builds the PNGs for the new layers. |
+| # | step | tool | what it does |
+|---|---|---|---|
+| 1 | discover | `discover.py` | NASA CMR (public): NISAR L2 GCOV granules touching the area's boxes (`config/areas.json`). **Only tracks configured for the role in `config/areas.json` (`tracks`) are NEW and ingested; other qualifying tracks are listed as "other tracks seen, not ingested (add to config/areas.json to include)".** COAST = covers >= 50 % of the delta box with HH; SEA = >= 20 % of the sea box with VV. Duplicates of one pass collapse (validated > PR > coverage > smaller). Compares with `data/h5/catalog.json`: NEW scenes and UPGRADES (provisional -> validated). CMR unreachable = warning, the run goes on. |
+| 2 | ingest | `ingest.py` | Only if step 1 found something. Stream-subsets each scene over HTTPS range requests (box window only), 90 MB guard, max 6 scenes per run. **Needs `EARTHDATA_TOKEN`; if scenes are new and the token is missing the run fails here with a clear message** (no new scenes = no token needed). |
+| 3 | verify_h5 | run_all | Every `data/h5/*.h5` must open. One that does not is left out of the catalogue and listed in the summary (`unreadable_h5`) and as a warning; the workflow never commits it. |
+| 4 | catalog | `catalog.py` | `data/h5/catalog.json` from the H5 attributes. |
+| 5 | sync_manifest | `sync_manifest.py` | Manifest layers for new scenes. |
+| 6 | alerts | `alerts.py` | GDACS + SACHET -> `alerts.json` (alerts-v2), filtered by `alert_match`. A failed source keeps its old items with the real old timestamp. |
+| 7 | events | `events.py` | Draft events from cyclone/flood alerts (`auto_<SOURCE>_<id>`, `alert_only`, not reviewed); links catalogue passes to every event whose window holds their date. |
+| 8 | build_web | `tools/build_web.py` | PNGs, class maps, `mandal_rank.json` (by_date), `profile.json`. A failure here (e.g. a pass whose data cannot be read) is a WARNING: that pass has no numbers, so step 10 gives it **numbers_coming**; the numbers of an older pass are never shown as new. |
+| 9 | tests | `test_story.py`, `test_findings.py`, `test_events.py`, `check_manifest.py` | ALL must pass. Any failure = **exit 2**: step 10 and 11 do not run, the old findings stay, nothing is deployable. |
+| 10 | build_story | `tools/build_story.py` | `findings/<pass-date>.json` (write-once), `findings/latest.json` (rebuilt every run, so "age of the last pass" stays true), `data/web/story.json`, `feed.json`, `atom.xml`. States: big_change, quiet, no_new_pass, numbers_coming, no_baseline. |
+| 11 | persist | run_all + `events.persist_radar_findings` | Each event's linked pass gets its `radar_finding` (change_seen / no_clear_change / numbers_coming) in `events.json`. |
+| 12 | events again | `events.py` | Must change nothing but the stamp (reported as `events_idempotent`). |
 
-No new scenes: the job ends after step 1 with no commit and no deploy.
+**Exit codes**: `0` all good (deployable) | `2` tests failed | `1` any other error. A JSON summary (steps, seconds, result, changed files, warnings) goes to stdout and to `--summary <file>`. Flags: `--root --now --offline --skip-ingest --dry-run --area --summary --alerts-fixture`. `--now 2026-11-21T10:00Z` sets the clock of alerts, events, discovery and the story (the catalogue stamp `cataloged_utc` still uses the real clock).
 
-New layers get a generic name ("Sea surface, 2026-11-01 (T120)"), `default_on: false`, group before/during/after by date (27-28 Oct = during) and their own `latest_of` series for tracks other than 55 (coast) / 48 (sea), e.g. `nisar_l_sea_t120_vv`. Rename or re-group by hand in the manifest; sync never overwrites those fields again.
+### Gating in update.yml (decision 5 of the Wave 4 plan)
+| what | when it is committed |
+|---|---|
+| `data/h5/*.h5`, `data/h5/catalog.json`, `data/processed/manifest.json` | **always**, when changed (data of record). An unreadable H5 is never staged. |
+| `data/processed/findings/`, `events.json`, `alerts.json`, `mandal_rank.json`, `profile.json` | **only if run_all exited 0** |
+| Pages redeploy (`gh workflow run pages.yml`) | only if exit 0 **and** something was committed |
+| the job | green on exit 0; **red** on exit 1 or 2, after the data of record was committed |
+A day without a new pass still refreshes `alerts.json`, `events.json` and `latest.json` (age), so the daily run normally commits and deploys a small change. `EARTHDATA_TOKEN` is in the environment of the "Run the pipeline" step only and `run_all.py` removes it from every sub-process except ingest; it is never printed (output is masked).
 
-Known limits: every new SEA track (T120, T127...) is shown as a sea layer even though the sea box is only 20-30 % covered; classification thresholds are in `discover.py` (`MIN_COVER`). Coast passes of other tracks are picked up automatically if they cover the delta. Class maps, mandal ranking and profile (W3-A) are not run by update.yml; the Pages build re-runs them (next section).
+`pages.yml` (on every push to main and on dispatch): build_web (a failure is a warning, same rule as above), **all four test commands (any failure = no deploy)**, build_story, then the site: `app/`, `data/processed/` (includes `findings/`), **`config/`** (the page reads `config/areas.json`), `data/reference/` small files, `data/web/`, `data/h5/`.
+
+SACHET from the runner: not known yet whether the NDMA server answers GitHub's IP ranges. If it does not, `alerts.py` fails soft: the previous SACHET items stay with their real snapshot time, `ok:false` and the error are in `alerts.json`, the run only prints a warning. GDACS is public and worked from the Mac. Look at the first scheduled run's summary (`warnings`).
+
+Known limits: **only configured tracks are ingested** (COAST T055, SEA T048 today). Discovery still lists other qualifying tracks (e.g. SEA T120 F080 and T127 F010, 6 scenes, 8 Oct to 1 Nov 2026) under "other tracks seen, not ingested (add to config/areas.json to include)", so nothing is hidden. This reverses the earlier W3-B note that every new SEA track is ingested automatically. Why: a track needs a baseline entry to give honest numbers, and silently adding sea layers (each 0.9 to 1.3 GB, sea box only 21 to 32 % covered) would be surprise data. Adding a track = adding it to the config (`tracks` and, for numbers, `baselines`); the next run ingests it. Coast passes of an unconfigured track are likewise not ingested; a coast scene already in the catalogue without a baseline gets `no_baseline` until the track is configured.
+
+New layers get a generic name ("Sea surface, 2026-11-01 (T120)"), `default_on: false`, group before/during/after by date (27-28 Oct = during). Rename or re-group by hand in the manifest; sync never overwrites those fields again.
+
+### Notes from building the simulations (14 Nov 2026)
+1. (Fixed) `test_findings.py::test_real_data_every_pass_validates` used to hard-code the 9 Nov pass as the newest; it now uses `passes[-1]`. The simulations no longer patch any test.
+2. **Local `data/web/` is a git-ignored build product and may be older than `build_web.py`**: the first run after a code change can revise a findings file once (revision +1, `changed: ["class_stats"]`). Harmless but visible; the simulations first do one "settle" run for that reason.
+3. The `quiet` template needs a pass with NO flooded mandal and no mandal change since the previous pass, so it cannot follow a flooded pass (scenario `copy_of_last_pass` therefore gives big_change; use `quiet_pass_calm` for quiet).
 
 ## One-time setup (user)
-1. **Earthdata token**: log in at https://urs.earthdata.nasa.gov -> *Generate Token* (user token, valid ~60 days; renew and update the secret when it expires, the run fails with a clear error). Repo -> Settings -> Secrets and variables -> Actions -> New secret `EARTHDATA_TOKEN`. The ASF DAAC app must be authorised on that account (EULA accepted: it already is if downloads worked with `~/.netrc`).
-2. **Pages**: Settings -> Pages -> Source: *GitHub Actions* (also needed by `pages.yml`).
-3. Settings -> Actions -> General -> Workflow permissions: allow read and write (the workflow also sets `contents: write`, `actions: write` itself; org policies can override).
-4. Push the workflow files (nothing has been pushed from the device shell yet).
+1. **Earthdata token**: log in at https://urs.earthdata.nasa.gov -> *Generate Token* (user token, valid ~60 days). Repo -> Settings -> Secrets and variables -> Actions -> New secret `EARTHDATA_TOKEN`. When it expires the run fails on the first day with a new scene, with the message "no Earthdata login ... set the repo secret EARTHDATA_TOKEN". The ASF DAAC app must be authorised on that account (EULA accepted).
+2. **Pages**: Settings -> Pages -> Source: *GitHub Actions*.
+3. **Workflow permissions**: Settings -> Actions -> General -> Workflow permissions: *Read and write permissions* (the workflow also asks for `contents: write`, `actions: write`; an organisation policy can override).
+4. Push the workflow files and `config/`, `tools/`, `data/processed/events.json`, `data/processed/findings/` (nothing has been pushed from the device shell yet), then run "Update NISAR data" once with *dry_run* ticked and read the job summary.
+
+## Simulations (no network, no real data touched)
+Everything runs in a scratch copy (`rsync`, without `.git .venv data/raw`); the report ends with a guard that checks the real repo's `data/h5`, `findings/`, `events.json`, `alerts.json`, `manifest.json` and `config/` by sha256 before and after.
+```
+.venv/bin/python tools/sim/run_sim.py new_pass_change --out <scratch>/sim/new_pass_change   # report in <scratch>/sim/reports/
+# scenarios: new_pass_change copy_of_last_pass quiet_pass_calm missing_pass analysis_failed analysis_truncated no_baseline
+#            ap_alert ap_alert_quiet ap_alert_calm
+tools/sim/emulate_workflow.sh <scratch>/sim/workflow   # runs the run: blocks of update.yml and pages.yml in order, local bare git remote
+```
+Each scenario: settle run -> inject a fake pass (`_SIMULATED` granule name) -> `run_all.py --offline --now <date>` -> report (headline, template_state, three numbers, top 5 mandals, pass list, chips, events, files changed, 9 Nov archive sha before/after, number-versus-source check). `tools/sim/emulate_workflow.sh <scratch> --force-test-failure` injects a failing test into the scratch copy and checks the gate: run_all exit 2, no findings/events/alerts commit, no Pages redeploy call, pages.yml builds no site. The emulator needs PyYAML in the venv only (`.venv/bin/pip install pyyaml`). Scenario `copy_of_last_pass` (was `quiet_pass`) = 21 Nov copy of 9 Nov; it is NOT a quiet test.
 
 ## Run by hand
 ```
