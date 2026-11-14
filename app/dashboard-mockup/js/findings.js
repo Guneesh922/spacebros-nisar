@@ -91,6 +91,9 @@ window.FINDINGS = {
     ]
   },
 
+  /* permanent line on the What happened tab; links come from data/events/*.json official_links */
+  official: { text: "Not an official warning \u2014 follow IMD and APSDMA." },
+
   tips: {
     db: "Radar brightness is measured in decibels (dB). A brighter sea means rougher water.",
     err: "How far the true value could be from the number shown."
@@ -104,10 +107,11 @@ window.FINDINGS = {
 
   /* Map captions: Shows / Cannot show / Source (same three rows as the app). */
   captions: {
-    share:  { shows: "How much of each mandal was probably flooded, over the 9 Nov radar picture.", cant: "How deep the water was, or any damage.", src: "SpaceBros analysis of NISAR L-band, NASA/JPL-Caltech and ISRO via ASF DAAC", sample: "Sample values" },
-    radar:  { shows: "Radar brightness of the land on 9 Nov 2026 (HH, brightness in dB). Dark patches can be water.", cant: "Ground truth. This is one date only.", src: "NISAR L-band, NASA/JPL-Caltech and ISRO via ASF DAAC", sample: "Quick-look sample" },
-    swipe:  { shows: "Radar brightness of the land on 16 Oct (before, left) and 9 Nov (after, right).", cant: "Wet soil apart from shallow water. The 16 Oct frame position is copied from a later pass.", src: "NISAR L-band, NASA/JPL-Caltech and ISRO via ASF DAAC", sample: "Quick-look sample" },
-    eye:    { shows: "Radar brightness of the sea on 27 Oct 2026 (VV, dB). Brighter sea is rougher. The dark hole is the calm eye.", cant: "Wind speed. Brightness is a clue to roughness only.", src: "NISAR L-band, NASA/JPL-Caltech and ISRO via ASF DAAC. Track: IMD bulletins", sample: "Quick-look sample" },
+    radar_sea: { shows: "Radar brightness of the sea on {date} (VV, dB). Brighter sea is rougher.", cant: "Wind speed. Brightness is a clue to roughness only.", src: "NISAR L-band, NASA/JPL-Caltech and ISRO via ASF DAAC", sample: "Quick-look sample" },
+    share:  { shows: "How much of each mandal was probably flooded, over the {date} radar picture.", cant: "How deep the water was, or any damage.", src: "SpaceBros analysis of NISAR L-band, NASA/JPL-Caltech and ISRO via ASF DAAC", sample: "Sample values" },
+    radar:  { shows: "Radar brightness of the land on {date} (HH, brightness in dB). Dark patches can be water.", cant: "Ground truth. This is one date only.", src: "NISAR L-band, NASA/JPL-Caltech and ISRO via ASF DAAC", sample: "Quick-look sample" },
+    swipe:  { shows: "Radar brightness of the {what} on {before} (before, left) and {after} (after, right).", cant: "Wet soil apart from shallow water.", src: "NISAR L-band, NASA/JPL-Caltech and ISRO via ASF DAAC", sample: "Quick-look sample" },
+    eye:    { shows: "Radar brightness of the sea on {date} (VV, dB). Brighter sea is rougher. The dark hole is the calm eye.", cant: "Wind speed. Brightness is a clue to roughness only.", src: "NISAR L-band, NASA/JPL-Caltech and ISRO via ASF DAAC. Track: IMD bulletins", sample: "Quick-look sample" },
     custom: { shows: "The layers ticked in the layer list.", cant: "See the Limit column for each layer.", src: "Credit for each layer is in the layer list", sample: null }
   }
 };

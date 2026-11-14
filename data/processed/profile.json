@@ -1,758 +1,1316 @@
 {
  "layer_id": "nisar_l_sea_20261027_t48_vv",
  "eye": [
-  16.257,
-  82.514
+  16.226,
+  82.539
  ],
- "eye_centre_err_km": 1.5,
- "eye_radius_km": 4.7,
- "eye_radius_err": 2.2,
- "eye_radius_definition": "half-contrast radius of the azimuthal-mean VV profile (midway between inner-core mean and eyewall ring maximum)",
- "eyewall_ring_km": 13.7,
- "core_contrast_db": 3.3,
+ "eye_centre_err_km": 1.4,
+ "eye_radius_km": 6.4,
+ "eye_radius_err": 0.5,
+ "eye_radius_definition": "half-contrast radius of the azimuthal-mean VV profile (midway between the inner-core mean, r<3 km, and the eyewall ring maximum, 1 km rings, 3-ring running mean)",
+ "eyewall_ring_km": 11.5,
+ "core_contrast_db": 2.43,
  "imd_fix": {
   "lat": 16.3,
-  "lon": 82.597,
-  "time_utc": "2026-10-27T13:02Z",
-  "method": "linear interpolation between IMD 12:00 UTC (16.3N,82.7E) and 15:00 UTC (16.3N,82.4E) advisories; IMD positions are given to 0.1 deg (~11 km)"
+  "lon": 82.598,
+  "time_utc": "2026-10-27T13:01Z",
+  "method": "linear interpolation between IMD 12:00 UTC (16.30N,82.70E) and 15:00 UTC (16.30N,82.40E) fixes; IMD positions are given to 0.1 deg (~11 km)"
  },
- "imd_offset_km": 10.1,
+ "imd_offset_km": 10.4,
  "acquisition_utc": "2026-10-27T13:01:51Z to 13:02:08Z",
  "bin_km": 1,
  "sea_only_land_masked": true,
  "points": [
   {
    "r_km": 2.5,
-   "db": 3.84,
-   "err": 0.17
+   "db": 0.09,
+   "err": 0.21
   },
   {
    "r_km": 7.5,
-   "db": 5.34,
+   "db": 1.8,
+   "err": 0.28
+  },
+  {
+   "r_km": 12.5,
+   "db": 2.44,
+   "err": 0.22
+  },
+  {
+   "r_km": 17.5,
+   "db": 2.13,
+   "err": 0.27
+  },
+  {
+   "r_km": 22.5,
+   "db": 1.8,
+   "err": 0.32
+  },
+  {
+   "r_km": 27.5,
+   "db": 1.69,
    "err": 0.35
   },
   {
-   "r_km": 12.5,
-   "db": 6.0,
-   "err": 0.2
-  },
-  {
-   "r_km": 17.5,
-   "db": 6.48,
-   "err": 0.49
-  },
-  {
-   "r_km": 22.5,
-   "db": 7.27,
-   "err": 0.75
-  },
-  {
-   "r_km": 27.5,
-   "db": 6.99,
-   "err": 0.86
-  },
-  {
    "r_km": 32.5,
-   "db": 6.63,
-   "err": 1.04
+   "db": 1.64,
+   "err": 0.4
   },
   {
    "r_km": 37.5,
-   "db": 6.58,
-   "err": 1.15
-  },
-  {
-   "r_km": 42.5,
-   "db": 5.85,
-   "err": 0.73
-  },
-  {
-   "r_km": 47.5,
-   "db": 5.3,
+   "db": 1.64,
    "err": 0.43
   },
   {
-   "r_km": 52.5,
-   "db": 4.92,
-   "err": 0.56
-  },
-  {
-   "r_km": 57.5,
-   "db": 4.85,
-   "err": 0.83
-  },
-  {
-   "r_km": 62.5,
-   "db": 4.62,
-   "err": 0.81
-  },
-  {
-   "r_km": 67.5,
-   "db": 4.29,
-   "err": 0.82
-  },
-  {
-   "r_km": 72.5,
-   "db": 3.86,
-   "err": 0.87
-  },
-  {
-   "r_km": 77.5,
-   "db": 3.64,
-   "err": 0.89
-  },
-  {
-   "r_km": 82.5,
-   "db": 3.12,
-   "err": 0.94
-  },
-  {
-   "r_km": 87.5,
-   "db": 3.06,
-   "err": 0.88
-  },
-  {
-   "r_km": 92.5,
-   "db": 2.86,
-   "err": 1.15
-  },
-  {
-   "r_km": 97.5,
-   "db": 2.63,
-   "err": 0.94
-  },
-  {
-   "r_km": 102.5,
-   "db": 2.18,
-   "err": 0.83
-  },
-  {
-   "r_km": 107.5,
-   "db": 1.99,
-   "err": 0.78
-  },
-  {
-   "r_km": 112.5,
-   "db": 2.05,
-   "err": 0.92
-  },
-  {
-   "r_km": 117.5,
-   "db": 2.19,
-   "err": 0.91
-  },
-  {
-   "r_km": 122.5,
-   "db": 2.06,
-   "err": 1.0
-  }
- ],
- "points_calm_1015_provisional": [
-  {
-   "r_km": 0.5,
-   "db": -14.17
-  },
-  {
-   "r_km": 1.5,
-   "db": -14.11
-  },
-  {
-   "r_km": 2.5,
-   "db": -14.07
-  },
-  {
-   "r_km": 3.5,
-   "db": -13.99
-  },
-  {
-   "r_km": 4.5,
-   "db": -14.03
-  },
-  {
-   "r_km": 5.5,
-   "db": -14.02
-  },
-  {
-   "r_km": 6.5,
-   "db": -14.0
-  },
-  {
-   "r_km": 7.5,
-   "db": -13.99
-  },
-  {
-   "r_km": 8.5,
-   "db": -13.97
-  },
-  {
-   "r_km": 9.5,
-   "db": -14.03
-  },
-  {
-   "r_km": 10.5,
-   "db": -14.1
-  },
-  {
-   "r_km": 11.5,
-   "db": -14.16
-  },
-  {
-   "r_km": 12.5,
-   "db": -14.16
-  },
-  {
-   "r_km": 13.5,
-   "db": -14.06
-  },
-  {
-   "r_km": 14.5,
-   "db": -14.04
-  },
-  {
-   "r_km": 15.5,
-   "db": -14.07
-  },
-  {
-   "r_km": 16.5,
-   "db": -14.05
-  },
-  {
-   "r_km": 17.5,
-   "db": -14.25
-  },
-  {
-   "r_km": 18.5,
-   "db": -14.49
-  },
-  {
-   "r_km": 19.5,
-   "db": -14.6
-  },
-  {
-   "r_km": 20.5,
-   "db": -14.73
-  },
-  {
-   "r_km": 21.5,
-   "db": -14.87
-  },
-  {
-   "r_km": 22.5,
-   "db": -14.9
-  },
-  {
-   "r_km": 23.5,
-   "db": -15.21
-  },
-  {
-   "r_km": 24.5,
-   "db": -14.99
-  },
-  {
-   "r_km": 25.5,
-   "db": -15.17
-  },
-  {
-   "r_km": 26.5,
-   "db": -15.07
-  },
-  {
-   "r_km": 27.5,
-   "db": -15.05
-  },
-  {
-   "r_km": 28.5,
-   "db": -14.96
-  },
-  {
-   "r_km": 29.5,
-   "db": -14.95
-  },
-  {
-   "r_km": 30.5,
-   "db": -14.87
-  },
-  {
-   "r_km": 31.5,
-   "db": -14.55
-  },
-  {
-   "r_km": 32.5,
-   "db": -14.55
-  },
-  {
-   "r_km": 33.5,
-   "db": -13.34
-  },
-  {
-   "r_km": 34.5,
-   "db": -14.79
-  },
-  {
-   "r_km": 35.5,
-   "db": -14.79
-  },
-  {
-   "r_km": 36.5,
-   "db": -14.82
-  },
-  {
-   "r_km": 37.5,
-   "db": -14.8
-  },
-  {
-   "r_km": 38.5,
-   "db": -14.75
-  },
-  {
-   "r_km": 39.5,
-   "db": -14.75
-  },
-  {
-   "r_km": 40.5,
-   "db": -14.71
-  },
-  {
-   "r_km": 41.5,
-   "db": -14.6
-  },
-  {
    "r_km": 42.5,
-   "db": -14.57
-  },
-  {
-   "r_km": 43.5,
-   "db": -14.48
-  },
-  {
-   "r_km": 44.5,
-   "db": -14.26
-  },
-  {
-   "r_km": 45.5,
-   "db": -14.27
-  },
-  {
-   "r_km": 46.5,
-   "db": -14.21
+   "db": 1.59,
+   "err": 0.44
   },
   {
    "r_km": 47.5,
-   "db": -14.34
-  },
-  {
-   "r_km": 48.5,
-   "db": -14.4
-  },
-  {
-   "r_km": 49.5,
-   "db": -14.23
-  },
-  {
-   "r_km": 50.5,
-   "db": -14.22
-  },
-  {
-   "r_km": 51.5,
-   "db": -14.28
+   "db": 1.48,
+   "err": 0.46
   },
   {
    "r_km": 52.5,
-   "db": -14.31
-  },
-  {
-   "r_km": 53.5,
-   "db": -14.32
-  },
-  {
-   "r_km": 54.5,
-   "db": -14.27
-  },
-  {
-   "r_km": 55.5,
-   "db": -14.25
-  },
-  {
-   "r_km": 56.5,
-   "db": -14.35
+   "db": 1.49,
+   "err": 0.49
   },
   {
    "r_km": 57.5,
-   "db": -14.39
+   "db": 1.44,
+   "err": 0.67
   },
   {
-   "r_km": 58.5,
-   "db": -14.42
+   "r_km": 62.5,
+   "db": 1.38,
+   "err": 0.67
   },
   {
-   "r_km": 59.5,
-   "db": -14.45
+   "r_km": 67.5,
+   "db": 1.15,
+   "err": 0.64
+  },
+  {
+   "r_km": 72.5,
+   "db": 0.83,
+   "err": 0.67
+  },
+  {
+   "r_km": 77.5,
+   "db": 0.56,
+   "err": 0.71
+  },
+  {
+   "r_km": 82.5,
+   "db": 0.14,
+   "err": 0.71
+  },
+  {
+   "r_km": 87.5,
+   "db": -0.22,
+   "err": 0.72
+  },
+  {
+   "r_km": 92.5,
+   "db": -0.52,
+   "err": 0.68
+  },
+  {
+   "r_km": 97.5,
+   "db": -0.88,
+   "err": 1.01
+  },
+  {
+   "r_km": 102.5,
+   "db": -1.22,
+   "err": 1.05
+  },
+  {
+   "r_km": 107.5,
+   "db": -1.61,
+   "err": 0.98
+  },
+  {
+   "r_km": 112.5,
+   "db": -2.44,
+   "err": 1.18
+  },
+  {
+   "r_km": 117.5,
+   "db": -2.94,
+   "err": 0.86
   }
  ],
- "notes": "Backscatter only; no wind speed is derived. Eye contrast is weak (about 3.3 dB). 15 Oct comparison profile is from a PROVISIONAL product and that scene has low-backscatter patches.",
+ "points_definition": "points: azimuthal-mean VV (linear power, 5 km rings) minus the eye floor (mean VV inside 3 km: -10.49 dB); err = standard error across up to 8 azimuth sectors, combined with the floor's. points_abs_vv_db: absolute VV dB in 1 km rings (err across sectors). transect: absolute VV along the azimuth direction.",
  "points_abs_vv_db": [
   {
    "r_km": 0.5,
-   "db": -11.5,
-   "err": 0.03,
+   "db": -10.42,
+   "err": 0.23,
    "n_px": 305
   },
   {
    "r_km": 1.5,
-   "db": -11.2,
-   "err": 0.07,
+   "db": -10.44,
+   "err": 0.24,
    "n_px": 940
   },
   {
    "r_km": 2.5,
-   "db": -10.46,
-   "err": 0.16,
+   "db": -10.54,
+   "err": 0.13,
    "n_px": 1564
   },
   {
    "r_km": 3.5,
-   "db": -9.95,
-   "err": 0.18,
+   "db": -10.51,
+   "err": 0.17,
    "n_px": 2204
   },
   {
    "r_km": 4.5,
-   "db": -9.63,
-   "err": 0.23,
+   "db": -10.22,
+   "err": 0.24,
    "n_px": 2812
   },
   {
    "r_km": 5.5,
-   "db": -9.25,
-   "err": 0.28,
+   "db": -9.68,
+   "err": 0.29,
    "n_px": 3452
   },
   {
    "r_km": 6.5,
-   "db": -8.73,
-   "err": 0.33,
+   "db": -9.17,
+   "err": 0.28,
    "n_px": 4084
   },
   {
    "r_km": 7.5,
-   "db": -8.49,
-   "err": 0.34,
+   "db": -8.73,
+   "err": 0.29,
    "n_px": 4708
   },
   {
    "r_km": 8.5,
-   "db": -8.36,
-   "err": 0.32,
+   "db": -8.41,
+   "err": 0.23,
    "n_px": 5364
   },
   {
    "r_km": 9.5,
-   "db": -8.23,
-   "err": 0.28,
+   "db": -8.14,
+   "err": 0.18,
    "n_px": 5964
   },
   {
    "r_km": 10.5,
-   "db": -8.13,
-   "err": 0.25,
+   "db": -8.03,
+   "err": 0.15,
    "n_px": 6572
   },
   {
    "r_km": 11.5,
-   "db": -8.09,
-   "err": 0.22,
+   "db": -8.0,
+   "err": 0.14,
    "n_px": 7244
   },
   {
    "r_km": 12.5,
-   "db": -8.04,
-   "err": 0.16,
+   "db": -8.07,
+   "err": 0.14,
    "n_px": 7828
   },
   {
    "r_km": 13.5,
-   "db": -8.04,
-   "err": 0.13,
+   "db": -8.06,
+   "err": 0.14,
    "n_px": 8476
   },
   {
    "r_km": 14.5,
-   "db": -8.06,
-   "err": 0.12,
+   "db": -8.1,
+   "err": 0.17,
    "n_px": 9144
   },
   {
    "r_km": 15.5,
-   "db": -8.07,
-   "err": 0.12,
+   "db": -8.2,
+   "err": 0.18,
    "n_px": 9708
   },
   {
    "r_km": 16.5,
-   "db": -8.14,
-   "err": 0.12,
+   "db": -8.28,
+   "err": 0.2,
    "n_px": 10380
   },
   {
    "r_km": 17.5,
-   "db": -8.21,
-   "err": 0.13,
+   "db": -8.38,
+   "err": 0.22,
    "n_px": 11004
   },
   {
    "r_km": 18.5,
-   "db": -8.28,
-   "err": 0.15,
+   "db": -8.42,
+   "err": 0.23,
    "n_px": 11604
   },
   {
    "r_km": 19.5,
-   "db": -8.34,
-   "err": 0.16,
+   "db": -8.49,
+   "err": 0.23,
    "n_px": 12252
   },
   {
    "r_km": 20.5,
-   "db": -8.47,
-   "err": 0.18,
+   "db": -8.53,
+   "err": 0.24,
    "n_px": 12884
   },
   {
    "r_km": 21.5,
-   "db": -8.55,
-   "err": 0.19,
+   "db": -8.62,
+   "err": 0.26,
    "n_px": 13508
   },
   {
    "r_km": 22.5,
-   "db": -8.56,
-   "err": 0.19,
+   "db": -8.69,
+   "err": 0.27,
    "n_px": 14196
   },
   {
    "r_km": 23.5,
-   "db": -8.59,
-   "err": 0.19,
+   "db": -8.78,
+   "err": 0.3,
    "n_px": 14708
   },
   {
    "r_km": 24.5,
-   "db": -8.58,
-   "err": 0.23,
+   "db": -8.82,
+   "err": 0.3,
    "n_px": 15388
   },
   {
    "r_km": 25.5,
-   "db": -8.72,
-   "err": 0.23,
+   "db": -8.8,
+   "err": 0.3,
    "n_px": 16028
   },
   {
    "r_km": 26.5,
-   "db": -8.77,
-   "err": 0.25,
+   "db": -8.8,
+   "err": 0.3,
    "n_px": 16644
   },
   {
    "r_km": 27.5,
-   "db": -8.8,
-   "err": 0.27,
+   "db": -8.79,
+   "err": 0.31,
    "n_px": 17276
   },
   {
    "r_km": 28.5,
-   "db": -8.81,
-   "err": 0.28,
+   "db": -8.76,
+   "err": 0.32,
    "n_px": 17912
   },
   {
    "r_km": 29.5,
-   "db": -8.82,
-   "err": 0.27,
+   "db": -8.85,
+   "err": 0.32,
    "n_px": 18524
   },
   {
    "r_km": 30.5,
-   "db": -8.76,
-   "err": 0.27,
+   "db": -8.84,
+   "err": 0.34,
    "n_px": 19204
   },
   {
    "r_km": 31.5,
-   "db": -8.78,
-   "err": 0.28,
+   "db": -8.86,
+   "err": 0.35,
    "n_px": 19764
   },
   {
    "r_km": 32.5,
-   "db": -8.79,
-   "err": 0.29,
+   "db": -8.87,
+   "err": 0.36,
    "n_px": 20420
   },
   {
    "r_km": 33.5,
-   "db": -8.75,
-   "err": 0.31,
+   "db": -8.85,
+   "err": 0.37,
    "n_px": 21044
   },
   {
    "r_km": 34.5,
-   "db": -8.8,
-   "err": 0.32,
+   "db": -8.84,
+   "err": 0.38,
    "n_px": 21636
   },
   {
    "r_km": 35.5,
-   "db": -8.83,
-   "err": 0.33,
+   "db": -8.85,
+   "err": 0.39,
    "n_px": 22316
   },
   {
    "r_km": 36.5,
-   "db": -8.82,
-   "err": 0.33,
+   "db": -8.85,
+   "err": 0.41,
    "n_px": 22988
   },
   {
    "r_km": 37.5,
-   "db": -8.81,
-   "err": 0.34,
+   "db": -8.85,
+   "err": 0.41,
    "n_px": 23540
   },
   {
    "r_km": 38.5,
-   "db": -8.83,
-   "err": 0.35,
+   "db": -8.85,
+   "err": 0.4,
    "n_px": 24196
   },
   {
    "r_km": 39.5,
-   "db": -8.83,
-   "err": 0.35,
+   "db": -8.89,
+   "err": 0.41,
    "n_px": 24820
   },
   {
    "r_km": 40.5,
-   "db": -8.85,
-   "err": 0.36,
+   "db": -8.89,
+   "err": 0.4,
    "n_px": 25404
   },
   {
    "r_km": 41.5,
-   "db": -8.84,
-   "err": 0.37,
-   "n_px": 25893
+   "db": -8.9,
+   "err": 0.41,
+   "n_px": 26092
   },
   {
    "r_km": 42.5,
-   "db": -8.83,
-   "err": 0.38,
-   "n_px": 25806
+   "db": -8.87,
+   "err": 0.41,
+   "n_px": 26720
   },
   {
    "r_km": 43.5,
-   "db": -8.84,
-   "err": 0.38,
-   "n_px": 26251
+   "db": -8.9,
+   "err": 0.42,
+   "n_px": 27148
   },
   {
    "r_km": 44.5,
-   "db": -8.84,
-   "err": 0.37,
-   "n_px": 26645
+   "db": -8.94,
+   "err": 0.42,
+   "n_px": 26275
   },
   {
    "r_km": 45.5,
-   "db": -8.89,
-   "err": 0.37,
-   "n_px": 27054
+   "db": -8.98,
+   "err": 0.42,
+   "n_px": 26054
   },
   {
    "r_km": 46.5,
-   "db": -8.9,
-   "err": 0.37,
-   "n_px": 26873
+   "db": -9.02,
+   "err": 0.42,
+   "n_px": 25374
   },
   {
    "r_km": 47.5,
-   "db": -8.93,
-   "err": 0.37,
-   "n_px": 26018
+   "db": -9.05,
+   "err": 0.43,
+   "n_px": 24941
   },
   {
    "r_km": 48.5,
-   "db": -8.94,
-   "err": 0.37,
-   "n_px": 25564
+   "db": -8.99,
+   "err": 0.44,
+   "n_px": 24739
   },
   {
    "r_km": 49.5,
-   "db": -8.91,
-   "err": 0.38,
-   "n_px": 24760
+   "db": -9.02,
+   "err": 0.45,
+   "n_px": 24542
   },
   {
    "r_km": 50.5,
-   "db": -8.89,
-   "err": 0.39,
-   "n_px": 23870
+   "db": -9.0,
+   "err": 0.45,
+   "n_px": 24393
   },
   {
    "r_km": 51.5,
-   "db": -8.95,
-   "err": 0.39,
-   "n_px": 23746
+   "db": -9.02,
+   "err": 0.5,
+   "n_px": 24244
   },
   {
    "r_km": 52.5,
-   "db": -8.94,
-   "err": 0.39,
-   "n_px": 23751
+   "db": -9.0,
+   "err": 0.52,
+   "n_px": 24100
   },
   {
    "r_km": 53.5,
-   "db": -8.98,
-   "err": 0.42,
-   "n_px": 23761
+   "db": -9.01,
+   "err": 0.53,
+   "n_px": 23993
   },
   {
    "r_km": 54.5,
-   "db": -8.96,
-   "err": 0.44,
-   "n_px": 23781
+   "db": -9.01,
+   "err": 0.56,
+   "n_px": 23830
   },
   {
    "r_km": 55.5,
-   "db": -8.93,
-   "err": 0.45,
-   "n_px": 23596
+   "db": -9.02,
+   "err": 0.59,
+   "n_px": 23691
   },
   {
    "r_km": 56.5,
-   "db": -8.95,
-   "err": 0.46,
-   "n_px": 23381
+   "db": -9.03,
+   "err": 0.64,
+   "n_px": 23615
   },
   {
    "r_km": 57.5,
-   "db": -8.98,
-   "err": 0.46,
-   "n_px": 23265
+   "db": -9.08,
+   "err": 0.67,
+   "n_px": 23452
   },
   {
    "r_km": 58.5,
-   "db": -9.02,
-   "err": 0.49,
-   "n_px": 23275
+   "db": -9.09,
+   "err": 0.67,
+   "n_px": 23439
   },
   {
    "r_km": 59.5,
-   "db": -9.07,
-   "err": 0.53,
-   "n_px": 23213
+   "db": -9.05,
+   "err": 0.68,
+   "n_px": 23409
   }
  ],
- "points_definition": "points: mean of (27 Oct VV minus 15 Oct VV) in 5 km rings around the SAR eye centre, sea only; err = standard error across up to 8 azimuthal sectors (does not include the calm-reference caveat). points_abs_vv_db: absolute VV dB, 1 km bins.",
- "calm_reference_caveat": "The 15 Oct reference is a PROVISIONAL product and has large dark low-backscatter patches; the whole-sea median difference is +4.5 dB, so absolute 'rise' values are inflated by an unknown amount. Compare the shape, not the level.",
- "sea_median_diff_db": 4.54
+ "eye_floor_vv_db": -10.49,
+ "transect": {
+  "direction": "along-track (azimuth) axis through the eye, from a line fit to the swath edges; positive s = toward the north, bearing 12 deg from north",
+  "bearing_deg": 12.2,
+  "strip_halfwidth_km": 2.0,
+  "bin_km": 1,
+  "why": "the radar incidence angle changes across the swath (range), so a line along the azimuth direction keeps it constant",
+  "points": [
+   {
+    "s_km": -43.5,
+    "db": -9.04,
+    "err": 0.05,
+    "n_px": 284
+   },
+   {
+    "s_km": -42.5,
+    "db": -9.01,
+    "err": 0.03,
+    "n_px": 401
+   },
+   {
+    "s_km": -41.5,
+    "db": -8.84,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -40.5,
+    "db": -8.84,
+    "err": 0.03,
+    "n_px": 401
+   },
+   {
+    "s_km": -39.5,
+    "db": -8.68,
+    "err": 0.03,
+    "n_px": 398
+   },
+   {
+    "s_km": -38.5,
+    "db": -8.58,
+    "err": 0.03,
+    "n_px": 401
+   },
+   {
+    "s_km": -37.5,
+    "db": -8.54,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -36.5,
+    "db": -8.5,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -35.5,
+    "db": -8.47,
+    "err": 0.03,
+    "n_px": 399
+   },
+   {
+    "s_km": -34.5,
+    "db": -8.5,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -33.5,
+    "db": -8.54,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -32.5,
+    "db": -8.68,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -31.5,
+    "db": -8.7,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -30.5,
+    "db": -8.59,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -29.5,
+    "db": -8.65,
+    "err": 0.03,
+    "n_px": 401
+   },
+   {
+    "s_km": -28.5,
+    "db": -8.68,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -27.5,
+    "db": -8.65,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -26.5,
+    "db": -8.81,
+    "err": 0.03,
+    "n_px": 398
+   },
+   {
+    "s_km": -25.5,
+    "db": -9.08,
+    "err": 0.03,
+    "n_px": 401
+   },
+   {
+    "s_km": -24.5,
+    "db": -9.32,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -23.5,
+    "db": -9.37,
+    "err": 0.03,
+    "n_px": 401
+   },
+   {
+    "s_km": -22.5,
+    "db": -9.14,
+    "err": 0.03,
+    "n_px": 398
+   },
+   {
+    "s_km": -21.5,
+    "db": -9.07,
+    "err": 0.03,
+    "n_px": 401
+   },
+   {
+    "s_km": -20.5,
+    "db": -8.77,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -19.5,
+    "db": -8.9,
+    "err": 0.03,
+    "n_px": 401
+   },
+   {
+    "s_km": -18.5,
+    "db": -9.05,
+    "err": 0.03,
+    "n_px": 399
+   },
+   {
+    "s_km": -17.5,
+    "db": -9.15,
+    "err": 0.04,
+    "n_px": 399
+   },
+   {
+    "s_km": -16.5,
+    "db": -8.75,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": -15.5,
+    "db": -8.64,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -14.5,
+    "db": -8.41,
+    "err": 0.03,
+    "n_px": 401
+   },
+   {
+    "s_km": -13.5,
+    "db": -8.2,
+    "err": 0.04,
+    "n_px": 399
+   },
+   {
+    "s_km": -12.5,
+    "db": -8.28,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": -11.5,
+    "db": -7.99,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": -10.5,
+    "db": -7.94,
+    "err": 0.03,
+    "n_px": 401
+   },
+   {
+    "s_km": -9.5,
+    "db": -7.92,
+    "err": 0.04,
+    "n_px": 399
+   },
+   {
+    "s_km": -8.5,
+    "db": -8.01,
+    "err": 0.04,
+    "n_px": 399
+   },
+   {
+    "s_km": -7.5,
+    "db": -8.1,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": -6.5,
+    "db": -8.29,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": -5.5,
+    "db": -8.71,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": -4.5,
+    "db": -9.33,
+    "err": 0.04,
+    "n_px": 398
+   },
+   {
+    "s_km": -3.5,
+    "db": -9.93,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": -2.5,
+    "db": -10.46,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": -1.5,
+    "db": -11.13,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": -0.5,
+    "db": -10.91,
+    "err": 0.03,
+    "n_px": 399
+   },
+   {
+    "s_km": 0.5,
+    "db": -10.13,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": 1.5,
+    "db": -9.77,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 2.5,
+    "db": -10.19,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": 3.5,
+    "db": -10.57,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 4.5,
+    "db": -10.16,
+    "err": 0.03,
+    "n_px": 398
+   },
+   {
+    "s_km": 5.5,
+    "db": -9.14,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 6.5,
+    "db": -8.32,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": 7.5,
+    "db": -7.62,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 8.5,
+    "db": -7.16,
+    "err": 0.04,
+    "n_px": 399
+   },
+   {
+    "s_km": 9.5,
+    "db": -7.3,
+    "err": 0.03,
+    "n_px": 399
+   },
+   {
+    "s_km": 10.5,
+    "db": -7.44,
+    "err": 0.03,
+    "n_px": 401
+   },
+   {
+    "s_km": 11.5,
+    "db": -7.59,
+    "err": 0.03,
+    "n_px": 400
+   },
+   {
+    "s_km": 12.5,
+    "db": -7.67,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": 13.5,
+    "db": -7.6,
+    "err": 0.04,
+    "n_px": 399
+   },
+   {
+    "s_km": 14.5,
+    "db": -7.54,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 15.5,
+    "db": -7.54,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": 16.5,
+    "db": -7.56,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 17.5,
+    "db": -7.5,
+    "err": 0.04,
+    "n_px": 399
+   },
+   {
+    "s_km": 18.5,
+    "db": -7.44,
+    "err": 0.04,
+    "n_px": 399
+   },
+   {
+    "s_km": 19.5,
+    "db": -7.56,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 20.5,
+    "db": -7.48,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": 21.5,
+    "db": -7.41,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 22.5,
+    "db": -7.41,
+    "err": 0.04,
+    "n_px": 398
+   },
+   {
+    "s_km": 23.5,
+    "db": -7.45,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 24.5,
+    "db": -7.6,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": 25.5,
+    "db": -7.49,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 26.5,
+    "db": -7.49,
+    "err": 0.04,
+    "n_px": 398
+   },
+   {
+    "s_km": 27.5,
+    "db": -7.66,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": 28.5,
+    "db": -7.66,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": 29.5,
+    "db": -7.52,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 30.5,
+    "db": -7.43,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 31.5,
+    "db": -7.44,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 32.5,
+    "db": -7.47,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": 33.5,
+    "db": -7.35,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 34.5,
+    "db": -7.33,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 35.5,
+    "db": -7.49,
+    "err": 0.05,
+    "n_px": 399
+   },
+   {
+    "s_km": 36.5,
+    "db": -7.46,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 37.5,
+    "db": -7.53,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 38.5,
+    "db": -7.59,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 39.5,
+    "db": -7.86,
+    "err": 0.05,
+    "n_px": 398
+   },
+   {
+    "s_km": 40.5,
+    "db": -7.74,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 41.5,
+    "db": -7.8,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 42.5,
+    "db": -7.64,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 43.5,
+    "db": -7.62,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 44.5,
+    "db": -7.66,
+    "err": 0.05,
+    "n_px": 399
+   },
+   {
+    "s_km": 45.5,
+    "db": -7.54,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 46.5,
+    "db": -7.6,
+    "err": 0.05,
+    "n_px": 399
+   },
+   {
+    "s_km": 47.5,
+    "db": -7.66,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 48.5,
+    "db": -7.55,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": 49.5,
+    "db": -7.84,
+    "err": 0.04,
+    "n_px": 399
+   },
+   {
+    "s_km": 50.5,
+    "db": -7.82,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 51.5,
+    "db": -7.81,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 52.5,
+    "db": -7.81,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 53.5,
+    "db": -7.92,
+    "err": 0.05,
+    "n_px": 398
+   },
+   {
+    "s_km": 54.5,
+    "db": -7.76,
+    "err": 0.04,
+    "n_px": 401
+   },
+   {
+    "s_km": 55.5,
+    "db": -7.67,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 56.5,
+    "db": -7.51,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 57.5,
+    "db": -7.41,
+    "err": 0.05,
+    "n_px": 399
+   },
+   {
+    "s_km": 58.5,
+    "db": -7.48,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 59.5,
+    "db": -7.71,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 60.5,
+    "db": -8.16,
+    "err": 0.06,
+    "n_px": 400
+   },
+   {
+    "s_km": 61.5,
+    "db": -8.53,
+    "err": 0.06,
+    "n_px": 400
+   },
+   {
+    "s_km": 62.5,
+    "db": -8.27,
+    "err": 0.05,
+    "n_px": 399
+   },
+   {
+    "s_km": 63.5,
+    "db": -8.17,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 64.5,
+    "db": -8.37,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 65.5,
+    "db": -8.38,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 66.5,
+    "db": -8.3,
+    "err": 0.04,
+    "n_px": 399
+   },
+   {
+    "s_km": 67.5,
+    "db": -8.47,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 68.5,
+    "db": -8.51,
+    "err": 0.05,
+    "n_px": 400
+   },
+   {
+    "s_km": 69.5,
+    "db": -8.33,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 70.5,
+    "db": -8.38,
+    "err": 0.04,
+    "n_px": 400
+   },
+   {
+    "s_km": 71.5,
+    "db": -8.12,
+    "err": 0.05,
+    "n_px": 399
+   },
+   {
+    "s_km": 72.5,
+    "db": -8.27,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 73.5,
+    "db": -8.59,
+    "err": 0.05,
+    "n_px": 401
+   },
+   {
+    "s_km": 74.5,
+    "db": -9.11,
+    "err": 0.06,
+    "n_px": 400
+   },
+   {
+    "s_km": 75.5,
+    "db": -9.61,
+    "err": 0.06,
+    "n_px": 399
+   },
+   {
+    "s_km": 76.5,
+    "db": -9.41,
+    "err": 0.06,
+    "n_px": 401
+   },
+   {
+    "s_km": 77.5,
+    "db": -8.98,
+    "err": 0.05,
+    "n_px": 399
+   },
+   {
+    "s_km": 78.5,
+    "db": -8.95,
+    "err": 0.12,
+    "n_px": 123
+   }
+  ]
+ },
+ "notes": "Backscatter only; no wind speed is derived. The eye is faint in L-band VV (prominence 0.76 dB over the 12-25 km annulus at 5 km smoothing); the ring profile mixes near and far range, so the level carries an incidence-angle trend. Single scene, VALIDATED product, no ground truth.",
+ "eye_search": {
+  "method": "unique prominent interior local minimum of 5 km Gaussian-smoothed VV (500 m cells), >= 30 km from no-data and land, within 150 km of the IMD fix, lowest within 10 km radius; prominence = 12-25 km annulus mean minus minimum",
+  "n_local_minima": 1,
+  "n_candidates": 1,
+  "prominence_db": 0.76,
+  "smoothed_vv_db": -9.3,
+  "centre_by_sigma_km": [
+   {
+    "sigma_km": 3.0,
+    "lat": 16.235,
+    "lon": 82.529,
+    "offset_km": 1.4
+   },
+   {
+    "sigma_km": 4.0,
+    "lat": 16.23,
+    "lon": 82.534,
+    "offset_km": 0.7
+   },
+   {
+    "sigma_km": 5.0,
+    "lat": 16.226,
+    "lon": 82.539,
+    "offset_km": 0.0
+   },
+   {
+    "sigma_km": 6.0,
+    "lat": 16.221,
+    "lon": 82.548,
+    "offset_km": 1.1
+   }
+  ]
+ },
+ "provenance": {
+  "created_utc": "2026-11-14T11:29:01Z",
+  "tool": "tools/build_web.py (build_profile)",
+  "h5_sources": [
+   "data/h5/L_SEA_20261027_T048.h5"
+  ],
+  "source_granule": "NISAR_L2_PR_GCOV_034_048_D_080_2005_DVDV_A_20261027T130151_20261027T130208_P05036_N_P_J_001",
+  "product_status": "VALIDATED",
+  "band": "L",
+  "pol": "VV",
+  "track": 48,
+  "method": "see eye_search, points_definition and transect; docs/METHODS.md",
+  "caveats": [
+   "single scene, single band",
+   "weak eye contrast",
+   "level carries an incidence-angle trend across the swath",
+   "no ground truth or best-track comparison beyond the IMD fix interpolation"
+  ],
+  "previous_placeholder_eye": {
+   "eye": [
+    16.257,
+    82.514
+   ],
+   "offset_to_new_eye_km": 4.4
+  }
+ }
 }

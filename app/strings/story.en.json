@@ -1,0 +1,136 @@
+{
+  "schema": "story-strings-v1",
+  "note": "Templates for the live What-happened story. {placeholders} are filled by tools/build_story.py from data, never typed. Keep sentences under 20 words, age-12 reading level, hedge every flood claim. Needs domain-expert review before real numbers go live.",
+  "placeholders": {
+    "event": "event name, e.g. Cyclone Arnab",
+    "date": "radar pass date, e.g. 9 Nov",
+    "prev_date": "previous pass date",
+    "days": "whole days",
+    "days_after": "days after landfall",
+    "n_prev": "mandals probably flooded on the previous pass",
+    "n_now": "mandals probably flooded on this pass",
+    "receded": "mandals that went down",
+    "still": "mandals about the same",
+    "worse": "mandals that went up",
+    "top_mandal": "mandal with the largest share",
+    "lik_then": "share on the earlier pass, in 100 acres",
+    "lik": "share in 100 acres, rounded",
+    "err": "give-or-take, in out of 100",
+    "normal": "normal-fortnight share in 100",
+    "times": "times-normal words",
+    "change_pts": "change in points",
+    "next_date": "expected next pass, about",
+    "built": "page build time, IST",
+    "season_line": "line from data/seasons.json",
+    "mandal": "mandal name",
+    "km2": "square km",
+    "lo": "low range",
+    "hi": "high range",
+    "radius": "eye radius km",
+    "text": "confounder text",
+    "ref_date": "calm reference date"
+  },
+  "headline": {
+    "recovery": {
+      "most": "Most of the flooded land around {event} has probably drained.",
+      "partial": "Some of the land flooded by {event} has probably drained. Some is still wet.",
+      "little": "Most of the land probably flooded by {event} still looks wet in the latest radar picture."
+    },
+    "worse": "More land is probably flooded than on the last radar pass.",
+    "first_pass": "First radar picture after {event}: some land was probably under water.",
+    "no_new_pass": "No new radar picture yet. This page shows the last one, from {date}.",
+    "watch": "Calm on the coast. No active storm.",
+    "practice_prefix": "Practice numbers: ",
+    "no_flood": "No land looks probably flooded in this radar picture."
+  },
+  "lead": {
+    "recovery": "The satellite looked again on {date}, {days_after} days after landfall. The numbers are likely to change as more radar pictures arrive.",
+    "first_pass": "NISAR looked at the coast on {date}. Radar change points to places that were probably under water.",
+    "watch": "No storm is being tracked right now. The latest radar picture is from {date}.",
+    "landfall_day": "NISAR looked at the coast on {date}, the day {event} reached land. Radar change points to places that were probably under water.",
+    "confounder": "{text}"
+  },
+  "since_last": {
+    "title": "Since the last pass",
+    "chip_down": "went down",
+    "chip_same": "about the same",
+    "chip_up": "went up",
+    "text": "Between {prev_date} and {date}, {n_prev} mandals were probably flooded and now {n_now} are. {receded} went down, {still} stayed about the same, {worse} went up.",
+    "since_landfall": "Since the landfall pass, the share in {top_mandal} has gone from about {lik_then} to about {lik} in every 100 acres."
+  },
+  "bignums": {
+    "top_mandal": {
+      "unit": "in every 100 acres",
+      "label": "of {top_mandal} was probably under water, give or take {err}",
+      "value": "{lik}"
+    },
+    "change": {
+      "unit": "points",
+      "label": "change in {top_mandal} since the last radar pass",
+      "value": "{change_pts}"
+    },
+    "days_after": {
+      "unit": "days",
+      "label": "after the storm reached land, when this radar picture was taken",
+      "value": "{days_after}"
+    },
+    "days_to_next": {
+      "unit": "days",
+      "label": "until the next radar pass, about",
+      "value": "{days}"
+    },
+    "flooded_count": {
+      "unit": "mandals",
+      "label": "mandals probably flooded",
+      "value": "{n_now}"
+    },
+    "days_since_pass": {
+      "unit": "days",
+      "label": "since the last radar pass",
+      "value": "{days}"
+    },
+    "eye_radius": {
+      "unit": "km",
+      "label": "wide, the calm centre (eye) of the storm in the radar picture, give or take {err}",
+      "value": "{radius}"
+    }
+  },
+  "mandal": {
+    "trend_down": "The share here has probably gone down since {prev_date}.",
+    "trend_flat": "There is no clear change here since {prev_date}.",
+    "trend_up": "The share here has probably gone up since {prev_date}.",
+    "trend_new": "This is the first radar picture for this mandal.",
+    "not_enough_view": "The radar did not see enough of this mandal to say.",
+    "ask_officials": "This is a guide to where to look. Ask your local officials.",
+    "main": "About {lik} in every 100 acres of {mandal} were probably under water on {date}, give or take {err}.",
+    "low": "Little sign of new open water in {mandal}: about {lik} in every 100 acres, give or take {err}.",
+    "times": "That is {times} a normal fortnight."
+  },
+  "provisional": "Early data. NISAR has not finished checking it. Numbers may change.",
+  "missing_numbers": "Pictures are ready, numbers are coming.",
+  "stale": "No new radar pass in {days} days. This page shows the last one, from {date}.",
+  "next_pass": "Next radar pass expected about {next_date}. This is a schedule estimate. It can shift.",
+  "watch": {
+    "normal_check": "Every mandal is inside its normal range on the latest pass.",
+    "season": "{season_line}",
+    "link": "For alerts, see IMD.",
+    "flood_signal": "Some mandals still show probable open water. Ask your local officials."
+  },
+  "timestamps": {
+    "picture": "Radar picture taken {date}, IST",
+    "built": "Page updated {built}"
+  },
+  "official_banner": "This is not an official warning. For alerts, follow IMD, APSDMA and your district officers.",
+  "feed": {
+    "title": "{event}: radar updates",
+    "item": "{headline} ({status})"
+  },
+  "next_pass_overdue": "The next radar pass was expected about {next_date}. It can shift.",
+  "update": {
+    "coast_first": "Radar picture of the coast on {date}.",
+    "coast_summary": "Radar points to about {km2} square km of new open water ({lo} to {hi} with other settings). That is {times} a normal fortnight.",
+    "sea_eye": "Radar picture of the sea on {date}, with the calm centre (eye) of {event}.",
+    "sea_after": "Radar picture of the sea on {date}.",
+    "sea_diff": "The sea looks brighter than on a calm day ({ref_date}). That is where wind roughened the water."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "seasons-v1",
+  "region": "Andhra Pradesh coast (Godavari delta and nearby)",
+  "note": "Plain-text seasonal lines for the quiet-period (watch) state. General climate background, not a forecast. To be checked against IMD before publishing.",
+  "seasons": [
+    { "id": "pre_monsoon_cyclone", "months": [4, 5], "label": "Early cyclone season", "line": "April and May can bring early cyclones to the Bay of Bengal. They are less common than in the autumn." },
+    { "id": "southwest_monsoon", "months": [6, 7, 8, 9], "label": "Monsoon", "line": "June to September is the main monsoon. Heavy rain and river floods in the Godavari are most likely now." },
+    { "id": "post_monsoon_cyclone", "months": [10, 11, 12], "label": "Cyclone season", "line": "October to December is the main cyclone season on this coast. Storms from the Bay of Bengal are most likely now." },
+    { "id": "dry", "months": [1, 2, 3], "label": "Dry season", "line": "January to March is usually dry and calm. Floods and cyclones are rare." }
+  ],
+  "official_source": "IMD (https://mausam.imd.gov.in/)"
+}

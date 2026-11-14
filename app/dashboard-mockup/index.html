@@ -30,6 +30,7 @@
 <main class="main" id="main" data-section="happened">
   <aside class="panel" id="panel" aria-label="Findings and data">
     <div class="banner" id="banner" hidden></div>
+    <div class="card daycard" id="daycard" aria-label="Save, share or download this view"></div>
     <section id="sec-happened" role="tabpanel" aria-labelledby="tab-happened" class="sec" aria-busy="true">
       <div class="skel" aria-hidden="true"><div class="skel__b" style="height:190px"></div><div class="skel__b" style="height:260px"></div><div class="skel__b" style="height:160px"></div></div>
       <p class="visually-hidden" role="status">Loading findings</p>
@@ -45,10 +46,11 @@
       </button>
       <div class="seg" id="map-modes" role="group" aria-label="What the map shows"></div>
     </div>
+    <div class="tl" id="tl" hidden aria-label="Choose the radar scene date"></div>
     <div class="swipe" id="swipe" hidden>
-      <span class="swipe__l">16 Oct, before</span>
+      <span class="swipe__l">Before</span>
       <input type="range" min="0" max="100" value="50" id="swipe-range" aria-label="Move to compare before and after radar">
-      <span class="swipe__r">9 Nov, after</span>
+      <span class="swipe__r">After</span>
     </div>
     <div class="swipe-line" id="swipe-line" hidden></div>
     <div class="legend" id="legend"></div>

@@ -35,7 +35,8 @@ Native coast is far over 50 MB; 2x2 is still 56 MB (slightly over the 50 MB targ
        profile.json (eye profile) from L_SEA_20261027 VV along a transect through the eye (data/interim/A/profile*.json
        is the old format). Replace the invented numbers; keep the same JSON shape the dashboard reads.
 5. [ ] Sea difference: check 15 Oct (PROVISIONAL) vs 3 Oct calibration offset before quoting numbers (median diff is +3.7 dB).
-6. [ ] S-band: user downloads the 4 scenes with `python src/fetch/bhoonidhi_s_band.py download ...` (resume now works),
+6a. [x] One-command S-band subsetting written (14 Nov 2026): `python src/fetch/bhoonidhi_s_band.py subset --preset arnab` streams only box chunks over HTTP Range (RangeFile), S-band grid/pols in subset_h5.py, `--local` for portal files; see docs/PIPELINE.md "S-band in one command". Tested on synthetic SSAR files + local Range server only.
+6. [ ] S-band: user RUNS the subset command (replaces downloading the 4 full files; old `download` still works),
        inspect format with h5py, extend subset_h5.py for S-band (band S, same schema), add layers.
 7. [ ] Email Bhoonidhi support about missing S-band: 27 Oct sea eye pass, 15 Oct + 8 Nov sea, 9 Nov delta.
 8. [ ] Drop badges only for layers now built from H5; update docs/PLACEHOLDERS.md; tidy docs/BACKEND_GAPS.md and
@@ -55,3 +56,67 @@ map overlays crowd at narrow desktop widths; fit-to-bounds off right after a mod
 - Sea difference median is +3.7 dB over the whole scene: partly the storm, but the 15 Oct reference is PROVISIONAL, so part may be calibration. Check against 3 Oct (also calm) before claiming numbers.
 - Dashboard NOT yet checked in a browser: the built-in browser cannot reach a server started from the Linux shell, and no server was running on port 8765. The user (or a Claude Code session on the Mac) must start the `nisar-static` preview, then check overlay placement, badges and console.
 - Pipeline venv lives in /tmp/venv-nisar (made with uv; the device-shell home disk is full). Rebuild with: `UV_CACHE_DIR=/tmp/uvcache uv venv /tmp/venv-nisar && uv pip install --python /tmp/venv-nisar/bin/python h5py numpy pyproj pillow`.
+
+## Wave 3 (started 14 Nov 16:20 IST) — user's goals: a living product, not a static doc
+User wants: the map keeps updating as new NISAR scenes are released (automatic pipeline); users can save a
+particular day to view later; then a full evaluation (by a Fable agent) of whether all L- and S-band data is used
+and shown well. Verified 16:18 IST in the browser: radar overlays draw in the right place (coast + sea/eye modes);
+8 console 404s still to trace.
+- [x] W3-A derived products from H5: class maps, mandal_rank.json, profile.json (agent: Sonnet, 14 Nov). Built by `tools/build_web.py`, method in `docs/METHODS.md`. Still placeholder: all S-band layers; the wet-crops class is not distinguishable from normal field change; no ground truth; baseline scenes PROVISIONAL; dashboard text/badges that say "sample" are hard-coded in app/ (owned by W3-C).
+- [x] W3-B automatic update pipeline: discover (CMR) -> ingest -> catalog -> manifest sync -> daily Action `.github/workflows/update.yml`; see docs/PIPELINE.md. Needs the user: secret EARTHDATA_TOKEN, push, Pages on (agent: Sonnet)
+- [x] W3-C dashboard: timeline of all scenes, "Save this day" + permalinks, fix 404s (agent: Sonnet, 14 Nov). Done: 404s were size-probe HEADs with a wrong path (fixed); class-map PNGs 404 only if ticked (UI shows "Not loaded yet"); dates come from manifest layers (type nisar, ready); date timeline on the map for Radar/Before-after/Eye; "This view" card with Save this day / Copy link / Download this day / Saved days; view state in the URL hash; layer table no longer scrolls sideways; fit-after-mode-switch fixed. Saved days live in localStorage (per browser). Open: class PNGs still missing in data/processed/img/ (W3-A).
+- [ ] W3-D S-band: blocked until the user downloads the 4 scenes (needs their Bhoonidhi login)
+- [ ] W3-E final evaluation of data use and presentation (agent: Fable), after A–C
+- [ ] W3-F review of the professional tab -> docs/review/PRO_TAB_REVIEW.md (agent: Sonnet, read-only)
+- [ ] W3-G spec for a live, newsletter-style public tab driven by the latest scenes -> docs/review/LIVE_STORY_SPEC.md (agent: Sonnet, read-only)
+- [ ] W3-H implement F + G after W3-C finishes (avoid two agents editing dash.js at once)
+- Order agreed with the user: the Fable evaluation (W3-E) runs LAST, only after A, B, C, H and S-band are done (or the user says to go without S-band).
+- W3-F done: docs/review/PRO_TAB_REVIEW.md (top 10). W3-G done: docs/review/LIVE_STORY_SPEC.md (critical path: per-scene stats -> build_story.py -> renderStory).
+- Decisions on the spec's open questions (Opus, 14 Nov): (1) ONE mandal_rank.json with a `by_date` section
+  (one fetch; also feeds the per-mandal sparkline from PRO review #5) rather than separate files;
+  (2) event files are written by a human (or a Claude session on request); the pipeline may create a draft stub that
+  never publishes until marked active; (3) "since last pass" compares with the previous pass, plus a second sentence
+  for total change since landfall. Permalink format must be shared with W3-C's hash state (read dash.js first).
+- W3-B decisions (Opus): ingest the 6 extra SEA scenes (T120 D, T127 A; 8 Oct, 20 Oct, 1 Nov) as layers that are off by default
+  (partial sea coverage, not eye passes). The timeline must handle several tracks per role. Small fix pending in
+  sync_manifest.py: refresh processing_level/product_status when a provisional scene is replaced by a validated one.
+- W3-A done (see docs/METHODS.md). Honest status: new water on 9 Nov = 84 km2 (1.6% of land; 61-108 km2 by threshold) vs 0.04% in a
+  normal fortnight -> real signal; wet-crops class NOT separable from normal field change -> keep it labelled weak or drop it from the
+  public tab; eye found at 16.226 N 82.539 E, 4.4 km from the old placeholder marker, 10 km from the IMD fix (faint, 0.76 dB).
+  9 Nov water also includes Cyclone Murasu + river peak, not Arnab alone; say so.
+- Gap for the live product: build_web.py writes class layers into the manifest only with --write-manifest; when a new COAST scene
+  arrives, the pipeline must recompute class maps/mandal_rank for the NEWEST coast date and point the class layers at it
+  (and add by_date to mandal_rank.json per the W3 decision). -> W3-H phase 2.
+
+## W3-H phase 1 (14 Nov, Sonnet) — done: PRO review #1, #6, eye wording, LIVE_STORY tasks 1/2/4, official-warning line
+- Scenes card (Data tab) now built from `data/h5/catalog.json` (falls back to manifest layers if missing): date + start time UTC and IST, band, role, track/frame, A/D, pols, posting m, PROVISIONAL/VALIDATED chip on every row, size, sha256 (12 chars, Copy button copies the full hash). Newest first; any number of tracks per role. New catalogue rows appear with no code change. Latency ("in catalogue after ...") shows only if a scene carries `cataloged_utc`/`ingested_utc`/`added_utc`; catalog.json has no such field today, so it is not shown.
+- Downloads card: per-scene H5 link with size + sha256 from catalog.json, "Cite this" (Copy citation text / Copy BibTeX, authors "SpaceBros (NASA Space Apps 2026)", NASA/JPL-Caltech + ISRO via ASF DAAC credit, URL of the page), method-notes link (docs/METHODS.md if present, else "method notes coming"), "For scripts" row (catalog.json, manifest.json). If the clipboard is blocked the citation opens and is selected.
+- Eye-profile card text now comes from profile.json (`points_definition`, caveat, notes, eye fields); axis label says "change in brightness" when the definition says minus/difference; y range follows the data. Nothing in profile.json edited.
+- Official-warning line ("Not an official warning ...", IMD / APSDMA / SACHET links) under the first card on What happened; links from `data/events/arnab-2026.json` `official_links`, hard-coded fallback.
+- New files: `data/story_rules.json`, `data/seasons.json`, `data/events/arnab-2026.json`, `app/strings/story.en.json` (no runtime use yet; findings.js untouched except an added `official` string and still the fallback).
+- Still open for W3-H phase 2: renderStory(), build_story.py, per-scene mandal_rank by_date, class-map retargeting, feeds; PRO review #2-#5, #7-#10.
+
+## W3-H phase 2 backend (14 Nov, Sonnet) — DONE
+- [x] Class maps for every coast date after the baseline; class + sea-difference manifest layers retargeted at the newest date in every build (`class_date`, `diff_date` added); sea difference for every track-48 scene vs 15 Oct, colour-blind-safe ramp with stops in the json.
+- [x] `mandal_rank.json` `by_date`, `area_km2`, `flooded_km2`, `change_vs_normal_pp`, `err`, `total_pct`; `rank` = total (water + crops), `rank_water` = water only; headlines use water only (docs/METHODS.md section 2). `tools/check_manifest.py` now checks `rank_basis` and `by_date`.
+- [x] dB histograms + `water_threshold_db` in every layer json (PRO review #9); colour-blind ramp (#10 partly: map ramp done, UI legend/contrast is frontend).
+- [x] Catalog `cataloged_utc` (+ `produced_utc` / `available_utc` when known); `sync_manifest.py` refreshes `processing_level` on a provisional -> validated upgrade.
+- [x] `tools/build_story.py` -> `data/web/story.json`, `feed.json`, `atom.xml`; `tools/tests/test_story.py` (16 tests, plain asserts); `pages.yml` runs build_web, the tests, then build_story. Event file `data/events/arnab-2026.json` has `confounders` (Murasu + river peak, 9 Nov). `app/strings/story.en.json` got extra keys (update.*, mandal.main/low/times, bignums unit); `data/story_rules.json` got `class_basis`, `site_url`.
+- Still frontend (next agent): renderStory(), archive + `#...` permalinks, histogram and sparkline drawing, sea-diff legend from `ramp`, read `rank_water`/`flooded_km2`/`by_date`; PRO review #2, #4, #5 (UI parts), #7 done in phase 1.
+- Not tested live: a third coast scene arriving through CI (simulated locally with a copy of the 9 Nov file as a fake 21 Nov scene: class maps, manifest, rank by_date all picked it up; peak memory 1.7 GB). Domain-expert review of the English templates is still open (docs/PLACEHOLDERS.md section 7).
+- S-band check (14 Nov 17:15 IST): NOT processed. Only a truncated 21 MB start of the 4 Oct coast file (full ~10 GB per its HDF5
+  header) existed, from the old non-resuming script; renamed to .h5.part so the new script resumes it. Other 3 files not downloaded.
+  At ~0.2 MB/s each file takes ~14 h; prefer the Bhoonidhi portal's subsetting tool (delta box 81.6,16.2,82.6,17.1) if available.
+
+## W3-H phase 2 frontend (14 Nov, Sonnet) — DONE (app/dashboard-mockup only)
+- Public tab renders from `data/web/story.json` (`renderStory`, falls back to findings.js text if the file is missing): masthead (state eyebrow, provisional badge from `badges.provisional`, "Sample values" only if `badges.sample`), headline + the `since_last` box (text + went down / about the same / went up counts) always next to it, lead (confounder sentence shown once as its own "Other causes" note), 84 km2 class summary, 3 big numbers (value, unit, label; first has the +- from `err`), "Show on the map" (opens `map.mode` + the `map.layer_id` class overlay), next-pass line, picture/build timestamps, official-warning line, "Find your mandal" search over `mandal_sentences` (a click on the map shows the same sentence; unranked mandals say "not enough radar view"), the existing ranking/mandal/cyclone cards, "Earlier updates" archive from `updates[]` (each links by its `hash`; "Save" stores it in the existing saved days without moving the view), JSON/Atom feed links. State variants tested by overriding the story in the console (`window.__spacebros.setStory(obj)`): event, recovery, watch (no ranking/cyclone cards), stale (older-picture note), `numbers_ready:false` (only "Pictures are ready, numbers are coming", no lead/numbers/ranking), sample badge.
+- Public ranking and mandal card now use OPEN WATER only (`rank_water`, `water_pct`, `normal_water_pct`), as the backend decided; wet crops are not shown there (weak signal).
+- Flood share map: day selector (28 Oct / 9 Nov) from `mandal_rank.by_date`; hash `mode=share&d=` now honoured, so archive and saved days restore the right day. Class PNG for the chosen day is derived from the manifest class layer name (`class_YYYYMMDD_*.png`).
+- Pro tab: layer table verified (no sideways scroll at 1400 and 800; long limits in an expandable "Limits" row; "Weak signal" tag on the wet-crops layer); mandal table = rank by `rank_water` with toggle to water + crops, water % +- (with "not distinguishable from zero" when err >= value), flooded km2, change vs normal in points, sparkline per mandal from `by_date`, list of unranked mandals; eye profile annotated (eye edge with shaded +- band, eyewall ring, IMD-fix offset marker, peak); "Radar by date" small multiples (all coast and sea dates, click puts it on the map); brightness histogram card per scene with the water cut line (coast) and share below the cut; legends: dB greyscale bar, sea-difference colour ramp from `ramp.stops`, class colours with text labels (wet crops marked weak signal).
+- Hard-coded "Sample values" / "Quick-look sample" tags removed wherever the data is real (manifest placeholder null, `badges.sample` false); they still appear automatically if a layer/rank/profile carries `placeholder.is` or the story sets `badges.sample`.
+- Bugs fixed on the way: eye-profile hover threw (`L` shadowed Leaflet); an unbroken alert headline made the page 1031 px wide at 800 px.
+- Still placeholder / open: S-band (none yet); no English-template domain review; HEAD size probes show `net::ERR_ABORTED` in the browser tool but return 200 (tool artefact, all GET requests 200, no 404s, no console messages); the "Water + crops" table mode scrolls sideways inside its box at 800 px; mandal-card and ranking still read the newest day, not the day chosen in the share-map selector.
+
+- Open (Opus, 14 Nov 17:40): data/processed/alerts.json holds Jammu & Kashmir SACHET alerts, not Andhra Pradesh -> wrong region on
+  the alerts card; refetch AP alerts (src/fetch/sachet_snapshot.py) or mark it placeholder. Rename the sea-diff layer id to match
+  its date when convenient (update dash.js references). Mandal card should follow the share-map day selector.

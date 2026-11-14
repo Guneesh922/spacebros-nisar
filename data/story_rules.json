@@ -1,0 +1,101 @@
+{
+  "schema": "story-rules-v1",
+  "note": "All thresholds for the live What-happened story in one reviewable file (docs/review/LIVE_STORY_SPEC.md section 2). Read by tools/build_story.py.",
+  "flooded_mandal": {
+    "min_likely_water_pct": 3,
+    "min_times_normal": 2,
+    "min_radar_coverage_pct": 50,
+    "rule_text": "A mandal counts as 'flooded' if likely new open water is at least 3% of its area, AND at least 2 times its normal-fortnight water share, AND radar covered at least 50% of it. Only the water class is used for headline claims: the wet-crops class is not separable from normal field change (docs/METHODS.md). Below 50% coverage the mandal is shown as 'not enough radar view' and is never ranked.",
+    "class_basis": "water"
+  },
+  "change_vs_previous_pass": {
+    "report_change_only_if_abs_change_exceeds_error_multiple": 2,
+    "min_points": 1,
+    "rule_text": "Report 'went down' or 'went up' only if the change is larger than 2 times the error (and at least 1 percentage point). Anything inside that band is 'no clear change'."
+  },
+  "headline_keys": {
+    "recovery.most": {
+      "receded_share_of_previously_flooded_min": 0.75
+    },
+    "recovery.partial": {
+      "receded_share_of_previously_flooded_min": 0.25,
+      "receded_share_of_previously_flooded_max": 0.75
+    },
+    "recovery.little": {
+      "receded_share_of_previously_flooded_max": 0.25
+    },
+    "worse": {
+      "note": "more flooded mandals now than on the previous pass"
+    },
+    "first_pass": {
+      "note": "no previous pass to compare with"
+    },
+    "no_new_pass": {
+      "note": "no scene newer than the one already shown"
+    }
+  },
+  "times_normal_words": {
+    "less_than": 0.8,
+    "same_below": 1.25,
+    "one_and_a_half_below": 1.75,
+    "twice_below": 2.5,
+    "cap_words": "more than ten times",
+    "cap_above": 10
+  },
+  "monitor_window_days": 45,
+  "stale_after_days": 16,
+  "stale_note": "NISAR repeat is 12 days; 16 = 12 + 4 days grace. After that the page says 'No new radar pass in {days} days' and shows the last pass date.",
+  "next_pass_basis_days": 12,
+  "states": [
+    "event",
+    "recovery",
+    "watch"
+  ],
+  "state_rules": {
+    "event": "an event file with status 'active' and landfall within monitor_window_days",
+    "recovery": "an active event past its first radar passes, still inside monitor_window_days",
+    "watch": "no active event inside monitor_window_days and no new flood signal"
+  },
+  "banned_words": [
+    "damage",
+    "damaged",
+    "destroyed",
+    "casualties",
+    "deaths",
+    "killed",
+    "depth",
+    "people affected",
+    "backscatter",
+    "SAR",
+    "polarisation",
+    "polarization",
+    "wind speed from radar",
+    "guaranteed",
+    "definitely",
+    "certainly"
+  ],
+  "banned_words_note": "Case-insensitive whole-word match on every generated string. The fixed radar-limits sentence (findings.js mandal.cannot) names these ideas only to deny them and is exempt.",
+  "require_hedge_for": [
+    "flooded",
+    "under water",
+    "under floodwater"
+  ],
+  "hedge_words": [
+    "probably",
+    "likely",
+    "about",
+    "give or take"
+  ],
+  "guard": {
+    "fail_on_unfilled_placeholder": true,
+    "placeholder_pattern": "\\{[a-z_]+\\}"
+  },
+  "event_stub_policy": "Auto-created stubs have status 'needs_review' and never publish text until a human sets status to 'active'.",
+  "reading_level": {
+    "max_words_per_sentence": 20
+  },
+  "site_url": "https://guneesh922.github.io/spacebros-nisar/app/dashboard-mockup/",
+  "archive": {
+    "sea_scenes_from_days_before_landfall": 1
+  }
+}

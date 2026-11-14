@@ -7,14 +7,33 @@ Usage (from the repo root):
   python src/fetch/subset_h5.py --scene L_COAST_1004 --src data/raw/nisar_l_h5/<granule>.h5
   python src/fetch/subset_h5.py --scene L_COAST_1004 --src <local.h5> --multilook 2 --suffix _ml2
   python src/fetch/subset_h5.py --scene L_SEA_EYE_1027 --src https://nisar.asf.earthdatacloud.nasa.gov/...h5
+Any scene not in the SCENES table (new passes found by tools/pipeline/discover.py, or S-band) is described on the
+command line instead:
+  python src/fetch/subset_h5.py --scene L_COAST_20261121_T055 --role COAST --status VALIDATED --posting 20 \
+      --granule NISAR_L2_PR_GCOV_036_055_A_010_4005_DHDH_A_20261121T000107_20261121T000130_P05036_N_P_J_001 \
+      --src https://nisar.asf.earthdatacloud.nasa.gov/.../....h5          # streams; uses $EARTHDATA_TOKEN if set
+  python src/fetch/subset_h5.py --scene S_COAST_20261016_T055 --role COAST --band S --src <local S-band GCOV.h5>
+S-band (ISRO NISAR_SSAR_GCOV, /science/SSAR/GCOV/grids/frequencyA): same schema, band "S". COAST uses the GCOV
+diagonal terms the file holds (DH products: HHHH, HVHV -> /backscatter/HH, HV); SEA compact-pol products (CRNA) hold
+RHRH, RVRV -> /backscatter/RH, RV and root attr pol_basis="compact-circular-transmit". Default posting 20 m COAST /
+100 m SEA (multilook computed from the native spacing). src/fetch/bhoonidhi_s_band.py `subset` calls main() with an
+already-open range-read file object (h5_obj=), so only the box chunks are fetched from Bhoonidhi.
+Streaming: with env EARTHDATA_TOKEN (Earthdata user token) the https source is read with HTTP range requests and
+a bearer token (stdlib only); without it earthaccess (netrc login) is used as before.
 Only the box window is read from the granule (row bands), never the full layer.
 """
 import argparse
+import contextlib
 import datetime as dt
+import io
+import os
 import re
 import subprocess
 import sys
 import time
+import urllib.error
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 import h5py
@@ -44,14 +63,18 @@ SCENES = {
 }
 
 
-def find_grid(h5, freq="A"):
-    """HDF5 group holding the GCOV grids for one frequency (same logic as src/gcov_subset.py)."""
-    for base in ("/science/LSAR/GCOV/grids", "/science/SSAR/GCOV/grids"):
+def find_grid(h5, freq="A", band=None):
+    """HDF5 group holding the GCOV grids for one frequency (same logic as src/gcov_subset.py).
+    band "L" / "S" restricts the search to /science/LSAR or /science/SSAR; None tries LSAR then SSAR."""
+    bases = {"L": ("/science/LSAR/GCOV/grids",), "S": ("/science/SSAR/GCOV/grids",)}.get(
+        band, ("/science/LSAR/GCOV/grids", "/science/SSAR/GCOV/grids"))
+    for base in bases:
         path = f"{base}/frequency{freq}"
         if path in h5:
             return h5[path]
     found = []
-    h5.visit(lambda n: found.append(n) if n.endswith(f"frequency{freq}") and "grids" in n else None)
+    pick = {"L": "LSAR", "S": "SSAR"}.get(band, "")
+    h5.visit(lambda n: found.append(n) if n.endswith(f"frequency{freq}") and "grids" in n and pick in n else None)
     if not found:
         raise KeyError(f"frequency{freq} grid not found in file")
     return h5[found[0]]
@@ -71,9 +94,58 @@ def txt(v):
 
 def ident(h5, name, default=None):
     for base in ("/science/LSAR/identification", "/science/SSAR/identification"):
-        if base in h5 and name in h5[base]:
-            return h5[base][name][()]
+        try:
+            if base in h5 and name in h5[base]:
+                return h5[base][name][()]
+        except (KeyError, OSError):    # truncated / unreadable small field: fall back to the file name
+            pass
     return default
+
+
+LINEAR_RX = {"HH", "HV", "VH", "VV"}
+COMPACT_RX = {"RH", "RV", "LH", "LV"}   # circular transmit, linear receive
+
+
+def diag_terms(grid):
+    """Diagonal covariance datasets present in a GCOV frequency group (HHHH, HVHV, RHRH, RVRV...), in file order."""
+    return [k for k in grid.keys()
+            if len(k) == 4 and k[:2] == k[2:] and k[:2] in (LINEAR_RX | COMPACT_RX)]
+
+
+def pol_basis_of(names):
+    """'linear' for HH/HV/VH/VV; 'compact-circular-transmit' for RH/RV (right) or LH/LV (left)."""
+    return "compact-circular-transmit" if any(n[:2] in COMPACT_RX for n in names) else "linear"
+
+
+def default_pols(band, role, grid):
+    """L-band: fixed lists. S-band: whatever diagonal terms the file holds (COAST: co/cross H first)."""
+    if band != "S":
+        return SEA_POLS if role == "SEA" else COAST_POLS
+    have = diag_terms(grid)
+    want = ["HHHH", "HVHV"] if role == "COAST" else ["VVVV", "VHVH", "RHRH", "RVRV", "LHLH", "LVLV", "HHHH", "HVHV"]
+    pols = [p for p in want if p in have] or have
+    if role == "COAST":
+        pols = [p for p in pols if p in ("HHHH", "HVHV")] or pols   # never mix pol bases on a coast layer
+    return pols
+
+
+def chunk_bytes(ds, r0, r1, c0, c1, cap=120):
+    """Compressed bytes of the chunks that overlap the window (reads only HDF5 metadata). Returns (n_chunks, bytes,
+    sampled) or None for contiguous datasets. Large windows are estimated from `cap` evenly spaced chunks."""
+    if ds.chunks is None:
+        return None
+    cr, cc = ds.chunks[-2:]
+    keys = [(r, c) for r in range(r0 // cr * cr, r1, cr) for c in range(c0 // cc * cc, c1, cc)]
+    step = max(1, len(keys) // cap)
+    tot = n = 0
+    for r, c in keys[::step]:
+        try:
+            info = ds.id.get_chunk_info_by_coord((r, c))
+        except Exception:  # noqa: BLE001  (chunk never written)
+            continue
+        tot += info.size
+        n += 1
+    return len(keys), tot * (len(keys) / max(1, n)) if n else 0.0, step > 1
 
 
 def git_sha():
@@ -112,7 +184,111 @@ def block_mean_db(arr, k):
     return db.astype("float32")
 
 
+class TokenRangeFile(io.RawIOBase):
+    """Read-only file object over an https URL using HTTP range requests and an Earthdata bearer token.
+
+    stdlib only. The bearer token is sent only to *.earthdata.nasa.gov / *.earthdatacloud.nasa.gov hosts; redirects
+    (to a presigned S3 URL) are followed by hand so the token never reaches a third-party host. Blocks of
+    `block` bytes are cached (small LRU) because h5py reads many nearby chunks. Re-resolves the redirect on 401/403
+    (presigned URLs expire)."""
+
+    def __init__(self, url, token, block=8 * 1024 * 1024, cache_blocks=24):
+        self.url, self.token, self.block, self.cache_blocks = url, token, block, cache_blocks
+        self.pos, self.cache, self._final = 0, {}, None
+        self.size = int(self._get(0, 0)[1])
+
+    @staticmethod
+    def _trusted(host):
+        return host.endswith(".earthdata.nasa.gov") or host.endswith(".earthdatacloud.nasa.gov") or host == "earthdata.nasa.gov"
+
+    def _resolve(self):
+        """Follow redirects from the DAAC URL; remember the final (presigned) URL."""
+        url = self.url
+        for _ in range(6):
+            host = urllib.parse.urlparse(url).hostname or ""
+            hdr = {"Range": "bytes=0-0", "User-Agent": "spacebros-nisar"}
+            if self._trusted(host):
+                hdr["Authorization"] = "Bearer " + self.token
+            req = urllib.request.Request(url, headers=hdr)
+            opener = urllib.request.build_opener(_NoRedirect)
+            try:
+                resp = opener.open(req, timeout=120)
+                resp.close()
+                self._final = url
+                return
+            except urllib.error.HTTPError as e:
+                if e.code in (301, 302, 303, 307, 308) and e.headers.get("Location"):
+                    url = urllib.parse.urljoin(url, e.headers["Location"])
+                    continue
+                raise
+        raise OSError("too many redirects")
+
+    def _get(self, start, end, _retry=True):
+        if self._final is None:
+            self._resolve()
+        hdr = {"Range": f"bytes={start}-{end}", "User-Agent": "spacebros-nisar"}
+        if self._trusted(urllib.parse.urlparse(self._final).hostname or ""):
+            hdr["Authorization"] = "Bearer " + self.token
+        last = None
+        for attempt in range(5):
+            try:
+                with urllib.request.urlopen(urllib.request.Request(self._final, headers=hdr), timeout=120) as r:
+                    cr = r.headers.get("Content-Range", "")
+                    total = cr.rsplit("/", 1)[-1] if "/" in cr else r.headers.get("Content-Length", "0")
+                    return r.read(), total
+            except urllib.error.HTTPError as e:
+                if e.code in (401, 403) and _retry:
+                    self._final = None
+                    return self._get(start, end, _retry=False)
+                last = e
+            except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+                last = e
+            time.sleep(2 ** attempt)
+        raise OSError(f"range read failed: {last}")
+
+    def readable(self):
+        return True
+
+    def seekable(self):
+        return True
+
+    def tell(self):
+        return self.pos
+
+    def seek(self, off, whence=0):
+        self.pos = off if whence == 0 else self.pos + off if whence == 1 else self.size + off
+        return self.pos
+
+    def _block(self, i):
+        if i not in self.cache:
+            if len(self.cache) >= self.cache_blocks:
+                self.cache.pop(next(iter(self.cache)))
+            a = i * self.block
+            self.cache[i] = self._get(a, min(a + self.block, self.size) - 1)[0]
+        return self.cache[i]
+
+    def readinto(self, b):
+        n = min(len(b), self.size - self.pos)
+        if n <= 0:
+            return 0
+        out, got = memoryview(b), 0
+        while got < n:
+            i, off = divmod(self.pos, self.block)
+            chunk = self._block(i)[off:off + (n - got)]
+            out[got:got + len(chunk)] = chunk
+            got += len(chunk)
+            self.pos += len(chunk)
+        return got
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *a, **k):
+        return None
+
+
 def open_source(src):
+    if re.match(r"https?://", src) and os.environ.get("EARTHDATA_TOKEN"):
+        return h5py.File(TokenRangeFile(src, os.environ["EARTHDATA_TOKEN"].strip()), "r")
     if re.match(r"https?://", src):
         import earthaccess  # lazy: only needed for streaming
         earthaccess.login(persist=False)
@@ -121,35 +297,77 @@ def open_source(src):
     return h5py.File(src, "r")
 
 
-def main():
+def main(argv=None, h5_obj=None):
+    """CLI entry. h5_obj: an already-open h5py.File (e.g. over a range-read file object); --src is then only recorded
+    as source_url (never opened)."""
     ap = argparse.ArgumentParser()
-    ap.add_argument("--scene", required=True, choices=sorted(SCENES))
+    ap.add_argument("--scene", required=True,
+                    help="id from the SCENES table, or any new id (then --role and usually --granule are needed)")
     ap.add_argument("--src", required=True, help="local .h5 path or https URL of the full granule")
     ap.add_argument("--multilook", type=int, default=None,
                     help="k x k block mean (COAST default 1 = native; SEA default = round(100 m / spacing))")
+    ap.add_argument("--posting", type=float, default=None,
+                    help="target posting in m; multilook = round(posting / native spacing), min 1 (overridden by --multilook)")
+    ap.add_argument("--role", choices=["COAST", "SEA"], help="needed for scenes that are not in the SCENES table")
+    ap.add_argument("--band", choices=["L", "S"], default=None, help="default: detected from the file (LSAR/SSAR)")
+    ap.add_argument("--granule", default=None, help="source granule id (default: SCENES table, else the file stem)")
+    ap.add_argument("--status", choices=["PROVISIONAL", "VALIDATED"], default=None)
+    ap.add_argument("--collection", default=None)
+    ap.add_argument("--pols", default=None, help="comma list of GCOV datasets, e.g. HHHH,HVHV (default: role default)")
+    ap.add_argument("--source-url", default=None, help="recorded as source_url (default: ASF URL for L, none for local S)")
+    ap.add_argument("--plan", action="store_true", help="print window, chunk counts and the compressed bytes to be "
+                    "fetched per polarisation, then stop without writing")
+    ap.add_argument("--no-log", action="store_true", help="do not append to data/logs/nisar_h5_subset.md")
     ap.add_argument("--out", default="data/h5/")
     ap.add_argument("--suffix", default="", help="appended to the file stem, e.g. _ml2")
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
     t0 = time.time()
 
-    coll, fid, boxname, pols = SCENES[args.scene]
-    role = "SEA" if boxname == "sea" else "COAST"
+    if args.scene in SCENES:
+        coll, fid, boxname, pols = SCENES[args.scene]
+        role = "SEA" if boxname == "sea" else "COAST"
+    else:
+        if not args.role:
+            ap.error(f"scene {args.scene!r} is not in the SCENES table: pass --role COAST|SEA (and --granule)")
+        role = args.role
+        boxname = "sea" if role == "SEA" else "delta"
+        pols = None            # decided from the file once the band is known
+        fid = args.granule or re.sub(r"\.h5$", "", Path(args.src.split("?")[0]).name)
+        s_hint = args.band == "S" or args.scene.startswith("S_") or fid.startswith("NISAR_S")
+        coll = args.collection or ("NISAR_SSAR_GCOV" if s_hint else
+                                   "NISAR_L2_GCOV_V1" if args.status == "VALIDATED" else "NISAR_L2_GCOV_PROVISIONAL_V1")
+    if args.granule:
+        fid = args.granule
+    coll = args.collection or coll
+    if args.pols:
+        pols = [p.strip().upper() for p in args.pols.split(",")]
     bbox = BOX[boxname]
-    status = "PROVISIONAL" if "PROVISIONAL" in coll else "VALIDATED"
+    status = args.status or ("PROVISIONAL" if "PROVISIONAL" in coll or "SSAR" in coll else "VALIDATED")
     out_dir = Path(args.out)
     if not out_dir.is_absolute():
         out_dir = ROOT / out_dir
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    with open_source(args.src) as h5:
-        grid = find_grid(h5, "A")
+    opener = contextlib.nullcontext(h5_obj) if h5_obj is not None else open_source(args.src)
+    with opener as h5:
+        band = args.band or ("S" if "/science/SSAR" in h5 and "/science/LSAR" not in h5 else "L")
+        grid = find_grid(h5, "A", band)
+        if pols is None:
+            pols = default_pols(band, role, grid)
         epsg = epsg_of(grid)
         x = grid["xCoordinates"][:]
         y = grid["yCoordinates"][:]
         dx, dy = float(x[1] - x[0]), float(y[1] - y[0])
         if dy > 0:
             raise ValueError("south-up grid not supported (expected y descending)")
-        k = args.multilook or (max(1, round(SEA_POSTING_M / abs(dx))) if role == "SEA" else 1)
+        if args.multilook:
+            k = args.multilook
+        elif args.posting:
+            k = max(1, round(args.posting / abs(dx)))
+        elif role == "SEA":
+            k = max(1, round(SEA_POSTING_M / abs(dx)))
+        else:
+            k = max(1, round(20.0 / abs(dx))) if band == "S" else 1   # S-band COAST: 20 m by default
         c0, c1, r0, r1 = window(x, y, bbox, epsg)
         nrow, ncol = (r1 - r0) // k, (c1 - c0) // k
         r1, c1 = r0 + nrow * k, c0 + ncol * k
@@ -167,7 +385,7 @@ def main():
         start_utc = txt(st)[:19] + "Z" if st is not None else fmt(m.group(1))
         end_utc = txt(en)[:19] + "Z" if en is not None else fmt(m.group(2))
         date = start_utc[:10].replace("-", "")
-        fname = f"L_{role}_{date}_T{track:03d}{args.suffix}.h5"
+        fname = f"{band}_{role}_{date}_T{track:03d}{args.suffix}.h5"
         out = out_dir / fname
 
         # true footprint: pixel-edge rectangle -> lat/lon (sample all four edges)
@@ -179,17 +397,40 @@ def main():
         lon, lat = Transformer.from_crs(epsg, 4326, always_xy=True).transform(ex, ey)
         bounds = [[float(lat.min()), float(lon.min())], [float(lat.max()), float(lon.max())]]
 
-        src_url = args.src if re.match(r"https?://", args.src) else f"{BASE}/{coll}/{fid}/{fid}.h5"
+        if args.source_url:
+            src_url = args.source_url
+        elif re.match(r"https?://", args.src):
+            src_url = args.src
+        elif band == "S":
+            src_url = f"https://bhoonidhi-api.nrsc.gov.in/download?id={fid}&collection={coll}"
+        else:
+            src_url = f"{BASE}/{coll}/{fid}/{fid}.h5"
         print(f"{args.scene}: grid EPSG:{epsg} spacing {abs(dx):g} m, window rows {r0}:{r1} cols {c0}:{c1}, "
               f"multilook {k} -> {nrow}x{ncol} @ {posting:g} m")
 
+        pol_names = [n for n in pols if n in grid]
+        basis = pol_basis_of(pol_names or pols)
+        band_rows = max(k, (min(2048, int(3e7) // max(1, c1 - c0)) // k) * k)   # <= ~30 M samples per read band
+        if args.plan:
+            tot = 0.0
+            for name in pol_names + (["mask"] if "mask" in grid else []):
+                cb = chunk_bytes(grid[name], r0, r1, c0, c1)
+                if cb:
+                    tot += cb[1]
+                    print(f"  plan {name}: {cb[0]} chunks {grid[name].chunks} dtype {grid[name].dtype}, "
+                          f"~{cb[1] / 1e6:.0f} MB compressed{' (sampled)' if cb[2] else ''}")
+                else:
+                    print(f"  plan {name}: contiguous (uncompressed) dataset, "
+                          f"~{(r1 - r0) * (c1 - c0) * grid[name].dtype.itemsize / 1e6:.0f} MB if read by rows")
+            print(f"  plan total ~{tot / 1e6:.0f} MB for pols {pol_names} (pol_basis {basis}); nothing written")
+            return None
         tmp = out.with_suffix(".h5.part")
         stats = {}
         with h5py.File(tmp, "w") as o:
             a = o.attrs
             a["schema"] = "spacebros-subset-v1"
             a["scene_id"] = args.scene
-            a["band"] = "L"
+            a["band"] = band
             a["role"] = role
             a["source_granule"] = fid
             a["source_url"] = src_url
@@ -205,6 +446,7 @@ def main():
             a["epsg"] = epsg
             a["posting_m"] = posting
             a["multilook"] = k
+            a["pol_basis"] = basis
             a["created_utc"] = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
             a["software"] = f"src/fetch/subset_h5.py@{git_sha()}"
             a["bounds_latlon"] = np.array(bounds, dtype="float64")
@@ -213,7 +455,6 @@ def main():
             dgx.attrs["epsg"] = epsg
             dgy.attrs["epsg"] = epsg
             chunks = (min(256, nrow), min(256, ncol))
-            band_rows = max(k, (2048 // k) * k)
             for name in pols:
                 if name not in grid:
                     print(f"  {name}: not in file (has {[q for q in grid.keys() if len(q) == 4]})")
@@ -237,6 +478,9 @@ def main():
                 vm = v != FILL
                 stats[pol] = (float(np.median(v[vm]) / 100) if vm.any() else float("nan"),
                               float(1 - (d[::2, ::2] != FILL).mean()))
+            if not stats:
+                raise ValueError(f"none of {pols} found in the file; its datasets: "
+                                 f"{[q for q in grid.keys() if len(q) == 4]}")
             if "mask" in grid:
                 mk = o.create_dataset("aux/mask", shape=(nrow, ncol), dtype="uint8", chunks=chunks,
                                       compression="gzip", compression_opts=6, shuffle=True)
@@ -252,12 +496,16 @@ def main():
         tmp.replace(out)
 
     mb = out.stat().st_size / 1e6
-    print(f"wrote {out.relative_to(ROOT)}  shape={nrow}x{ncol}  posting={posting:g} m  size={mb:.1f} MB")
+    shown = out.relative_to(ROOT) if out.is_relative_to(ROOT) else out   # --out may be outside the repo
+    print(f"wrote {shown}  shape={nrow}x{ncol}  posting={posting:g} m  size={mb:.1f} MB")
     sline = "; ".join(f"{p} median {m_:.2f} dB nan {n_:.3f}" for p, (m_, n_) in stats.items())
     for p, (m_, n_) in stats.items():
         print(f"  {p}: median {m_:.2f} dB, NaN fraction {n_:.3f}")
     print(f"  bounds_latlon {bounds}  runtime {time.time() - t0:.0f} s")
+    if args.no_log:
+        return
     log = ROOT / "data" / "logs" / "nisar_h5_subset.md"
+    log.parent.mkdir(parents=True, exist_ok=True)
     with open(log, "a") as f:
         f.write(f"- {dt.datetime.now(dt.timezone.utc):%Y-%m-%d %H:%MZ} {args.scene} -> data/h5/{fname} "
                 f"shape={nrow}x{ncol} posting={posting:g}m multilook={k} size={mb:.1f}MB {sline} "

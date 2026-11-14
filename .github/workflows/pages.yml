@@ -31,7 +31,12 @@ jobs:
         run: pip install h5py numpy pyproj Pillow
 
       - name: Build display assets from data/h5 (writes data/web/)
-        run: python tools/build_web.py
+        run: python tools/build_web.py   # also retargets the class + sea difference layers of data/processed/manifest.json at the newest scene
+
+      - name: Build the live story (story.json, feed.json, atom.xml) and run its tests
+        run: |
+          python tools/tests/test_story.py
+          python tools/build_story.py
 
       - name: Assemble site
         run: |

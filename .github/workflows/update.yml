@@ -1,0 +1,82 @@
+name: Update NISAR data
+
+# Daily: look for new NISAR L2 GCOV passes over the study area (NASA CMR, no login), subset them into data/h5/,
+# refresh data/h5/catalog.json and the manifest layers, commit, then redeploy Pages.
+# One-time setup: repo secret EARTHDATA_TOKEN (see docs/PIPELINE.md). Without new scenes nothing is committed.
+on:
+  schedule:
+    - cron: "23 5 * * *"        # 05:23 UTC = 10:53 IST, off the :00 peak
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only list what would be ingested (no download, no commit)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write     # commit the new subsets
+  actions: write      # start the Pages workflow (a push made with GITHUB_TOKEN does not trigger it)
+
+concurrency:
+  group: nisar-update
+  cancel-in-progress: false   # never overlap; a late run waits
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install h5py numpy pyproj Pillow
+
+      - name: Discover new scenes (CMR, public)
+        id: discover
+        run: |
+          python tools/pipeline/discover.py --json /tmp/new_scenes.json
+          n=$(python -c "import json; d=json.load(open('/tmp/new_scenes.json')); print(len(d['new'])+len(d['upgrades']))")
+          echo "count=$n" >> "$GITHUB_OUTPUT"
+          echo "$n new/upgraded scene(s)"
+
+      - name: Dry run (list only)
+        if: ${{ steps.discover.outputs.count != '0' && inputs.dry_run }}
+        run: python tools/pipeline/ingest.py --from /tmp/new_scenes.json --dry-run
+
+      - name: Ingest (stream-subset, 90 MB guard, rebuild catalog)
+        if: ${{ steps.discover.outputs.count != '0' && !inputs.dry_run }}
+        env:
+          EARTHDATA_TOKEN: ${{ secrets.EARTHDATA_TOKEN }}
+        run: |
+          if [ -z "$EARTHDATA_TOKEN" ]; then echo "::error::secret EARTHDATA_TOKEN is not set (docs/PIPELINE.md)"; exit 1; fi
+          python tools/pipeline/ingest.py --from /tmp/new_scenes.json
+
+      - name: Catalog + manifest sync + validation
+        if: ${{ steps.discover.outputs.count != '0' && !inputs.dry_run }}
+        run: |
+          python tools/pipeline/catalog.py
+          python tools/pipeline/sync_manifest.py
+          python tools/check_manifest.py
+
+      - name: Commit and push
+        id: commit
+        if: ${{ steps.discover.outputs.count != '0' && !inputs.dry_run }}
+        run: |
+          git add -A data/h5 data/processed/manifest.json
+          if git diff --cached --quiet; then echo "nothing to commit"; echo "pushed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          git config user.name  "nisar-update-bot"
+          git config user.email "nisar-update-bot@users.noreply.github.com"
+          git commit -m "data: add new NISAR scenes (automatic update)" -m "$(git diff --cached --name-status | cut -c1-120 | head -20)"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Redeploy Pages
+        if: ${{ steps.commit.outputs.pushed == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref "${GITHUB_REF_NAME}"   # workflow_dispatch is allowed with GITHUB_TOKEN

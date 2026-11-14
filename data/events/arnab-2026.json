@@ -1,0 +1,54 @@
+{
+  "schema": "event-v1",
+  "id": "arnab_2026",
+  "name": "Cyclone Arnab",
+  "hazard": "cyclone",
+  "status": "active",
+  "region": "konaseema",
+  "imd": {
+    "category": "Very Severe Cyclonic Storm",
+    "category_short": "VSCS",
+    "wind_kmh": [125, 135],
+    "gust_kmh": 150,
+    "wind_text": "About 125 to 135 km/h wind near landfall, with gusts to about 150 km/h (IMD).",
+    "source": "IMD",
+    "bulletin_urls": [],
+    "bulletin_dir": "docs/imd_bulletins"
+  },
+  "landfall": {
+    "lat": 16.45,
+    "lon": 81.9,
+    "date": "2026-10-28",
+    "time_utc": null,
+    "note": "time being confirmed (IMD)",
+    "where_text": "Landfall point on the map: near 16.45 N, 81.9 E (Narasapuram and Razole area)."
+  },
+  "dates": { "landfall_day": "2026-10-28", "closed": null },
+  "baseline": {
+    "scenes": [
+      { "scene_id": "L_COAST_1004", "role": "COAST", "date": "2026-10-04" },
+      { "scene_id": "L_COAST_1016", "role": "COAST", "date": "2026-10-16" },
+      { "scene_id": "L_SEA_CALM_1015", "role": "SEA", "date": "2026-10-15" }
+    ],
+    "note": "Calm-period scenes. The 15 Oct sea scene is PROVISIONAL; check it against 3 Oct before quoting numbers."
+  },
+  "confounders": [
+    {
+      "id": "murasu_2026",
+      "name": "Cyclone Murasu",
+      "kind": "cyclone",
+      "from": "2026-11-01",
+      "to": "2026-11-03",
+      "affects_dates": ["2026-11-09"],
+      "limit_text": "Cyclone Murasu (1-3 Nov) and the river peak",
+      "text": "Cyclone Murasu (1 to 3 Nov) and the Godavari river peak (about 2 Nov) also put water on the land. This radar picture shows all of it together, not Cyclone Arnab alone.",
+      "note": "Human-written. affects_dates lists the radar scene dates the note applies to; add a date when a later scene is still affected."
+    }
+  ],
+  "monitor_days": 45,
+  "official_links": [
+    { "name": "IMD", "url": "https://mausam.imd.gov.in/", "what": "India Meteorological Department" },
+    { "name": "APSDMA", "url": "https://apsdma.ap.gov.in/", "what": "Andhra Pradesh State Disaster Management Authority" },
+    { "name": "SACHET", "url": "https://sachet.ndma.gov.in/", "what": "NDMA alert portal" }
+  ]
+}

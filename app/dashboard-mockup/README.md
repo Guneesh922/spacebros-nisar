@@ -29,3 +29,15 @@ Header with title and subtitle, underline tabs, one card/badge system, "Sample v
 
 ## Known limits
 Desktop first, phone is a simple stack, English only. Swipe uses CSS clip and can lag during zoom animation.
+
+## Dates, permalinks and saved days (W3-C)
+The NISAR dates come from manifest layers (`type: nisar`, `status: ready`, with `date`, `png`, `bounds`); a new layer entry appears in the date selector on the map with no code change. The view (tab, mode, dates, mandal, map centre and zoom) is kept in the URL hash (`#tab=happened&mode=swipe&role=coast&d=...&b=...`; plain `#data` still works). The "This view" card offers Copy link, Save this day (localStorage, this browser only, by date and role, never by array position) and Download this day (PNG, H5 of record, JSON).
+
+## Live story, archive and pro tab (W3-H phase 2)
+- "What happened" is rendered from `data/web/story.json` (built by `tools/build_story.py`). If that file is missing the page falls back to the text in `js/findings.js`. Fields used: state, headline, since_last, lead, confounders, class_summary, big_numbers, map, next_pass, timestamps, badges (+ provisional_text), mandal_sentences / mandals, updates[] (archive, each linked by `hash`), feed. Strings for stale/missing text come from `app/strings/story.en.json` (built-in English fallback).
+- Badges: "Provisional data" from `badges.provisional`; "Sample values" only if `badges.sample` is true, or a layer / `mandal_rank.json` / `profile.json` carries `placeholder.is`. The wet-crops layer carries a "Weak signal" tag.
+- To test a state without editing data: `window.__spacebros.setStory({...JSON.parse(JSON.stringify(window.__spacebros.story())), state: 'watch'})` in the console (null = built-in text).
+- Mandal numbers: public tab = open water only (`rank_water`); data tab can rank by water or water + crops. `by_date` of `mandal_rank.json` feeds the sparklines and the flood-share day selector (hash `mode=share&d=YYYY-MM-DD`).
+- Data tab cards added: Radar by date (small multiples), Brightness histogram (`hist` + `water_threshold_db` of each layer json); map legends come from the layers on the map (dB bar, sea-difference `ramp.stops`, class colours).
+- Test viewports: 1400x900 and 800 wide, both tabs, all four map modes.
+

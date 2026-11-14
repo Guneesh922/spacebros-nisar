@@ -618,19 +618,19 @@
       "time_utc": null,
       "latest_of": "nisar_class_new_water",
       "shows": "Where open water likely appeared between the before and after scenes",
-      "limit": "water under dense crops (it can be missed); 9 Nov also reflects Cyclone Murasu (1-3 Nov) and the river peak, not Arnab alone",
+      "limit": "water under dense crops (it can be missed); wind-roughened water can look bright; 9 Nov also reflects Cyclone Murasu (1-3 Nov) and the river peak, not Arnab alone",
       "source": "SpaceBros change map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",
-      "png": "data/processed/img/class_20261109_new_water.png",
+      "png": "data/web/class_20261109_new_water.png",
       "bounds": [
         [
-          16.19511,
+          16.1949,
           81.59718
         ],
         [
           17.10546,
-          82.60788
+          82.60745
         ]
       ],
       "bounds_inferred": false,
@@ -671,7 +671,15 @@
         "2026-10-16"
       ],
       "class_group": "ap_delta_oct_nov_2026",
-      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 subset"
+      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 H5 subsets (tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_COAST_20261004_T055.h5",
+        "data/h5/L_COAST_20261016_T055.h5",
+        "data/h5/L_COAST_20261028_T055.h5",
+        "data/h5/L_COAST_20261109_T055.h5"
+      ],
+      "processing": "single-band L (HH+HV); baseline 4 and 16 Oct are PROVISIONAL products; thresholds in data/web/class_stats.json and docs/METHODS.md",
+      "class_date": "2026-11-09"
     },
     {
       "group": "after",
@@ -682,19 +690,19 @@
       "time_utc": null,
       "latest_of": "nisar_class_wet_crops",
       "shows": "Where crop fields likely turned wet or flooded (radar brightness change)",
-      "limit": "water under dense crops; a normal fortnight (4-16 Oct) changes as many fields (1.9% vs 1.0% on 9 Nov), so this shows changing fields, not proven flooding",
+      "limit": "water under dense crops; a normal fortnight (4-16 Oct) already flags 2.1% of land by the same rule, against 2.7% on 28 Oct and 0.9% on 9 Nov, so this class is not clearly above normal field change and is not proven flooding",
       "source": "SpaceBros change map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",
-      "png": "data/processed/img/class_20261109_wet_crops.png",
+      "png": "data/web/class_20261109_wet_crops.png",
       "bounds": [
         [
-          16.19511,
+          16.1949,
           81.59718
         ],
         [
           17.10546,
-          82.60788
+          82.60745
         ]
       ],
       "bounds_inferred": false,
@@ -735,7 +743,15 @@
         "2026-10-16"
       ],
       "class_group": "ap_delta_oct_nov_2026",
-      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 subset"
+      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 H5 subsets (tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_COAST_20261004_T055.h5",
+        "data/h5/L_COAST_20261016_T055.h5",
+        "data/h5/L_COAST_20261028_T055.h5",
+        "data/h5/L_COAST_20261109_T055.h5"
+      ],
+      "processing": "single-band L (HH+HV); baseline 4 and 16 Oct are PROVISIONAL products; thresholds in data/web/class_stats.json and docs/METHODS.md",
+      "class_date": "2026-11-09"
     },
     {
       "group": "after",
@@ -750,15 +766,15 @@
       "source": "SpaceBros change map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",
-      "png": "data/processed/img/class_20261109_no_change.png",
+      "png": "data/web/class_20261109_no_change.png",
       "bounds": [
         [
-          16.19511,
+          16.1949,
           81.59718
         ],
         [
           17.10546,
-          82.60788
+          82.60745
         ]
       ],
       "bounds_inferred": false,
@@ -799,22 +815,30 @@
         "2026-10-16"
       ],
       "class_group": "ap_delta_oct_nov_2026",
-      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 subset"
+      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 H5 subsets (tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_COAST_20261004_T055.h5",
+        "data/h5/L_COAST_20261016_T055.h5",
+        "data/h5/L_COAST_20261028_T055.h5",
+        "data/h5/L_COAST_20261109_T055.h5"
+      ],
+      "processing": "single-band L (HH+HV); baseline 4 and 16 Oct are PROVISIONAL products; thresholds in data/web/class_stats.json and docs/METHODS.md",
+      "class_date": "2026-11-09"
     },
     {
       "group": "during",
       "type": "derived",
       "chip": "nisar",
       "kind": "image",
-      "date": "2026-10-27",
-      "time_utc": "2026-10-27T13:01:51Z",
+      "date": "2026-11-08",
+      "time_utc": "2026-11-08T13:01:51Z",
       "latest_of": "nisar_sea_diff",
-      "shows": "Change in sea-surface radar brightness, eye pass minus calm day (dB); difference of two calibrated backscatter images; wind-roughened sea appears brighter",
+      "shows": "Change in sea-surface radar brightness, 8 Nov minus calm day 15 Oct (dB); difference of two calibrated backscatter images; wind-roughened sea appears brighter",
       "limit": "wind speed (it is a brightness change); the 15 Oct calm reference is provisional and patchy, so the level may be overstated",
       "source": "SpaceBros difference map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",
-      "png": "data/web/nisar_sea_diff_20261027_vs_20261015.png",
+      "png": "data/web/nisar_sea_diff_20261108_vs_20261015.png",
       "bounds": [
         [
           15.29757,
@@ -845,12 +869,52 @@
       "status": "ready",
       "placeholder": null,
       "id": "nisar_sea_diff_20261027_vs_20261015",
-      "name": "Sea roughness change (storm minus calm)",
-      "bounds_source": "H5 subset footprint (data/web/nisar_sea_diff_20261027_vs_20261015.json, built by tools/build_web.py)",
+      "name": "Sea roughness change (8 Nov minus calm 15 Oct)",
+      "bounds_source": "H5 subset footprint (data/web/nisar_sea_diff_20261108_vs_20261015.json, built by tools/build_web.py)",
       "h5_sources": [
-        "data/h5/L_SEA_20261027_T048.h5",
+        "data/h5/L_SEA_20261108_T048.h5",
         "data/h5/L_SEA_20261015_T048.h5"
-      ]
+      ],
+      "diff_date": "2026-11-08",
+      "diff_reference_date": "2026-10-15",
+      "diff_dates": [
+        "2026-10-27",
+        "2026-11-08"
+      ],
+      "ramp": {
+        "name": "blue-white-orange (colour-blind safe)",
+        "kind": "diverging",
+        "unit": "dB",
+        "colour_blind_safe": true,
+        "stops": [
+          {
+            "value": -15.0,
+            "hex": "#1D4E89",
+            "label": "much darker (smoother sea)"
+          },
+          {
+            "value": -7.5,
+            "hex": "#6BAED6",
+            "label": null
+          },
+          {
+            "value": 0.0,
+            "hex": "#F7F7F7",
+            "label": "no change"
+          },
+          {
+            "value": 7.5,
+            "hex": "#F6A04D",
+            "label": null
+          },
+          {
+            "value": 15.0,
+            "hex": "#B54708",
+            "label": "much brighter (rougher sea)"
+          }
+        ],
+        "note": "negative = sea darker than the calm reference, positive = brighter (rougher); grey-white = no change"
+      }
     },
     {
       "group": "during",

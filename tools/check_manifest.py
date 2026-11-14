@@ -434,9 +434,20 @@ def main():
             ranks = [r.get("rank") for r in rows]
             if ranks != list(range(1, len(rows) + 1)):
                 errs.append("mandal_rank.json: ranks must run 1..N in row order")
-            tot = [r["water_pct"] for r in rows if "water_pct" in r]  # ranked by likely-new-water share only (wet-crops class is not storm-specific)
+            basis = d.get("rank_basis") or "water_pct"   # W3-H: rank follows total likely flooded (water + crops); rank_water follows water only
+            tot = [r[basis] for r in rows if basis in r]
             if tot != sorted(tot, reverse=True):
-                errs.append("mandal_rank.json: rows not sorted by water_pct descending")
+                errs.append("mandal_rank.json: rows not sorted by %s descending" % basis)
+            for iso, blk in (d.get("by_date") or {}).items():
+                brs = blk.get("rows") or []
+                for r in brs:
+                    for k in ("mandal", "water_pct", "crops_pct", "err", "coverage_pct", "area_km2", "flooded_km2"):
+                        if k not in r:
+                            errs.append("mandal_rank.json by_date %s: %s missing '%s'" % (iso, r.get("mandal"), k))
+                            break
+                rw = sorted(r["rank_water"] for r in brs if r.get("rank_water"))
+                if rw != list(range(1, len(rw) + 1)):
+                    errs.append("mandal_rank.json by_date %s: rank_water must run 1..N" % iso)
         if fn == "profile.json":
             pts = d.get("points", [])
             if len(pts) < 20:
