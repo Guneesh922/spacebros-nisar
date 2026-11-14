@@ -1,0 +1,73 @@
+name: Deploy to GitHub Pages
+
+# One-time setup by the repo owner: Settings -> Pages -> Source: GitHub Actions.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true   # data/h5/*.h5 may be in Git LFS; Pages does not serve LFS pointers
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pipeline deps
+        run: pip install h5py numpy pyproj Pillow
+
+      - name: Build display assets from data/h5 (writes data/web/)
+        run: python tools/build_web.py
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site/data
+          cp -r app _site/app
+          cp -r data/processed _site/data/processed
+          # reference: small files only (< 1 MB each)
+          mkdir -p _site/data/reference
+          find data/reference -type f -size -1024k | while read -r f; do
+            mkdir -p "_site/$(dirname "$f")"; cp "$f" "_site/$f"
+          done
+          [ -d data/web ] && cp -r data/web _site/data/web || echo "no data/web (no H5 yet)"
+          [ -d data/h5 ] && cp -r data/h5 _site/data/h5 || echo "no data/h5 yet"
+          # root redirect only if the repo has no root index.html
+          if [ ! -f index.html ]; then
+            cat > _site/index.html <<'HTML'
+          <!doctype html>
+          <meta charset="utf-8">
+          <title>SpaceBros NISAR</title>
+          <meta http-equiv="refresh" content="0; url=app/dashboard-mockup/">
+          <a href="app/dashboard-mockup/">Open the dashboard</a>
+          HTML
+          fi
+          touch _site/.nojekyll
+          du -sh _site
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -55,7 +55,9 @@ v1 fields (always present, same meaning): `id, group, name, chip, date, shows, s
 | `kind` | `image` (PNG overlay with `bounds`), `wmts` (tile layer), `geojson` (vector, needs `file`), `live` (fetched JSON, needs `url_template`), `link` (no overlay; needs `link_url` or `file`). |
 | `date`, `time_utc` | ISO date or `"live"` or a year; exact pass time for scenes. |
 | `latest_of` | Layers sharing the key form a time series; the newest is "latest". Keys used: `nisar_l_sea_vv`, `nisar_l_coast_hh`. |
-| `png` | Path under `data/processed/img/`. `null` for non-image layers. |
+| `png` | Path under `data/processed/img/` (hand-made files) or `data/web/` (built by `tools/build_web.py` from the layer's `h5`; git-ignored, produced by the Pages workflow). `null` for non-image layers. |
+| `h5` | Optional. Source subset of record, `data/h5/<name>.h5` (schema `spacebros-subset-v1`, see `docs/DATA_STORAGE.md`). When present, `tools/build_web.py` reads `/backscatter/{pol}` from it and writes `data/web/{id}.png` and `data/web/{id}.json` (bounds, p2/p50/p98, nan_frac, source_granule, product_status). `check_manifest.py` checks the path shape; with `--files` the file must exist. |
+| `stretch` | Optional `[lo_dB, hi_dB]` overriding the default display stretch used by `build_web.py` (COAST -25..0, SEA -30..-5). |
 | `bounds`, `bounds_inferred` | `[[S,W],[N,E]]` of the full image. `bounds_inferred: true` when no KML exists and the box was copied from the same track/frame of a later pass. `bounds_source` explains. |
 | `url_template` | Tile or API URL. WMTS uses `{time}/{z}/{y}/{x}`; live uses `{lat}`/`{lon}` filled from `config`. |
 | `latest_available_lag_days` | wmts only. Integer: the newest date the source usually has is today minus this many days. The page tries that date, then one and two days earlier. `time_step` and `time_format` say how to build `{time}`. |

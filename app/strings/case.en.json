@@ -108,7 +108,7 @@
   "case.about.limit4": "The “likely” colours come from a threshold. They are not a warning, and they are not an area in km².",
   "case.about.limit5": "The cyclone path is straight lines between IMD reports, not the true path.",
   "case.about.limit6": "IMD is still confirming the landfall time.",
-  "case.about.limit7": "The eye size and the radial chart are sample values until the processed files are ready.",
+  "case.about.limit7": "The eye is small and weak in this radar view (about 5 km core, bright ring near 14 km). The brightness-rise chart compares 27 Oct with a provisional calm scene (15 Oct) that has dark patches, so read its shape, not its level.",
   "case.about.credits_h": "Credits and licences",
   "case.about.credit_row": "{provider}. Credit: {credit}. Licence: {licence}.",
   "case.about.placeholder_h": "What is placeholder",

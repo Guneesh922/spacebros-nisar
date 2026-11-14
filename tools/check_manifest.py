@@ -5,8 +5,9 @@ Usage:
     python3 tools/check_manifest.py [--manifest PATH] [--files]
 
 Prints one PASS/FAIL line per check. Exit code 0 when every check passes, 1 otherwise.
---files additionally lists referenced files that do not exist yet (informational only,
-never changes the exit code).
+--files additionally lists referenced files that do not exist yet (informational; the exit code is
+unchanged, except that a layer's `h5` file must exist, a missing one fails). Missing `png` files under
+data/web/ are build outputs of tools/build_web.py and only produce a WARN line.
 """
 import argparse
 import json
@@ -25,6 +26,8 @@ STATUSES = {"ready", "coming_next", "link_only", "unavailable"}
 ACCESS = {"live", "snapshot", "pipeline", "link"}
 HEX = re.compile(r"^#[0-9A-Fa-f]{6}$")
 ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+PNG_PREFIXES = ("data/processed/img/", "data/web/")   # data/web/ = built by tools/build_web.py (git-ignored)
+H5_PREFIX = "data/h5/"
 
 results = []   # (ok, name, detail)
 warnings = []  # non-failing notes, printed as WARN lines
@@ -60,7 +63,7 @@ def all_paths(m):
     """Every file path the manifest references (for --files)."""
     paths = set()
     for l in m.get("layers", []):
-        for k in ("png", "file"):
+        for k in ("png", "file", "h5"):
             if l.get(k):
                 paths.add(l[k])
         for c in l.get("classes") or []:
@@ -208,8 +211,12 @@ def main():
                 errs.append("layer %s: nisar image layer needs time_utc" % i)
         elif l.get("bounds") is not None and not bounds_ok(l.get("bounds")):
             errs.append("layer %s: bounds shape invalid" % i)
-        if l.get("png") and not str(l["png"]).startswith("data/processed/img/"):
-            errs.append("layer %s: png must live under data/processed/img/" % i)
+        if l.get("png") and not str(l["png"]).startswith(PNG_PREFIXES):
+            errs.append("layer %s: png must live under data/processed/img/ or data/web/ (build output)" % i)
+        if l.get("h5") is not None:
+            h = str(l["h5"])
+            if not h.startswith(H5_PREFIX) or not h.endswith(".h5") or ".." in h or h.count("/") != 2:
+                errs.append("layer %s: h5 must be data/h5/<name>.h5" % i)
         if l.get("kind") == "wmts":
             u = l.get("url_template") or ""
             if "{time}" not in u or "{z}" not in u:
@@ -256,8 +263,8 @@ def main():
         if not l:
             errs.append("missing NISAR layer %s" % n)
             continue
-        if l.get("png") != "data/processed/img/%s.png" % n:
-            errs.append("layer %s: png must be data/processed/img/%s.png" % (n, n))
+        if l.get("png") not in tuple(p + "%s.png" % n for p in PNG_PREFIXES):
+            errs.append("layer %s: png must be data/processed/img/%s.png or data/web/%s.png" % (n, n, n))
         want_key = "nisar_l_sea_vv" if "_sea_" in n else "nisar_l_coast_hh"
         if l.get("latest_of") != want_key:
             errs.append("layer %s: latest_of must be %s" % (n, want_key))
@@ -427,9 +434,9 @@ def main():
             ranks = [r.get("rank") for r in rows]
             if ranks != list(range(1, len(rows) + 1)):
                 errs.append("mandal_rank.json: ranks must run 1..N in row order")
-            tot = [r["water_pct"] + r["crops_pct"] for r in rows if "water_pct" in r and "crops_pct" in r]
+            tot = [r["water_pct"] for r in rows if "water_pct" in r]  # ranked by likely-new-water share only (wet-crops class is not storm-specific)
             if tot != sorted(tot, reverse=True):
-                errs.append("mandal_rank.json: rows not sorted by water_pct + crops_pct descending")
+                errs.append("mandal_rank.json: rows not sorted by water_pct descending")
         if fn == "profile.json":
             pts = d.get("points", [])
             if len(pts) < 20:
@@ -456,9 +463,18 @@ def main():
     if args.files:
         print("\nReferenced files that do not exist yet (informational):")
         missing = [p for p in all_paths(m) if not os.path.exists(os.path.join(ROOT, p))]
+        h5_missing = []
         for p in missing:
-            print("  missing  %s" % p)
+            if p.startswith("data/web/"):
+                print("  WARN     %s (build output: run python tools/build_web.py)" % p)
+            elif p.startswith(H5_PREFIX) and p.endswith(".h5"):
+                h5_missing.append(p)
+                print("  FAIL     %s (layer h5 file missing)" % p)
+            else:
+                print("  missing  %s" % p)
         print("  %d of %d referenced files missing" % (len(missing), len(all_paths(m))))
+        if h5_missing:
+            ok_all = False
 
     wtxt = ", %d warning%s" % (len(warnings), "" if len(warnings) == 1 else "s") if warnings else ""
     print("\n%s (%d checks, %d failed%s)" % ("PASS" if ok_all else "FAIL", len(results), sum(1 for r in results if not r[0]), wtxt))

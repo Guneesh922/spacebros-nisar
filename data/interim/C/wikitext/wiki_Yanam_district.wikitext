@@ -1,0 +1,157 @@
+{{Use dmy dates|date=July 2019}}
+{{Infobox settlement
+| name                   = Yanam district
+| other_name             = 
+| type                   = [[List of districts of Puducherry|District]] of [[Puducherry (union territory)|Puducherry]]
+| image                  = File:Puducherry Map.svg
+| alt                    = 
+| caption                = 
+| pushpin_label_position = 
+| pushpin_alt            = 
+| pushpin_caption        = Location in India
+| coordinates            = {{coord|16|44|2|N|82|12|39|E|display=inline,title}}
+| subdivision_type       = Country
+| subdivision_name       = {{flag|India}}
+| subdivision_type1      = [[States and union territories of India|Union Territory]]
+| subdivision_name1      = [[Puducherry (union territory)|Puducherry]]
+| subdivision_type2      = [[List of districts of India|District]]
+| established_title      = <!-- Established -->
+| established_date       = 
+| founder                = 
+| named_for              = 
+| government_type        = 
+| governing_body         = 
+| unit_pref              = Metric
+| area_footnotes         = 
+| area_rank              = 
+| area_total_km2         = 
+| elevation_footnotes    = 
+| elevation_m            = 
+| population_total       = 55,626
+| population_as_of       = 2011
+| population_rank        = 
+| population_density_km2 = auto
+| population_demonym     = 
+| population_footnotes   = 
+| demographics_type1     = Languages
+| demographics1_title1   = Official
+| demographics1_info1    = [[Telugu language|Telugu]]<ref name="1965act">{{cite web |title=The Pondicherry Official Languages Act, 1965 |url=http://www.lawsofindia.org/pdf/puducherry/1965/1965Pondicherry3.pdf |archive-url=https://web.archive.org/web/20200503022028/http://www.lawsofindia.org/pdf/puducherry/1965/1965Pondicherry3.pdf |archive-date=3 May 2020 |website=lawsofindia.org |publisher=Laws of India |url-status=usurped |access-date=10 June 2019}}</ref>
+| time_zone1             = [[Indian Standard Time|IST]]
+| demographics1_title2   = Additional
+| demographics1_info2    = [[English language|English]],<ref name="1965act"/> [[French language|French]]<ref name="1963assemblyresolution">{{cite book|url=https://books.google.com/books?id=SbHeDwAAQBAJ|title=The Legacy of French Rule in India (1674-1954): An investigation of a process of Creolization|author= Animesh Rai|publisher= Institut français de Pondichéry|year=2020|isbn=9791036549892 }}</ref>
+| utc_offset1            = +5:30
+| postal_code_type       = [[Postal Index Number|PIN]]
+| postal_code            = 
+| area_code_type         = Telephone code
+| area_code              = 
+| registration_plate     = 
+| website                = {{URL|http://yanam.gov.in/}}
+| footnotes              = 
+}}
+'''Yanam district''' ({{IPA|te|jaːnaːm|lang}}) (previously '''Yanaon''', ({{IPA|fr|janaɔ̃|lang}})) is one of the four census districts of the [[Union Territory]] of [[Puducherry (union territory)|Puducherry]] in India. Administratively it falls under the [[Puducherry district]].<ref>{{cite web|url = https://censusindia.gov.in/nada/index.php/catalog/980/download/36788/DH_2011_3401_PART_A_DCHB_YANAM.pdf|format = PDF| title = District Census Handbook Yanam | pages = 19 | publisher = [[2011 census of India]] | accessdate = 2024-11-02 }}</ref>
+
+==Geography==
+Yanam district occupies an area of {{convert|20|km2|sqmi}},<ref name="Reference Annual">{{cite book | editor1 = Srivastava, Dayawanti | title = India 2010: A Reference Annual | chapter = States and Union Territories: Pondicherry: Government | edition = 54th | publisher = Additional Director General, Publications Division, [[Ministry of Information and Broadcasting (India)]], [[Government of India]] | year = 2010 | location = New Delhi, India | pages = 1222 | isbn = 978-81-230-1617-7}}</ref>
+
+It is located south of Kakinada port on the north bank of Godavari river, slightly inland. It is bordered and surrounded by [[Konaseema district]] on South and [[Kakinada district]] on north (Districts of [[Andhra]] State)
+
+==Revenue villages==
+Apart from the town of [[Yanam]] itself, the following villages fall under the district's jurisdiction:{{citation needed|date=September 2018}} 
+* Agraharam
+* Darialatippa
+* Farampeta
+* [[Francetippa]]
+* Guerempeta
+* Kanakalapeta
+* Kurasampeta
+* Mettakur
+
+==Demographics==
+According to the [[2011 census of India|2011 census]] Yanam district has a [[Demographics of India|population]] of 55,626,<ref name=districtcensus>{{cite web | url = http://www.census2011.co.in/district.php | title = District Census 2011 | access-date = 2011-09-30 | year = 2011 | publisher = Census2011.co.in}}</ref> roughly equal to the island of [[Greenland]].<ref name="cia">{{cite web | author = US Directorate of Intelligence | title = Country Comparison:Population | url = https://www.cia.gov/library/publications/the-world-factbook/rankorder/2119rank.html | archive-url = https://web.archive.org/web/20070613004507/https://www.cia.gov/library/publications/the-world-factbook/rankorder/2119rank.html | url-status = dead | archive-date = 13 June 2007 | access-date = 2011-10-01 | quote = Greenland, 57,670, July 2011 est.}}</ref> This gives it a ranking of 629th in India (out of a total of [[Districts of India|640]]).<ref name=districtcensus/> 
+The district has a population density of {{convert|	3272	|PD/sqkm|PD/sqmi}}.<ref name=districtcensus/> Its [[Family planning in India|population growth rate]] over the decade 2001-2011 was 77.15%.<ref name=districtcensus/>	Yanam	has a [[sex ratio]] of 	1039	[[Women in India|females]] for every 1000 males,<ref name=districtcensus/> and a [[Literacy in India|literacy rate]] of 80.26%.<ref name=districtcensus/>
+
+===Religion===
+{{Pie chart
+|thumb = right
+|caption = Religion in Yanam district (2011)
+|label1 = [[Hinduism]]
+|value1 = 96.24
+|color1 = DarkOrange
+|label2 = [[Islam]]
+|value2 = 2.14
+|color2 = Green
+|label3 = [[Christianity]]
+|value3 = 1.57
+|color3 = Blue
+|label4 = Others
+|value4 = 0.05
+|color4 = LightGrey
+}}
+According to the official 2011 census database, Hinduism is the major religion practiced in Yanam district, comprising 96.24% of the population.<ref name="Census2011ReligionYanam">{{cite web |title=Table C-01 Population by Religious Community: Puducherry (Yanam District) |url=https://censusindia.gov.in |publisher=Office of the Registrar General & Census Commissioner, India |year=2011 |access-date=2026-06-27}}</ref> Muslims form a small religious minority at 2.14%, followed closely by Christians who make up 1.57% of the inhabitants.<ref name="Census2011ReligionYanam" /> Other groups, including Sikhs, Jains, and non-religious individuals, make up less than 0.05% combined.<ref name="Census2011ReligionYanam" />
+
+===Language===
+{{Pie chart
+|thumb = right
+|caption = Languages in Yanam district (2011)
+
+|label1 = [[Telugu language|Telugu]]
+|value1 = 97.43
+|color1 = Yellow
+
+|label2 = [[Tamil language|Tamil]]
+|value2 = 1.25
+|color2 = Red
+|label3 = Others
+|value3 = 1.32
+|color3 = LightGrey
+}}
+As a geographical enclave entirely situated within the state of Andhra Pradesh, [[Telugu language|Telugu]] serves as the predominant mother tongue, spoken by 97.43% of the district's population according to the 2011 census.<ref name="Census2011LanguageYanam">{{cite web |title=Table C-16 Population by Mother Tongue: Puducherry (Yanam District) |url=https://censusindia.gov.in/nada/index.php/catalog/10218 |publisher=Office of the Registrar General & Census Commissioner, India |year=2011 |access-date=2026-06-27}}</ref> Due to administrative associations within the wider Union Territory structures, a minor [[Tamil language|Tamil]] speaking community exists at 1.25%, with the remaining 1.32% composed of minor clusters speaking languages such as [[Malayalam]], Urdu, and Hindi.<ref name="Census2011LanguageYanam" />
+
+==Tourism==
+===Coringa Wildlife Sanctuary===
+[[Coringa Wildlife Sanctuary]], situated near [[Kakinada]], is a notable ecological gem. It covers an area of around 235 square kilometers and is primarily known for its extensive mangrove forest cover, making it one of the largest stretches of mangroves in the country.
+
+The sanctuary's location along the delta of the Godavari River and the Bay of Bengal gives rise to a fragile ecosystem. The intertwining network of creeks, estuaries, and tidal embankments creates a habitat that supports a wide array of wildlife.
+
+Bird enthusiasts flock to Coringa to witness the rich avian diversity. The sanctuary is a haven for migratory and resident bird species, making it a prime destination for bird-watching. Pelicans, flamingos, herons, and many other waterfowl find refuge here.
+
+Apart from birds, the sanctuary is also home to diverse aquatic species, including various species of fish, crabs, and shrimp, which play a vital role in the local ecosystem.
+
+===Yanam River Beach Walk Trial===
+The walkway on the banks of [[Godavari River]] is a major tourist attraction. The walkway surrounds around the landscape of the Yanam coastal area along the river side. The Walkway has park benches to relax and enjoy the beauty of Godavari River. The walkaway starts at Shivam Bath Statue which goes via Ferry Road where various statues and photoshoot places were present and ends at Yedurlanka Bridge.
+
+===Yanam Mangrove Forest and Puducherry State Obelisk Tower of Yanam===
+Apart from Coringa Wildlife Sanctuary, Yanam itself has a Mangrove Forest (which is the actual range of Coringa Wildlife Sanctuary in the Yanam District Administrational Area) where all the activities of Coringa National Park can be done. In order to have the Birds View of the Yanam Mangrove Forest, the Yanam Obelisk Tower was constructed here.
+
+The Yanam Obelisk Tower was conceptualised With the sole intention to reflect the special bond of Puducherry and French cultural diversity in Yanam, a special design on the lines of [[Eiffel Tower]] in [[Paris]], [[France]] was constructed as the "Yanam Tower". The Yanam Obelisk Tower was planned in an area of 18 acres in Giriyampeta village. The height of the Tower is 101.6 metres (333 feet), which is one-third of the actual height of the Eiffel Tower in Paris, France. The Tower weight is about 9125 tons. Foundation is a special bored cast in-situ piling up to 60 metres depth with 2020 cubic metres concrete and with a super structure of 31 metres height holding 1300 cubic metres concrete and 320 metric tons Rebar Steel. The Tower is covered with structural glazing of 2200 sq metres area with a 6mm thick toughened reflective glass. It is constructed with a Design Wind Speed of 216&nbsp;km/h. The Tourism Department of Puducherry, Government of India has approved and sanctioned its timely share of funds to the tune of Rs.17.21 crores towards the developmental works around the Yanam Tower. The Yanam Tower is expected to bring an overall development in the surrounding villages of Giriyampeta, Savithrinagar etc., with The main intention in taking up of this project is to safeguard the unique blend of [[French language|French]] - [[Telugu language|Telugu]] culture in Yanam and promote the Tourism sector to help Yanam emerge as a major Tourist destination.
+
+==See also==
+*[[Yanam (India)]]
+*[[Yanam Municipality]]
+*[[Karaikal district]]
+*[[Mahe district|Mahé district]]
+*[[Puducherry district]]
+
+==References==
+{{Commons category}}
+{{Reflist}}
+
+{{Geographic location
+|Centre    = Yanam district
+|North     = [[Kakinada district]], [[Andhra]]
+|Northeast = 
+|East      = [[Konaseema district]], [[Andhra]]
+|Southeast = 
+|South     = [[Konaseema district]], [[Andhra]]
+|Southwest = 
+|West      = [[Kakinada district]], [[Andhra]]
+|Northwest = 
+}}
+
+{{Puducherry}}
+{{Authority control}}
+
+{{DEFAULTSORT:Yanam District}}
+[[Category:Yanam district| ]]
+[[Category:Districts of Puducherry]]
+[[Category:Subnational enclaves and exclaves in India]]

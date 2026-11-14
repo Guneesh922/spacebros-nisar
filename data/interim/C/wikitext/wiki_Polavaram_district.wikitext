@@ -1,0 +1,169 @@
+{{other uses|Polavaram (disambiguation)}}
+{{Short description|District of Andhra Pradesh, India}}
+{{Use dmy dates|date=December 2025}}
+{{Use Indian English|date=December 2025}}
+{{Infobox settlement
+| name = Polavaram district
+| other_name = 
+| type = [[List of districts of Andhra Pradesh|District]] of [[Andhra Pradesh]]
+| subdivision_type = Country
+| subdivision_name = {{IND}}
+| image = Papikondalu 04.jpg
+| caption = [[Godavari River|Godavari]] at [[Papikonda National Park]]
+| image_map = Polavaram in Andhra Pradesh (India).svg
+| map_caption = Polavaram district in Andhra Pradesh
+| mapframe = yes
+| mapframe-zoom = 7
+| mapframe-wikidata = yes
+| coordinates = {{coord| 17.439| 81.775|type:adm3rd_region:IN_dim:200000|display=inline,title}}
+| subdivision_type1 = [[States and union territories of India|State]]
+| subdivision_name1 = {{Flag icon image|Emblem of Andhra Pradesh.svg}} [[Andhra Pradesh]]
+| subdivision_type2 = [[List of regions in India|Region]]
+| subdivision_name2 = [[Godavari|Godavari]]
+| seat_type = Headquarters
+| seat = [[Rampachodavaram]]
+| seat1_type = Population
+| seat1 = 3,49,953
+| parts_type = Administrative Divisions
+| parts = {{bulleted list|
+| [[List of revenue divisions in Andhra Pradesh|2 revenue divisions]]
+ [[Rampachodavaram revenue division|Rampachodavaram]], [[Chinturu revenue division|Chinturu]]
+| [[List of mandals of Andhra Pradesh|12 Mandals]]
+}}
+| native_name = <!-- No native name per [[WP:NOINDICSCRIPTS]] -->
+| government_footnotes = 
+| government_type = 
+| governing_body = 
+| leader_party = 
+| leader_title = [[District magistrate (India)|District Collector]]
+| leader_name = A.S. Dinesh Kumar I.A.S
+| leader_title1 = [[Superintendent of police (India)|SP]]
+| leader_name1 = 
+| leader_title2 = [[Indian Forest Service|DFO]]
+| leader_name2 = 
+| leader_title3 = [[List of constituencies of the Lok Sabha#Andhra Pradesh (25)|Lok Sabha constituencies]]
+| leader_name3 = 
+| leader_title4 = [[Member of Parliament, Lok Sabha|MP]]
+| leader_name4 = 
+| total_type = Total
+| area_total_km2 = 6,058
+| area_footnotes = 
+| population_as_of = 
+| population_footnotes = 
+| population_total = 
+| population_density_km2 = auto
+| demographics_type1 = Languages
+| demographics1_footnotes = <!-- for references: use <ref>tags -->
+| demographics1_title1 = Official
+| demographics1_info1 = [[Telugu language|Telugu]]
+| demographics_type2 = [[Literacy in India|Literacy]]
+| demographics2_footnotes = 
+| demographics2_title1 = 
+| demographics2_info1 = 
+| demographics3_footnotes = <!-- for references: use <ref>tags -->
+| time_zone1 = [[Indian Standard Time|IST]]
+| utc_offset = +05:30
+| postal_code_type = [[Postal Index Number]]
+| postal_code = 
+| website = [https://polavaram.ap.gov.in/ Official website]
+| established_title = Formed
+| established_date = 31 December 2025
+| founder = [[Government of Andhra Pradesh]]
+| named_for = [[Polavaram Project]]
+}}
+'''Polavaram district'''<ref>{{cite web |title=Andhra Pradesh Cabinet approves formation of two new districts, headquarters status for Madanapalle|url=https://www.newindianexpress.com/states/andhra-pradesh/2025/Dec/30/andhra-pradesh-cabinet-approves-formation-of-two-new-districts-headquarters-status-for-madanapalle |date=30 December 2025 |website=[[The New Indian Express]] |language=en }}</ref> is a district in the Indian state of [[Andhra Pradesh]]. The headquarters of the district is located at [[Rampachodavaram]].<ref>{{cite web |title=A.P. Cabinet clears district reorganisation, mandal realignment|url=https://www.thehindu.com/news/national/andhra-pradesh/ap-cabinet-clears-district-reorganisation-mandal-realignment/article70450525.ece |date=29 December 2025 |website=[[The Hindu]] |language=en }}</ref>
+
+==Etymology==
+This district is named after [[Polavaram Project]] which is an under-construction multi-purpose  project on the [[Godavari River]].
+
+== History ==
+On December 31, 2025, Rampachodavaram division was carved out of [[Alluri Sitharama Raju district]]. Earlier the district region was part of [[East Godavari district]].<ref>{{cite web |title=Andhra Pradesh Cabinet approves formation of two new districts, headquarters status for Madanapalle|url=https://www.newindianexpress.com/states/andhra-pradesh/2025/Dec/30/andhra-pradesh-cabinet-approves-formation-of-two-new-districts-headquarters-status-for-madanapalle |date=30 December 2025 |website=[[The New Indian Express]] |language=en }}</ref>
+
+== Administrative divisions ==
+[[File:Bhupathipalem Reservoir aerial view 05.jpg|alt=Bhupathipalem Reservoir aerial view|thumb|Bhupathipalem Reservoir aerial view|left]]
+The district is divided into two revenue divisions, namely [[Rampachodavaram revenue division|Rampachodavaram]] and [[Chinturu revenue division|Chinturu]].<ref>{{cite web |title=AP Issues GO Creating Polavaram District With Rampachodavaram as Headquarters
+|url=https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-issues-go-creating-polavaram-district-with-rampachodavaram-as-headquarters-1927331|date=30 December 2025 |website=[[Deccan Chronicle]] |language=en }}</ref> These revenue divisions are further subdivided into a total of 12 mandals, each administered by a Tahsildar.
+
+=== Mandals ===
+The list of 12 mandals in Polavaram district, divided into 2 revenue divisions, is given below.
+# [[Chinturu revenue division]]
+##[[Chinturu mandal|Chinturu]]
+## Etapaka
+## Kunavaram
+## Vara Ramachandrapuram
+#[[Rampachodavaram revenue division]]
+##[[Addateegala mandal|Addateegala]]
+##[[Devipatnam mandal|Devipatnam]]
+##[[Gangavaram mandal|Gangavaram]]
+## Gurthedu
+##[[Maredumilli mandal|Maredumilli]]
+##[[Rajavommangi mandal|Rajavommangi]]
+## Rampachodavaram
+##[[Y. Ramavaram mandal|Y. Ramavaram]]
+
+== Demographics ==
+
+{{bar box
+|title=Religions in Polavaram district (2011)<ref>{{Cite web|date=2011|title=Population by Religion - Andhra Pradesh|url=https://censusindia.gov.in/2011census/C-01/DDW28C-01%20MDDS.XLS|website=censusindia.gov.in|publisher=Office of the Registrar General & Census Commissioner, India}}</ref>
+|titlebar=#Fcd116
+|left1=Religion
+|right1=Percent
+|float=left
+|bars=
+{{bar percent|[[Hinduism]]|darkorange|97.28}}
+{{bar percent|[[Telugu Christians|Christianity]]|dodgerblue|1.64}}
+{{bar percent|[[Andhra Muslims|Islam]]|green|0.84}}
+{{bar percent|Other or not stated|black|0.24}}
+|caption=Distribution of religions
+}}
+
+Polavaram district has a population of 349,913. The district has a sex ratio of 1051 females per 1000 males. The only town in the district is [[Rampachodavaram]], which has a population of 9,952. Scheduled Castes and Scheduled Tribes made up 19,634 (5.61%) and 240,729 (68.80%) of the population respectively.<ref name="demographics">{{cite web |title=District Census Hand Book – Khammam |url=https://censusindia.gov.in/nada/index.php/catalog/142/download/218/DH_2011_2810_PART_A_DCHB_KHAMMAM.pdf |website=[[Census of India]] |publisher=[[Registrar General and Census Commissioner of India]]}}</ref><ref name="demographics1">{{cite web |title=District Census Hand Book – East Godavari |url=https://censusindia.gov.in/nada/index.php/catalog/158/download/282/DH_2011_2814_PART_A_DCHB_EAST_GODAVARI.pdf|website=[[Census of India]] |publisher=[[Registrar General and Census Commissioner of India]]}}</ref>{{rp|85–90}}
+
+{{Pie chart
+| precision = 2
+| caption = Languages of Polavaram district (2011)<ref name="language"/>
+| label1 = [[Telugu language|Telugu]]
+| value1 = 76.69
+| color1 = steelblue
+| label2 = [[Koya language|Koya]]
+| value2 = 20.70
+| color2 = teal
+| label3 = [[Odia language|Odia]]
+| value3 = 1.13
+| color3 = saddlebrown
+| other-label = Others
+| other-color = grey
+| other = y
+| thumb = right
+}}
+
+At the time of the 2011 census, 76.69% of the population spoke [[Telugu language|Telugu]], 20.70% [[Koya language|Koya]] and 1.13% [[Odia language|Odia]] as their first language.<ref name="language">{{Cite web |title=Table C-16 Population by Mother Tongue: Andhra Pradesh |url=https://censusindia.gov.in/nada/index.php/catalog/10193/download/13305/DDW-C16-STMT-MDDS-2800.XLSX |website=[[Census of India]] |publisher=[[Registrar General and Census Commissioner of India]]}}</ref>
+
+== Politics ==
+There is one parliamentary and one assembly constituencies in Polavaram district. The parliamentary constituency is {{bulleted list
+|[[Araku (ST) (Lok Sabha constituency)]]
+}}
+The assembly constituency is<ref>{{cite web|url=http://ceoandhra.nic.in/Right%20to%20Infn.Act/annex1.htm|title=District-wise Assembly-Constituencies|work=ceoandhra.nic.in}}</ref>
+
+{|class="wikitable sortable"
+!width="50px" style="font-size:75%"|Constituency number
+!Name
+!style="font-size:75%"|Reserved for<br/>([[Dalit|SC]]/[[Adivasi|ST]]/None)
+!Parliament
+|-
+|53
+|[[Rampachodavaram (ST) (Assembly constituency)|Rampachodavaram]]
+|[[Adivasi|ST]]||[[Araku (ST) (Lok Sabha constituency)]]
+|}
+
+== References ==
+{{Reflist}}
+
+==External links==
+{{Sister project links| wikt=no | commons=Category:Polavaram district | b=no | n=no | q=no | s=no | v=no | voy=no | species=no | d=Q137785865}}
+{{Andhra Pradesh}}
+{{Polavaram district}}
+{{Godavari basin}}
+
+[[Category:Districts of Andhra Pradesh]]
+[[Category:2025 establishments in Andhra Pradesh]]

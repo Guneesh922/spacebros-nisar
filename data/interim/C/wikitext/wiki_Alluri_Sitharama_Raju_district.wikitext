@@ -1,0 +1,220 @@
+{{Short description|New district in Andhra Pradesh, India}}
+{{Use Indian English|date=January 2022}}
+{{Use dmy dates|date=January 2022}}
+{{Infobox settlement
+| name                   = Alluri Sitharama Raju district
+| other_name             = Alluri district, ASR district
+| type                   = [[List of districts of Andhra Pradesh|District]] of [[Andhra Pradesh]]
+| image                  = {{Photomontage
+|size = 250
+|photo1a = Lambasinghi on a cloudy day.jpg
+|photo1b = Entrance to Borra caves from above 01.jpg
+|photo2a = Coffee plantation in Araku Valley 02.jpg
+|photo2b = Chintapalle Waterfalls.jpg
+}}
+| image_size             = 
+| alt                    = 
+| caption                = Clockwise from T
+top left: Eastern Ghats at [[Lambasingi]], [[Borra Caves]], [[Chintapalle, Visakhapatnam district|Chintapalle]] Falls, Coffee plantations at [[Araku Valley]]
+| image_map              = Alluri Sitharama Raju in Andhra Pradesh (India).svg
+| map_caption            = Location of Alluri district in Andhra Pradesh
+| coordinates            = {{coord|18.08|82.67|display=title,inline}}
+| year_start             = <!--  the year in which the territory was established as a separate entity -->
+| established_title      = First formed
+| established_date       = 4 April 2022
+| established_date2      = 31 December 2025 ([[Polavaram district]])
+| established_title2     = Reorganized
+| founder                = [[Government of Andhra Pradesh]]
+| total_type             = Total
+| seat_type              = Headquarters
+| seat                   = [[Paderu]]
+| population_total       = <!-- 953960 -->
+| subdivision_type       = Country
+| subdivision_name       = {{IND}}
+| subdivision_type1      = [[States and union territories of India|State]]
+| subdivision_name1      = {{flagicon image|Emblem of Andhra Pradesh.svg}} [[Andhra Pradesh]]
+| subdivision_type2      = Region
+| subdivision_name2      = [[North Andhra|Uttara Andhra]]
+| parts_type             = Administrative divisions
+| parts                  = {{bulleted list|
+| [[List of revenue divisions in Andhra Pradesh|1 revenue divisions]]
+| [[List of mandals of Andhra Pradesh|11 mandals]]
+}}
+| leader_title           = [[District magistrate (India)|District collector and magistrate]]
+| leader_name            = A.S. Dinesh Kumar {{small|IAS}}
+| leader_title1          = [[Superintendent of Police]]
+| leader_name1           = Amit Bardar {{small|IPS}}
+| leader_title2          = [[List of constituencies of the Lok Sabha|Lok Sabha constituencies]]
+| leader_name2           = 01 constituency
+| leader_title3          = [[Vidhan Sabha|Assembly constituencies]]
+| leader_name3           = [[List of constituencies of the Andhra Pradesh Legislative Assembly|2 constituencies]]
+| area_total_km2         = <!-- 12251-->
+| population_footnotes   = <ref name="demographics"/>
+| population_as_of       = 2011
+| population_density_km2 = auto
+| utc_offset             = +05:30
+| time_zone1             = [[Indian Standard Time|IST]]
+| named_for              = [[Alluri Sitarama Raju]]
+| website                = {{URL|https://allurisitharamaraju.ap.gov.in/}}
+| demographics_type1     = Demographics
+| demographics1_title1   = [[Literacy in India|Literacy]]
+| demographics1_info1    = <!-- 48.34% -->
+| demographics1_title2   = Sex ratio
+| demographics1_info2    = 
+| mapframe               = yes
+| mapframe-zoom          = 7
+| mapframe-wikidata      = yes
+}}
+
+'''Alluri Sitharama Raju district''', also known as '''Alluri district'''<ref>{{Cite web |title=Andhra Pradesh government may bifurcate newly-formed Alluri Sitarama Raju district |url=https://www.newindianexpress.com/states/andhra-pradesh/2022/apr/06/andhra-pradeshgovernmentmay-bifurcate-newly-formed-alluri-sitarama-raju-district-2438567.html |access-date=2022-07-09 |website=The New Indian Express}}</ref> and by its initials as '''ASR district''',<ref>{{Cite news |date=2 June 2022 |title=Coastal Andhra Pradesh to witness intense heatwave during next three days; mercury may touch 47°C |language=en-IN |work=[[The Hindu]] |url=https://www.thehindu.com/news/national/andhra-pradesh/coastal-andhra-pradesh-to-witness-intense-heatwave-during-next-three-days-mercury-may-touch-47c/article65488135.ece |access-date=3 June 2022 |issn=0971-751X}}</ref> is a district in the Indian state of [[Andhra Pradesh]]. The headquarters of the district is located at [[Paderu]]. Named after [[Alluri Sitarama Raju]], a revolutionary in the [[Indian independence movement]] who hailed from the region. The district is known for its scenery and lies in the [[Eastern Ghats]].<ref>{{Cite web |last=Apparasu |first=Srinivasa Rao |date=3 January 2023 |title=Andhra Pradesh: Hamlet nestled in Eastern Ghats a popular winter getaway |url=https://www.hindustantimes.com/india-news/andhra-pradesh-hamlet-nestled-in-eastern-ghats-a-popular-winter-getaway-101672685841015.html |access-date=26 September 2024 |website=Hindustan Times}}</ref><ref>{{Cite news |last=Gopal |first=B. Madhu |date=17 October 2022 |title=Andhra Pradesh: As winter nears, Lambasingi beckons tourists |url=https://www.thehindu.com/news/cities/Visakhapatnam/as-winter-nears-lambasingi-beckons-tourists/article66022076.ece |access-date=26 September 2024 |work=The Hindu |language= |issn=0971-751X}}</ref>
+
+==Etymology==
+[[File:Alluri Sita Rama Raju statue.jpg|thumb|A statue of [[Alluri Sitarama Raju]]|left]]
+
+This district is named after [[Alluri Sitarama Raju]], a revolutionary in the Indian independence movement who came from the region.<ref>{{Cite news |last= |first= |date=8 August 2021 |title=Call to draw inspiration from Alluri |url=https://www.thehindu.com/news/national/andhra-pradesh/call-to-draw-inspiration-from-alluri/article35806018.ece |access-date=26 September 2024 |work=The Hindu |language= |issn=0971-751X}}</ref><ref>{{Cite web |last=Rao |first=G. Janardhana |date=4 April 2022 |title=Andhra district named after Alluri, his memorials in neglect |url=https://www.newindianexpress.com/states/andhra-pradesh/2022/Apr/04/andhra-district-named-after-alluri-his-memorials-in-neglect-2437679.html |access-date=26 September 2024 |website=The New Indian Express |language=}}</ref>
+
+== History ==
+In July 2019, on the occasion of Alluri Sitarama Raju's 122nd birth anniversary, state Tourism Minister [[Muttamsetti Srinivasa Rao|Avanthi Srinivasa Rao]] said a newly formed district would be named after Alluri Sitarama Raju.<ref name="nee1">{{cite web |date=5 July 2019 |title=New district will be named after Alluri: Minister |url=https://www.newindianexpress.com/states/andhra-pradesh/2019/jul/05/new-district-will-be-named-after-alluri-minister-1999664.html |url-status=live |archive-url=https://web.archive.org/web/20191028054433/http://www.newindianexpress.com/states/andhra-pradesh/2019/jul/05/new-district-will-be-named-after-alluri-minister-1999664.html |archive-date=28 October 2019 |access-date=26 January 2022 |website=[[The New Indian Express]]}}</ref>
+The district was proposed on 26 January 2022 by the [[Y. S. Jagan Mohan Reddy]]'s government as part of a reorganisation of all the existing 13 districts in the state to form 26 districts in total. Final notification was issued by the [[Government of Andhra Pradesh]] on 3 April 2022 and the district was effective from 4 April 2022. The administrative headquarters of the district is located at [[Paderu]]. It was formed from [[Paderu revenue division]] of [[Visakhapatnam district]] and [[Rampachodavaram revenue division]] of [[East Godavari district]].<ref>{{Cite news|last=Raghavendra|first=V.|date=26 January 2022|title=With creation of 13 new districts, AP now has 26 districts|work=[[The Hindu]]|url=https://www.thehindu.com/news/national/andhra-pradesh/with-creation-of-13-new-districts-ap-now-has-26-districts/article38327788.ece|url-status=live|access-date=26 January 2022|archive-url=https://web.archive.org/web/20220126110443/https://www.thehindu.com/news/national/andhra-pradesh/with-creation-of-13-new-districts-ap-now-has-26-districts/article38327788.ece|archive-date=26 January 2022|issn=0971-751X}}</ref><ref>{{Cite web|date=30 March 2022|title=New districts to come into force on April 4|url=https://www.thehindu.com/news/national/andhra-pradesh/new-districts-to-come-into-force-on-april-4/article65274658.ece|access-date=31 March 2022|website=[[The Hindu]]|language=en}}</ref>
+
+On December 31st 2025, Rampachodavaram division was carved out of this district and formed as a new district named '''[[Polavaram district]]'''.<ref>{{cite web |title=Andhra Pradesh Cabinet approves formation of two new districts, headquarters status for Madanapalle|url=https://www.newindianexpress.com/states/andhra-pradesh/2025/Dec/30/andhra-pradesh-cabinet-approves-formation-of-two-new-districts-headquarters-status-for-madanapalle |date=30 December 2025 |website=[[The New Indian Express]] |language=en }}</ref>
+
+==Geography==
+The district is bordered to the north by [[Malkangiri district]] and [[Koraput district]] in [[Odisha]], to the west by [[Polavaram district]], to the south by [[Anakapalli district]], and to the east by [[Vizianagaram district]] and [[Parvathipuram Manyam district]]s.{{citation needed|date= September 2022}}
+
+== Administrative divisions ==
+The district has one revenue division, namely [[Paderu revenue division|Paderu]], which is further subdivided into a total of 11 mandals, each administered by a Tahsildar.<ref>{{Cite web |date=31 March 2022 |title=కొత్త జిల్లా తాజా స్వరూపం |url=https://www.eenadu.net/telugu-news/ap-top-news/general/2501/122062849 |access-date=31 March 2022 |website=[[Eenadu.net]] |language=te}}</ref><ref>{{Cite news |last=Jonathan |first=P. Samuel |date=2022-09-07 |title=Andhra Pradesh: Cabinet clears investment proposals worth ₹1.25 lakh crore |language=en-IN |work=The Hindu |url=https://www.thehindu.com/news/national/andhra-pradesh/andhra-pradesh-cabinet-clears-investment-proposals-worth-125-lakh-crore/article65862971.ece |access-date=2022-09-13 |issn=0971-751X}}</ref><ref>{{cite web |title=AP Issues GO Creating Polavaram District With Rampachodavaram as Headquarters
+|url=https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-issues-go-creating-polavaram-district-with-rampachodavaram-as-headquarters-1927331|date=30 December 2025 |website=[[Deccan Chronicle]] |language=en }}</ref>
+
+=== Mandals ===
+There are 11 mandals located in [[Alluri Sitharama Raju district]], which are under [[Paderu revenue division]], are listed  below. 
+<!-- [obsolete map
+[[File:Alluri Sitharama Raju.png|alt=Alluri Sitharama Raju District|thumb|right|500px|[[Mandal]]s of Alluri Sitharama Raju district]] -->
+{{Div col}}
+
+*[[Paderu revenue division]]
+# [[Ananthagiri mandal, ASR district|Ananthagiri]]
+# [[Araku Valley mandal|Araku Valley]]
+# [[Chintapalli mandal|Chinthapalli]]
+# [[Dumbriguda mandal|Dumbriguda]]
+# [[Ganagaraju Madugula mandal|Ganagaraju Madugula]]
+# [[Gudem Kotha Veedhi mandal|Gudem Kotha Veedhi]]
+# [[Hukumpeta mandal|Hukumpeta]]
+# [[Koyyuru mandal|Koyyuru]]
+# [[Munchingiputtu mandal|Munchingiputtu]]
+# [[Paderu mandal|Paderu]]
+#[[Peda Bayalu mandal|Pedabayalu]]
+{{Div end}}
+
+== Cities and towns ==
+There are no cities or towns in the district. Major villages are Araku and Padern
+{| class="wikitable"
+|+
+Major villages in Alluri Sitharama Raju District
+!S.No.
+!Name
+!Civic status
+!Revenue<br />division
+!Population<br />(2011 census)
+|-
+| 1
+| [[Araku]]
+| Gram Panchayat
+| [[Paderu revenue division|Paderu]]
+| 56,674
+|-
+| 2
+| [[Paderu]]
+| Gram Panchayat
+| [[Paderu revenue division|Paderu]]
+| 20,760
+|-
+| 3
+| [[Chintapalli]]
+| Major Gram Panchayat
+| [[Paderu revenue division|Paderu]]
+| 9888
+|}
+
+== Demographics ==
+{{bar box
+|title=Religions in Alluri Sitarama Raju district (2011)<ref name="religion"/>
+|titlebar=#Fcd116
+|left1=Religion
+|right1=Percent
+|float=left
+|bars=
+{{bar percent|[[Hinduism]]|darkorange|97.35}}
+{{bar percent|[[Telugu Christians|Christianity]]|dodgerblue|1.50}}
+{{bar percent|[[Andhra Muslims|Islam]]|green|0.64}}
+{{bar percent|Other or not stated|black|0.51}}
+|caption=Distribution of religions
+}}
+
+The district has a population of 6,04,047. 576,026 is rural and 28,021 (4.64%) is urban. Scheduled Castes and Scheduled Tribes make up 4,154 and 547,951 which is 0.69% and 90.71% of the population respectively.<ref name="census">{{cite web |title=Districts Reorganization |url=https://english.sakshi.com/news/andhrapradesh/heres-how-new-ap-map-looks-after-districts-reorganization-153041 |url-status=dead |archive-url=https://web.archive.org/web/20220601231914/https://english.sakshi.com/news/andhrapradesh/heres-how-new-ap-map-looks-after-districts-reorganization-153041 |archive-date=1 June 2022 |access-date=1 May 2022}}</ref>
+
+97.35% of the population is Hindu while 1.50% of the population is Christian and 0.64% is Muslim.<ref>{{Cite web|date=2011|title=Population by Religion - Andhra Pradesh|url=https://censusindia.gov.in/2011census/C-01/DDW28C-01%20MDDS.XLS|website=censusindia.gov.in|publisher=Office of the Registrar General & Census Commissioner, India}}</ref>
+
+{{Pie chart
+| precision = 2
+| caption = Languages of Alluri Sitarama Raju district (2011)<ref name="language"/>
+| label1 = [[Telugu language|Telugu]]
+| value1 = 66.54
+| color1 = red
+| label2 = [[Odia language|Odia]]
+| value2 = 17.39
+| color2 = yellow
+| label3 = [[Kuvi language|Kuvi]]
+| value3 = 11.12
+| color3 = pink
+| label4 = [[Konda language (Dravidian)|Konda]]
+| value4 = 3.19
+| color4 = green
+| other-label = Others
+| other-color = #F9F9F9
+| other = y
+| thumb = right
+}}
+
+At the time of the 2011 census, 66.54% of the population spoke [[Telugu language|Telugu]], 17.39% [[Odia language|Odia]], 11.12% [[Kuvi language|Kuvi]] and 3.19% [[Konda language (Dravidian)|Konda]] as their first language.<ref name="language">{{Cite web |title=Table C-16 Population by Mother Tongue: Andhra Pradesh |url=https://censusindia.gov.in/nada/index.php/catalog/10193/download/13305/DDW-C16-STMT-MDDS-2800.XLSX |website=[[Census of India]] |publisher=[[Registrar General and Census Commissioner of India]]}}</ref>
+
+The district when it was created in 2022 had a population of 953,960, of which 37,973 (3.98%) live in urban areas based on 2011 census data. Alluri Sitarama Raju district had a sex ratio of 1046 females per 1000 males and a literacy rate of 42.34%.<ref name="census1">{{cite web |title=District Census Hand Book – Visakhapatnam |url=https://censusindia.gov.in/nada/index.php/catalog/122/download/138/DH_2011_2813_PART_A_DCHB_VISAKHAPATNAM.pdf|website=[[Census of India]] |publisher=[[Registrar General and Census Commissioner of India]]}}</ref><ref name="census2">{{cite web |title=District Census Hand Book – East Godavari |url=https://censusindia.gov.in/nada/index.php/catalog/158/download/282/DH_2011_2814_PART_A_DCHB_EAST_GODAVARI.pdf|website=[[Census of India]] |publisher=[[Registrar General and Census Commissioner of India]]}}</ref> Scheduled Castes and Scheduled Tribes made up 2.49% and 82.67% of the population respectively.<ref name="demographics">{{Cite web |title=Demography Sri Alluri Sitharamaraju District |url=https://allurisitharamaraju.ap.gov.in/demography/}}</ref>
+
+The tribals are a mix of peoples: [[:te:బగత_ప్రజలు|Bhagatha]], Konda Dora, [[Khond people|Khond]], [[Konda Reddis|Konda Reddy]], Konda Kapu, Parang Proja, Valmiki, [[Kotia (tribe)|Kotia]], Nooka Dora, Goudu, Mali and [[Gadaba people|Gadaba]].
+
+The vast majority of people are [[Hindus|Hindu]], with small minorities of Christians and Muslims.<ref name="religion">{{Cite web|date=2011|title=Population by Religion - Andhra Pradesh|url=https://censusindia.gov.in/nada/index.php/catalog/11363/download/14476/DDW28C-01%20MDDS.XLS|website=censusindia.gov.in|publisher=[[Registrar General and Census Commissioner of India]]}}</ref>
+
+== Politics ==
+There is one parliamentary and 3 assembly constituencies in Alluri Sitharama Raju district. The parliamentary constituency is [[Araku Lok Sabha constituency]], which is reserved for [[Scheduled Castes and Scheduled Tribes|Scheduled Tribe]] candidates. 
+
+The assembly constituencies are<ref>{{cite web|url=http://ceoandhra.nic.in/Right%20to%20Infn.Act/annex1.htm|title=District-wise Assembly-Constituencies|work=ceoandhra.nic.in}}</ref>
+
+{|class="wikitable sortable"
+!width="50px" style="font-size:75%"|Constituency number
+!Name
+!style="font-size:75%"|Reserved for<br/>([[Dalit|SC]]/[[Adivasi|ST]]/None)
+!Parliament
+|-
+|28
+|[[Araku Valley (Assembly constituency)|Araku Valley]]
+|[[Adivasi|ST]]
+| rowspan="3" |[[Araku Lok Sabha constituency|Araku]]
+|-
+|29
+|[[Paderu (ST) (Assembly constituency)|Paderu]]
+|[[Adivasi|ST]]
+|}
+
+== References ==
+{{Reflist}}
+
+== External links ==
+{{Sister project links| wikt=no | commons=Category:Alluri Sitharama Raju district | b=no | n=no | q=no | s=no | v=no | voy=no | species=no | d=Q110714850}}
+
+{{authority control}}
+{{Districts of Andhra Pradesh}}
+{{Alluri Sitharama Raju district}}
+
+[[Category:Alluri Sitharama Raju district]]
+[[Category:2022 establishments in Andhra Pradesh]]
+[[Category:Districts of Andhra Pradesh]]

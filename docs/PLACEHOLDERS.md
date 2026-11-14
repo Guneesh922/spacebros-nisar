@@ -12,12 +12,12 @@ Replaced by: the same path, as a greyscale dB PNG (VV for sea, HH for coast, at 
 |---|---|---|---|---|---|
 | `nisar_l_coast_20261109_t55_hh` | `data/processed/img/nisar_l_coast_20261109_t55_hh.png` | backend | L_COAST_1109 | validated (GCOV_V1) | from KML |
 | `nisar_l_coast_20261028_t55_hh` | `data/processed/img/nisar_l_coast_20261028_t55_hh.png` | backend | L_COAST_1028 | validated (GCOV_V1) | from KML |
-| `nisar_l_coast_20261016_t55_hh` | `data/processed/img/nisar_l_coast_20261016_t55_hh.png` | backend | L_COAST_1016 | provisional (PR) | **inferred** (no KML) |
-| `nisar_l_coast_20261004_t55_hh` | `data/processed/img/nisar_l_coast_20261004_t55_hh.png` | backend | L_COAST_1004 | provisional (PR) | **inferred** (no KML) |
+| `nisar_l_coast_20261016_t55_hh` | `data/web/nisar_l_coast_20261016_t55_hh.png` | backend | L_COAST_1016 | provisional (PR) | **inferred** (no KML) |  **REAL since 14 Nov: built from `data/h5/` by tools/build_web.py; placeholder null; bounds from the H5, not inferred.**
+| `nisar_l_coast_20261004_t55_hh` | `data/web/nisar_l_coast_20261004_t55_hh.png` | backend | L_COAST_1004 | provisional (PR) | **inferred** (no KML) |  **REAL since 14 Nov: built from `data/h5/` by tools/build_web.py; placeholder null; bounds from the H5, not inferred.**
 | `nisar_l_sea_20261108_t48_vv` | `data/processed/img/nisar_l_sea_20261108_t48_vv.png` | backend | L_SEA_AFTER_1108 | validated (GCOV_V1) | from KML |
-| `nisar_l_sea_20261027_t48_vv` | `data/processed/img/nisar_l_sea_20261027_t48_vv.png` | backend | L_SEA_EYE_1027 | validated (GCOV_V1) | from KML |
-| `nisar_l_sea_20261015_t48_vv` | `data/processed/img/nisar_l_sea_20261015_t48_vv.png` | backend | L_SEA_CALM_1015 | provisional (PR) | **inferred** (no KML) |
-| `nisar_l_sea_20261003_t48_vv` | `data/processed/img/nisar_l_sea_20261003_t48_vv.png` | backend | L_SEA_CALM_1003 | provisional (PR) | **inferred** (no KML) |
+| `nisar_l_sea_20261027_t48_vv` | `data/web/nisar_l_sea_20261027_t48_vv.png` | backend | L_SEA_EYE_1027 | validated (GCOV_V1) | from KML |  **REAL since 14 Nov: built from `data/h5/` by tools/build_web.py; placeholder null; bounds from the H5, not inferred.**
+| `nisar_l_sea_20261015_t48_vv` | `data/web/nisar_l_sea_20261015_t48_vv.png` | backend | L_SEA_CALM_1015 | provisional (PR) | **inferred** (no KML) |  **REAL since 14 Nov: built from `data/h5/` by tools/build_web.py; placeholder null; bounds from the H5, not inferred.**
+| `nisar_l_sea_20261003_t48_vv` | `data/web/nisar_l_sea_20261003_t48_vv.png` | backend | L_SEA_CALM_1003 | provisional (PR) | **inferred** (no KML) |  **REAL since 14 Nov: built from `data/h5/` by tools/build_web.py; placeholder null; bounds from the H5, not inferred.**
 
 ## 2. Bounds inferred (`bounds_inferred: true`)
 
@@ -25,10 +25,10 @@ The four provisional scenes have no KML (the `_LATLON.kml` URLs redirect to Eart
 
 | Layer ids | Bounds used `[[S,W],[N,E]]` | Copied from | Who | Source id |
 |---|---|---|---|---|
-| `nisar_l_sea_20261003_t48_vv`, `nisar_l_sea_20261015_t48_vv` | `[[15.297,81.272],[18.331,84.490]]` | KML of 2026-10-27 T48 F80 | backend | L_SEA_CALM_1003, L_SEA_CALM_1015 |
-| `nisar_l_coast_20261004_t55_hh`, `nisar_l_coast_20261016_t55_hh` | `[[15.289,80.534],[18.337,83.768]]` | KML of 2026-10-28 T55 F10 | backend | L_COAST_1004, L_COAST_1016 |
+| `nisar_l_sea_20261003_t48_vv`, `nisar_l_sea_20261015_t48_vv` | `[[15.297,81.272],[18.331,84.490]]` | KML of 2026-10-27 T48 F80 | backend | L_SEA_CALM_1003, L_SEA_CALM_1015 |  **REAL since 14 Nov: built from `data/h5/` by tools/build_web.py; placeholder null; bounds from the H5, not inferred.**
+| `nisar_l_coast_20261004_t55_hh`, `nisar_l_coast_20261016_t55_hh` | `[[15.289,80.534],[18.337,83.768]]` | KML of 2026-10-28 T55 F10 | backend | L_COAST_1004, L_COAST_1016 |  **REAL since 14 Nov: built from `data/h5/` by tools/build_web.py; placeholder null; bounds from the H5, not inferred.**
 | `nisar_class_*` (3 layers) | T55 frame bounds as above | placeholder only; real class maps will be on the delta subset grid | backend | L_COAST_1016, L_COAST_1109 |
-| `nisar_sea_diff_20261027_vs_20261015` | T48 frame bounds as above | placeholder only | backend | L_SEA_EYE_1027, L_SEA_CALM_1015 |
+| `nisar_sea_diff_20261027_vs_20261015` | T48 frame bounds as above | placeholder only | backend | L_SEA_EYE_1027, L_SEA_CALM_1015 | (superseded: real bounds from the H5)
 
 ## 3. Derived products (status `unavailable`, tag "Sample values")
 
@@ -39,7 +39,7 @@ No image exists and none is drawn from quick-looks (a difference of colour compo
 | `nisar_class_new_water` (likely new open water, #2A6FB0) | `data/processed/img/class_20261109_new_water.png` | backend | L_COAST_1004, L_COAST_1016, L_COAST_1109 |
 | `nisar_class_wet_crops` (likely wet or flooded crops, #E09A2B) | `data/processed/img/class_20261109_wet_crops.png` | backend | same |
 | `nisar_class_no_change` (likely no change, outline) | `data/processed/img/class_20261109_no_change.png` | backend | same |
-| `nisar_sea_diff_20261027_vs_20261015` | `data/processed/img/nisar_sea_diff_20261027_vs_20261015.png` | backend | L_SEA_EYE_1027, L_SEA_CALM_1015 |
+| `nisar_sea_diff_20261027_vs_20261015` | `data/web/nisar_sea_diff_20261027_vs_20261015.png` | backend | L_SEA_EYE_1027, L_SEA_CALM_1015 |  **REAL since 14 Nov: VV 27 Oct minus VV 15 Oct from the two H5 subsets (build_sea_difference).**
 
 ## 4. Companion JSON files (tag "Sample values")
 

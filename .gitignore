@@ -35,3 +35,8 @@ data/**/*.npy
 data/**/*.npz
 data/**/*.vrt
 .venv/
+
+# --- storage decision (14 Nov 2026): H5 subsets of record are committed; web build outputs are not ---
+!data/h5/
+!data/h5/*.h5
+data/web/

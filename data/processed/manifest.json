@@ -92,7 +92,7 @@
       "id": "asf_nisar_l",
       "provider": "NASA/JPL-Caltech and ISRO via ASF DAAC",
       "access": "pipeline",
-      "licence": "NASA open data; follow ASF DAAC data-use terms [licence wording to confirm]",
+      "licence": "NASA Earth science data, open by default (CC0 unless marked); follow ASF DAAC terms",
       "credit_line": "NASA/JPL-Caltech and ISRO via ASF DAAC",
       "credit_confirmed": true,
       "can_host": true,
@@ -140,7 +140,7 @@
       "access": "live",
       "licence": "public API, no key",
       "credit_line": "GDACS",
-      "credit_confirmed": true,
+      "credit_confirmed": false,
       "can_host": false,
       "delay_hint": "minutes to hours",
       "url": "https://www.gdacs.org/",
@@ -150,7 +150,7 @@
       "id": "ndma_sachet",
       "provider": "NDMA SACHET (Common Alerting Protocol feed)",
       "access": "snapshot",
-      "licence": "public alert feed [licence to confirm]",
+      "licence": "feed declares 'public domain'; NDMA website policy allows linking, no framing",
       "credit_line": "NDMA SACHET",
       "credit_confirmed": true,
       "can_host": true,
@@ -175,8 +175,8 @@
       "provider": "MOSDAC, ISRO (INSAT-3DS / 3DR)",
       "access": "link",
       "licence": "rules forbid redistribution: link out only",
-      "credit_line": "[credit line to confirm]",
-      "credit_confirmed": false,
+      "credit_line": "Data Source MOSDAC/SAC/ISRO. https://mosdac.gov.in",
+      "credit_confirmed": true,
       "can_host": false,
       "delay_hint": "10-30 min imagery",
       "url": "https://mosdac.gov.in/"
@@ -185,8 +185,8 @@
       "id": "geoboundaries",
       "provider": "geoBoundaries (ADM3 mandals, boundary year 2018)",
       "access": "snapshot",
-      "licence": "ODbL-1.0",
-      "credit_line": "geoBoundaries, ODbL-1.0 (boundary year 2018)",
+      "licence": "check geoboundaries.org: project site states CC BY 4.0, our earlier note said ODbL",
+      "credit_line": "Boundaries: geoBoundaries (geoboundaries.org), boundary year 2018",
       "credit_confirmed": true,
       "can_host": true,
       "delay_hint": "static",
@@ -198,8 +198,8 @@
       "provider": "OpenStreetMap (coastline and land polygons)",
       "access": "snapshot",
       "licence": "ODbL-1.0",
-      "credit_line": "[credit line to confirm]",
-      "credit_confirmed": false,
+      "credit_line": "© OpenStreetMap contributors",
+      "credit_confirmed": true,
       "can_host": true,
       "delay_hint": "static",
       "url": "https://www.openstreetmap.org/copyright"
@@ -208,7 +208,7 @@
       "id": "spacebros_derived",
       "provider": "SpaceBros (derived from NISAR data)",
       "access": "pipeline",
-      "licence": "team product, sample values until the backend replaces it",
+      "licence": "team product from NISAR data",
       "credit_line": "SpaceBros, from NISAR data",
       "credit_confirmed": true,
       "can_host": true,
@@ -230,15 +230,15 @@
       "source": "T55 F10 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
       "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
-      "png": "data/processed/img/nisar_l_coast_20261109_t55_hh.png",
+      "png": "data/web/nisar_l_coast_20261109_t55_hh.png",
       "bounds": [
         [
-          15.289417736208744,
-          80.53360154529867
+          16.1949,
+          81.59718
         ],
         [
-          18.337444233134367,
-          83.76801815174849
+          17.10546,
+          82.60745
         ]
       ],
       "bounds_inferred": false,
@@ -259,15 +259,12 @@
       "default_on": true,
       "opacity": 0.85,
       "status": "ready",
-      "placeholder": {
-        "is": true,
-        "tag": "Quick-look sample",
-        "replaced_by": "data/processed/img/nisar_l_coast_20261109_t55_hh.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
-      },
+      "placeholder": null,
       "id": "nisar_l_coast_20261109_t55_hh",
       "name": "Coast, 12 days after",
       "processing_level": "validated",
-      "bounds_source": "KML LatLonQuad of the browse image"
+      "bounds_source": "H5 subset footprint (data/web/nisar_l_coast_20261016_t55_hh.json, built by tools/build_web.py)",
+      "h5": "data/h5/L_COAST_20261109_T055.h5"
     },
     {
       "group": "during",
@@ -282,15 +279,15 @@
       "source": "T55 F10 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
       "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
-      "png": "data/processed/img/nisar_l_coast_20261028_t55_hh.png",
+      "png": "data/web/nisar_l_coast_20261028_t55_hh.png",
       "bounds": [
         [
-          15.289417736208744,
-          80.53360154529867
+          16.1949,
+          81.59718
         ],
         [
-          18.337444233134367,
-          83.76801815174849
+          17.10546,
+          82.60745
         ]
       ],
       "bounds_inferred": false,
@@ -311,15 +308,12 @@
       "default_on": false,
       "opacity": 0.85,
       "status": "ready",
-      "placeholder": {
-        "is": true,
-        "tag": "Quick-look sample",
-        "replaced_by": "data/processed/img/nisar_l_coast_20261028_t55_hh.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
-      },
+      "placeholder": null,
       "id": "nisar_l_coast_20261028_t55_hh",
       "name": "Coast, 4 hours after landfall",
       "processing_level": "validated",
-      "bounds_source": "KML LatLonQuad of the browse image"
+      "bounds_source": "H5 subset footprint (data/web/nisar_l_coast_20261016_t55_hh.json, built by tools/build_web.py)",
+      "h5": "data/h5/L_COAST_20261028_T055.h5"
     },
     {
       "group": "before",
@@ -334,18 +328,18 @@
       "source": "T55 F10 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
       "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
-      "png": "data/processed/img/nisar_l_coast_20261016_t55_hh.png",
+      "png": "data/web/nisar_l_coast_20261016_t55_hh.png",
       "bounds": [
         [
-          15.289417736208744,
-          80.53360154529867
+          16.1949,
+          81.59718
         ],
         [
-          18.337444233134367,
-          83.76801815174849
+          17.10546,
+          82.60745
         ]
       ],
-      "bounds_inferred": true,
+      "bounds_inferred": false,
       "url_template": null,
       "band": "L",
       "pol": "HH",
@@ -363,15 +357,12 @@
       "default_on": false,
       "opacity": 0.85,
       "status": "ready",
-      "placeholder": {
-        "is": true,
-        "tag": "Quick-look sample",
-        "replaced_by": "data/processed/img/nisar_l_coast_20261016_t55_hh.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
-      },
+      "placeholder": null,
       "id": "nisar_l_coast_20261016_t55_hh",
       "name": "Coast before the storm",
       "processing_level": "provisional",
-      "bounds_source": "inferred from the same track/frame KML of 2026-10-28 (T55 F10); real GeoTIFF bounds replace this"
+      "bounds_source": "H5 subset footprint (data/web/nisar_l_coast_20261016_t55_hh.json, built by tools/build_web.py)",
+      "h5": "data/h5/L_COAST_20261016_T055.h5"
     },
     {
       "group": "before",
@@ -386,18 +377,18 @@
       "source": "T55 F10 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
       "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
-      "png": "data/processed/img/nisar_l_coast_20261004_t55_hh.png",
+      "png": "data/web/nisar_l_coast_20261004_t55_hh.png",
       "bounds": [
         [
-          15.289417736208744,
-          80.53360154529867
+          16.1949,
+          81.59718
         ],
         [
-          18.337444233134367,
-          83.76801815174849
+          17.10546,
+          82.60745
         ]
       ],
-      "bounds_inferred": true,
+      "bounds_inferred": false,
       "url_template": null,
       "band": "L",
       "pol": "HH",
@@ -415,15 +406,12 @@
       "default_on": false,
       "opacity": 0.85,
       "status": "ready",
-      "placeholder": {
-        "is": true,
-        "tag": "Quick-look sample",
-        "replaced_by": "data/processed/img/nisar_l_coast_20261004_t55_hh.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
-      },
+      "placeholder": null,
       "id": "nisar_l_coast_20261004_t55_hh",
       "name": "Coast, start of the normal period",
       "processing_level": "provisional",
-      "bounds_source": "inferred from the same track/frame KML of 2026-10-28 (T55 F10); real GeoTIFF bounds replace this"
+      "bounds_source": "H5 subset footprint (data/web/nisar_l_coast_20261004_t55_hh.json, built by tools/build_web.py)",
+      "h5": "data/h5/L_COAST_20261004_T055.h5"
     },
     {
       "group": "after",
@@ -438,15 +426,15 @@
       "source": "T48 F80 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
       "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
-      "png": "data/processed/img/nisar_l_sea_20261108_t48_vv.png",
+      "png": "data/web/nisar_l_sea_20261108_t48_vv.png",
       "bounds": [
         [
-          15.29700264750999,
-          81.272021834518
+          15.29757,
+          81.27202
         ],
         [
-          18.33073904937732,
-          84.48977175584287
+          18.04115,
+          84.4841
         ]
       ],
       "bounds_inferred": false,
@@ -467,15 +455,12 @@
       "default_on": false,
       "opacity": 0.85,
       "status": "ready",
-      "placeholder": {
-        "is": true,
-        "tag": "Quick-look sample",
-        "replaced_by": "data/processed/img/nisar_l_sea_20261108_t48_vv.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
-      },
+      "placeholder": null,
       "id": "nisar_l_sea_20261108_t48_vv",
       "name": "Sea surface, after the storm",
       "processing_level": "validated",
-      "bounds_source": "KML LatLonQuad of the browse image"
+      "bounds_source": "H5 subset footprint (data/web/nisar_l_coast_20261016_t55_hh.json, built by tools/build_web.py)",
+      "h5": "data/h5/L_SEA_20261108_T048.h5"
     },
     {
       "group": "during",
@@ -490,15 +475,15 @@
       "source": "T48 F80 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
       "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
-      "png": "data/processed/img/nisar_l_sea_20261027_t48_vv.png",
+      "png": "data/web/nisar_l_sea_20261027_t48_vv.png",
       "bounds": [
         [
-          15.29700264750999,
-          81.272021834518
+          15.29757,
+          81.27202
         ],
         [
-          18.33073904937732,
-          84.48977175584287
+          18.04115,
+          84.4841
         ]
       ],
       "bounds_inferred": false,
@@ -519,15 +504,12 @@
       "default_on": false,
       "opacity": 0.85,
       "status": "ready",
-      "placeholder": {
-        "is": true,
-        "tag": "Quick-look sample",
-        "replaced_by": "data/processed/img/nisar_l_sea_20261027_t48_vv.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
-      },
+      "placeholder": null,
       "id": "nisar_l_sea_20261027_t48_vv",
       "name": "Sea surface, eye pass",
       "processing_level": "validated",
-      "bounds_source": "KML LatLonQuad of the browse image"
+      "bounds_source": "H5 subset footprint (data/web/nisar_l_sea_20261027_t48_vv.json, built by tools/build_web.py)",
+      "h5": "data/h5/L_SEA_20261027_T048.h5"
     },
     {
       "group": "before",
@@ -542,18 +524,18 @@
       "source": "T48 F80 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
       "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
-      "png": "data/processed/img/nisar_l_sea_20261015_t48_vv.png",
+      "png": "data/web/nisar_l_sea_20261015_t48_vv.png",
       "bounds": [
         [
-          15.29700264750999,
-          81.272021834518
+          15.29757,
+          81.27202
         ],
         [
-          18.33073904937732,
-          84.48977175584287
+          18.04115,
+          84.4841
         ]
       ],
-      "bounds_inferred": true,
+      "bounds_inferred": false,
       "url_template": null,
       "band": "L",
       "pol": "VV",
@@ -571,15 +553,12 @@
       "default_on": false,
       "opacity": 0.85,
       "status": "ready",
-      "placeholder": {
-        "is": true,
-        "tag": "Quick-look sample",
-        "replaced_by": "data/processed/img/nisar_l_sea_20261015_t48_vv.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
-      },
+      "placeholder": null,
       "id": "nisar_l_sea_20261015_t48_vv",
       "name": "Calm sea reference",
       "processing_level": "provisional",
-      "bounds_source": "inferred from the same track/frame KML of 2026-10-27 (T48 F80); real GeoTIFF bounds replace this"
+      "bounds_source": "H5 subset footprint (data/web/nisar_l_sea_20261015_t48_vv.json, built by tools/build_web.py)",
+      "h5": "data/h5/L_SEA_20261015_T048.h5"
     },
     {
       "group": "before",
@@ -594,18 +573,18 @@
       "source": "T48 F80 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
       "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
-      "png": "data/processed/img/nisar_l_sea_20261003_t48_vv.png",
+      "png": "data/web/nisar_l_sea_20261003_t48_vv.png",
       "bounds": [
         [
-          15.29700264750999,
-          81.272021834518
+          15.29757,
+          81.27202
         ],
         [
-          18.33073904937732,
-          84.48977175584287
+          18.04115,
+          84.4841
         ]
       ],
-      "bounds_inferred": true,
+      "bounds_inferred": false,
       "url_template": null,
       "band": "L",
       "pol": "VV",
@@ -623,15 +602,12 @@
       "default_on": false,
       "opacity": 0.85,
       "status": "ready",
-      "placeholder": {
-        "is": true,
-        "tag": "Quick-look sample",
-        "replaced_by": "data/processed/img/nisar_l_sea_20261003_t48_vv.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
-      },
+      "placeholder": null,
       "id": "nisar_l_sea_20261003_t48_vv",
       "name": "Calm sea, extra reference",
       "processing_level": "provisional",
-      "bounds_source": "inferred from the same track/frame KML of 2026-10-27 (T48 F80); real GeoTIFF bounds replace this"
+      "bounds_source": "H5 subset footprint (data/web/nisar_l_sea_20261003_t48_vv.json, built by tools/build_web.py)",
+      "h5": "data/h5/L_SEA_20261003_T048.h5"
     },
     {
       "group": "after",
@@ -642,22 +618,22 @@
       "time_utc": null,
       "latest_of": "nisar_class_new_water",
       "shows": "Where open water likely appeared between the before and after scenes",
-      "limit": "water under dense crops (it can be missed)",
+      "limit": "water under dense crops (it can be missed); 9 Nov also reflects Cyclone Murasu (1-3 Nov) and the river peak, not Arnab alone",
       "source": "SpaceBros change map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",
       "png": "data/processed/img/class_20261109_new_water.png",
       "bounds": [
         [
-          15.289417736208744,
-          80.53360154529867
+          16.19511,
+          81.59718
         ],
         [
-          18.337444233134367,
-          83.76801815174849
+          17.10546,
+          82.60788
         ]
       ],
-      "bounds_inferred": true,
+      "bounds_inferred": false,
       "url_template": null,
       "band": "L",
       "pol": "HH",
@@ -682,12 +658,8 @@
       ],
       "default_on": false,
       "opacity": 0.75,
-      "status": "unavailable",
-      "placeholder": {
-        "is": true,
-        "tag": "Sample values",
-        "replaced_by": "data/processed/img/class_20261109_new_water.png (real class map from the NISAR change analysis)"
-      },
+      "status": "ready",
+      "placeholder": null,
       "id": "nisar_class_new_water",
       "name": "Likely new open water",
       "period": [
@@ -698,7 +670,8 @@
         "2026-10-04",
         "2026-10-16"
       ],
-      "class_group": "ap_delta_oct_nov_2026"
+      "class_group": "ap_delta_oct_nov_2026",
+      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 subset"
     },
     {
       "group": "after",
@@ -709,22 +682,22 @@
       "time_utc": null,
       "latest_of": "nisar_class_wet_crops",
       "shows": "Where crop fields likely turned wet or flooded (radar brightness change)",
-      "limit": "water under dense crops (it can be missed)",
+      "limit": "water under dense crops; a normal fortnight (4-16 Oct) changes as many fields (1.9% vs 1.0% on 9 Nov), so this shows changing fields, not proven flooding",
       "source": "SpaceBros change map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",
       "png": "data/processed/img/class_20261109_wet_crops.png",
       "bounds": [
         [
-          15.289417736208744,
-          80.53360154529867
+          16.19511,
+          81.59718
         ],
         [
-          18.337444233134367,
-          83.76801815174849
+          17.10546,
+          82.60788
         ]
       ],
-      "bounds_inferred": true,
+      "bounds_inferred": false,
       "url_template": null,
       "band": "L",
       "pol": "HH",
@@ -749,12 +722,8 @@
       ],
       "default_on": false,
       "opacity": 0.75,
-      "status": "unavailable",
-      "placeholder": {
-        "is": true,
-        "tag": "Sample values",
-        "replaced_by": "data/processed/img/class_20261109_wet_crops.png (real class map from the NISAR change analysis)"
-      },
+      "status": "ready",
+      "placeholder": null,
       "id": "nisar_class_wet_crops",
       "name": "Likely wet or flooded crops",
       "period": [
@@ -765,7 +734,8 @@
         "2026-10-04",
         "2026-10-16"
       ],
-      "class_group": "ap_delta_oct_nov_2026"
+      "class_group": "ap_delta_oct_nov_2026",
+      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 subset"
     },
     {
       "group": "after",
@@ -783,15 +753,15 @@
       "png": "data/processed/img/class_20261109_no_change.png",
       "bounds": [
         [
-          15.289417736208744,
-          80.53360154529867
+          16.19511,
+          81.59718
         ],
         [
-          18.337444233134367,
-          83.76801815174849
+          17.10546,
+          82.60788
         ]
       ],
-      "bounds_inferred": true,
+      "bounds_inferred": false,
       "url_template": null,
       "band": "L",
       "pol": "HH",
@@ -816,12 +786,8 @@
       ],
       "default_on": false,
       "opacity": 0.75,
-      "status": "unavailable",
-      "placeholder": {
-        "is": true,
-        "tag": "Sample values",
-        "replaced_by": "data/processed/img/class_20261109_no_change.png (real class map from the NISAR change analysis)"
-      },
+      "status": "ready",
+      "placeholder": null,
       "id": "nisar_class_no_change",
       "name": "Likely no change (outline)",
       "period": [
@@ -832,7 +798,8 @@
         "2026-10-04",
         "2026-10-16"
       ],
-      "class_group": "ap_delta_oct_nov_2026"
+      "class_group": "ap_delta_oct_nov_2026",
+      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 subset"
     },
     {
       "group": "during",
@@ -840,25 +807,25 @@
       "chip": "nisar",
       "kind": "image",
       "date": "2026-10-27",
-      "time_utc": null,
+      "time_utc": "2026-10-27T13:01:51Z",
       "latest_of": "nisar_sea_diff",
-      "shows": "Change in sea-surface radar brightness, eye pass minus calm day (dB)",
-      "limit": "wind speed (it is a brightness change)",
+      "shows": "Change in sea-surface radar brightness, eye pass minus calm day (dB); difference of two calibrated backscatter images; wind-roughened sea appears brighter",
+      "limit": "wind speed (it is a brightness change); the 15 Oct calm reference is provisional and patchy, so the level may be overstated",
       "source": "SpaceBros difference map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",
-      "png": "data/processed/img/nisar_sea_diff_20261027_vs_20261015.png",
+      "png": "data/web/nisar_sea_diff_20261027_vs_20261015.png",
       "bounds": [
         [
-          15.29700264750999,
-          81.272021834518
+          15.29757,
+          81.27202
         ],
         [
-          18.33073904937732,
-          84.48977175584287
+          18.04115,
+          84.4841
         ]
       ],
-      "bounds_inferred": true,
+      "bounds_inferred": false,
       "url_template": null,
       "band": "L",
       "pol": "VV",
@@ -875,14 +842,15 @@
       "classes": null,
       "default_on": false,
       "opacity": 0.85,
-      "status": "unavailable",
-      "placeholder": {
-        "is": true,
-        "tag": "Sample values",
-        "replaced_by": "data/processed/img/nisar_sea_diff_20261027_vs_20261015.png (real difference map; none drawn from quick-looks on purpose)"
-      },
+      "status": "ready",
+      "placeholder": null,
       "id": "nisar_sea_diff_20261027_vs_20261015",
-      "name": "Sea roughness change (storm minus calm)"
+      "name": "Sea roughness change (storm minus calm)",
+      "bounds_source": "H5 subset footprint (data/web/nisar_sea_diff_20261027_vs_20261015.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_SEA_20261027_T048.h5",
+        "data/h5/L_SEA_20261015_T048.h5"
+      ]
     },
     {
       "group": "during",
@@ -1074,8 +1042,8 @@
       "config": {
         "lat": 16.0,
         "lon": 82.0,
-        "coordinates_confirmed": false,
-        "coordinates_note": "sea point to be confirmed by the backend person",
+        "coordinates_confirmed": true,
+        "coordinates_note": "ocean cell off Narsapur; 14 Nov test returned data (4.5 m waves on 27 Oct)",
         "readout": "card",
         "timeout_ms": 8000
       }
@@ -1117,10 +1085,10 @@
       "id": "open_meteo_flood",
       "name": "River flow (Open-Meteo flood model)",
       "config": {
-        "lat": 16.94,
-        "lon": 81.77,
-        "coordinates_confirmed": false,
-        "coordinates_note": "river point (near Dowleswaram barrage) to be confirmed",
+        "lat": 16.925,
+        "lon": 81.725,
+        "coordinates_confirmed": true,
+        "coordinates_note": "grid cell on the main Godavari channel near Dowleswaram; the earlier 16.94N 81.77E point was a side channel",
         "readout": "card",
         "timeout_ms": 8000
       }
@@ -1251,7 +1219,7 @@
       "limit": "a map layer (a link out, MOSDAC forbids redistribution)",
       "source": "MOSDAC, ISRO",
       "source_id": "mosdac",
-      "credit": "[credit line to confirm]",
+      "credit": "Data Source MOSDAC/SAC/ISRO. https://mosdac.gov.in",
       "png": null,
       "bounds": null,
       "bounds_inferred": false,
@@ -1310,11 +1278,7 @@
       "default_on": false,
       "opacity": null,
       "status": "ready",
-      "placeholder": {
-        "is": true,
-        "tag": "Sample values",
-        "replaced_by": "data/processed/alerts.json (real SACHET snapshot with saved_at_ist)"
-      },
+      "placeholder": null,
       "id": "alerts_sachet_snapshot",
       "name": "Official alerts (SACHET snapshot)",
       "file": "data/processed/alerts.json"
@@ -1356,8 +1320,8 @@
       "id": "alerts_gdacs_live",
       "name": "Global alerts (GDACS, live)",
       "config": {
-        "endpoint_confirmed": false,
-        "endpoint_note": "[endpoint and CORS from github.io to confirm]",
+        "endpoint_confirmed": true,
+        "endpoint_note": "HTTP 200 with Access-Control-Allow-Origin * on 14 Nov; preflight and github.io load still to test",
         "timeout_ms": 8000
       }
     }
@@ -1441,11 +1405,8 @@
         "nisar_class_wet_crops",
         "nisar_class_no_change"
       ],
-      "placeholder": {
-        "is": true,
-        "tag": "Sample values",
-        "replaced_by": "data/processed/mandal_rank.json (real zonal stats from the NISAR change analysis)"
-      }
+      "placeholder": null,
+      "caveat": "9 Nov combines Cyclone Arnab (27-28 Oct), Cyclone Murasu (1-3 Nov) and the Godavari peak (about 2 Nov). Radar-only classes, not validated against a flood map. Wet-or-flooded crops is not storm-specific."
     }
   ],
   "files": {

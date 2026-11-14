@@ -1,0 +1,216 @@
+{{Use dmy dates|date=February 2020}}{{Use Indian English|date=February 2020}}
+{{Infobox settlement
+| name                   = Bhadradri Kothagudem district
+| type                   = [[List of districts of Telangana|District]]
+| total_type             = Total
+| image                  = A View of Bhadrachalam Gopuram.JPG
+| alt                    = 
+| caption                = View of Bhadrachalam Gopuram
+| image_map              = Bhadradri Kothagudem in Telangana (India).svg
+| map_alt                = 
+| map_caption            = Location in Telangana
+| coordinates            = {{Coord|17|39|N|80|41|E|type:adm3rd_region:IN_dim:100000|display=inline,title}}
+| coor_pinpoint          = Kothagudem
+| subdivision_type       = Country
+| subdivision_name       = {{IND}}
+| subdivision_type1      = [[States and union territories of India|State]]
+| subdivision_name1      = {{seal|Telangana}}
+| subdivision_type2      = 
+| subdivision_name2      = 
+| established_title      = Established
+| established_date       = 
+| seat_type              = Headquarters
+| seat                   = [[Kothagudem]]
+| parts_type             = [[List of mandals in Telangana|Mandalas]]
+| parts_style            = para
+| p1                     = 24
+| area_total_km2         = 7483
+| area_footnotes         = 
+| population_as_of       = 2011
+| population_total       = 1069261
+| population_footnotes   = 
+| population_urban       = 31.71%
+| population_density_km2 = auto
+| demographics_type1     = 
+| demographics1_title1   = [[Literacy in India|Literacy]]
+| demographics1_info1    = 
+| demographics1_title2   = Sex ratio
+| demographics1_info2    = 
+| leader_title           = [[District collector]]
+| leader_name            = Ankit IAS
+| leader_title1          = [[Superintendent of Police (India)|SP]]
+| leader_name1           = Sri Biruduraju Rohit Raju<ref>{{cite web | url=https://www.deccanchronicle.com/nation/in-other-news/040124/state-govt-transfers-23-ips-officers.html | title=State Govt Transfers 23 IPS Officers | date=4 January 2024 }}</ref>
+| leader_title2          = 
+| leader_name2           = 
+| time_zone1             = [[Indian Standard Time|IST]]
+| utc_offset1            = +05:30
+| registration_plate     = TG–28<ref>{{cite news|title=Telangana New Districts Names 2016 Pdf TS 31 Districts List|url=https://timesalert.com/telangana-new-districts-list/21462/|access-date=11 October 2016|work=Timesalert.com|date=11 October 2016}}</ref>
+| custom_label_sec1      = tg
+| custom_data_sec1       = vd
+| custom_label_sec2      = je
+| custom_data_sec2       = xh
+| website                = {{URL|http://kothagudem.telangana.gov.in/}}
+}}
+
+'''Bhadradri Kothagudem district''' is a [[List of districts in India|district]] in the east of the [[Indian state]] of [[Telangana]].<ref>{{cite news|title=Names of 6 new districts changed|url=https://www.thehindu.com/todays-paper/tp-national/tp-telangana/Names-of-6-new-districts-changed/article15660997.ece|access-date=4 November 2016|work=The Hindu|date=22 October 2016|language=en-IN}}</ref> [[Kothagudem]] is the district headquarters.<ref name="profile"> Bhandaradri kothagudem district is located in eastern part of Telangana.{{Cite web|url=http://www.trac.telangana.gov.in/New_Districts/districts/02-Bhadradri-Kothagudem.pdf|title=Bhadradri-Kothagudem district|website=Official website of Medchal district|access-date=29 June 2017|archive-url=https://web.archive.org/web/20170110191528/http://trac.telangana.gov.in/New_Districts/districts/02-Bhadradri-Kothagudem.pdf|archive-date=10 January 2017|url-status=dead}}</ref> It is the largest district in Telangana, with an area of 7483&nbsp;km<sup>2</sup>.<ref name=":0" /> It borders the districts [[Khammam district|Khammam]], [[Mahabubabad district|Mahabubabad]], [[Mulugu district|Mulugu]] and shares a boundary with the bordering states [[Chhattisgarh]] and [[Andhra Pradesh]]. The district comprises 24 [[mandal]]s and 2 [[revenue division]]s, [[Kothagudem]] and [[Bhadrachalam]], and 481 [[gram panchayat]]s, and 5 [[municipalities]].<ref>{{cite web|url=https://kothagudem.telangana.gov.in/?|title=BHADRADRI KOTHAGUDEM DISTRICT|website=Kothagudem.telangana.gov.in|access-date=3 August 2026}}</ref>
+
+Kothagudem district contains some major industries, and is endowed with a variety of important minerals such as [[coal]]. The [[Singareni Collieries Company]] (SCCL), a government coal mining company jointly owned by the [[Government of Telangana]] and [[Government of India]], has its headquarters in Kothagudem. SCCL operates 16 [[opencast]] and 30 underground mines in four districts of Telangana with a manpower of around 58,837.{{When|date=March 2024}} 
+
+[[Kothagudem Thermal Power Station]], which is located in [[Palvancha]], is one of the coal-based power plants of [[Telangana State Power Generation Corporation Limited]]. The Paperboards and Specialty Papers Division of [[ITC Limited]] (ITC-PSPD) is located at [[Sarapaka|Sarapaka village]] near Bhadrachalam.
+
+== History ==
+Prehistoric man probably roamed around the areas of lower Godavari valley<ref>{{cite book|title=Paleolithic History of Godavari valley|url =https://books.google.com/books?id=OBJuAAAAMAAJ&q=Bhadrachalam|year =1984}}</ref> in the surroundings of [[Bhadrachalam]], [[Kothagudem]], [[Pinapaka mandal|Pinapaka]] and [[Paloncha]] Taluks in the district.
+
+Megalithic Dolmens were found at Janampet of Pinapaka Taluk.<ref>{{cite web|url=http://asihyd.ap.nic.in/khammam.html|title=Archeological Survey of India}}</ref> and Padugonigudem<ref>{{cite news| url=http://www.hindu.com/2011/04/22/stories/2011042263190600.htm | archive-url=https://web.archive.org/web/20110426083135/http://www.hindu.com/2011/04/22/stories/2011042263190600.htm | url-status=dead | archive-date=2011-04-26 | location=Chennai, India | work=[[The Hindu]] | title=3,000-year-old megalithic site discovered in Khammam | date=2011-04-22}}</ref> villages in Gundala Taluk of the district were rich in Megalithic cultural remnants explored and discovered recently.
+
+Buddhist sites in the district are found at [[Aswaraopeta]] and Karukonda<ref>{{Cite web| url=http://www.aparchaeologymuseum.com/wp-content/uploads/2012/05/Khammam-dt.pdf | title=Khammam district | access-date=2013-05-02 | archive-url=https://web.archive.org/web/20140203152357/http://www.aparchaeologymuseum.com/wp-content/uploads/2012/05/Khammam-dt.pdf | archive-date=2014-02-03 | url-status=dead}}</ref> near [[Kothagudem]].
+
+Bhadrachalam town has a documented history of a [[Sita Ramachandraswamy Temple, Bhadrachalam|Rama Temple]] constructed  around 17th century CE by [[Kancherla Gopanna]].<ref>{{cite web|url=https://www.bhadrachalarama.org/templehistory.html|title= Welcome to Bhadrachala Sree Seetha Ramachandra swamy temple|work=bhadrachalarama.org}}</ref> popularly known as Bhakta Ramadasu or Bhadrachala Ramadasu is a saint-poet.
+
+== Geography ==
+
+Bhadradri Kothagudem is the easternmost district of [[Telangana]] and is spread over an area of {{convert|7483|km2|sqmi|abbr=on}}.<ref name=":0">{{Cite web |last=TSDPS |title=Telangana State Development and Planning Society |url=https://www.tsdps.telangana.gov.in/Atlas.pdf}}</ref> The district is bounded on the north and northeast by the [[Bijapur district, Chhattisgarh|Bijapur]] and [[Sukma district|Sukma]] districts of [[Chhattisgarh]], on the east by [[Polavaram district]] of [[Andhra Pradesh]], on the south and southeast by the [[Khammam district|Khammam]] and on southeast by [[Eluru district|Eluru]] of [[Andhra Pradesh]] , on the west by [[Mahabubabad district]] and on the northwest by [[Mulugu district]].
+
+The district contains [[Kinnerasani Wildlife Sanctuary]] and also rich in forest reserves.
+
+== Demographics ==
+
+{{bar box
+|title=Religion in Bhadradri Kothagudem district (2011)<ref name="religion">{{Cite web|date=2011|title=Population by Religion - Andhra Pradesh|url=https://censusindia.gov.in/nada/index.php/catalog/11363/download/14476/DDW28C-01%20MDDS.XLS|website=[[Census of India]]|publisher=[[Registrar General and Census Commissioner of India]]}}</ref>
+|titlebar=#fcd116
+|float=right
+|bars=
+{{bar percent|[[Hinduism in Telangana|Hinduism]]|darkorange|92.15}}
+{{bar percent|[[Islam]]|green|5.80}}
+{{bar percent|[[Telugu Christians|Christianity]]|dodgerblue|1.60}}
+{{bar percent|Other or not stated|black|0.45}}
+}}
+
+As of the [[2011 census of India]], the district has a population of 1,069,261. Bhadradri Kothagudem has a sex ratio of 1008 females per 1000 males and a literacy rate of 66.40%. 107,326 (10.04%) were under 6 years of age. 339,083 (31.71%) lived in urban areas. [[Scheduled Castes and Scheduled Tribes]] made up 143,482 (13.42%) and 392,034 (36.66%) of the population respectively.<ref>{{Cite web |title=Know your district Plan your district - Bhadradri Kothagudem |url=http://www.trac.telangana.gov.in/trac/New_Districts/districts/02-Bhadradri-Kothagudem.pdf |website=trac.telangana.gov.in |publisher=Telangana State Remote Sensing Applications Centre}}</ref>
+
+{{Pie chart
+|thumb =right
+|caption = Languages of Bhadradri Kothagudem district (2011)<ref name="language"/>
+|label1 = [[Telugu language|Telugu]] |value1 = 72.34 |color1 = steelblue
+|label2 = [[Koya language|Koya]] |value2 = 10.55 |color2 = teal
+|label3 = [[Lambadi]] |value3 = 10.15 |color3 = khaki
+|label4 = [[Urdu]] |value4 = 5.09 |color4 = green
+|label5 = [[Hindi]] |value5 = 1.13 |color5 = orange
+|label6 = Others |value6 = 0.74 |color6 = grey
+}}
+
+At the time of the 2011 census, 72.34% of the population spoke [[Telugu language|Telugu]], 10.55% [[Koya language|Koya]], 10.15% [[Lambadi]], 5.09% [[Urdu]] and 1.13% [[Hindi]] as their first language.<ref name="language">{{Cite web |title=Table C-16 Population by Mother Tongue: Andhra Pradesh |url=https://censusindia.gov.in/nada/index.php/catalog/10193/download/13305/DDW-C16-STMT-MDDS-2800.XLSX |website=[[Census of India]] |publisher=[[Registrar General and Census Commissioner of India]]}}</ref>
+
+== Administrative divisions ==
+[[File:Bhadradri District basic outline map.png|thumb|240px|Bhadradri Kothagudem district outline map]]
+The district has two [[List of revenue divisions in Telangana|revenue divisions]] of [[Bhadrachalam]] and [[Kothagudem]] and is sub-divided into 23 [[mandal]]s.<ref name="profile" /> Ankit is the present [[District magistrate|collector]] of the district, having assumed the role in 2026.<ref>{{Cite web |title=District Officials |url=https://www.telangana.gov.in/contacts/district-officials |url-status=dead |archive-url=https://web.archive.org/web/20230923164520/https://www.telangana.gov.in/contacts/district-officials |archive-date=23 September 2023 |access-date=20 January 2024 |website=Telangana State Portal}}</ref><ref>{{Cite news |date=15 July 2023 |title=Mr.Ankit has taken charge as Collector and District Magistrate from Mr.Jitesh V Patil.|url=https://telanganatoday.com/dr-priyanka-ala-takes-charge-as-kothagudem-collector |access-date=20 January 2024 |work=[[Telangana Today]]}}</ref>
+
+=== Constituencies ===
+The district contains five [[Telangana Legislative Assembly]] constituencies. [[Kothagudem Assembly constituency]] includes the towns of Kothagudem and [[Palvancha]],  part of the [[Khammam Lok Sabha constituency]]. [[Aswaraopeta Assembly constituency]] is a Scheduled Tribe (ST) reserved constituency, and is also part of the [[Khammam Lok Sabha constituency]]. The [[Bhadrachalam Assembly constituency|Bhadrachalam]], [[Yellandu Assembly constituency|Yellandu]], and [[Pinapaka Assembly constituency|Pinapaka Assembly constituencies]] are ST reserved constituencies, and are part of the [[Mahabubabad Lok Sabha constituency]].
+
+=== Mandals ===
+
+The below table categorizes mandals into their respective revenue divisions in the district:<ref>{{Cite web |title=Map of District |url=https://kothagudem.telangana.gov.in/map-of-district/ |url-status=live |archive-url=https://web.archive.org/web/20231207023914/https://kothagudem.telangana.gov.in/map-of-district/ |archive-date=2023-12-07 |access-date=2024-03-24 |website=Bhadradi Kothagudem District}}</ref>
+
+{| class="wikitable sortable"
+|-
+! No.
+! Mandal !! Number of villages !! Revenue division
+|-
+
+|1 
+|[[Bhadrachalam]]||0||rowspan="8" |Bhadrachalam
+|-
+|2 
+|[[Manuguru]]||14
+|-
+|3
+|[[Aswapuram]]||24
+|-
+|4 
+|[[Pinapaka]]||23
+|-
+|5 
+|[[Burgampahad]]||17
+|-
+|6 
+|[[Cherla mandal|Cherla]]||26
+|-
+|7 
+|[[Dummugudem]]||37
+|-
+|8 
+|[[Karakagudem]]||16
+|-
+|9 
+|[[Kothagudem]]||0||rowspan="15"|Kothagudem
+|-
+|10
+|Allapalli||12
+|-
+|11 
+|Annapureddypalli||10
+|-
+|12 
+|[[Aswaraopeta]]||30
+|-
+|13 
+|[[Mulakalapalli|Mulakalapally]]||20
+|-
+|14 
+|[[Palvancha]]||36
+|- 
+|15 
+|Sujatanagar||20
+|-
+|16 
+|[[Tekulapalli]]||36
+|-
+|17 
+|[[Chandrugonda]]||14
+|-
+|18 
+|[[Yellandu]]||29
+|-
+|19 
+|[[Chunchupalle|Chunchupalli]]||18
+|-
+|20 
+|[[Dammapeta]]||31
+|-
+|21 
+|[[Gundala, Bhadradri Kothagudem district|Gundala]]||11
+|-
+|22 
+|[[Julurpadu|Julurpad]]||24
+|-
+|23
+|Laxmidevipalli||31
+|}
+
+== See also ==
+* [[List of districts in Telangana]]
+
+== References ==
+{{reflist}}
+
+== External links ==
+{{Commons category | Bhadradri Kothagudem District}}
+* [https://kothagudem.telangana.gov.in/ Official website]
+
+{{Geographic location
+|Centre = Bhadradri Kothagudem district
+|North = [[Bijapur district, Chhattisgarh]]
+|Northeast = [[Sukma district]], [[Chhattisgarh]]
+|East = [[Polavaram district]], [[Andhra Pradesh]]
+|Southeast = [[Eluru district]], [[Andhra Pradesh]]
+|South = [[Khammam district]]
+|Southwest = [[Khammam district]]
+|West = [[Mahabubabad district]]
+|Northwest = [[Mulugu district]]
+}}
+
+{{Telangana|state=expanded}}
+
+[[Category:Districts of Telangana]]
+[[Category:Bhadradri Kothagudem district| ]]

@@ -1,0 +1,205 @@
+{{Short description|District in Andhra Pradesh, India}}
+{{Use Indian English|date=January 2022}}
+{{Use dmy dates|date=January 2022}}
+{{Infobox settlement
+| name                   = Anakapalli district
+| native_name            = <!-- No native name per [[WP:NOINDICSCRIPTS]] -->
+| native_name_lang       = <!-- ISO 639-1 code e.g. "fr" for French. If more than one, use {{lang}} instead -->
+| type                   = [[Districts of Andhra Pradesh|District]] of [[Andhra Pradesh]]
+| image                  = {{Photomontage
+|size = 250
+|photo1a = Main Stupa Bojjannakonda.jpg
+|photo1b = Anakapalle Gandhi Nagar.jpg
+|photo2a = NTPC Simhadri Super thermal power plant at Parawada.jpg
+|photo2b = Panchadharla Temples and Monuments, Dharapalem village, Andhra Pradesh - 71.jpg
+|photo3a = Anakapalle Sarada River Bridge.jpg
+}}
+| image_size             = 
+| alt                    = 
+| caption                = Clockwise from top-left: Stupa at [[Bojjannakonda]], Gandhi Nagar in [[Anakapalle]], Dharmalingeswara Temple at Panchadharla, Bridge over the [[Sarada River]], [[Simhadri Super Thermal Power Station|NTPC Simhadi Super Thermal Power Plant]]
+| image_map              = Anakapalli in Andhra Pradesh (India).svg
+| map_caption            = Anakapalli district in Andhra Pradesh
+| etymology              = 
+| seat_type              = Headquarters
+| seat                   = [[Anakapalle|Anakapalli]]
+| nickname               = 
+| coordinates            = {{coord|17.69|83.00|display=title,
+inline}}
+| Government_type        = 
+| Body                   = 
+| Mayor                  = 
+| leader_title           = [[District magistrate (India)|Collector & District Magistrate]]
+| leader_name            = Smt.Vijaya Krishnan, [[Indian Administrative Service|I.A.S.]]
+| leader_title1          = [[List of constituencies of the Lok Sabha|Lok Sabha constituencies]]
+| leader_name1           = [[Anakapalli (Lok Sabha constituency)|Anakapalli]]
+| leader_title2          = 
+| leader_name2           = 
+| leader_title3          = 
+| leader_name3           = 
+| total_type             = Total
+| area_total_km2         = 4292
+| population_total       = 1,726,998
+| population_urban       = 250359
+| population_as_of       = 2011
+| population_footnotes   = <ref name="census"/>
+| population_density_km2 = auto
+| subdivision_type       = Country
+| subdivision_name       = {{IND}}
+| subdivision_type1      = [[States and union territories of India|State]]
+| subdivision_name1      = {{flagicon image|}}[[Andhra Pradesh]]
+| subdivision_type2      = Region
+| subdivision_name2      = [[Uttarandhra]]
+| time_zone1             = [[Indian Standard Time|IST]]
+| utc_offset             = +05:30
+| custom_label_sec1      = [[GDP]] (2022-23)
+| custom_data_sec1       = {{INRConvert|45092|c|year=2023}}<ref>{{Cite web | url=https://des.ap.gov.in/MainPage.do?mode=menuBind&tabname=publications | title=Publications | archive-url=https://web.archive.org/web/20220615153640/https://des.ap.gov.in/MainPage.do?mode=menuBind&tabname=publications | archive-date=2022-06-15}}</ref>
+| website                = {{URL|https://anakapalli.ap.gov.in}}
+| mapframe               = yes
+| mapframe-zoom          = 8
+| mapframe-wikidata      = yes
+| map_caption1           = Interactive map outlining district
+}}
+
+'''Anakapalli district''' is a [[List of districts of Andhra Pradesh|district]] in the Indian state of [[Andhra Pradesh]]. It was formed on 4 April 2022 from Anakapalli and Narsipatnam revenue divisions of the old [[Visakhapatnam district]].<ref>{{Cite news |date=2022-01-26 |title=Andhra Pradesh approves creation of 13 new districts |url=https://timesofindia.indiatimes.com/city/amaravati/andhra-pradesh-approves-creation-of-13-new-districts/articleshow/89136083.cms |access-date=2024-04-03 |work=[[The Times of India]]|issn=0971-8257}}</ref> The administrative headquarters are at [[Anakapalle|Anakapalli]].<ref>{{Cite news|last=Raghavendra|first=V.|date=26 January 2022|title=With creation of 13 new districts, AP now has 26 districts|work=[[The Hindu]]|url=https://www.thehindu.com/news/national/andhra-pradesh/with-creation-of-13-new-districts-ap-now-has-26-districts/article38327788.ece|url-status=live|access-date=26 January 2022|archive-url=https://web.archive.org/web/20220126110443/https://www.thehindu.com/news/national/andhra-pradesh/with-creation-of-13-new-districts-ap-now-has-26-districts/article38327788.ece|archive-date=26 January 2022|issn=0971-751X}}</ref><ref name="gaz">{{cite journal |title=ANDHRA PRADESH GAZETTE |journal=G.O.Rt.No.60, Revenue (Lands-IV), 25 [ 1 ] Th January, 2022 |date=25 January 2022 |page=117}}</ref><ref>{{Cite web|date=30 March 2022|title=New districts to come into force on April 4|url=https://www.thehindu.com/news/national/andhra-pradesh/new-districts-to-come-into-force-on-april-4/article65274658.ece|access-date=31 March 2022|website=[[The Hindu]]|language=en}}</ref><ref>{{Cite web|date=31 March 2022|title=కొత్త జిల్లా తాజా స్వరూపం|url=https://www.eenadu.net/telugu-news/ap-top-news/general/2501/122062849|access-date=31 March 2022|website=[[Eenadu]]|language=te}}</ref> [[Sankaram]], 3 km from Anakapalli is identified to be developed as the headquarters of the new district.<ref>{{Cite news|last=Rao|first=V. Kamalakara|date=2024-01-24|title=buddhist site of sankaram set to become headquarters of anakapalli district |url=https://www.thehindu.com/news/cities/Visakhapatnam/buddhist-site-of-sankaram-set-to-become-headquarters-of-anakapalli-district/article67772029.ece|work=[[The Hindu]]|language=en-IN|issn=0971-751X|url-status=live|archive-url=https://web.archive.org/web/20240125022458/https://www.thehindu.com/news/cities/Visakhapatnam/buddhist-site-of-sankaram-set-to-become-headquarters-of-anakapalli-district/article67772029.ece|archive-date=2024-01-25|access-date=2026-11-10}}</ref>
+
+== Etymology ==
+This district name is derived from its headquarters [[Anakapalli]].<ref>{{Cite web |title=History {{!}} Ankapalli District {{!}} India |url=https://anakapalli.ap.gov.in/history/ |access-date=2024-04-03 |language=en-US}}</ref>
+
+== Geography ==
+This district is surrounded by [[Alluri Sitharama Raju district]] to the north, [[Kakinada district]] to the west, the [[Bay of Bengal]] to the south and [[Vizianagaram district]] and [[Visakhapatnam district]] to the east.{{citation needed|date= September 2022}}
+
+== Demographics ==
+{{bar box
+|title=Religions in Anakapalli district (2011)<ref>{{Cite web|date=2011|title=Population by Religion - Andhra Pradesh|url=https://censusindia.gov.in/nada/index.php/catalog/11363/download/14476/DDW28C-01%20MDDS.XLS|website=censusindia.gov.in|publisher=[[Registrar General and Census Commissioner of India]]}}</ref>
+|titlebar=#Fcd116
+|left1=Religion
+|right1=Percent
+|float=left
+|bars=
+{{bar percent|[[Hinduism]]|darkorange|98.12}}
+{{bar percent|[[Islam]]|green|0.84}}
+{{bar percent|[[Telugu Christians|Christianity]]|blue|0.78}}
+{{bar percent|Other or not stated|black|0.26}}
+|caption=Distribution of religions
+}}
+
+At the time of the 2011 census, Anakapalli district had a population of 1,726,998, of which 250,359 (14.50%) live in urban areas. Anakapalli district had a sex ratio of 1020 females per 1000 males. Scheduled Castes and Scheduled Tribes make up 158,060 (9.15%) and 47,975 (2.78%) of the population respectively.<ref name="census">{{cite web |title=District Census Hand Book – Visakhapatnam |url=https://censusindia.gov.in/nada/index.php/catalog/122/download/138/DH_2011_2813_PART_A_DCHB_VISAKHAPATNAM.pdf|website=[[Census of India]] |publisher=[[Registrar General and Census Commissioner of India]]}}</ref>{{rp|90–94}}
+
+[[Telugu language|Telugu]] was the predominant language, spoken by 98.87% of the population.<ref>{{Cite web |title=Table C-16 Population by Mother Tongue: Andhra Pradesh |url=https://censusindia.gov.in/nada/index.php/catalog/10193/download/13305/DDW-C16-STMT-MDDS-2800.XLSX |website=[[Census of India]] |publisher=[[Registrar General and Census Commissioner of India]]}}</ref>
+
+
+== Politics ==
+
+There are one parliamentary and seven assembly constituencies in Anakapalli district. The parliamentary constituenciy is {{bulleted list
+|[[Anakapalli (Lok Sabha constituency)]]
+}}
+The assembly constituencies are<ref>{{cite web|url=http://ceoandhra.nic.in/Right%20to%20Infn.Act/annex1.htm|title=District-wise Assembly-Constituencies|work=ceoandhra.nic.in}}</ref>
+
+{|class="wikitable sortable"
+!width="50px" style="font-size:75%"|Constituency number
+!Name
+!style="font-size:75%"|Reserved for<br />([[Dalit|SC]]/[[Adivasi|ST]]/None)
+!Parliament
+|-
+|26
+|[[Chodavaram (Assembly constituency)|Chodavaram]]
+|None
+| rowspan="7" |[[Anakapalli (Lok Sabha constituency)|Anakapalli]]
+|-
+|27
+|[[Madugula (Assembly constituency)|Madugula]]
+|None
+|-
+|30
+|[[Anakapalli (Assembly constituency)|Anakapalli]]
+|None
+|-
+|31
+|[[Pendurthi (Assembly constituency)|Pendurthi]] (partially)
+|None
+|-
+|32
+|[[Elamanchili (Assembly constituency)|Elamanchili]]
+|None
+|-
+|33
+|[[Payakaraopet (SC) (Assembly constituency)|Payakaraopet]]
+|[[Dalit|SC]]
+|-
+|34
+|[[Narsipatnam (Assembly constituency)|Narsipatnam]]
+|None
+|}
+
+== Administrative divisions ==
+[[File:Anakapalli.png|alt=Anakapalli District|thumb|Satellite view of Anakapalli district]]
+
+The district is divided into 3 revenue divisions: [[Anakapalli revenue division|Anakapalli]], [[Adduroad Junction revenue division|Adduroad Junction]] and [[Narsipatnam revenue division|Narsipatnam]], which are further subdivided into 24 [[Tehsil|mandal]]s, each headed by a sub-collector.<ref name=newdiv>{{cite news|title=GO issued for creation of Anakapalle revenue division|url=https://www.thehindu.com/news/cities/Visakhapatnam/go-issued-for-creation-of-anakapalle-revenue-division/article4580216.ece|access-date=21 November 2015|work=The Hindu|date=4 April 2013|location=Viskhapatnam}}</ref>{{Obsolete source|Districts have been reorganised, can't use this as a reference for the current structure. Still useful for discussing the historical district structure, so shouldn't be deleted outright.|date=November 2026}}
+
+=== Mandals ===
+The list of 24 mandals in Anakapalli district, divided into 3 revenue divisions, is given below.
+{{Div col}}
+# [[Adduroad Junction revenue division]]
+## [[Atchutapuram mandal|Atchutapuram]]
+## [[Elamanchili mandal|Elamanchili]]
+## [[Kotauratla mandal|Kotauratla]]
+## [[Nakkapalli mandal|Nakkapalli]]
+## [[Payakaraopeta mandal|Payakaraopeta]]
+## [[Rambilli mandal|Rambilli]]
+## [[S. Rayavaram mandal|S. Rayavaram]] 
+# [[Anakapalle revenue division]]
+## [[Anakapalle mandal|Anakapalli]]
+## [[Butchayyapeta mandal|Butchayyapeta]]
+## [[Cheedikada mandal|Cheedikada]]
+## [[Chodavaram mandal|Chodavaram]]
+## [[Devarapalli mandal|Devarapalli]]
+## [[K. Kotapadu mandal|K. Kotapadu]]
+## [[Kasimkota mandal|Kasimkota]]
+## [[Munagapaka mandal|Munagapaka]]
+## [[Paravada mandal|Paravada]]
+## [[Sabbavaram mandal|Sabbavaram]]
+# [[Narsipatnam revenue division]] 
+## [[Golugonda mandal|Golugonda]] 
+## [[Madugula mandal|Madugula]]
+## [[Makavarapalem mandam|Makavarapalem]]  
+## [[Narsipatnam mandal|Narsipatnam]] 
+## [[Nathavaram mandal|Nathavaram]] 
+## [[Ravikamatham mandal|Ravikamatham]]
+## [[Rolugunta mandal|Rolugunta]]
+{{Div end}}
+
+=== Cities and towns ===
+The district consists of two municipalities and 8 census towns. Anakapalli falls under [[Greater Visakhapatnam Municipal Corporation]] and the two municipalities in the district are [[Elamanchili]] and [[Narsipatnam]].<ref>{{cite web|title=Adminsistrative divisions of Visakhapatnam district|url=http://visakhapatnam.nic.in/at-a-glance.html|website=Visakhapatnam District|publisher=National Informatics Centre|url-status=dead|archive-url=https://web.archive.org/web/20190701203053/http://visakhapatnam.nic.in/at-a-glance.html|archive-date=2019-07-01|access-date=2026-11-11}}</ref>{{Obsolete source|Outdated for discussing Anakapalli district (it's for Vizag), but still useful for historical information. The data seems to be pulled from the 2011 census.|date=November 2026}} The census towns are [[Bowluvada]], [[Chodavaram, Visakhapatnam district|Chodavaram]], [[Kantabamsuguda]], [[Mulakuddu]], [[Nakkapalle]], [[Narsipatnam]], [[Peda Boddepalle]], [[Payakaraopeta]].{{citation needed|date= September 2022}}
+
+== Notable people from Anakapalli district==
+<!---♦♦♦ Only add a person to this list if they already have their own article on the English Wikipedia ♦♦♦--->
+<!---♦♦♦ Please keep the list in alphabetical order by FIRST NAME ♦♦♦--->
+* [[Aarudra]], writer
+* [[Beesetti Venkata Satyavathi]], former Member of Parliament(Lok Sabha)
+* [[Dadi Veerabhadra Rao]], former state minister and Member of Legislative Assembly(Andhra Pradesh)
+* [[Gunasekhar]], film producer and director
+* [[Gurajada Apparao]], poet and writer
+* [[Konathala Ramakrishna]], former state minister and Member of Parliament(Lok Sabha)
+* [[Manikyalu Malla Venkata | Malla Venkata Manikyalu]], Indian [[weightlifter]]
+* [[Peela Govinda Satyanarayana]], former Member of Legislative Assembly(Andhra Pradesh)
+* [[Mallikarjuna Rao (actor) | Peela Mallikarjuna Rao]], Telugu character actor(comedian) & former general secretary of Telugu Movie Artists Association (MAA)
+* [[Pethakamsetti Appala Narasimham]], former Member of Parliament(Lok Sabha), former MLA and former [[Visakhapatnam Urban Development Authority | VUDA]] Chairman
+* [[Puri Jagannadh]], film producer and director
+* [[Shobha Naidu]], kuchipudi dancer
+* [[Sirivennela Seetharama Sastry]], lyricist
+* [[S. R. A. S. Appala Naidu]],  State Minister and Member of Parliament(Lok Sabha)
+* [[Vangalapudi Anitha]], [[List of home ministers of Andhra Pradesh|Minister of Home Affairs & Disaster Management]]
+* [[Villuri Venkataramana|Villuri Venkata Ramana]], former Member of Parliament(Rajya Sabha)
+
+== References ==
+{{Reflist}}
+
+== External links ==
+{{Sister project links| wikt=no | commons=Category:Anakapalli district | b=no | n=no | q=no | s=no | v=no | voy=no | species=no | d=Q110714857}}
+
+{{Anakapalli district}}
+{{Andhra Pradesh}}
+
+[[Category:Anakapalli district|*]]
+[[Category:2022 establishments in Andhra Pradesh]]
+[[Category:Districts of Andhra Pradesh]]

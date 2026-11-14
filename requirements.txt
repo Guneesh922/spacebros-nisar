@@ -9,3 +9,10 @@ matplotlib>=3.8
 pillow>=10.0
 requests>=2.31
 pandas>=2.0
+
+# Data pipeline (H5 subsets -> display assets). Needed by tools/build_web.py and src/fetch/subset_h5.py.
+# (h5py, numpy, pyproj, pillow are already listed above.)
+# Optional, only for streaming granules instead of downloading them:
+# earthaccess>=0.11
+# fsspec>=2024.2
+# aiohttp>=3.9
