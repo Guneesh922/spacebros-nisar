@@ -1,0 +1,169 @@
+/* Design tokens. The ONLY file in the app that contains hex values.
+   Fonts: this @import loads Anek Latin (variable width+weight), Anek Telugu and
+   IBM Plex Mono. If you prefer <link> tags in index.html, use the same URL and
+   delete the @import. */
+@import url("https://fonts.googleapis.com/css2?family=Anek+Latin:wdth,wght@75..125,100..800&family=Anek+Telugu:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+:root {
+  /* text */
+  --ink: #131E22;
+  --ink-2: #3F4D53;
+  --muted: #586469;
+  /* surfaces */
+  --paper: #F1F4F3;
+  --quiet: #E6EBEA;
+  --line: #D3DAD8;
+  --card: #FFFFFF;
+  --stage: #0F1B1F;
+  --on-stage-muted: #C4D0D2;
+  /* NISAR / brand teal (NISAR and brand only) */
+  --teal: #17635F;
+  --teal-hover: #0E4542;
+  --teal-tint: #D8EAE7;
+  --teal-onmap: #5FD0C3;
+  /* the two classes (those classes only) */
+  --water: #2A6FB0;
+  --water-ink: #1D4E7C;
+  --water-tint: #E3EDF6;
+  --crops: #E09A2B;
+  --crops-ink: #7A4A06;
+  --crops-tint: #F8EACF;
+  --white: #FFFFFF;
+
+  /* fonts */
+  --font-ui: "Anek Latin", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-te: "Anek Telugu", "Anek Latin", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --heading-stretch: 88%;
+  --heading-weight: 600;
+
+  /* radii */
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 10px;
+  --r-pill: 999px;
+
+  /* spacing scale */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+
+  /* touch target */
+  --touch: 44px;
+
+  /* type sizes */
+  --fs-body: 16px;
+  --fs-small: 14px;
+  --fs-caption: 13px;   /* nothing smaller except mono metadata and chips */
+  --fs-meta: 12px;
+  --fs-h3: 18px;
+  --fs-h2: 22px;
+  --fs-h1: 30px;
+  --lh-body: 1.45;
+
+  /* focus */
+  --focus-ring: 2px solid var(--teal);
+  --focus-offset: 2px;
+}
+
+/* ---------- reset / base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+html[lang="te"] body { font-family: var(--font-te); }
+@media (max-width: 767px) {
+  :root { --fs-body: 15px; }
+}
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: var(--heading-weight);
+  font-stretch: var(--heading-stretch);
+  line-height: 1.2;
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+p { margin: 0; }
+button { font-family: inherit; cursor: pointer; }
+button, input, select { font-size: inherit; color: inherit; }
+img, svg { max-width: 100%; }
+
+/* ---------- utilities ---------- */
+.mono { font-family: var(--font-mono); font-size: var(--fs-meta); }
+.muted { color: var(--muted); }
+
+/* focus ring */
+:focus-visible,
+.focus-ring:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+.map-dark :focus-visible { outline-color: var(--teal-onmap); }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* chips */
+.chip {
+  display: inline-block;
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  line-height: 1.3;
+  padding: 3px 8px;
+  border-radius: var(--r-sm);
+  background: var(--quiet);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.chip--nisar { background: var(--teal-tint); color: var(--teal-hover); }
+.chip--context { background: var(--quiet); color: var(--ink-2); }
+
+/* placeholder tag */
+.tag-sample {
+  display: inline-block;
+  font-size: var(--fs-caption);
+  line-height: 1.4;
+  padding: 1px 8px;
+  border-radius: var(--r-sm);
+  background: transparent;
+  border: 1px dashed var(--muted);
+  color: var(--ink-2);
+}
+
+/* shared button looks (shell may reuse) */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+  min-height: var(--touch);
+  padding: 0 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  font-size: var(--fs-small);
+}
+.btn--primary { background: var(--ink); border-color: var(--ink); color: var(--white); font-weight: 500; }
+.btn--teal { background: var(--teal); border-color: var(--teal); color: var(--white); }
+.btn--teal:hover { background: var(--teal-hover); border-color: var(--teal-hover); }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

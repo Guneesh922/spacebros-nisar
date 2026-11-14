@@ -1,0 +1,26 @@
+{
+  "saved_at_ist": "2026-10-27T17:30:00+05:30",
+  "placeholder": {
+    "is": true,
+    "tag": "Sample values",
+    "replaced_by": "data/processed/alerts.json (real SACHET snapshot)"
+  },
+  "sachet": [
+    {
+      "headline": "[Sample headline: official alert text from the saved SACHET feed]",
+      "area": "Coastal Andhra Pradesh",
+      "issued": "2026-10-27T16:45:00+05:30"
+    },
+    {
+      "headline": "[Sample headline: official alert text from the saved SACHET feed]",
+      "area": "East Godavari, West Godavari, Konaseema, Kakinada",
+      "issued": "2026-10-27T15:10:00+05:30"
+    },
+    {
+      "headline": "[Sample headline: official alert text from the saved SACHET feed]",
+      "area": "Andhra Pradesh coast, west-central Bay of Bengal",
+      "issued": "2026-10-27T12:00:00+05:30"
+    }
+  ],
+  "gdacs": []
+}

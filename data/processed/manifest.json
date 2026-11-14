@@ -1,0 +1,1470 @@
+{
+  "schema_version": 2,
+  "generated_utc": "2026-11-14T06:00:00Z",
+  "app": {
+    "default_region": "ap_coast",
+    "default_lang": "en",
+    "page_budget_mb": 15
+  },
+  "regions": [
+    {
+      "id": "ap_coast",
+      "name": "Andhra Pradesh coast",
+      "default": true,
+      "bounds": [
+        [
+          15.0,
+          81.0
+        ],
+        [
+          18.0,
+          85.0
+        ]
+      ],
+      "bounds_source": "data/sources.yaml boxes.sea",
+      "districts": null,
+      "children": [
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ]
+    },
+    {
+      "id": "konaseema",
+      "name": "Konaseema",
+      "parent": "ap_coast",
+      "bounds": [
+        [
+          16.2,
+          81.6
+        ],
+        [
+          17.1,
+          82.6
+        ]
+      ],
+      "bounds_source": "data/sources.yaml boxes.delta",
+      "districts": [
+        "Dr. B.R. Ambedkar Konaseema"
+      ]
+    },
+    {
+      "id": "west_godavari",
+      "name": "West Godavari",
+      "parent": "ap_coast",
+      "bounds": [
+        [
+          16.25,
+          81.5
+        ],
+        [
+          16.9,
+          81.95
+        ]
+      ],
+      "bounds_source": "bbox of mandals at least 50% inside the delta box (mandals_delta_list.csv), padded 0.05 degrees",
+      "districts": [
+        "West Godavari"
+      ]
+    },
+    {
+      "id": "kakinada",
+      "name": "Kakinada",
+      "parent": "ap_coast",
+      "bounds": [
+        [
+          16.65,
+          81.95
+        ],
+        [
+          17.2,
+          82.45
+        ]
+      ],
+      "bounds_source": "bbox of mandals at least 50% inside the delta box (mandals_delta_list.csv), padded 0.05 degrees",
+      "districts": [
+        "Kakinada"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "asf_nisar_l",
+      "provider": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "access": "pipeline",
+      "licence": "NASA open data; follow ASF DAAC data-use terms [licence wording to confirm]",
+      "credit_line": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "credit_confirmed": true,
+      "can_host": true,
+      "delay_hint": "1-3 days after the pass",
+      "url": "https://asf.alaska.edu/data-sets/sar-data-sets/nisar/",
+      "note": "L-band GCOV, provisional (PR) products to 16 Oct, validated GCOV_V1 from 22 Oct. Quick-look browse PNGs are display-only."
+    },
+    {
+      "id": "nasa_gibs",
+      "provider": "NASA GIBS / Worldview (EOSDIS)",
+      "access": "live",
+      "licence": "NASA data is CC0",
+      "credit_line": "NASA GIBS",
+      "credit_confirmed": true,
+      "can_host": true,
+      "delay_hint": "VIIRS and IMERG daily: 1-2 days; Himawari: minutes to hours, rolling window of days",
+      "url": "https://gibs.earthdata.nasa.gov/",
+      "note": "No account needed. Reference_Labels_15m returns an empty image, not used."
+    },
+    {
+      "id": "open_meteo_marine",
+      "provider": "Open-Meteo Marine API",
+      "access": "live",
+      "licence": "CC BY 4.0, non-commercial use, under 10,000 calls a day",
+      "credit_line": "Open-Meteo.com, CC BY 4.0",
+      "credit_confirmed": true,
+      "can_host": false,
+      "delay_hint": "hourly model run",
+      "url": "https://open-meteo.com/en/docs/marine-weather-api"
+    },
+    {
+      "id": "open_meteo_flood",
+      "provider": "Open-Meteo Flood API (GloFAS river discharge)",
+      "access": "live",
+      "licence": "CC BY 4.0, non-commercial use, under 10,000 calls a day",
+      "credit_line": "Open-Meteo.com, CC BY 4.0",
+      "credit_confirmed": true,
+      "can_host": false,
+      "delay_hint": "daily model run",
+      "url": "https://open-meteo.com/en/docs/flood-api"
+    },
+    {
+      "id": "gdacs",
+      "provider": "GDACS (UN/EC Global Disaster Alert and Coordination System)",
+      "access": "live",
+      "licence": "public API, no key",
+      "credit_line": "GDACS",
+      "credit_confirmed": true,
+      "can_host": false,
+      "delay_hint": "minutes to hours",
+      "url": "https://www.gdacs.org/",
+      "note": "Not yet tested from a github.io page (risk R1). The strip falls back to the snapshot only."
+    },
+    {
+      "id": "ndma_sachet",
+      "provider": "NDMA SACHET (Common Alerting Protocol feed)",
+      "access": "snapshot",
+      "licence": "public alert feed [licence to confirm]",
+      "credit_line": "NDMA SACHET",
+      "credit_confirmed": true,
+      "can_host": true,
+      "delay_hint": "snapshot time is always shown (saved_at_ist)",
+      "url": "https://sachet.ndma.gov.in/",
+      "note": "Feed blocks browser (CORS) access, so a pipeline saves it to data/processed/alerts.json. No fetch script exists yet."
+    },
+    {
+      "id": "imd_bulletins",
+      "provider": "India Meteorological Department / RSMC New Delhi",
+      "access": "link",
+      "licence": "public bulletins (PDF); linked, not re-hosted",
+      "credit_line": "IMD / RSMC New Delhi bulletins",
+      "credit_confirmed": true,
+      "can_host": false,
+      "delay_hint": "per bulletin",
+      "url": "https://rsmcnewdelhi.imd.gov.in/report.php?internal_menu=MzQ=",
+      "note": "The IMD cyclone track is typed from these PDFs (data/reference/imd_track_arnab.csv). The IMD API is not used."
+    },
+    {
+      "id": "mosdac",
+      "provider": "MOSDAC, ISRO (INSAT-3DS / 3DR)",
+      "access": "link",
+      "licence": "rules forbid redistribution: link out only",
+      "credit_line": "[credit line to confirm]",
+      "credit_confirmed": false,
+      "can_host": false,
+      "delay_hint": "10-30 min imagery",
+      "url": "https://mosdac.gov.in/"
+    },
+    {
+      "id": "geoboundaries",
+      "provider": "geoBoundaries (ADM3 mandals, boundary year 2018)",
+      "access": "snapshot",
+      "licence": "ODbL-1.0",
+      "credit_line": "geoBoundaries, ODbL-1.0 (boundary year 2018)",
+      "credit_confirmed": true,
+      "can_host": true,
+      "delay_hint": "static",
+      "url": "https://www.geoboundaries.org/",
+      "note": "Pre-2022 district layout; districts come from data/reference/mandal_district_2022.csv (Wikipedia-sourced)."
+    },
+    {
+      "id": "osm",
+      "provider": "OpenStreetMap (coastline and land polygons)",
+      "access": "snapshot",
+      "licence": "ODbL-1.0",
+      "credit_line": "[credit line to confirm]",
+      "credit_confirmed": false,
+      "can_host": true,
+      "delay_hint": "static",
+      "url": "https://www.openstreetmap.org/copyright"
+    },
+    {
+      "id": "spacebros_derived",
+      "provider": "SpaceBros (derived from NISAR data)",
+      "access": "pipeline",
+      "licence": "team product, sample values until the backend replaces it",
+      "credit_line": "SpaceBros, from NISAR data",
+      "credit_confirmed": true,
+      "can_host": true,
+      "delay_hint": "after the NISAR subset is processed",
+      "url": null
+    }
+  ],
+  "layers": [
+    {
+      "group": "after",
+      "type": "nisar",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-11-09",
+      "time_utc": "2026-11-09T00:01:07Z",
+      "latest_of": "nisar_l_coast_hh",
+      "shows": "Land backscatter: radar brightness, HH (γ⁰, dB)",
+      "limit": "ground truth (single date, none yet)",
+      "source": "T55 F10 · NASA/ISRO via ASF",
+      "source_id": "asf_nisar_l",
+      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "png": "data/processed/img/nisar_l_coast_20261109_t55_hh.png",
+      "bounds": [
+        [
+          15.289417736208744,
+          80.53360154529867
+        ],
+        [
+          18.337444233134367,
+          83.76801815174849
+        ]
+      ],
+      "bounds_inferred": false,
+      "url_template": null,
+      "band": "L",
+      "pol": "HH",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": true,
+      "opacity": 0.85,
+      "status": "ready",
+      "placeholder": {
+        "is": true,
+        "tag": "Quick-look sample",
+        "replaced_by": "data/processed/img/nisar_l_coast_20261109_t55_hh.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
+      },
+      "id": "nisar_l_coast_20261109_t55_hh",
+      "name": "Coast, 12 days after",
+      "processing_level": "validated",
+      "bounds_source": "KML LatLonQuad of the browse image"
+    },
+    {
+      "group": "during",
+      "type": "nisar",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-28",
+      "time_utc": "2026-10-28T00:01:07Z",
+      "latest_of": "nisar_l_coast_hh",
+      "shows": "Land backscatter: radar brightness, HH (γ⁰, dB)",
+      "limit": "whether water is still rising (one look)",
+      "source": "T55 F10 · NASA/ISRO via ASF",
+      "source_id": "asf_nisar_l",
+      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "png": "data/processed/img/nisar_l_coast_20261028_t55_hh.png",
+      "bounds": [
+        [
+          15.289417736208744,
+          80.53360154529867
+        ],
+        [
+          18.337444233134367,
+          83.76801815174849
+        ]
+      ],
+      "bounds_inferred": false,
+      "url_template": null,
+      "band": "L",
+      "pol": "HH",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": 0.85,
+      "status": "ready",
+      "placeholder": {
+        "is": true,
+        "tag": "Quick-look sample",
+        "replaced_by": "data/processed/img/nisar_l_coast_20261028_t55_hh.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
+      },
+      "id": "nisar_l_coast_20261028_t55_hh",
+      "name": "Coast, 4 hours after landfall",
+      "processing_level": "validated",
+      "bounds_source": "KML LatLonQuad of the browse image"
+    },
+    {
+      "group": "before",
+      "type": "nisar",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-16",
+      "time_utc": "2026-10-16T00:01:06Z",
+      "latest_of": "nisar_l_coast_hh",
+      "shows": "Land backscatter: radar brightness, HH (γ⁰, dB)",
+      "limit": "wet soil apart from shallow water",
+      "source": "T55 F10 · NASA/ISRO via ASF",
+      "source_id": "asf_nisar_l",
+      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "png": "data/processed/img/nisar_l_coast_20261016_t55_hh.png",
+      "bounds": [
+        [
+          15.289417736208744,
+          80.53360154529867
+        ],
+        [
+          18.337444233134367,
+          83.76801815174849
+        ]
+      ],
+      "bounds_inferred": true,
+      "url_template": null,
+      "band": "L",
+      "pol": "HH",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": 0.85,
+      "status": "ready",
+      "placeholder": {
+        "is": true,
+        "tag": "Quick-look sample",
+        "replaced_by": "data/processed/img/nisar_l_coast_20261016_t55_hh.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
+      },
+      "id": "nisar_l_coast_20261016_t55_hh",
+      "name": "Coast before the storm",
+      "processing_level": "provisional",
+      "bounds_source": "inferred from the same track/frame KML of 2026-10-28 (T55 F10); real GeoTIFF bounds replace this"
+    },
+    {
+      "group": "before",
+      "type": "nisar",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-04",
+      "time_utc": "2026-10-04T00:01:06Z",
+      "latest_of": "nisar_l_coast_hh",
+      "shows": "Land backscatter: radar brightness, HH (γ⁰, dB)",
+      "limit": "wet soil apart from shallow water",
+      "source": "T55 F10 · NASA/ISRO via ASF",
+      "source_id": "asf_nisar_l",
+      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "png": "data/processed/img/nisar_l_coast_20261004_t55_hh.png",
+      "bounds": [
+        [
+          15.289417736208744,
+          80.53360154529867
+        ],
+        [
+          18.337444233134367,
+          83.76801815174849
+        ]
+      ],
+      "bounds_inferred": true,
+      "url_template": null,
+      "band": "L",
+      "pol": "HH",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": 0.85,
+      "status": "ready",
+      "placeholder": {
+        "is": true,
+        "tag": "Quick-look sample",
+        "replaced_by": "data/processed/img/nisar_l_coast_20261004_t55_hh.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
+      },
+      "id": "nisar_l_coast_20261004_t55_hh",
+      "name": "Coast, start of the normal period",
+      "processing_level": "provisional",
+      "bounds_source": "inferred from the same track/frame KML of 2026-10-28 (T55 F10); real GeoTIFF bounds replace this"
+    },
+    {
+      "group": "after",
+      "type": "nisar",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-11-08",
+      "time_utc": "2026-11-08T13:01:51Z",
+      "latest_of": "nisar_l_sea_vv",
+      "shows": "Sea-surface roughness: radar brightness, VV (γ⁰, dB)",
+      "limit": "wind speed; brightness shows roughness",
+      "source": "T48 F80 · NASA/ISRO via ASF",
+      "source_id": "asf_nisar_l",
+      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "png": "data/processed/img/nisar_l_sea_20261108_t48_vv.png",
+      "bounds": [
+        [
+          15.29700264750999,
+          81.272021834518
+        ],
+        [
+          18.33073904937732,
+          84.48977175584287
+        ]
+      ],
+      "bounds_inferred": false,
+      "url_template": null,
+      "band": "L",
+      "pol": "VV",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": 0.85,
+      "status": "ready",
+      "placeholder": {
+        "is": true,
+        "tag": "Quick-look sample",
+        "replaced_by": "data/processed/img/nisar_l_sea_20261108_t48_vv.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
+      },
+      "id": "nisar_l_sea_20261108_t48_vv",
+      "name": "Sea surface, after the storm",
+      "processing_level": "validated",
+      "bounds_source": "KML LatLonQuad of the browse image"
+    },
+    {
+      "group": "during",
+      "type": "nisar",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-27",
+      "time_utc": "2026-10-27T13:01:51Z",
+      "latest_of": "nisar_l_sea_vv",
+      "shows": "Sea-surface roughness: radar brightness, VV (γ⁰, dB)",
+      "limit": "wind speed; brightness shows roughness",
+      "source": "T48 F80 · NASA/ISRO via ASF",
+      "source_id": "asf_nisar_l",
+      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "png": "data/processed/img/nisar_l_sea_20261027_t48_vv.png",
+      "bounds": [
+        [
+          15.29700264750999,
+          81.272021834518
+        ],
+        [
+          18.33073904937732,
+          84.48977175584287
+        ]
+      ],
+      "bounds_inferred": false,
+      "url_template": null,
+      "band": "L",
+      "pol": "VV",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": 0.85,
+      "status": "ready",
+      "placeholder": {
+        "is": true,
+        "tag": "Quick-look sample",
+        "replaced_by": "data/processed/img/nisar_l_sea_20261027_t48_vv.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
+      },
+      "id": "nisar_l_sea_20261027_t48_vv",
+      "name": "Sea surface, eye pass",
+      "processing_level": "validated",
+      "bounds_source": "KML LatLonQuad of the browse image"
+    },
+    {
+      "group": "before",
+      "type": "nisar",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-15",
+      "time_utc": "2026-10-15T13:01:50Z",
+      "latest_of": "nisar_l_sea_vv",
+      "shows": "Sea-surface roughness: radar brightness, VV (γ⁰, dB)",
+      "limit": "an average sea (one calm day only)",
+      "source": "T48 F80 · NASA/ISRO via ASF",
+      "source_id": "asf_nisar_l",
+      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "png": "data/processed/img/nisar_l_sea_20261015_t48_vv.png",
+      "bounds": [
+        [
+          15.29700264750999,
+          81.272021834518
+        ],
+        [
+          18.33073904937732,
+          84.48977175584287
+        ]
+      ],
+      "bounds_inferred": true,
+      "url_template": null,
+      "band": "L",
+      "pol": "VV",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": 0.85,
+      "status": "ready",
+      "placeholder": {
+        "is": true,
+        "tag": "Quick-look sample",
+        "replaced_by": "data/processed/img/nisar_l_sea_20261015_t48_vv.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
+      },
+      "id": "nisar_l_sea_20261015_t48_vv",
+      "name": "Calm sea reference",
+      "processing_level": "provisional",
+      "bounds_source": "inferred from the same track/frame KML of 2026-10-27 (T48 F80); real GeoTIFF bounds replace this"
+    },
+    {
+      "group": "before",
+      "type": "nisar",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-03",
+      "time_utc": "2026-10-03T13:01:33Z",
+      "latest_of": "nisar_l_sea_vv",
+      "shows": "Sea-surface roughness: radar brightness, VV (γ⁰, dB)",
+      "limit": "an average sea (one calm day only)",
+      "source": "T48 F80 · NASA/ISRO via ASF",
+      "source_id": "asf_nisar_l",
+      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "png": "data/processed/img/nisar_l_sea_20261003_t48_vv.png",
+      "bounds": [
+        [
+          15.29700264750999,
+          81.272021834518
+        ],
+        [
+          18.33073904937732,
+          84.48977175584287
+        ]
+      ],
+      "bounds_inferred": true,
+      "url_template": null,
+      "band": "L",
+      "pol": "VV",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": 0.85,
+      "status": "ready",
+      "placeholder": {
+        "is": true,
+        "tag": "Quick-look sample",
+        "replaced_by": "data/processed/img/nisar_l_sea_20261003_t48_vv.png (same path, real greyscale dB product from the GCOV GeoTIFF)"
+      },
+      "id": "nisar_l_sea_20261003_t48_vv",
+      "name": "Calm sea, extra reference",
+      "processing_level": "provisional",
+      "bounds_source": "inferred from the same track/frame KML of 2026-10-27 (T48 F80); real GeoTIFF bounds replace this"
+    },
+    {
+      "group": "after",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-11-09",
+      "time_utc": null,
+      "latest_of": "nisar_class_new_water",
+      "shows": "Where open water likely appeared between the before and after scenes",
+      "limit": "water under dense crops (it can be missed)",
+      "source": "SpaceBros change map",
+      "source_id": "spacebros_derived",
+      "credit": "SpaceBros, from NISAR data",
+      "png": "data/processed/img/class_20261109_new_water.png",
+      "bounds": [
+        [
+          15.289417736208744,
+          80.53360154529867
+        ],
+        [
+          18.337444233134367,
+          83.76801815174849
+        ]
+      ],
+      "bounds_inferred": true,
+      "url_template": null,
+      "band": "L",
+      "pol": "HH",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": [
+        {
+          "id": "new_water",
+          "label": "likely new open water",
+          "colour": "#2A6FB0",
+          "style": "fill",
+          "default_on": true
+        }
+      ],
+      "default_on": false,
+      "opacity": 0.75,
+      "status": "unavailable",
+      "placeholder": {
+        "is": true,
+        "tag": "Sample values",
+        "replaced_by": "data/processed/img/class_20261109_new_water.png (real class map from the NISAR change analysis)"
+      },
+      "id": "nisar_class_new_water",
+      "name": "Likely new open water",
+      "period": [
+        "2026-10-16",
+        "2026-11-09"
+      ],
+      "normal_period": [
+        "2026-10-04",
+        "2026-10-16"
+      ],
+      "class_group": "ap_delta_oct_nov_2026"
+    },
+    {
+      "group": "after",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-11-09",
+      "time_utc": null,
+      "latest_of": "nisar_class_wet_crops",
+      "shows": "Where crop fields likely turned wet or flooded (radar brightness change)",
+      "limit": "water under dense crops (it can be missed)",
+      "source": "SpaceBros change map",
+      "source_id": "spacebros_derived",
+      "credit": "SpaceBros, from NISAR data",
+      "png": "data/processed/img/class_20261109_wet_crops.png",
+      "bounds": [
+        [
+          15.289417736208744,
+          80.53360154529867
+        ],
+        [
+          18.337444233134367,
+          83.76801815174849
+        ]
+      ],
+      "bounds_inferred": true,
+      "url_template": null,
+      "band": "L",
+      "pol": "HH",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": [
+        {
+          "id": "wet_crops",
+          "label": "likely wet or flooded crops",
+          "colour": "#E09A2B",
+          "style": "fill",
+          "default_on": true
+        }
+      ],
+      "default_on": false,
+      "opacity": 0.75,
+      "status": "unavailable",
+      "placeholder": {
+        "is": true,
+        "tag": "Sample values",
+        "replaced_by": "data/processed/img/class_20261109_wet_crops.png (real class map from the NISAR change analysis)"
+      },
+      "id": "nisar_class_wet_crops",
+      "name": "Likely wet or flooded crops",
+      "period": [
+        "2026-10-16",
+        "2026-11-09"
+      ],
+      "normal_period": [
+        "2026-10-04",
+        "2026-10-16"
+      ],
+      "class_group": "ap_delta_oct_nov_2026"
+    },
+    {
+      "group": "after",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-11-09",
+      "time_utc": null,
+      "latest_of": "nisar_class_no_change",
+      "shows": "Outline of areas with likely no change against the normal period",
+      "limit": "small changes (it is a threshold, not a measurement)",
+      "source": "SpaceBros change map",
+      "source_id": "spacebros_derived",
+      "credit": "SpaceBros, from NISAR data",
+      "png": "data/processed/img/class_20261109_no_change.png",
+      "bounds": [
+        [
+          15.289417736208744,
+          80.53360154529867
+        ],
+        [
+          18.337444233134367,
+          83.76801815174849
+        ]
+      ],
+      "bounds_inferred": true,
+      "url_template": null,
+      "band": "L",
+      "pol": "HH",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": [
+        {
+          "id": "no_change",
+          "label": "likely no change",
+          "colour": null,
+          "style": "outline",
+          "default_on": false
+        }
+      ],
+      "default_on": false,
+      "opacity": 0.75,
+      "status": "unavailable",
+      "placeholder": {
+        "is": true,
+        "tag": "Sample values",
+        "replaced_by": "data/processed/img/class_20261109_no_change.png (real class map from the NISAR change analysis)"
+      },
+      "id": "nisar_class_no_change",
+      "name": "Likely no change (outline)",
+      "period": [
+        "2026-10-16",
+        "2026-11-09"
+      ],
+      "normal_period": [
+        "2026-10-04",
+        "2026-10-16"
+      ],
+      "class_group": "ap_delta_oct_nov_2026"
+    },
+    {
+      "group": "during",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-27",
+      "time_utc": null,
+      "latest_of": "nisar_sea_diff",
+      "shows": "Change in sea-surface radar brightness, eye pass minus calm day (dB)",
+      "limit": "wind speed (it is a brightness change)",
+      "source": "SpaceBros difference map",
+      "source_id": "spacebros_derived",
+      "credit": "SpaceBros, from NISAR data",
+      "png": "data/processed/img/nisar_sea_diff_20261027_vs_20261015.png",
+      "bounds": [
+        [
+          15.29700264750999,
+          81.272021834518
+        ],
+        [
+          18.33073904937732,
+          84.48977175584287
+        ]
+      ],
+      "bounds_inferred": true,
+      "url_template": null,
+      "band": "L",
+      "pol": "VV",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": 0.85,
+      "status": "unavailable",
+      "placeholder": {
+        "is": true,
+        "tag": "Sample values",
+        "replaced_by": "data/processed/img/nisar_sea_diff_20261027_vs_20261015.png (real difference map; none drawn from quick-looks on purpose)"
+      },
+      "id": "nisar_sea_diff_20261027_vs_20261015",
+      "name": "Sea roughness change (storm minus calm)"
+    },
+    {
+      "group": "during",
+      "type": "optical",
+      "chip": "context",
+      "kind": "wmts",
+      "date": "live",
+      "time_utc": null,
+      "latest_of": null,
+      "shows": "Cloud tops and land colour as seen from orbit, once a day",
+      "limit": "the sea or land under cloud (cloud tops only)",
+      "source": "NASA GIBS · VIIRS NOAA-21",
+      "source_id": "nasa_gibs",
+      "credit": "NASA GIBS · VIIRS",
+      "png": null,
+      "bounds": null,
+      "bounds_inferred": false,
+      "url_template": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA21_CorrectedReflectance_TrueColor/default/{time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg",
+      "band": null,
+      "pol": null,
+      "track": null,
+      "frame": null,
+      "direction": null,
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": 0.9,
+      "status": "ready",
+      "placeholder": null,
+      "id": "gibs_viirs_truecolor",
+      "name": "Cloud image (VIIRS true colour)",
+      "latest_available_lag_days": 1,
+      "time_step": "P1D",
+      "time_format": "YYYY-MM-DD",
+      "config": {
+        "layer": "VIIRS_NOAA21_CorrectedReflectance_TrueColor",
+        "tile_matrix_set": "GoogleMapsCompatible_Level9",
+        "format": "image/jpeg",
+        "max_native_zoom": 9,
+        "alt_layers": [
+          "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+          "VIIRS_SNPP_CorrectedReflectance_TrueColor"
+        ],
+        "alt_note": "SNPP stops at 2026-11-02 in gibs_layers.json; NOAA-21 and NOAA-20 are current. Satellite for a saved event is a human pick.",
+        "known_range_end": "2026-11-14",
+        "range_from": "data/reference/gibs_layers.json"
+      }
+    },
+    {
+      "group": "during",
+      "type": "optical",
+      "chip": "context",
+      "kind": "wmts",
+      "date": "live",
+      "time_utc": null,
+      "latest_of": null,
+      "shows": "Satellite rain estimate, daily mean rate (mm/h)",
+      "limit": "rain under a day's average (a daily mean, not a storm total)",
+      "source": "NASA GIBS · IMERG",
+      "source_id": "nasa_gibs",
+      "credit": "NASA GIBS · IMERG",
+      "png": null,
+      "bounds": null,
+      "bounds_inferred": false,
+      "url_template": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/IMERG_Precipitation_Rate/default/{time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png",
+      "band": null,
+      "pol": null,
+      "track": null,
+      "frame": null,
+      "direction": null,
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": 0.7,
+      "status": "ready",
+      "placeholder": null,
+      "id": "gibs_imerg_daily",
+      "name": "Rain (IMERG, daily)",
+      "latest_available_lag_days": 2,
+      "time_step": "P1D",
+      "time_format": "YYYY-MM-DD",
+      "config": {
+        "layer": "IMERG_Precipitation_Rate",
+        "tile_matrix_set": "GoogleMapsCompatible_Level6",
+        "format": "image/png",
+        "max_native_zoom": 6,
+        "known_range_end": "2026-11-12",
+        "range_from": "data/reference/gibs_layers.json"
+      }
+    },
+    {
+      "group": "during",
+      "type": "optical",
+      "chip": "context",
+      "kind": "wmts",
+      "date": "live",
+      "time_utc": null,
+      "latest_of": null,
+      "shows": "Infrared brightness temperature of cloud tops, every 10 minutes",
+      "limit": "rain or wind (it sees cloud-top temperature)",
+      "source": "NASA GIBS · Himawari AHI B13",
+      "source_id": "nasa_gibs",
+      "credit": "NASA GIBS · Himawari",
+      "png": null,
+      "bounds": null,
+      "bounds_inferred": false,
+      "url_template": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/Himawari_AHI_Band13_Clean_Infrared/default/{time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png",
+      "band": null,
+      "pol": null,
+      "track": null,
+      "frame": null,
+      "direction": null,
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": 0.7,
+      "status": "ready",
+      "placeholder": null,
+      "id": "gibs_himawari_b13",
+      "name": "Cloud-top temperature (Himawari infrared)",
+      "latest_available_lag_days": 0,
+      "time_step": "PT10M",
+      "time_format": "YYYY-MM-DDTHH:mm:ssZ",
+      "config": {
+        "layer": "Himawari_AHI_Band13_Clean_Infrared",
+        "tile_matrix_set": "GoogleMapsCompatible_Level6",
+        "format": "image/png",
+        "max_native_zoom": 6,
+        "rolling_window": true,
+        "rolling_note": "GIBS keeps only a rolling window; older dates vanish. Saved 27 Oct stills in data/raw/gibs/ are the only reliable copy.",
+        "known_range_end": "2026-11-14T03:10:00Z",
+        "range_from": "data/reference/gibs_layers.json"
+      }
+    },
+    {
+      "group": "during",
+      "type": "weather",
+      "chip": "model",
+      "kind": "live",
+      "date": "live",
+      "time_utc": null,
+      "latest_of": null,
+      "shows": "Wave height, period and direction at one sea point (model, not a measurement)",
+      "limit": "measured waves (a forecast model at one point)",
+      "source": "Open-Meteo marine",
+      "source_id": "open_meteo_marine",
+      "credit": "Open-Meteo.com, CC BY 4.0",
+      "png": null,
+      "bounds": null,
+      "bounds_inferred": false,
+      "url_template": "https://marine-api.open-meteo.com/v1/marine?latitude={lat}&longitude={lon}&current=wave_height,wave_direction,wave_period,swell_wave_height&timezone=UTC",
+      "band": null,
+      "pol": null,
+      "track": null,
+      "frame": null,
+      "direction": null,
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": null,
+      "status": "ready",
+      "placeholder": null,
+      "id": "open_meteo_marine",
+      "name": "Waves (Open-Meteo marine model)",
+      "config": {
+        "lat": 16.0,
+        "lon": 82.0,
+        "coordinates_confirmed": false,
+        "coordinates_note": "sea point to be confirmed by the backend person",
+        "readout": "card",
+        "timeout_ms": 8000
+      }
+    },
+    {
+      "group": "during",
+      "type": "weather",
+      "chip": "model",
+      "kind": "live",
+      "date": "live",
+      "time_utc": null,
+      "latest_of": null,
+      "shows": "Godavari river discharge at one point (GloFAS model, m³/s)",
+      "limit": "flood extent (a river flow model at one point)",
+      "source": "Open-Meteo flood",
+      "source_id": "open_meteo_flood",
+      "credit": "Open-Meteo.com, CC BY 4.0",
+      "png": null,
+      "bounds": null,
+      "bounds_inferred": false,
+      "url_template": "https://flood-api.open-meteo.com/v1/flood?latitude={lat}&longitude={lon}&daily=river_discharge&past_days=7&forecast_days=7",
+      "band": null,
+      "pol": null,
+      "track": null,
+      "frame": null,
+      "direction": null,
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": null,
+      "status": "ready",
+      "placeholder": null,
+      "id": "open_meteo_flood",
+      "name": "River flow (Open-Meteo flood model)",
+      "config": {
+        "lat": 16.94,
+        "lon": 81.77,
+        "coordinates_confirmed": false,
+        "coordinates_note": "river point (near Dowleswaram barrage) to be confirmed",
+        "readout": "card",
+        "timeout_ms": 8000
+      }
+    },
+    {
+      "group": "after",
+      "type": "reference",
+      "chip": "reference",
+      "kind": "geojson",
+      "date": "2018",
+      "time_utc": null,
+      "latest_of": null,
+      "shows": "Mandal (sub-district) outlines",
+      "limit": "administrative lines, not flood extents",
+      "source": "geoBoundaries ADM3 · ODbL-1.0",
+      "source_id": "geoboundaries",
+      "credit": "geoBoundaries, ODbL-1.0 (boundary year 2018)",
+      "png": null,
+      "bounds": null,
+      "bounds_inferred": false,
+      "url_template": null,
+      "band": null,
+      "pol": null,
+      "track": null,
+      "frame": null,
+      "direction": null,
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": true,
+      "opacity": 1.0,
+      "status": "ready",
+      "placeholder": null,
+      "id": "mandal_boundaries",
+      "name": "Mandal boundaries",
+      "file": "data/processed/mandals.geojson"
+    },
+    {
+      "group": "during",
+      "type": "reference",
+      "chip": "reference",
+      "kind": "geojson",
+      "date": "2026-10-27",
+      "time_utc": null,
+      "latest_of": null,
+      "shows": "Track of the cyclone centre from IMD bulletin fixes",
+      "limit": "the exact path between fixes (interpolated)",
+      "source": "IMD bulletins · credited link",
+      "source_id": "imd_bulletins",
+      "credit": "IMD / RSMC New Delhi bulletins",
+      "png": null,
+      "bounds": null,
+      "bounds_inferred": false,
+      "url_template": null,
+      "band": null,
+      "pol": null,
+      "track": null,
+      "frame": null,
+      "direction": null,
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": "arnab_2026",
+      "classes": null,
+      "default_on": false,
+      "opacity": 1.0,
+      "status": "ready",
+      "placeholder": null,
+      "id": "imd_track_arnab",
+      "name": "IMD cyclone track",
+      "file": "data/processed/imd_track_arnab.geojson"
+    },
+    {
+      "group": "during",
+      "type": "reference",
+      "chip": "reference",
+      "kind": "link",
+      "date": null,
+      "time_utc": null,
+      "latest_of": null,
+      "shows": "Official IMD cyclone bulletins",
+      "limit": "a map layer (a link to the PDFs, not re-hosted)",
+      "source": "IMD / RSMC New Delhi",
+      "source_id": "imd_bulletins",
+      "credit": "IMD / RSMC New Delhi bulletins",
+      "png": null,
+      "bounds": null,
+      "bounds_inferred": false,
+      "url_template": null,
+      "band": null,
+      "pol": null,
+      "track": null,
+      "frame": null,
+      "direction": null,
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": null,
+      "status": "link_only",
+      "placeholder": null,
+      "id": "imd_bulletins_link",
+      "name": "IMD bulletins (PDF)",
+      "link_url": "https://rsmcnewdelhi.imd.gov.in/report.php?internal_menu=MzQ="
+    },
+    {
+      "group": "during",
+      "type": "optical",
+      "chip": "context",
+      "kind": "link",
+      "date": null,
+      "time_utc": null,
+      "latest_of": null,
+      "shows": "Geostationary cloud image from ISRO",
+      "limit": "a map layer (a link out, MOSDAC forbids redistribution)",
+      "source": "MOSDAC, ISRO",
+      "source_id": "mosdac",
+      "credit": "[credit line to confirm]",
+      "png": null,
+      "bounds": null,
+      "bounds_inferred": false,
+      "url_template": null,
+      "band": null,
+      "pol": null,
+      "track": null,
+      "frame": null,
+      "direction": null,
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": null,
+      "status": "link_only",
+      "placeholder": null,
+      "id": "mosdac_insat_link",
+      "name": "INSAT-3DS cloud image (MOSDAC)",
+      "link_url": "https://mosdac.gov.in/"
+    },
+    {
+      "group": "during",
+      "type": "alerts",
+      "chip": "context",
+      "kind": "link",
+      "date": null,
+      "time_utc": null,
+      "latest_of": null,
+      "shows": "Official warnings from one feed, saved at the time shown",
+      "limit": "a live feed (a saved snapshot with its time)",
+      "source": "NDMA SACHET · snapshot",
+      "source_id": "ndma_sachet",
+      "credit": "NDMA SACHET",
+      "png": null,
+      "bounds": null,
+      "bounds_inferred": false,
+      "url_template": null,
+      "band": null,
+      "pol": null,
+      "track": null,
+      "frame": null,
+      "direction": null,
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": null,
+      "status": "ready",
+      "placeholder": {
+        "is": true,
+        "tag": "Sample values",
+        "replaced_by": "data/processed/alerts.json (real SACHET snapshot with saved_at_ist)"
+      },
+      "id": "alerts_sachet_snapshot",
+      "name": "Official alerts (SACHET snapshot)",
+      "file": "data/processed/alerts.json"
+    },
+    {
+      "group": "during",
+      "type": "alerts",
+      "chip": "context",
+      "kind": "live",
+      "date": "live",
+      "time_utc": null,
+      "latest_of": null,
+      "shows": "Current cyclone and flood alerts near the region",
+      "limit": "local warnings (a global early-alert feed)",
+      "source": "GDACS · live",
+      "source_id": "gdacs",
+      "credit": "GDACS",
+      "png": null,
+      "bounds": null,
+      "bounds_inferred": false,
+      "url_template": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist=TC;FL&fromdate={from}&todate={to}&alertlevel=Green;Orange;Red",
+      "band": null,
+      "pol": null,
+      "track": null,
+      "frame": null,
+      "direction": null,
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "default_on": false,
+      "opacity": null,
+      "status": "ready",
+      "placeholder": null,
+      "id": "alerts_gdacs_live",
+      "name": "Global alerts (GDACS, live)",
+      "config": {
+        "endpoint_confirmed": false,
+        "endpoint_note": "[endpoint and CORS from github.io to confirm]",
+        "timeout_ms": 8000
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "arnab_2026",
+      "name": "Cyclone Arnab",
+      "hazard": "cyclone_flood",
+      "gdacs_id": null,
+      "region": "konaseema",
+      "dates": {
+        "before": "2026-10-16",
+        "during": "2026-10-28",
+        "after": "2026-11-09",
+        "normal_period": [
+          "2026-10-04",
+          "2026-10-16"
+        ]
+      },
+      "layers": {
+        "before": [
+          "nisar_l_sea_20261003_t48_vv",
+          "nisar_l_sea_20261015_t48_vv",
+          "nisar_l_coast_20261004_t55_hh",
+          "nisar_l_coast_20261016_t55_hh"
+        ],
+        "during": [
+          "nisar_l_sea_20261027_t48_vv",
+          "nisar_l_coast_20261028_t55_hh",
+          "nisar_sea_diff_20261027_vs_20261015",
+          "gibs_viirs_truecolor",
+          "gibs_himawari_b13",
+          "gibs_imerg_daily",
+          "imd_track_arnab",
+          "open_meteo_marine"
+        ],
+        "after": [
+          "nisar_l_sea_20261108_t48_vv",
+          "nisar_l_coast_20261109_t55_hh",
+          "nisar_class_new_water",
+          "nisar_class_wet_crops",
+          "nisar_class_no_change",
+          "mandal_boundaries",
+          "open_meteo_flood"
+        ]
+      },
+      "default_on": [
+        "nisar_l_sea_20261027_t48_vv",
+        "nisar_l_coast_20261109_t55_hh",
+        "mandal_boundaries",
+        "imd_track_arnab"
+      ],
+      "analysis_id": "ap_delta_oct_nov_2026",
+      "track_geojson": "data/processed/imd_track_arnab.geojson",
+      "landfall": {
+        "lat": 16.45,
+        "lon": 81.9,
+        "time_utc": null,
+        "note": "time being confirmed (IMD)"
+      },
+      "case_study": true,
+      "summary": "One saved event: eye pass 27 Oct (Track 48), delta before/after pair on Track 55 (16 Oct, 28 Oct, 9 Nov) against a normal period of 4-16 Oct."
+    }
+  ],
+  "analyses": [
+    {
+      "id": "ap_delta_oct_nov_2026",
+      "region": "ap_coast",
+      "period": [
+        "2026-10-16",
+        "2026-11-09"
+      ],
+      "normal_period": [
+        "2026-10-04",
+        "2026-10-16"
+      ],
+      "rank_file": "data/processed/mandal_rank.json",
+      "class_layers": [
+        "nisar_class_new_water",
+        "nisar_class_wet_crops",
+        "nisar_class_no_change"
+      ],
+      "placeholder": {
+        "is": true,
+        "tag": "Sample values",
+        "replaced_by": "data/processed/mandal_rank.json (real zonal stats from the NISAR change analysis)"
+      }
+    }
+  ],
+  "files": {
+    "mandals": "data/processed/mandals.geojson",
+    "alerts": "data/processed/alerts.json",
+    "profile": "data/processed/profile.json"
+  },
+  "coming_next": [
+    {
+      "id": "quake",
+      "name": "Earthquake and landslide"
+    },
+    {
+      "id": "oil",
+      "name": "Oil spill"
+    },
+    {
+      "id": "fire",
+      "name": "Wildfire"
+    }
+  ]
+}

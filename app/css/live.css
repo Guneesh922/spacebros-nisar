@@ -1,0 +1,129 @@
+/* live.css: live-status chips and Open-Meteo readout card. Tokens only (css/tokens.css). */
+
+.live-chips {
+  position: absolute;
+  right: 16px;
+  bottom: 76px;   /* clears the scale and attribution stack (map.css) at 1200px and up */
+  z-index: 850;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--s-1);
+  max-width: min(340px, calc(100% - 32px));   /* narrower so it clears the caption card */
+  pointer-events: none;
+}
+.live-chips[hidden], .live-readout[hidden] { display: none; }
+.live-chip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s-2);
+  justify-content: flex-end;
+  padding: 2px 8px;
+  border-radius: var(--r-sm);
+  background: var(--stage);
+  border: 1px solid var(--on-stage-muted);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  line-height: 1.5;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+.live-chip__credit { color: var(--on-stage-muted); }
+.live-chip.is-pending { color: var(--on-stage-muted); }
+.live-chip.is-fail { border-style: dashed; color: var(--on-stage-muted); }
+
+.live-readout {
+  position: absolute;
+  right: 16px;
+  top: 196px;
+  z-index: 880;
+  max-width: 260px;
+  width: calc(100% - 100px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.live-readout__toggle { display: none; }
+.live-readout__body { display: flex; flex-direction: column; gap: var(--s-2); }
+.live-card {
+  background: var(--card);
+  color: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 8px 12px;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-body);
+}
+.live-card__title {
+  font-size: var(--fs-small);
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.live-card__line { color: var(--ink); font-weight: 500; overflow-wrap: anywhere; }
+.live-card__line.is-fail { color: var(--ink-2); font-weight: 400; }
+.live-card__meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  color: var(--muted);
+}
+.live-card__note { color: var(--ink-2); }
+.live-card__credit {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  color: var(--muted);
+  margin-top: 2px;
+}
+.live-spark { display: block; width: 100%; height: 36px; margin: 4px 0; }
+.live-spark__line { fill: none; stroke: var(--ink-2); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+.live-spark__today { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 2; }
+.live-spark__dot { fill: var(--teal); stroke: var(--card); stroke-width: 1; }
+
+.live-readout__toggle:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+
+/* Below 1200px: chips and readout form ONE column at the bottom-left of the map, above the caption
+   card and the scale row (live.js sets --live-bottom and --live-maxh). The top-left of the map stays
+   free for the compare controls. On desktop the wrapper is display: contents, so nothing moves. */
+.live-stack { display: contents; }
+@media (max-width: 1199px) {
+  .live-stack {
+    position: absolute;
+    left: 10px;
+    bottom: var(--live-bottom, 52px);
+    z-index: 850;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-1);
+    width: calc(100% - 20px);
+    max-width: 300px;
+    pointer-events: none;
+  }
+  .live-stack > .live-chips,
+  .live-stack > .live-readout { position: static; right: auto; top: auto; bottom: auto; }
+  .live-stack > .live-chips { width: 100%; max-width: 100%; }
+  .live-chips { align-items: flex-start; }
+  .live-chip { justify-content: flex-start; text-align: left; }
+  /* collapsed: the box is just the one-line button; open: the card gets the full column width */
+  .live-readout { gap: 0; width: auto; max-width: 100%; max-height: var(--live-maxh, 35%); }
+  .live-readout.is-open { width: 100%; }
+  .live-readout__toggle {
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    min-height: var(--touch);
+    padding: 0 var(--s-3);
+    margin-bottom: var(--s-1);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--card);
+    color: var(--ink);
+    font-size: var(--fs-small);
+    font-weight: 500;
+    white-space: nowrap;
+    pointer-events: auto;
+  }
+  .live-readout__body { display: none; min-height: 0; overflow-y: auto; overscroll-behavior: contain; pointer-events: auto; }
+  .live-readout.is-open .live-readout__body { display: flex; }
+  .live-readout.is-open .live-readout__toggle { margin-bottom: var(--s-1); }
+}

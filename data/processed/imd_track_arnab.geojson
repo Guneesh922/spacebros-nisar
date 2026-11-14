@@ -1,0 +1,301 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Cyclone Arnab IMD track",
+    "interpolated": true,
+    "note": "straight segments between IMD-reported fixes; not a best track"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      82.7,
+      16.3
+     ],
+     [
+      82.4,
+      16.3
+     ],
+     [
+      82.1,
+      16.3
+     ],
+     [
+      81.95,
+      16.35
+     ],
+     [
+      81.9,
+      16.45
+     ],
+     [
+      82.0,
+      16.4
+     ],
+     [
+      81.9,
+      16.5
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-27T12:00Z",
+    "intensity": "MSW 80 kt gust 90 kt; 973 hPa; T4.5",
+    "category": "Very Severe Cyclonic Storm",
+    "source_pdf": "docs/imd_bulletins/20261027_1200UTC_tc_advisory_No13.pdf",
+    "page": "1;2"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.7,
+     16.3
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-27T12:00Z",
+    "intensity": "150-160 kmph gust 180",
+    "category": "Very Severe Cyclonic Storm",
+    "source_pdf": "docs/imd_bulletins/20261027_1200UTC_national_bulletin_No20.pdf",
+    "page": "1;2"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.7,
+     16.3
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-27T15:00Z",
+    "intensity": "145-155 kmph gust 170",
+    "category": "Very Severe Cyclonic Storm",
+    "source_pdf": "docs/imd_bulletins/20261027_1500UTC_national_bulletin_No21.pdf",
+    "page": "1;2"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.4,
+     16.3
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-27T15:00Z",
+    "intensity": "MSW 80 kt gust 90 kt; 980 hPa; T4.5",
+    "category": "Very Severe Cyclonic Storm",
+    "source_pdf": "docs/imd_bulletins/20261027_1500UTC_tc_advisory_No14.pdf",
+    "page": "1;2"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.4,
+     16.3
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-27T18:00Z",
+    "intensity": "140-150 kmph gust 170",
+    "category": "Very Severe Cyclonic Storm",
+    "source_pdf": "docs/imd_bulletins/20261027_1800UTC_national_bulletin_No22.pdf",
+    "page": "1;2"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.1,
+     16.3
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-27T18:00Z",
+    "intensity": "MSW 75 kt gust 85 kt; 984 hPa; T4.0",
+    "category": "Very Severe Cyclonic Storm",
+    "source_pdf": "docs/imd_bulletins/20261027_1800UTC_tc_advisory_No15.pdf",
+    "page": "1;2"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.1,
+     16.3
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-27T20:00Z",
+    "intensity": "125-135 gust 150 kmph",
+    "category": null,
+    "source_pdf": "docs/imd_bulletins/20261027_2000UTC_hourly_bulletin_No7.pdf",
+    "page": "1"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     81.95,
+     16.35
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-27T20:30Z/2026-10-28T02:30Z",
+    "intensity": "125-135 kmph gust 150 at crossing",
+    "category": "Very Severe Cyclonic Storm",
+    "source_pdf": "docs/imd_bulletins/20261028_0300UTC_press_release_28Oct.pdf",
+    "page": "1"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     81.9,
+     16.45
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-27T21:00Z",
+    "intensity": "125-135 gust 150 kmph",
+    "category": null,
+    "source_pdf": "docs/imd_bulletins/20261027_2100UTC_hourly_bulletin_No8.pdf",
+    "page": "1"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.0,
+     16.4
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-27T22:00Z",
+    "intensity": "125-135 gust 150 kmph",
+    "category": null,
+    "source_pdf": "docs/imd_bulletins/20261027_2200UTC_hourly_bulletin_No9.pdf",
+    "page": "1"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.0,
+     16.4
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-27T23:00Z",
+    "intensity": "120-130 gust 145 kmph",
+    "category": null,
+    "source_pdf": "docs/imd_bulletins/20261027_2300UTC_hourly_bulletin_No10.pdf",
+    "page": "1"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.0,
+     16.4
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-28T00:00Z",
+    "intensity": "115-125 gust 140 kmph",
+    "category": null,
+    "source_pdf": "docs/imd_bulletins/20261028_0000UTC_hourly_bulletin_No11.pdf",
+    "page": "1"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.0,
+     16.4
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-28T00:00Z",
+    "intensity": "MSW 65 kt gust 75 kt; 985 hPa; T4.0",
+    "category": "Very Severe Cyclonic Storm",
+    "source_pdf": "docs/imd_bulletins/20261028_0000UTC_tc_advisory_No17.pdf",
+    "page": "1;2"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.0,
+     16.4
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-28T00:00Z",
+    "intensity": "115-125 kmph gust 135",
+    "category": "Very Severe Cyclonic Storm",
+    "source_pdf": "docs/imd_bulletins/20261028_0000UTC_national_bulletin_No24.pdf",
+    "page": "1;2"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     82.0,
+     16.4
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "time_utc": "2026-10-28T03:00Z",
+    "intensity": "110-120 kmph gust 130",
+    "category": "Severe Cyclonic Storm",
+    "source_pdf": "docs/imd_bulletins/20261028_0300UTC_press_release_28Oct.pdf",
+    "page": "1"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     81.9,
+     16.5
+    ]
+   }
+  }
+ ]
+}
