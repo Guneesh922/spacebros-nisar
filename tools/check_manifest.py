@@ -80,6 +80,72 @@ def all_paths(m):
     return sorted(paths)
 
 
+ALERT_LEVELS = {"Green", "Orange", "Red", None}
+EVENT_STATUS = {"alert_only", "radar_linked", "closed", "dismissed"}
+EVENT_FINDINGS = {"change_seen", "no_clear_change", "numbers_coming", "sea_no_public_finding"}
+
+
+def alerts_v2_errors(d):
+    """alerts-v2 (tools/pipeline/alerts.py): area_id, built_utc, gdacs{fetched_utc,ok,error,url,credit,items}, sachet{snapshot_utc,...}."""
+    errs = []
+    for k in ("area_id", "built_utc", "none_text"):
+        if not d.get(k):
+            errs.append("alerts.json: %s missing" % k)
+    for src, stamp, ikeys in (("gdacs", "fetched_utc", ("id", "type", "name", "alert_level", "from", "to", "link", "countries")),
+                              ("sachet", "snapshot_utc", ("id", "headline", "area", "issued", "source", "link", "category"))):
+        b = d.get(src)
+        if not isinstance(b, dict):
+            errs.append("alerts.json: %s must be an object (alerts-v2)" % src)
+            continue
+        for k in (stamp, "ok", "error", "url", "credit", "items"):
+            if k not in b:
+                errs.append("alerts.json: %s.%s missing" % (src, k))
+        if not isinstance(b.get("ok"), bool):
+            errs.append("alerts.json: %s.ok must be true/false" % src)
+        if b.get("ok") is False and not b.get("error"):
+            errs.append("alerts.json: %s.ok is false but error is empty" % src)
+        if b.get("ok") is True and not b.get(stamp):
+            errs.append("alerts.json: %s.%s missing although ok" % (src, stamp))
+        for it in b.get("items") or []:
+            for k in ikeys:
+                if k not in it:
+                    errs.append("alerts.json: %s item %s missing '%s'" % (src, it.get("id"), k))
+                    break
+            if src == "gdacs" and it.get("alert_level") not in ALERT_LEVELS:
+                errs.append("alerts.json: gdacs item %s alert_level %r not Green/Orange/Red" % (it.get("id"), it.get("alert_level")))
+    return errs
+
+
+def events_v1_errors(d):
+    """events-v1 (data/processed/events.json): ids unique, windows valid, statuses and radar findings from the contract."""
+    errs, seen = [], set()
+    if d.get("schema") != "events-v1":
+        errs.append("events.json: schema must be events-v1")
+    if not d.get("updated_utc"):
+        errs.append("events.json: updated_utc missing")
+    for ev in d.get("events", []):
+        i = ev.get("id")
+        if not i or i in seen:
+            errs.append("events.json: id missing or duplicate (%r)" % i)
+        seen.add(i)
+        for k in ("name", "type", "area_id", "start", "end", "aftermath_days", "window_source", "status", "status_text",
+                  "reviewed_by_human", "linked_passes", "alert_refs", "edit_log"):
+            if k not in ev:
+                errs.append("events.json: %s missing '%s'" % (i, k))
+        if ev.get("start") and ev.get("end") and ev["start"] > ev["end"]:
+            errs.append("events.json: %s start after end" % i)
+        if ev.get("status") not in EVENT_STATUS:
+            errs.append("events.json: %s status %r" % (i, ev.get("status")))
+        if ev.get("status") == "alert_only" and ev.get("linked_passes"):
+            errs.append("events.json: %s is alert_only but has linked passes" % i)
+        if str(i).startswith("auto_") and ev.get("reviewed_by_human"):
+            errs.append("events.json: %s is auto_ but reviewed_by_human is true (rename it)" % i)
+        for lp in ev.get("linked_passes", []):
+            if lp.get("radar_finding") not in EVENT_FINDINGS or lp.get("relation") not in ("during", "after"):
+                errs.append("events.json: %s linked pass %s has bad relation/radar_finding" % (i, lp.get("scene_id")))
+    return errs
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--manifest", default=os.path.join(ROOT, "data", "processed", "manifest.json"))
@@ -457,11 +523,26 @@ def main():
             if not all(k in p_ for p_ in pts for k in ("r_km", "db", "err")):
                 errs.append("profile.json: points need r_km, db, err")
         if fn == "alerts.json":
-            if not d.get("saved_at_ist"):
-                errs.append("alerts.json: saved_at_ist missing")
-            if "gdacs" not in d or not isinstance(d.get("sachet"), list):
-                errs.append("alerts.json: needs sachet[] and gdacs[]")
+            if d.get("schema") == "alerts-v2":
+                errs += alerts_v2_errors(d)
+            else:   # legacy v1 snapshot (src/fetch/sachet_snapshot.py --out): still readable
+                if not d.get("saved_at_ist"):
+                    errs.append("alerts.json: saved_at_ist missing")
+                if "gdacs" not in d or not isinstance(d.get("sachet"), list):
+                    errs.append("alerts.json: needs sachet[] and gdacs[]")
     check("companion files: mandal_rank.json, profile.json, alerts.json", errs)
+
+    # events.json (events-v1), written by tools/pipeline/events.py; optional until the first run
+    errs = []
+    p = os.path.join(base, "events.json")
+    if os.path.exists(p):
+        try:
+            errs += events_v1_errors(json.load(open(p, encoding="utf-8")))
+        except Exception as exc:
+            errs.append("events.json: invalid JSON (%s)" % exc)
+    else:
+        warnings.append("data/processed/events.json missing (optional; tools/pipeline/events.py writes it)")
+    check("events.json (events-v1)", errs)
 
     ok_all = all(r[0] for r in results)
     for ok, name, errs in results:

@@ -8,8 +8,11 @@ Feed: https://sachet.ndma.gov.in/cap_public_website/rss/rss_india.xml (RSS 2.0, 
 RSS item fields: title, description (empty), category, link (CAP XML), author ("email (IMD office)"), guid, pubDate (GMT).
 Output item: {headline, area, issued (IST ISO), source, link}. `area` = areaDesc if --cap else the issuing office.
 Only standard library. Never invents text: headlines are copied from <title>.
+Importable (used by tools/pipeline/alerts.py): fetch_items(cap=False) -> (items, meta); fill_cap_areas(items, only=None).
+Each item also carries `id` (the feed <guid>).
 """
 import sys, re, json, argparse, urllib.request, datetime as dt
+from concurrent.futures import ThreadPoolExecutor
 import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 FEED = "https://sachet.ndma.gov.in/cap_public_website/rss/rss_india.xml"
@@ -29,14 +32,10 @@ def cap_area(link):
     except Exception:
         return ""
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default="data/interim/C/alerts.json")
-    ap.add_argument("--cap", action="store_true")
-    ap.add_argument("--filter", action="store_true")
-    ap.add_argument("--max", type=int, default=200)
-    a = ap.parse_args()
-    root = ET.fromstring(get(FEED))
+def fetch_items(feed=FEED, cap=False, timeout=40):
+    """Fetch the SACHET RSS feed. Returns (items, meta). items = [{id, headline, area, issued (IST ISO), source, link,
+    category}]; `area` = issuing office, or CAP areaDesc when cap=True. meta = feed_pubdate, counts, oldest/newest item."""
+    root = ET.fromstring(get(feed, timeout))
     ch = root.find("channel")
     items = []
     for it in ch.findall("item"):
@@ -49,20 +48,43 @@ def main():
             issued = parsedate_to_datetime(it.findtext("pubDate")).astimezone(IST).isoformat(timespec="seconds")
         except Exception:
             issued = ""
-        items.append({"headline": title, "area": office, "issued": issued, "source": office, "link": link, "category": it.findtext("category") or ""})
-    if a.cap:
-        for i in items:
-            i["area"] = cap_area(i["link"]) or i["area"]
+        items.append({"id": (it.findtext("guid") or link).strip(), "headline": title, "area": office, "issued": issued,
+                      "source": office, "link": link, "category": it.findtext("category") or ""})
+    if cap:
+        fill_cap_areas(items)
+    meta = {"feed_url": feed, "feed_pubdate": ch.findtext("pubDate"), "feed_item_count": len(items),
+            "feed_oldest_item_ist": min((i["issued"] for i in items if i["issued"]), default=None),
+            "feed_newest_item_ist": max((i["issued"] for i in items if i["issued"]), default=None)}
+    return items, meta
+
+def fill_cap_areas(items, only=None, workers=8):
+    """Replace item['area'] by the CAP areaDesc (one request per item, `workers` in parallel). only = predicate(item)
+    to limit which items are fetched. Items whose CAP cannot be read keep the issuing office as area."""
+    todo = [i for i in items if i.get("link") and (only is None or only(i))]
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        for i, a in zip(todo, ex.map(lambda i: cap_area(i["link"]), todo)):
+            if a:
+                i["area"] = a
+                i["area_from_cap"] = True
+    return len(todo)
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--out", default="data/interim/C/alerts.json")
+    ap.add_argument("--cap", action="store_true")
+    ap.add_argument("--filter", action="store_true")
+    ap.add_argument("--max", type=int, default=200)
+    a = ap.parse_args()
+    items, meta = fetch_items(cap=a.cap)
     n_all = len(items)
-    oldest = min((i["issued"] for i in items if i["issued"]), default=None)
-    newest = max((i["issued"] for i in items if i["issued"]), default=None)
+    oldest, newest = meta["feed_oldest_item_ist"], meta["feed_newest_item_ist"]
     if a.filter:
         items = [i for i in items if REL.search(i["headline"] + " " + i["area"])]
     items = items[:a.max]
     out = {
         "saved_at_ist": dt.datetime.now(IST).isoformat(timespec="seconds"),
         "feed_url": FEED,
-        "feed_pubdate": ch.findtext("pubDate"),
+        "feed_pubdate": meta["feed_pubdate"],
         "feed_item_count": n_all,
         "feed_oldest_item_ist": oldest,
         "feed_newest_item_ist": newest,
