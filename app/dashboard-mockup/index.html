@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cyclone Arnab, Godavari delta: dashboard (SpaceBros)</title>
+<title>Coast Radar Watch</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="css/dash.css">
@@ -16,8 +16,8 @@
     <span class="hdr__mark" aria-hidden="true"></span>
     <div class="hdr__titles">
       <p class="hdr__org">SpaceBros &middot; NISAR coast watch</p>
-      <h1 class="hdr__title">Cyclone Arnab: coastal flooding and ocean winds</h1>
-      <p class="hdr__sub">Godavari delta, Andhra Pradesh &middot; October to November 2026 &middot; evidence from NISAR radar</p>
+      <h1 class="hdr__title">Coast Radar Watch</h1>
+      <p class="hdr__sub">What the newest NISAR radar passes show on the coast, next to official alerts.</p>
     </div>
     <div class="hdr__meta is-loading" id="hdr-meta">Loading data&hellip;</div>
   </div>
@@ -29,6 +29,7 @@
 
 <main class="main" id="main" data-section="happened">
   <aside class="panel" id="panel" aria-label="Findings and data">
+    <div class="panel__bar"><button type="button" class="panel__x" id="panel-close" aria-expanded="true" aria-controls="panel" aria-label="Close the side panel (the map button brings it back)"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Close panel</button></div>
     <div class="banner" id="banner" hidden></div>
     <div class="card daycard" id="daycard" aria-label="Save, share or download this view"></div>
     <section id="sec-happened" role="tabpanel" aria-labelledby="tab-happened" class="sec" aria-busy="true">
@@ -39,7 +40,7 @@
   </aside>
 
   <div class="stage">
-    <div id="map" class="app-map map-dark" role="region" aria-label="Map of the Godavari delta coast"></div>
+    <div id="map" class="app-map map-dark" role="region" aria-label="Map of the study area"></div>
     <div class="maptools">
       <button type="button" class="mt-btn" id="panel-toggle" aria-expanded="true" aria-controls="panel">
         <svg class="mt-ico" id="panel-toggle-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> <span id="panel-toggle-txt">Hide panel</span>

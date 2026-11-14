@@ -12,11 +12,11 @@ From the repo root: `python3 -m http.server 8000`, then open http://localhost:80
 
 ## Real vs sample
 - Real: layer list, sources, licences, scene catalogue, mandal outlines, IMD track, radar quick-looks (tagged "Quick-look sample").
-- Sample (tagged "Sample values" on screen, as in the app): `mandal_rank.json`, `profile.json`, `alerts.json`. All finding sentences are computed from these, so every number is a placeholder until the real files land (`docs/PLACEHOLDERS.md`).
+- Sample badges now appear only where a layer, `mandal_rank.json` or `profile.json` carries `placeholder.is` (see the W3-H and WP3 sections below for what the page reads today). Older text in this section ("every number is a placeholder") describes the first mockup and is superseded.
 - The "what radar cannot tell you" verdicts carry the "Draft: to be reviewed" tag.
 
 ## Findings text
-All plain-language copy is in `js/findings.js` as one `FINDINGS` object (`{placeholders}` are filled from the data; optional per-mandal overrides in `FINDINGS.mandals`). Swap that file for a backend-generated one.
+All plain-language copy is in `js/findings.js` as one `FINDINGS` object (`{placeholders}` are filled from the data; optional per-mandal overrides in `FINDINGS.mandals`). It is now only generic explanatory copy and neutral fallbacks; the live summary comes from `data/processed/findings/latest.json` (see WP3).
 
 ## Needs from the backend
 1. A findings JSON (same shape as `FINDINGS`), or per-mandal sentences and confidence levels.
@@ -41,3 +41,21 @@ The NISAR dates come from manifest layers (`type: nisar`, `status: ready`, with 
 - Data tab cards added: Radar by date (small multiples), Brightness histogram (`hist` + `water_threshold_db` of each layer json); map legends come from the layers on the map (dB bar, sea-difference `ramp.stops`, class colours).
 - Test viewports: 1400x900 and 800 wide, both tabs, all four map modes.
 
+
+## WP3 (Wave 4): what reads what
+Page start-up reads, all relative to the repo root (any failure of an optional file shows a neutral message, never invented text):
+| file | used for |
+|---|---|
+| `data/processed/findings/latest.json` (fallback `data/web/story.json`, then the neutral "Summary not available yet") | the Latest radar pass card: pass time IST, area, headline, `comparison_line`, `three_numbers` with ±, `caveats`, `confidence` ("Lower confidence" + reasons), `next_pass`, `age`, `event_chips` (list) or `event_chip`, mandal sentences, archive list `updates[]`. The newest pass date is `pass.date`. |
+| `data/processed/findings/<date>.json` | frozen summary of one coast pass. Opens when the map shows that date (flood-share day buttons, archive links, saved days, old hashes). Only dates listed in `updates[]` are fetched. "Back to the latest pass" returns. |
+| `data/processed/events.json` | Events archive card (name, type, dates, source and credit, severity as given, status, linked passes with finding text, cannot-tell list, edit log). `reviewed_by_human: false` shows "Draft from alert, not reviewed". `story` supplies ALL Arnab-style wording (landfall caption, eye profile, wind, before/after, other-water caveat); slots `{eye} {eye_err} {peak} {before} {after}` are filled from `profile.json` and the scene dates, and a sentence whose slot cannot be filled is left out. This wording shows only with an event chip or in the archive. |
+| `data/processed/alerts.json` (schema alerts-v2) | Alerts card (home) and Alerts card (data tab): GDACS and SACHET items, each with its own timestamp; `ok:false` shows "Could not refresh, showing snapshot from ...", `none_text` when both are empty, credits shown. |
+| `config/areas.json` | `site.title` -> `document.title` and header title, `site.tagline` -> header subtitle, area name in the pass and alerts cards. `index.html` holds neutral defaults. |
+| `app/strings/strings.en.json` (keys `dash.*`) | "How radar sees water" panel, Events archive intro and draft tag, "About and sources". |
+| `app/strings/story.en.json` | read-only; stale/missing-number strings. |
+| `data/h5/catalog.json`, `manifest.json`, `mandal_rank.json`, `profile.json`, `mandals.geojson`, `imd_track_arnab.geojson` | unchanged: scenes, layers, mandal numbers, eye profile, outlines, track. |
+`js/findings.js` now holds only generic explanatory copy and neutral fallbacks (no event wording). `data/events/arnab-2026.json` is no longer read.
+
+Side panel: "Close panel" (inside the panel) and "Hide panel" (on the map) both toggle it; `aria-expanded` is kept in step, focus moves to the map button, state is saved in localStorage (`spacebros.nisar.panelCollapsed.v1`, in try/catch) and the map is resized afterwards. Works at 390 px (panel sits under the map; collapsed, the map grows).
+
+Permalinks: format unchanged (`#tab=..&mode=..&m=..&l=..&c=..&z=..&d=..`). A `c`/`z` that is outside the study area (with a margin) or at a zoom below 5 is ignored and the map fits the area bounds. The page no longer writes `c`/`z` while the map has no real size (hidden or not laid out).

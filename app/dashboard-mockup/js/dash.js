@@ -9,7 +9,7 @@
   var SHARE_MAX = 15, GRAY = [-25, 0];
   var MODES = [['share', 'Flood share'], ['radar', 'Radar, after'], ['swipe', 'Before and after'], ['eye', 'Cyclone eye']];
 
-  var S = { section: 'happened', mapMode: 'share', shareD: null, rankBy: 'water', histId: null, fm: false, sel: null, swipe: 50, showAll: false, sort: { k: 'rank', d: 1 }, q: '', role: 'coast', dates: {}, dEye: null, prevMode: null, saved: [], storeOK: true, notice: '', undo: null };
+  var S = { section: 'happened', mapMode: 'share', shareD: null, rankBy: 'water', histId: null, fm: false, sel: null, swipe: 50, showAll: false, storyD: null, evOpen: {}, sort: { k: 'rank', d: 1 }, q: '', role: 'coast', dates: {}, dEye: null, prevMode: null, saved: [], storeOK: true, notice: '', undo: null };
   var X = {};                                  // loaded data
   var vis = { img: {}, before: null, outlines: true, track: true };
   var ready = false, hashTimer = null, lastHash = '', missing = {}, map, imgs = {}, imgsB = {}, mandLayer, featByName = {}, trackGrp, eyeGrp, hoverRing, built = {};
@@ -46,7 +46,28 @@
              km: r.water_km2, kmT: r.flooded_km2, area: r.area_km2, chg: r.water_change_vs_normal_pp, chgT: r.change_vs_normal_pp, cover: r.coverage_pct,
              rank: r.rank_water != null ? r.rank_water : (r.rank_water === undefined ? r.rank : null), rankT: r.rank };
   }
-  function storyOK() { return !!(X.story && X.story.schema === 'story-v1' && X.story.headline); }
+  function storyOK() { return !!(X.story && (X.story.schema === 'story-v1' || X.story.schema === 'findings-v1') && X.story.headline); }
+  /* UI text from app/strings/strings.en.json (flat keys); the second argument is a neutral fallback */
+  function T(k, fb) { return (X.ui && X.ui[k]) || fb || ''; }
+  function tl(iso) { if (!iso) return 'an unknown time'; var d = new Date(iso); return isNaN(d) ? String(iso) : ist(iso); }
+  function areaCfg() {
+    var c = X.cfg, as = (c && c.areas) || [], id = (X.latest && X.latest.area_id) || (c && c.default_area);
+    return as.filter(function (a) { return a.id === id; })[0] || as[0] || null;
+  }
+  function areaName() { var a = areaCfg(); return a ? a.name : ''; }
+  function latestPassDate() {
+    var s = X.latest; if (!s) return null;
+    if (s.pass && s.pass.date) return s.pass.date;
+    if (s.scene && s.scene.date) return s.scene.date;
+    return s.data_as_of ? String(s.data_as_of).slice(0, 10) : null;
+  }
+  function chipsOf(s) {
+    if (!s) return [];
+    var a = (s.event_chips && s.event_chips.length) ? s.event_chips : (s.event_chip ? [s.event_chip] : []);
+    return a.filter(function (c) { return c && c.text; });
+  }
+  function eventById(id) { return (X.events || []).filter(function (e) { return e.id === id; })[0] || null; }
+  function hasLang(t) { return /[\u0C00-\u0C7F]/.test(t || '') ? ' lang="te"' : ''; }
   function storyHas(nm) { return !!(storyOK() && X.story.mandal_sentences && X.story.mandal_sentences[nm]); }
   function hasM(nm) { return !!(nm && ((X.byName && X.byName[nm]) || storyHas(nm))); }
   function rankSample() { return !!((X.rank && X.rank.placeholder && X.rank.placeholder.is) || (storyOK() && X.story.badges && X.story.badges.sample)); }
@@ -59,13 +80,22 @@
   /* ---------------- load ---------------- */
   X.warn = [];
   function opt(u, what) { return getJSON(u).catch(function (e) { X.warn.push(what); console.warn(e.message); return null; }); }
+  function soft(u) { return getJSON(u).catch(function () { return null; }); }
+  /* first URL that loads wins; null if none (the 404 of a missing first file is the only noise) */
+  function firstJSON(urls) { var p = Promise.reject(new Error('start')); urls.forEach(function (u) { p = p.catch(function () { return getJSON(u); }); }); return p.catch(function () { return null; }); }
+  var FD = '../../data/processed/findings/';
   Promise.all([getJSON(D + 'manifest.json'), getJSON(D + 'mandals.geojson'), opt(D + 'mandal_rank.json', 'mandal_rank.json'),
                opt(D + 'profile.json', 'profile.json'), opt(D + 'alerts.json', 'alerts.json'), opt(D + 'imd_track_arnab.geojson', 'imd_track_arnab.geojson'),
                getJSON('../../data/h5/catalog.json').catch(function (e) { console.warn(e.message); return null; }),
-               getJSON('../../data/events/arnab-2026.json').catch(function () { return null; }),
-               getJSON('../../data/web/story.json').catch(function (e) { console.warn('story.json not available, using the built-in text: ' + e.message); return null; }),
-               getJSON('../strings/story.en.json').catch(function () { return null; })])
-    .then(function (a) { X.manifest = a[0]; X.mandals = a[1]; X.rank = a[2]; X.profile = a[3]; X.alerts = a[4]; X.track = a[5]; X.catalog = a[6]; X.evfile = a[7]; X.story = a[8]; X.str = a[9] || {}; init(); })
+               firstJSON([FD + 'latest.json', '../../data/web/story.json']),
+               soft(D + 'events.json'), soft('../../config/areas.json'),
+               soft('../strings/story.en.json'), soft('../strings/strings.en.json')])
+    .then(function (a) {
+      X.manifest = a[0]; X.mandals = a[1]; X.rank = a[2]; X.profile = a[3]; X.alerts = a[4]; X.track = a[5]; X.catalog = a[6];
+      X.story = a[7]; X.latest = a[7]; X.events = (a[8] && a[8].events) || []; X.cfg = a[9]; X.str = a[10] || {}; X.ui = a[11] || {};
+      if (!X.story) console.warn('No findings file and no story.json: the home tab shows the neutral message.');
+      init();
+    })
     .catch(function (e) {
       var b = $('#banner'); b.hidden = false;
       b.setAttribute('role', 'alert'); b.textContent = 'The data files could not be loaded (' + e.message + '). Serve the repo root with "python3 -m http.server 8000" and open http://localhost:8000/app/dashboard-mockup/ .';
@@ -74,8 +104,17 @@
 
   function init() {
     var m = X.manifest;
-    $('#hdr-meta').textContent = 'Data updated ' + ist(m.generated_utc);
+    $('#hdr-meta').textContent = 'Radar layers built ' + ist(m.generated_utc);
     $('#hdr-meta').classList.remove('is-loading');
+    // title and tagline come from config/areas.json (site.title / site.tagline); the HTML holds neutral defaults
+    var site = (X.cfg && X.cfg.site) || {};
+    if (site.title) { document.title = site.title; $('.hdr__title').textContent = site.title; }
+    if (site.tagline) $('.hdr__sub').textContent = site.tagline;
+    if (areaName()) $('#map').setAttribute('aria-label', 'Map of ' + areaName());
+    // dates that have a frozen findings file (coast passes listed in the archive) and the newest pass date
+    X.fdates = {}; X.fcache = {};
+    ((X.latest && X.latest.updates) || []).forEach(function (u) { if (u.kind !== 'sea' && u.date) X.fdates[u.date] = true; });
+    if (latestPassDate()) { X.fdates[latestPassDate()] = true; X.fcache[latestPassDate()] = X.latest; }
     X.rowsBy = {}; X.series = {}; X.shareDates = [];
     var rk = X.rank || {}, latest = rk.latest_date;
     function mapRows(list) {
@@ -112,6 +151,13 @@
     }
     applyView(parseHash());
     ready = true; writeHash(true);
+    preloadFindings();
+    if (window.ResizeObserver) new ResizeObserver(function () {
+      if (!mapReady()) return;
+      map.invalidateSize({ animate: false });
+      if (S.pendingFit) fitFor(S.pendingFit);
+      if (S.pendingView) { var pv = S.pendingView; S.pendingView = null; if (validView(pv)) map.setView([pv.c[0], pv.c[1]], pv.z, { animate: false }); }
+    }).observe($('#map'));
     // test hook: window.__spacebros.setStory(obj) re-renders the public tab from a modified story object (null = built-in text)
     window.__spacebros = { story: function () { return X.story; }, setStory: function (s) { X.story = s; buildHappened(); if (S.sel) selectMandal(S.sel, {}); } };
     window.addEventListener('hashchange', function () {
@@ -259,7 +305,7 @@
       if (missing[id]) { cb.disabled = true; cb.title = 'Layer data not loaded yet'; if (!cb.nextElementSibling) cb.insertAdjacentHTML('afterend', '<span class="sub">Not loaded yet</span>'); }
       cb.checked = id === 'mandal_boundaries' ? vis.outlines : id === 'imd_track_arnab' ? vis.track : !!vis.img[id];
     });
-    markThumbs(); renderTimeline(); updateNow();
+    markThumbs(); renderTimeline(); updateNow(); syncStory();
   }
   function capTag(key) {
     if (key === 'custom') return '';
@@ -280,8 +326,11 @@
   function toggleLayer(l, on) { if (on && !map.hasLayer(l)) l.addTo(map); if (!on && map.hasLayer(l)) map.removeLayer(l); }
   function updateSwipeLine() { $('#swipe-line').style.left = S.swipe + '%'; }
 
+  function mapReady() { var z = map.getSize(); return z.x >= 100 && z.y >= 100; }
   function fitFor(m) {
     map.invalidateSize({ animate: false });          // size first, so the fit is not computed on a stale container
+    if (!mapReady()) { S.pendingFit = m; return; }   // hidden or not laid out yet: fit when the map has a real size
+    S.pendingFit = null;
     var sea = m === 'eye' || ((m === 'radar' || m === 'swipe') && S.role === 'sea');
     map.fitBounds(sea ? SEA : DELTA, { animate: false });
   }
@@ -320,21 +369,19 @@
 
   function mandalCard(r) {
     var o = (F.mandals && F.mandals[r.mandal]) || {};
-    var v = { name: niceName(r.mandal), lik: n0(r.lik), normal: n0(r.normal), err: n0(r.err), water: n0(r.water), crops: n0(r.crops) };
-    var tw = timesWords(r.ratio);
-    v.times = tw;
-    var meaning = o.meaning || (tw === 'less' ? F.mandal.meaning_less : tw == null ? F.mandal.meaning_same : F.mandal.meaning);
+    var v = { lik: n0(r.lik), normal: n0(r.normal), err: n0(r.err) };
+    var sen = X.story && X.story.mandal_sentences && X.story.mandal_sentences[r.mandal];
     var cf = confOf(r);
-    var head = o.headline || fill(F.mandal.headline, v);
-    return '<div class="row row--between"><span class="eyebrow">Selected mandal · ' + esc(shortDist(r.district)) + '</span>' + rankTag() + '</div>' +
-      '<h3>' + esc(head) + '</h3>' +
-      '<p class="lead">' + esc(fill(meaning, v)) + '</p>' +
+    var head = o.headline || sen || niceName(r.mandal);
+    return '<div class="row row--between"><span class="eyebrow">Selected mandal \u00B7 ' + esc(shortDist(r.district)) + '</span>' + rankTag() + '</div>' +
+      '<h3>' + esc(niceName(r.mandal)) + '</h3>' +
+      (sen || o.headline ? '<p class="lead">' + esc(head) + '</p>' : '<p class="small">' + esc(T('dash.no_summary', 'Summary not available yet.')) + '</p>') +
       '<div class="waffles">' +
         waffle(r.water, 0, 0, 'on ' + esc(radarDay()), v.lik + ' in 100') +
         waffle(0, 0, r.normal, 'in a normal fortnight', v.normal + ' in 100') +
       '</div>' +
       '<div class="legendline"><span><i class="sw sw--w"></i>Probably open water</span><span><i class="sw sw--n"></i>Normal fortnight</span><span>Each square is 1 in 100</span></div>' +
-      '<p class="small">' + esc(fill(F.mandal.err, v)) + info(F.tips.err) + '</p>' +
+      '<p class="small">Give or take <b>' + v.err + '</b> out of 100.' + info(F.tips.err) + '</p>' +
       '<div class="note"><b>' + dots(cf.lvl) + esc(F.mandal['conf_' + cf.lvl]) + '.</b> ' + esc(cf.note) + '</div>' +
       '<div class="note"><b>What radar cannot tell you.</b> ' + esc(o.cannot || F.mandal.cannot) + '</div>' +
       '<p class="small muted">Wet crops are not counted here: radar cannot yet tell them apart from normal change in fields (weak signal). The raw numbers list them.</p>' +
@@ -379,30 +426,24 @@
       '<text x="110" y="' + (80 + 14) + '" text-anchor="middle" style="font-size:11px;fill:' + css('--ink-2') + '">calm eye</text></svg>';
   }
 
-  function bignums() {
-    var top = X.rows[0], h = '';
-    if (top) {
-      h += '<div class="bn"><span class="bn__v bn__v--water">' + n0(top.lik) + '%</span><span class="bn__l">of ' + esc(niceName(top.mandal)) + ' probably under water, the most of any mandal</span></div>' +
-           '<div class="bn"><span class="bn__v">' + (top.ratio > 10 ? 'over 10' : Math.round(top.ratio)) + '\u00D7</span><span class="bn__l">the usual share there in a normal fortnight</span></div>';
-    }
-    if (X.hasProf) h += '<div class="bn"><span class="bn__v">' + X.profile.eye_radius_km + ' km</span><span class="bn__l">from the centre of the storm\'s calm eye to its edge</span></div>';
-    return h ? '<div class="bignums">' + h + '</div>' : '';
-  }
-
   var OFFICIAL = [{ name: 'IMD', url: 'https://mausam.imd.gov.in/' }, { name: 'APSDMA', url: 'https://apsdma.ap.gov.in/' }, { name: 'SACHET', url: 'https://sachet.ndma.gov.in/' }];
   function officialLine() {
-    var o = F.official || {}, ls = (X.evfile && X.evfile.official_links && X.evfile.official_links.length) ? X.evfile.official_links : OFFICIAL;
-    return '<p class="small muted official">' + esc(o.text || 'Not an official warning. Follow IMD and APSDMA.') + ' ' + ls.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.name) + '</a>'; }).join(' \u00B7 ') + '</p>';
+    var o = F.official || {}, s = X.story, ev = s && eventById(s.event_id);
+    var ls = (s && s.official_links && s.official_links.length) ? s.official_links : (ev && ev.official_links && ev.official_links.length) ? ev.official_links : OFFICIAL;
+    var txt = (s && s.official_banner) || o.text || 'Not an official warning. Follow IMD and APSDMA.';
+    return '<p class="small muted official">' + esc(txt) + ' ' + ls.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.name) + '</a>'; }).join(' · ') + '</p>';
   }
-  /* ---------- live story (data/web/story.json) ---------- */
+  /* ---------- live story (data/processed/findings/latest.json, or a frozen <date>.json) ---------- */
   var STR = { missing: 'Pictures are ready, numbers are coming.', stale: 'No new radar pass in {days} days. This page shows the last one, from {date}.', overdue: 'The next radar pass was expected about {next_date}. It can shift.' };
   function sstr(k) { return (X.str && X.str[k]) || STR[{ missing_numbers: 'missing', stale: 'stale', next_pass_overdue: 'overdue' }[k] || k]; }
   function dm(iso) { var d = new Date(String(iso).slice(0, 10) + 'T00:00:00Z'); return isNaN(d) ? String(iso) : d.toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short' }); }
-  function pmTxt(e) { e = +e; return '\u00B1' + (e >= 1.5 ? Math.round(e) : n1(e)); }
+  function pmTxt(e) { e = +e; return '±' + (e >= 1.5 ? Math.round(e) : n1(e)); }
   function storyNumbersOK() { var s = X.story; return !!(s && s.numbers_ready !== false); }
+  function evChipHtml(c) { return '<a class="chip chip--event" href="#ev-' + esc(c.event_id) + '" data-evchip="' + esc(c.event_id) + '">' + esc(c.text) + '</a>'; }
   function storyHtml() {
-    var s = X.story, b = s.badges || {}, ts = s.timestamps || {}, sl = s.since_last, ok = storyNumbersOK();
-    var eyebrow = { event: 'Storm update', recovery: 'After the storm', watch: 'Watching the coast' }[s.state] || 'What happened';
+    var s = X.story, b = s.badges || {}, ts = s.timestamps || {}, sl = s.since_last, ok = storyNumbersOK(), pass = s.pass || {}, arch = !!s.archive;
+    var when = pass.time_ist_text || (s.data_as_of ? ist(s.data_as_of) : '');
+    var chips = chipsOf(s), area = areaName();
     var badges = (b.provisional ? tag('Provisional data') : '') + (b.sample ? tag(SAMPLE) : '');
     var conf = (s.confounders || []).filter(Boolean);
     var lead = String(s.lead || '');
@@ -414,9 +455,12 @@
       stale = '<div class="note note--warn" role="status"><b>Older picture.</b> ' + esc(fill(sstr('stale'), { days: isFinite(days) ? days : '?', date: dshort(String(s.data_as_of).slice(0, 10)) })) + '</div>';
     }
     var h = '<div class="card" id="story">' +
-      '<div class="row row--between"><span class="eyebrow">' + esc(eyebrow) + (s.data_as_of ? ' · ' + esc(dm(s.data_as_of)) : '') + '</span><span class="row" style="gap:6px">' + badges + '</span></div>' +
+      '<div class="row row--between"><span class="eyebrow">' + esc(arch ? 'Archived radar pass' : 'Latest radar pass') + (when ? ' · ' + esc(when) : '') + '</span><span class="row" style="gap:6px">' + badges + '</span></div>' +
+      '<div class="row" style="gap:6px">' + chips.map(evChipHtml).join('') + (pass.product_status ? statusChip(String(pass.product_status).toUpperCase()) : '') +
+        (area ? '<span class="small muted">' + esc(area) + (pass.role ? ' · ' + esc(pass.role.charAt(0) + pass.role.slice(1).toLowerCase()) + ' pass' + (pass.track != null ? ', track ' + esc(pass.track) : '') : '') + '</span>' : '') + '</div>' +
       '<h2 class="story__h">' + esc(s.headline) + '</h2>';
-    if (!ok) h += '<div class="note note--warn" role="status">' + esc(sstr('missing_numbers')) + '</div>';
+    if (arch) h += '<div class="note" role="status"><b>Frozen record.</b> This is the summary as it was written for this pass. <button type="button" class="linkbtn small" data-act="tolatest">Back to the latest pass</button></div>';
+    if (!ok) h += '<div class="note note--warn" role="status">' + esc(s.numbers_text || sstr('missing_numbers')) + '</div>';
     else if (sl) {
       var ch = sl.chips || {};
       h += '<div class="since" role="group" aria-label="' + esc(sl.title || 'Since the last pass') + '"><div class="since__t">' + esc(sl.title || 'Since the last pass') + ' <span class="muted">(' + esc(dm(sl.prev_date)) + ' to ' + esc(dm(sl.this_date)) + ')</span></div>' +
@@ -424,23 +468,201 @@
         '<div class="since__c"><span><b>' + esc(sl.receded) + '</b>' + esc(ch.down || 'went down') + '</span><span><b>' + esc(sl.still) + '</b>' + esc(ch.same || 'about the same') + '</span><span><b>' + esc(sl.worse) + '</b>' + esc(ch.up || 'went up') + '</span></div></div>';
     }
     if (lead && ok) h += '<p class="lead">' + esc(lead) + '</p>';
-    if (ok && s.class_summary && s.class_summary.text) h += '<p class="small">' + esc(s.class_summary.text) + '</p>';
+    if (ok && s.comparison_line) h += '<p class="small">' + esc(s.comparison_line) + '</p>';
+    else if (ok && s.class_summary && s.class_summary.text) h += '<p class="small">' + esc(s.class_summary.text) + '</p>';
     h += stale;
-    if (ok && s.big_numbers && s.big_numbers.length) h += '<div class="bignums">' + s.big_numbers.map(function (n, i) {
-      return '<div class="bn"><span class="bn__v' + (i === 0 ? ' bn__v--water' : '') + '">' + esc(n.value) + (i === 0 && n.err != null ? '<span class="bn__pm">' + pmTxt(n.err) + '</span>' : '') + '</span>' +
+    var nums = (s.three_numbers && s.three_numbers.length) ? s.three_numbers : (s.big_numbers || []);
+    if (ok && nums.length) h += '<div class="bignums">' + nums.map(function (n, i) {
+      return '<div class="bn"><span class="bn__v' + (i === 0 ? ' bn__v--water' : '') + '">' + esc(n.value) + (n.err != null ? '<span class="bn__pm">' + pmTxt(n.err) + '</span>' : '') + '</span>' +
         (n.unit ? '<span class="bn__u">' + esc(n.unit) + '</span>' : '') + '<span class="bn__l">' + esc(n.label) + '</span></div>';
     }).join('') + '</div>';
-    conf.forEach(function (c) { h += '<div class="note"><b>Other causes.</b> ' + esc(c) + '</div>'; });
-    if (b.provisional && s.provisional_text) h += '<p class="small muted">' + esc(s.provisional_text) + '</p>';
+    if (s.confidence && s.confidence.level === 'lower') {
+      h += '<div class="note note--warn" role="status"><b>Lower confidence.</b>' + ((s.confidence.reasons || []).length ? '<ul class="note__l">' + s.confidence.reasons.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul>' : '') + '</div>';
+    }
+    var cav = (s.caveats && s.caveats.length) ? s.caveats : conf.concat(b.provisional && s.provisional_text ? [s.provisional_text] : []);
+    if (cav.length) h += '<div class="note"><b>Caveats.</b><ul class="note__l">' + cav.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div>';
+    if (s.sea && s.sea.text) h += '<p class="small muted"><b>Sea.</b> ' + esc(s.sea.text) + '</p>';
     h += '<div class="row">' + (s.map && s.map.layer_id ? '<button class="btn btn--sm" data-act="storymap">Show on the map</button>' : '') + '</div>';
     var np = s.next_pass;
-    if (np) {
-      var ntxt = np.overdue ? fill(sstr('next_pass_overdue'), { next_date: dm(np.date) }) : (np.text || '');
+    if (np && !arch) {
+      var ntxt = np.text || '';
       if (ntxt) h += '<p class="small">' + esc(ntxt) + '</p>';
     }
-    h += '<p class="small muted">' + esc(ts.picture || s.data_as_of_text || '') + (ts.built ? ' · ' + esc(ts.built) : (s.built_text ? ' · Page updated ' + esc(s.built_text) : '')) + '</p>';
+    if (s.age && s.age.text && !arch) h += '<p class="small">' + esc(s.age.text) + '</p>';
+    h += '<p class="small muted">' + esc(ts.picture || s.data_as_of_text || '') + (ts.built ? ' · ' + esc(ts.built) : (s.built_text ? ' · Summary updated ' + esc(s.built_text) : '')) + '</p>';
     return h + '</div>';
   }
+  function noStoryHtml() {
+    return '<div class="card" id="story"><div class="row row--between"><span class="eyebrow">' + esc(F.intro.title) + '</span>' + rankTag() + '</div>' +
+      '<h2 class="story__h">' + esc(F.intro.lead) + '</h2><p class="small">' + esc(F.intro.how_to_read) + '</p></div>';
+  }
+
+  /* ---------- frozen findings per pass date ---------- */
+  function loadFindings(d) {
+    if (X.fcache[d]) return Promise.resolve(X.fcache[d]);
+    return getJSON(FD + d + '.json').then(function (o) { X.fcache[d] = o; return o; });
+  }
+  /* which pass date the home card should describe, from the map view (coast views only) */
+  function storyDateWanted() {
+    if (S.section !== 'happened') return undefined;
+    if (S.mapMode === 'share') return shareDate();
+    if ((S.mapMode === 'radar' || S.mapMode === 'swipe') && S.role === 'coast') return S.dates.coast.after;
+    return undefined;
+  }
+  function syncStory() {
+    if (!X.builtHappened || !X.latest) return;
+    var d = storyDateWanted(); if (d === undefined) return;
+    var target = (d && d !== latestPassDate() && X.fdates[d]) ? d : null;
+    if (target === S.storyD) return;
+    S.storyD = target;
+    if (!target) { X.story = X.latest; buildHappened(); return; }
+    loadFindings(target).then(function (o) { if (S.storyD === target) { X.story = o; buildHappened(); } })
+      .catch(function (e) { console.warn(e.message); if (S.storyD === target) { S.storyD = null; X.story = X.latest; buildHappened(); } });
+  }
+  function preloadFindings() {
+    Object.keys(X.fdates).forEach(function (d) { if (!X.fcache[d]) loadFindings(d).then(function () { refreshEvents(); refreshArchive(); }).catch(function (e) { console.warn(e.message); }); });
+  }
+
+  /* ---------- alerts (alerts-v2) ---------- */
+  function alertsHtml() {
+    var a = X.alerts;
+    if (!a) return '<p class="small">The alerts snapshot is not ready yet.</p>';
+    if (a.schema !== 'alerts-v2') return '<p class="small">The alerts file has an unknown format, so it is not shown.</p>';
+    var g = a.gdacs || {}, sa = a.sachet || {}, gi = g.items || [], si = sa.items || [];
+    function head(label, o, t) {
+      var when = o.ok === false ? 'Could not refresh, showing snapshot from ' + tl(t) + '.' : (label === 'GDACS' ? 'Checked ' : 'Snapshot ') + tl(t) + '.';
+      return '<div class="alerts__h"><b>' + esc(label) + '</b><span class="small' + (o.ok === false ? ' alerts__bad' : ' muted') + '">' + esc(when) + '</span></div>';
+    }
+    var h = '';
+    h += head('GDACS', g, g.fetched_utc) + (gi.length ? gi.map(function (x) {
+      return '<div class="alert"><b>' + esc(x.name || x.id) + '</b>' + (x.alert_level ? ' <span class="chip chip--partly">' + esc(x.alert_level) + '</span>' : '') +
+        '<div class="alert__m">' + esc(x.severity_text || '') + (x.from ? ' · ' + esc(dshort(String(x.from).slice(0, 10))) + (x.to ? ' to ' + esc(dshort(String(x.to).slice(0, 10))) : '') : '') + (x.current === false ? ' · not current' : '') + (x.link ? ' · <a href="' + esc(x.link) + '" target="_blank" rel="noopener">GDACS report</a>' : '') + '</div></div>';
+    }).join('') : '<p class="small muted">No items.</p>');
+    h += head('SACHET', sa, sa.snapshot_utc) + (si.length ? si.map(function (x) {
+      return '<div class="alert"><b' + hasLang(x.headline) + '>' + esc(x.headline) + '</b><div class="alert__m">' + esc(x.area || '') + (x.source ? ' · ' + esc(x.source) : '') + (x.issued ? ' · issued ' + esc(tl(x.issued)) : '') + (x.link ? ' · <a href="' + esc(x.link) + '" target="_blank" rel="noopener">Alert text</a>' : '') + '</div></div>';
+    }).join('') : '<p class="small muted">No items.</p>');
+    if (!gi.length && !si.length) h += '<p class="small"><b>' + esc(a.none_text || 'No current alerts for this area.') + '</b></p>';
+    h += '<p class="small muted">Credit: ' + esc(g.credit || 'GDACS') + '; ' + esc(sa.credit || 'NDMA SACHET') + '. Alerts are not confirmed by radar.</p>';
+    return h;
+  }
+  function alertsCard() {
+    var area = areaName();
+    return '<div class="card" id="alerts-strip"><div class="row row--between"><h2>Alerts' + (area ? ' <span class="muted small">for ' + esc(area) + '</span>' : '') + '</h2></div>' + alertsHtml() + '</div>';
+  }
+
+  /* ---------- general panel and About ---------- */
+  function radarPanelHtml() {
+    var title = T('dash.radar.title'); if (!title) return '';
+    var items = []; for (var i = 1; T('dash.radar.p' + i); i++) items.push(T('dash.radar.p' + i));
+    return '<div class="card" id="radar-water"><h2>' + esc(title) + '</h2><ul class="small note__l note__l--card">' + items.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></div>';
+  }
+  function aboutHtml(id) {
+    var title = T('dash.about.title'); if (!title) return '';
+    var li = []; for (var i = 1; T('dash.about.s' + i + '.name'); i++) {
+      var u = T('dash.about.s' + i + '.url');
+      li.push('<li><b>' + (u ? '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(T('dash.about.s' + i + '.name')) + '</a>' : esc(T('dash.about.s' + i + '.name'))) + '.</b> ' + esc(T('dash.about.s' + i + '.what')) + '</li>');
+    }
+    return '<div class="card" id="' + id + '"><h2>' + esc(title) + '</h2><p class="small">' + esc(T('dash.about.intro')) + '</p><ul class="small note__l note__l--card">' + li.join('') + '</ul>' +
+      (T('dash.about.notused') ? '<p class="small"><b>Not used.</b> ' + esc(T('dash.about.notused')) + '</p>' : '') + '</div>';
+  }
+
+  /* ---------- events (data/processed/events.json) ---------- */
+  var BAN = /\{\w+\}/;
+  function fillOrDrop(t, v) {      // a sentence with a slot that cannot be filled is left out, never invented
+    return String(t || '').split(/(?<=[.!?])\s+/).map(function (x) { return fill(x, v); }).filter(function (x) { return !BAN.test(x); }).join(' ');
+  }
+  function profBelongsTo(ev) {
+    if (!X.hasProf || !ev) return false;
+    var l = X.layers[X.profile.layer_id]; if (!l || !l.date) return false;
+    return (ev.linked_passes || []).some(function (p) { return p.date === l.date; });
+  }
+  function storySlots(ev) {
+    var v = {}, P = X.profile;
+    if (profBelongsTo(ev) && P) { if (P.eye_radius_km != null) v.eye = P.eye_radius_km; if (P.eye_radius_err != null) v.eye_err = P.eye_radius_err; if (X.peak) v.peak = X.peak.r_km; }
+    var cs = X.scenes && X.scenes.coast; if (cs && cs.length) { v.before = dshort(X.def.before.coast); v.after = dshort(X.def.after.coast); }
+    return v;
+  }
+  function evStoryHtml(ev, full) {
+    var st = ev.story; if (!st) return '';
+    var v = storySlots(ev), h = '', sampleT = profSample() ? tag(X.profile.placeholder.tag || SAMPLE) : '';
+    function para(k, lab) { var t = fillOrDrop(st[k], v); return t ? '<p class="small">' + (lab ? '<b>' + esc(lab) + '.</b> ' : '') + esc(t) + '</p>' : ''; }
+    h += para('landfall_caption', full ? 'Landfall' : '');
+    if (profBelongsTo(ev)) h += '<div class="row" style="align-items:flex-start">' + eyeDiagram() + '<div style="flex:1;min-width:180px;display:flex;flex-direction:column;gap:8px">' + (full ? '<b class="small">The eye ' + sampleT + '</b>' : sampleT) + para('eye_profile', '') + para('wind', '') + '</div></div>';
+    else h += para('eye_profile', full ? 'The eye' : '') + para('wind', '');
+    if (full) h += para('before_after', 'Before and after') + para('murasu_caveat', 'Other water') + para('sea_caveat', 'Sea brightness');
+    h += '<div class="row">' + (profBelongsTo(ev) ? '<button type="button" class="btn btn--sm" data-act="eye">Show the eye and path on the map</button>' : '') +
+      (full && X.scenes && X.scenes.coast.length > 1 ? '<button type="button" class="btn btn--sm" data-act="evswipe">Before and after on the map</button>' : '') + '</div>';
+    return h;
+  }
+  function evCardHome(s) {          // only when the pass carries an event chip
+    var out = '';
+    chipsOf(s).forEach(function (c) {
+      var ev = eventById(c.event_id); if (!ev || !ev.story) return;
+      out += '<div class="card" id="evcard-' + esc(ev.id) + '"><div class="row row--between"><h2>' + esc(ev.name) + '</h2>' + evChipHtml(c) + '</div>' + evStoryHtml(ev, false) +
+        '<p class="small"><a href="#ev-' + esc(ev.id) + '" data-evchip="' + esc(ev.id) + '">Open the full event record</a></p></div>';
+    });
+    return out;
+  }
+  var REL = { during: 'During the event', after: 'After the event', before: 'Before the event' };
+  function passFinding(p) {
+    var fd = X.fcache && X.fcache[p.date];
+    if (p.role === 'COAST' && fd && fd.headline) return fd.headline;
+    if (p.role === 'SEA') return (X.latest && X.latest.sea && X.latest.sea.text) || 'No sea finding yet.';
+    if (p.radar_finding === 'numbers_coming') return sstr('missing_numbers');
+    if (p.radar_finding === 'no_clear_change') return 'Radar shows no clear change.';
+    return 'Finding not available yet.';
+  }
+  function passLink(p) {
+    var u = ((X.latest && X.latest.updates) || []).filter(function (x) { return x.date === p.date && (x.kind === 'sea') === (p.role === 'SEA'); })[0];
+    if (u && (u.hash || u.permalink)) return '#' + (u.hash || String(u.permalink).replace(/^#/, ''));
+    return p.role === 'SEA' ? '#tab=happened&mode=radar&role=sea&d=' + p.date : '#tab=happened&mode=share&d=' + p.date;
+  }
+  function evItem(ev, open) {
+    var draft = ev.reviewed_by_human === false, sev = ev.severity || {}, src = ev.source || {};
+    var until = '';
+    if (ev.end && ev.aftermath_days) { var dt = new Date(ev.end + 'T00:00:00Z'); dt.setUTCDate(dt.getUTCDate() + ev.aftermath_days); until = dt.toISOString().slice(0, 10); }
+    var lp = (ev.linked_passes || []).slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    function kv(k, v) { return v ? '<div class="evkv"><dt>' + esc(k) + '</dt><dd>' + v + '</dd></div>' : ''; }
+    var h = '<details class="evt" id="ev-' + esc(ev.id) + '"' + (open ? ' open' : '') + '><summary><b>' + esc(ev.name) + '</b> <span class="chip chip--no">' + esc(ev.type || 'event') + '</span> ' +
+      '<span class="small muted">' + esc(ev.start ? dshort(ev.start) : '') + (ev.end && ev.end !== ev.start ? ' to ' + esc(dshort(ev.end)) : '') + '</span> ' +
+      (ev.status_text ? '<span class="chip chip--yes">' + esc(ev.status_text) + '</span> ' : '') +
+      (draft ? tag(T('dash.events.draft', 'Draft from alert, not reviewed')) : '') + '</summary><div class="evt__b">';
+    if (ev.description) h += '<p class="small">' + esc(ev.description) + '</p>';
+    h += '<dl class="evkv__l">' + kv('Type', esc(ev.type || '')) +
+      kv('Dates', esc((ev.start ? dshort(ev.start) : '?') + ' to ' + (ev.end ? dshort(ev.end) : '?')) + (until ? '. Radar passes are linked up to ' + esc(dshort(until)) : '')) +
+      kv('Source', (src.url ? '<a href="' + esc(src.url) + '" target="_blank" rel="noopener">' + esc(src.name || src.url) + '</a>' : esc(src.name || '')) + (ev.credit ? '. Credit: ' + esc(ev.credit) : '')) +
+      kv('Severity' + (sev.by ? ' (as given by ' + sev.by + ')' : ''), esc(sev.as_given || '')) +
+      kv('Status', esc(ev.status_text || ev.status || '') + (draft ? '. ' + esc(T('dash.events.draft', 'Draft from alert, not reviewed')) : '')) + '</dl>';
+    h += '<h3>Radar passes linked to this event</h3>';
+    h += lp.length ? '<ul class="evl">' + lp.map(function (p) {
+      return '<li><a class="evl__a" href="' + esc(passLink(p)) + '"><span class="arch__top"><b>' + esc(dshort(p.date)) + '</b><span class="chip chip--no">' + (p.role === 'SEA' ? 'Sea' : 'Coast') + '</span><span class="chip chip--partly">' + esc(REL[p.relation] || p.relation || '') + '</span></span>' +
+        '<span class="arch__h">' + esc(passFinding(p)) + '</span><span class="small muted">Opens this day on the map.</span></a></li>';
+    }).join('') + '</ul>' : '<p class="small">No radar pass is linked yet. ' + esc(T('dash.events.no_confirm', 'An alert alone is not confirmed by radar.')) + '</p>';
+    if (ev.story) h += '<h3>Guided story</h3>' + evStoryHtml(ev, true);
+    if ((ev.cannot_tell || []).length) h += '<h3>What radar cannot tell here</h3><ul class="small note__l">' + ev.cannot_tell.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>';
+    if ((ev.alert_refs || []).length) h += '<h3>Alerts that mention it</h3><ul class="small note__l">' + ev.alert_refs.map(function (a) { return '<li>' + esc(a.source) + ' ' + esc(a.id) + (a.issued ? ' · ' + esc(tl(a.issued)) : '') + ': ' + esc(a.headline || '') + '</li>'; }).join('') + '</ul>';
+    if ((ev.official_links || []).length) h += '<p class="small">Official sources: ' + ev.official_links.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.name) + '</a>'; }).join(' · ') + '</p>';
+    if ((ev.edit_log || []).length) h += '<details class="lim lim--card"><summary>Edit log (' + ev.edit_log.length + ')</summary><ul class="small note__l">' + ev.edit_log.map(function (e) { return '<li>' + esc(tl(e.utc)) + ' · ' + esc(e.by) + ': ' + esc(e.what) + '</li>'; }).join('') + '</ul></details>';
+    return h + '</div></details>';
+  }
+  function eventsHtml() {
+    var evs = (X.events || []).slice().sort(function (a, b) { return (a.start || '') < (b.start || '') ? 1 : -1; });
+    var chipIds = chipsOf(X.story).slice(0, 1).map(function (c) { return c.event_id; });   // the first chip's event opens; the rest stay collapsed
+    return '<div class="card" id="events"><h2>' + esc(T('dash.events.title', 'Events archive')) + '</h2><p class="small">' + esc(T('dash.events.intro')) + '</p>' +
+      (evs.length ? evs.map(function (e) { return evItem(e, chipIds.indexOf(e.id) >= 0 || S.evOpen[e.id]); }).join('') : '<p class="small">No events are listed yet.</p>') + '</div>';
+  }
+  function refreshEvents() {
+    var el = $('#events'); if (!el) return;
+    $$('#events details.evt', el).forEach(function (d) { S.evOpen[d.id.replace(/^ev-/, '')] = d.open; });
+    el.outerHTML = eventsHtml();
+  }
+  function openEvent(id) {
+    var d = $('#ev-' + id); if (!d) return;
+    d.open = true; S.evOpen[id] = true;
+    d.scrollIntoView({ block: 'start' });
+    var sm = d.querySelector('summary'); if (sm) sm.focus();
+  }
+
   function findHtml() {
     return '<div class="card" id="find"><h2>Find your mandal</h2><p class="small">Type the name of your mandal, or click it on the map.</p>' +
       '<div class="tools"><input type="search" id="fm-q" placeholder="Start typing a mandal name" aria-label="Find your mandal" autocomplete="off" aria-controls="fm-list"></div>' +
@@ -467,12 +689,25 @@
       (m.coverage_pct != null && m.coverage_pct < 50 ? 'Less than half of this mandal was in the radar view. ' : '') + (m.rank_water == null ? 'Not ranked.' : 'Rank ' + esc(m.rank_water) + ' of ' + X.rows.length + ' for open water.') + '</p>' +
       '<div class="row"><button type="button" class="btn btn--sm" data-act="zoom">Show on the map</button></div></div>';
   }
+  /* the event chip(s) of ONE pass: coast = that date's findings file (event_chips / event_chip); sea = events whose linked_passes hold it */
+  function passChips(u) {
+    if (u.kind !== 'sea') { var fd = X.fcache && X.fcache[u.date]; return fd ? chipsOf(fd).map(function (c) { return c.text; }) : []; }
+    var out = [];
+    (X.events || []).forEach(function (ev) {
+      (ev.linked_passes || []).forEach(function (p) {
+        if (p.date === u.date && p.role === 'SEA' && (p.relation === 'during' || p.relation === 'after')) out.push((p.relation === 'during' ? 'During ' : 'After ') + ev.name + (ev.reviewed_by_human === false ? ' (alert, not reviewed)' : ''));
+      });
+    });
+    return out;
+  }
+  function refreshArchive() { var el = $('#archive'); if (el) el.outerHTML = archiveHtml(); }
   function archiveHtml() {
-    var s = X.story, ups = s.updates || [], f = s.feed || {};
+    var s = X.latest || X.story, ups = s.updates || [], f = s.feed || {};
     var li = ups.map(function (u, i) {
       var role = u.kind === 'sea' ? 'Sea' : 'Coast';
-      return '<li class="arch__i"><a class="arch__a" href="#' + esc(u.hash || String(u.permalink || '').replace(/^#/, '')) + '"><span class="arch__top"><b>' + esc(dshort(u.date)) + '</b><span class="chip chip--no">' + role + '</span>' + (u.status ? statusChip(String(u.status).toUpperCase()) : '') + (i === 0 ? '<span class="chip chip--yes">Latest</span>' : '') + '</span>' +
-        '<span class="arch__h">' + esc(u.headline || '') + '</span>' + (u.days_after_landfall != null ? '<span class="small muted">' + esc(u.days_after_landfall === 0 ? 'Landfall day' : u.days_after_landfall < 0 ? Math.abs(u.days_after_landfall) + (u.days_after_landfall === -1 ? ' day before landfall' : ' days before landfall') : u.days_after_landfall + (u.days_after_landfall === 1 ? ' day after landfall' : ' days after landfall')) + '. Opens this day on the map.</span>' : '<span class="small muted">Opens this day on the map.</span>') + '</a>' +
+      var chips = passChips(u), chipH = chips.map(function (t) { return '<span class="chip chip--event">' + esc(t) + '</span>'; }).join('');
+      return '<li class="arch__i"><a class="arch__a" href="#' + esc(u.hash || String(u.permalink || '').replace(/^#/, '')) + '"><span class="arch__top"><b>' + esc(dshort(u.date)) + '</b><span class="chip chip--no">' + role + '</span>' + (u.status ? statusChip(String(u.status).toUpperCase()) : '') + (i === 0 ? '<span class="chip chip--yes">Latest</span>' : '') + chipH + '</span>' +
+        '<span class="arch__h">' + esc(u.headline || '') + '</span>' + (u.days_after_landfall != null && chips.length ? '<span class="small muted">' + esc(u.days_after_landfall === 0 ? 'Landfall day' : u.days_after_landfall < 0 ? Math.abs(u.days_after_landfall) + (u.days_after_landfall === -1 ? ' day before landfall' : ' days before landfall') : u.days_after_landfall + (u.days_after_landfall === 1 ? ' day after landfall' : ' days after landfall')) + '. Opens this day on the map.</span>' : '<span class="small muted">Opens this day on the map.</span>') + '</a>' +
         '<button type="button" class="linkbtn small arch__s" data-arch-save="' + esc(i) + '" aria-label="Save ' + esc(dshort(u.date)) + ' ' + role + ' to saved days">Save</button></li>';
     }).join('');
     return '<div class="card" id="archive"><h2>Earlier updates</h2><p class="small">Every radar picture we have analysed, newest first. Each opens the map for that day. Save keeps it in your saved days (this browser only).</p>' +
@@ -480,7 +715,7 @@
       '<p class="small">Follow updates: <a href="../../data/web/' + esc(f.json || 'feed.json') + '" target="_blank" rel="noopener">JSON feed</a> · <a href="../../data/web/' + esc(f.atom || 'atom.xml') + '" target="_blank" rel="noopener">Atom feed</a> (for a feed reader).</p></div>';
   }
   function archiveRec(i) {
-    var u = (X.story.updates || [])[i]; if (!u) return null;
+    var u = ((X.latest || X.story || {}).updates || [])[i]; if (!u) return null;
     var st = parseHash('#' + (u.hash || String(u.permalink || '').replace(/^#/, '')));
     var role = u.kind === 'sea' ? 'sea' : 'coast', label = dshort(u.date) + ' · ' + (role === 'sea' ? 'sea' : 'coast');
     return { id: uid(), label: label, date: st.d || u.date, mode: st.mode || 'share', view: { tab: 'happened', role: st.role || role, before: st.b || null, mandal: null, c: null, z: null, layers: null }, saved_at: new Date().toISOString() };
@@ -493,19 +728,12 @@
   }
 
   function buildHappened() {
-    var cy = F.cyclone, ev = X.event, story = storyOK(), nums = !story || storyNumbersOK();
+    var story = storyOK(), nums = !story || storyNumbersOK();
     var showRank = X.rows.length && nums && !(story && X.story.state === 'watch' && !X.rows.some(function (r) { return X.story.mandals && X.story.mandals[r.mandal] && X.story.mandals[r.mandal].flooded; }));
-    var html = (story ? storyHtml() +
-      ''
-      : '<div class="card">' +
-        '<div class="row row--between"><span class="eyebrow">What happened</span>' + rankTag() + '</div>' +
-        '<h2>' + esc(F.intro.title) + '</h2>' +
-        '<p class="lead">' + esc(F.intro.lead) + '</p>' +
-        (ev.landfall && !ev.landfall.time_utc ? '<p class="small">' + esc(F.intro.landfall_unknown) + '</p>' : '') +
-        bignums() +
-        '<p class="small">' + esc(F.intro.how_to_read) + '</p>' +
-      '</div>') +
+    var html = (story ? storyHtml() : noStoryHtml()) +
       officialLine() +
+      alertsCard() +
+      (story ? evCardHome(X.story) : '') +
       (story && X.story.mandal_sentences && nums ? findHtml() : '') +
 
       (!X.rows.length && nums ? '<div class="card"><h2>' + esc(F.ranking.title) + '</h2><p class="small">The mandal numbers are not ready yet. Check back soon.</p></div>' : '') +
@@ -519,19 +747,7 @@
 
       '<div class="card" id="mcard"></div>' : '') +
 
-      (X.hasProf && !(story && X.story.state === 'watch') ? '<div class="card" id="cyclone">' +
-        '<div class="row row--between"><h2>' + esc(cy.title) + '</h2>' + (profSample() ? tag(X.profile.placeholder.tag || SAMPLE) : '') + '</div>' +
-        '<p class="lead">' + esc(cy.lead) + '</p>' +
-        '<div class="row" style="align-items:flex-start">' + eyeDiagram() +
-        '<div style="flex:1;min-width:180px;display:flex;flex-direction:column;gap:8px">' +
-          '<p class="small"><b>' + esc(cy.category) + '.</b> ' + esc(cy.wind) + '</p>' +
-          '<p class="small">' + esc(fill(cy.eye, { eye: X.profile.eye_radius_km, eye_err: X.profile.eye_radius_err })) + '</p>' +
-          '<p class="small">' + esc(fill(cy.rough, { peak: X.peak.r_km })) + info(F.tips.db) + '</p>' +
-        '</div></div>' +
-        '<p class="small">' + esc(cy.where) + ' ' + esc(cy.track_note) + '</p>' +
-        '<div class="note"><b>What radar cannot tell you.</b> ' + esc(cy.cannot) + '</div>' +
-        '<div class="row"><button class="btn btn--sm" data-act="eye">Show the eye and path on the map</button></div>' +
-      '</div>' : '') +
+      radarPanelHtml() +
 
       '<div class="card">' +
         '<h2>' + esc(F.confidence.title) + '</h2>' +
@@ -543,9 +759,12 @@
         }).join('') +
       '</div>' +
 
-      (story && (X.story.updates || []).length ? archiveHtml() : '') +
-      '<div class="linkcard"><h2>' + esc(F.link_to_data.title) + '</h2><p>' + esc(F.link_to_data.text) + '</p><button class="btn" data-act="todata">' + esc(F.link_to_data.button) + ' →</button></div>';
+      eventsHtml() +
+      (X.latest && (X.latest.updates || []).length ? archiveHtml() : '') +
+      aboutHtml('about') +
+      '<div class="linkcard"><h2>' + esc(F.link_to_data.title) + '</h2><p>' + esc(F.link_to_data.text) + '</p><button class="btn" data-act="todata">' + esc(F.link_to_data.button) + ' \u2192</button></div>';
     $('#sec-happened').innerHTML = html; $('#sec-happened').removeAttribute('aria-busy');
+    X.builtHappened = true;
     renderRank();
     if (S.fm && S.sel) fmShow(S.sel);
   }
@@ -738,12 +957,7 @@
       '<p class="small muted">Read from ' + esc(src) + '. New scenes appear here when the catalogue is rebuilt. Times are the start of the radar pass. "In catalogue after" shows only when the catalogue records when a scene was added. PROVISIONAL scenes have not finished NISAR\u2019s own checks and may be replaced.</p>';
   }
 
-  function alertsBlock() {
-    var a = X.alerts; if (!a) return '<p class="small">The alerts snapshot is not ready yet.</p>';
-    return '<div class="row row--between"><span class="small">Saved <b>' + ist(a.saved_at_ist) + '</b> (a snapshot, not live)</span>' + (a.placeholder && a.placeholder.is ? tag(a.placeholder.tag) : '') + '</div>' +
-      a.sachet.map(function (x) { return '<div class="alert"><b>' + esc(x.headline) + '</b><div class="alert__m">' + esc(x.area) + ' · issued ' + ist(x.issued) + '</div></div>'; }).join('') +
-      '<p class="small">GDACS entries in the snapshot: ' + (a.gdacs.length || 'none') + '. Source: NDMA SACHET (licence to confirm).</p>';
-  }
+  function alertsBlock() { return alertsHtml(); }
 
   var DL = [
     ['manifest.json', 'Catalogue of layers, sources and events'], ['mandals.geojson', 'Mandal outlines (geoBoundaries, ODbL-1.0 licence)'],
@@ -754,14 +968,15 @@
   /* ---------- citation ---------- */
   function pageUrl() { return location.href.split('#')[0]; }
   function citeYear() { return '2026'; }
+  function siteTitle() { return (X.cfg && X.cfg.site && X.cfg.site.title) || 'Coast radar watch'; }
   function citeText() {
     var sc = sceneList(), ds = sc.map(function (l) { return l.date; }).filter(Boolean).sort();
     var span = ds.length ? ' NISAR L-band scenes from ' + dshort(ds[0]) + ' to ' + dshort(ds[ds.length - 1]) + '.' : '';
-    return 'SpaceBros (NASA Space Apps 2026). ' + citeYear() + '. Cyclone Arnab, Godavari delta: NISAR radar evidence of coastal flooding and ocean effects [dashboard].' + span +
+    return 'SpaceBros (NASA Space Apps 2026). ' + citeYear() + '. ' + siteTitle() + ': NISAR radar evidence on the coast [dashboard].' + span +
       ' ' + pageUrl() + '. Contains NISAR data, NASA/JPL-Caltech and ISRO, distributed by ASF DAAC. Accessed ' + new Date().toISOString().slice(0, 10) + '.';
   }
   function citeBib() {
-    return '@misc{spacebros_nisar_' + citeYear() + ',\n  author       = {{SpaceBros (NASA Space Apps 2026)}},\n  title        = {Cyclone Arnab, Godavari delta: NISAR radar evidence of coastal flooding and ocean effects},\n  year         = {' + citeYear() + '},\n  url          = {' + pageUrl() + '},\n  note         = {Contains NISAR data, NASA/JPL-Caltech and ISRO, distributed by ASF DAAC. Accessed ' + new Date().toISOString().slice(0, 10) + '}\n}';
+    return '@misc{spacebros_nisar_' + citeYear() + ',\n  author       = {{SpaceBros (NASA Space Apps 2026)}},\n  title        = {' + siteTitle() + ': NISAR radar evidence on the coast},\n  year         = {' + citeYear() + '},\n  url          = {' + pageUrl() + '},\n  note         = {Contains NISAR data, NASA/JPL-Caltech and ISRO, distributed by ASF DAAC. Accessed ' + new Date().toISOString().slice(0, 10) + '}\n}';
   }
   function copyText(t, done) {
     function fb() { try { var ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;left:-9999px;top:0'; document.body.appendChild(ta); ta.select(); var ok = document.execCommand('copy'); document.body.removeChild(ta); done(ok); } catch (e) { done(false); } }
@@ -860,7 +1075,7 @@
     if (!S.histId) { var lh = latestScene('coast') || latestScene('sea'); S.histId = lh ? lh.id : null; }
     var tN = rank.normal_period ? 'normal period ' + dshort(rank.normal_period[0]) + ' to ' + dshort(rank.normal_period[1]) : 'a normal fortnight';
     $('#sec-data').innerHTML =
-      '<nav class="chips" aria-label="Jump to a part of this section"><a href="#d-layers">Layers</a><a href="#d-mandals">Mandals</a><a href="#d-profile">Eye profile</a><a href="#d-small">Radar by date</a><a href="#d-hist">Histogram</a><a href="#d-scenes">Scenes</a><a href="#d-alerts">Alerts</a><a href="#d-files">Downloads</a>' +
+      '<nav class="chips" aria-label="Jump to a part of this section"><a href="#d-layers">Layers</a><a href="#d-mandals">Mandals</a><a href="#d-profile">Eye profile</a><a href="#d-small">Radar by date</a><a href="#d-hist">Histogram</a><a href="#d-scenes">Scenes</a><a href="#d-alerts">Alerts</a><a href="#d-files">Downloads</a><a href="#about-d">About and sources</a>' +
       '<a href="#" data-act="tohappened" class="chips__back">Plain-language view</a></nav>' +
       '<div class="card" id="d-layers"><div class="row row--between"><div><h2>Layers</h2><p class="small">Every map layer with its source, licence and known limits.</p></div><span class="small muted">Tick a box to draw a layer on the map</span></div><div class="tblwrap tblwrap--tall"><table class="dt"><thead><tr><th scope="col">Layer</th><th scope="col">Date</th><th scope="col">Source and credit</th><th scope="col">Licence</th><th scope="col">Status and limits</th><th scope="col">On map</th></tr></thead><tbody>' + layerRows() + '</tbody></table></div></div>' +
       (X.rows.length && rank.period ? '<div class="card" id="d-mandals"><div class="row row--between"><div><h2>Mandal table</h2></div>' + rankTag() + '</div>' +
@@ -874,8 +1089,8 @@
       '<div class="card" id="d-small"><div><h2>Radar by date</h2><p class="small">The same area on every date we hold, side by side. Coast first, then sea.</p></div>' + smBlock() + '</div>' +
       histCard() +
       '<div class="card" id="d-scenes"><div><h2>Scene catalogue</h2><p class="small">Every NISAR scene we hold as an H5 file, with when it was acquired, how, and how to check the file.</p></div>' + sceneBlock() + '</div>' +
-      '<div class="card" id="d-alerts"><div><h2>Alerts snapshot</h2></div>' + alertsBlock() + '</div>' +
-      '<div class="card" id="d-files"><div><h2>Downloads</h2><p class="small">Files as stored in the repository. H5 files are the data of record. Credits and licences are in the layer list above. NISAR data credit: NASA/JPL-Caltech and ISRO, via ASF DAAC.</p></div>' + dlBlock() + '</div>';
+      '<div class="card" id="d-alerts"><div><h2>Alerts</h2>' + (areaName() ? '<p class="small">For ' + esc(areaName()) + '. Each source shows when it was last read.</p>' : '') + '</div>' + alertsBlock() + '</div>' +
+      '<div class="card" id="d-files"><div><h2>Downloads</h2><p class="small">Files as stored in the repository. H5 files are the data of record. Credits and licences are in the layer list above. NISAR data credit: NASA/JPL-Caltech and ISRO, via ASF DAAC.</p></div>' + dlBlock() + '</div>' + aboutHtml('about-d');
     mandalTable(); bindProfile(); afterDl(); drawHist(); markThumbs();
     // sizes (best effort)
     $$('[data-size]').forEach(function (e) {
@@ -921,24 +1136,33 @@
     });
   }
 
+  var PANEL_KEY = 'spacebros.nisar.panelCollapsed.v1';
+  function setPanel(c, remember) {
+    $('#main').classList.toggle('collapsed', c);
+    ['#panel-toggle', '#panel-close'].forEach(function (id) { $(id).setAttribute('aria-expanded', String(!c)); });
+    $('#panel-toggle').classList.toggle('is-collapsed', c); $('#panel-toggle-txt').textContent = c ? 'Show panel' : 'Hide panel';
+    $('#panel').setAttribute('aria-hidden', String(c));
+    if (c) $('#panel').setAttribute('inert', ''); else $('#panel').removeAttribute('inert');
+    if (remember) { try { localStorage.setItem(PANEL_KEY, c ? '1' : '0'); } catch (e) { /* storage blocked */ } }
+    setTimeout(function () { map.invalidateSize({ animate: false }); }, 280);
+  }
   function bindUI() {
     bindCopy();
     var seg = $('#map-modes');
     seg.innerHTML = MODES.map(function (m) { return '<button type="button" data-m="' + m[0] + '" aria-pressed="false">' + m[1] + '</button>'; }).join('');
     seg.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) setMapMode(b.dataset.m, true); });
 
-    $('#tab-happened').addEventListener('click', function () { setSection('happened'); });
-    $('#tab-data').addEventListener('click', function () { setSection('data'); });
+    $('#tab-happened').addEventListener('click', function () { if ($('#main').classList.contains('collapsed')) setPanel(false, true); setSection('happened'); });
+    $('#tab-data').addEventListener('click', function () { if ($('#main').classList.contains('collapsed')) setPanel(false, true); setSection('data'); });
     $('.tabs').addEventListener('keydown', function (e) {
       if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var s = S.section === 'happened' ? 'data' : 'happened'; setSection(s); $('#tab-' + s).focus(); }
     });
 
-    $('#panel-toggle').addEventListener('click', function () {
-      var c = $('#main').classList.toggle('collapsed');
-      this.setAttribute('aria-expanded', String(!c));
-      this.classList.toggle('is-collapsed', c); $('#panel-toggle-txt').textContent = c ? 'Show panel' : 'Hide panel';
-      setTimeout(function () { map.invalidateSize(); }, 280);
-    });
+    // side panel: map button and the close button inside the panel do the same thing; the choice is remembered in this browser
+    $('#panel-toggle').addEventListener('click', function () { setPanel(!$('#main').classList.contains('collapsed'), true); });
+    $('#panel-close').addEventListener('click', function () { setPanel(true, true); $('#panel-toggle').focus(); });
+    var pc = null; try { pc = localStorage.getItem(PANEL_KEY); } catch (e) { pc = null; }
+    if (pc === '1') setPanel(true, false);
 
     $('#swipe-range').addEventListener('input', function () { S.swipe = +this.value; updateSwipeLine(); clipBefore(); });
 
@@ -949,6 +1173,7 @@
       var fmb = t.closest('[data-fm]'); if (fmb) { S.fm = true; selectMandal(fmb.dataset.fm, { fly: true, user: true }); return; }
       var rbb = t.closest('[data-rankby]'); if (rbb) { S.rankBy = rbb.dataset.rankby; S.sort = { k: 'rank', d: 1 }; mandalTable(); return; }
       var sm = t.closest('.sm__i'); if (sm) { showScene(sm.dataset.sm, sm.dataset.role); return; }
+      var evc = t.closest('[data-evchip]'); if (evc) { e.preventDefault(); openEvent(evc.dataset.evchip); return; }
       var as = t.closest('[data-arch-save]'); if (as) { e.preventDefault(); saveArchive(as); return; }
       var so = t.closest('[data-sort]'); if (so) { var k = so.dataset.sort; S.sort = { k: k, d: S.sort.k === k ? -S.sort.d : 1 }; mandalTable(); return; }
       if (t.id === 'rankmore') { S.showAll = !S.showAll; renderRank(); return; }
@@ -958,6 +1183,8 @@
       var act = a.dataset.act;
       if (act === 'zoom') { setMapMode('share', false); selectMandal(S.sel, { fly: true }); }
       if (act === 'storymap') storyMap();
+      if (act === 'tolatest') { S.shareD = null; S.mapMode = 'share'; setMapMode('share', false); }
+      if (act === 'evswipe') { if (X.scenes.coast.length) S.role = 'coast'; setMapMode('swipe', true); }
       if (act === 'swipe') { setMapMode('swipe', false); selectMandal(S.sel, { fly: true }); }
       if (act === 'eye') setMapMode('eye', true);
       if (act === 'todata') { setSection('data'); selectMandal(S.sel, {}); }
@@ -1086,7 +1313,7 @@
     if (st.mode === 'eye') st.d = S.dEye;
     if (st.mode === 'share') st.d = shareDate();
     if (st.mode === 'custom') st.layers = Object.keys(vis.img).filter(function (k) { return vis.img[k]; });
-    var c = map.getCenter(); st.c = [+c.lat.toFixed(4), +c.lng.toFixed(4)]; st.z = +map.getZoom().toFixed(2);
+    if (mapReady()) { var c = map.getCenter(); st.c = [+c.lat.toFixed(4), +c.lng.toFixed(4)]; st.z = +map.getZoom().toFixed(2); }
     return st;
   }
   function toHash(st) {
@@ -1125,6 +1352,12 @@
 
   /* Restore a view (from the URL or a saved day). Dates are looked up by value, never by position,
      so a scene that has gone from the archive is reported politely and the newest one is used. */
+  /* a permalink centre/zoom is only used when it is inside the study area (generous margin) and at a sensible zoom */
+  function validView(st) {
+    if (!st.c || st.z == null || !isFinite(st.c[0]) || !isFinite(st.c[1]) || !isFinite(st.z)) return false;
+    var b = L.latLngBounds(SEA).extend(DELTA[0]).extend(DELTA[1]).pad(1.5);
+    return b.contains([st.c[0], st.c[1]]) && st.z >= 5 && st.z <= 18;
+  }
   function applyView(st) {
     st = st || {};
     var notes = [];
@@ -1148,13 +1381,15 @@
     }
     if (st.mandal && hasM(st.mandal)) { S.sel = st.mandal; S.fm = true; } else if (!S.sel && X.rows.length) S.sel = X.rows[0].mandal;
     var haveView = !!(st.c && st.z != null);
+    if (haveView && !validView(st)) { haveView = false; notes.push('The map position in this link is outside the study area, so the map shows the whole area instead.'); }
     setSection(tab, { keepView: haveView });
     if (tab === 'data' && st.layers) {
       vis.img = {};
       st.layers.forEach(function (id) { if (isImg(X.layers[id])) vis.img[id] = 0.9; else notes.push('The layer "' + id + '" is no longer in the list.'); });
       applyMap();
     }
-    if (haveView) map.setView([st.c[0], st.c[1]], st.z, { animate: false });
+    if (haveView && mapReady()) map.setView([st.c[0], st.c[1]], st.z, { animate: false });
+    else if (haveView) S.pendingView = st;
     if (S.sel) selectMandal(S.sel, {});
     S.notice = notes.join(' '); say(S.notice);
     renderTimeline(); updateNow();
@@ -1185,7 +1420,7 @@
       '<div id="dc-form"></div><p class="small" id="dc-msg" role="status" aria-live="polite" hidden></p><div id="dc-files" hidden></div>' +
       '<div id="dc-saved"></div>' +
       '<p class="small muted" id="dc-latest">' + (all ? 'Latest scene: <b>' + esc(dshort(all.date)) + '</b> (' + ls.map(function (r) { return r + ' ' + esc(dd(latestScene(r).date)); }).join(', ') + '). ' : 'No radar scenes listed yet. ') +
-      'Data updated: <b>' + esc(ist(X.manifest.generated_utc)) + '</b>.</p>';
+      'Radar layers built: <b>' + esc(ist(X.manifest.generated_utc)) + '</b>.</p>';
     renderSaved(); updateNow();
   }
   function viewSig() { return [S.mapMode, S.role, primaryDate(), S.mapMode === 'swipe' ? S.dates[S.role].before : '', S.mapMode === 'custom' ? Object.keys(vis.img).join(',') : ''].join('|'); }

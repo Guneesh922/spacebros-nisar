@@ -13,17 +13,18 @@
 window.FINDINGS = {
   meta: {
     schema: "findings-mockup-0",
-    source: "derived in the browser from mandal_rank.json, profile.json, imd_track_arnab.geojson",
+    source: "neutral fallback text only; real summaries come from data/processed/findings/*.json",
     sample: true
   },
 
   /* Nicknames shown next to the official mandal spelling */
   aliases: { "Narasapuram": "Narsapur" },
 
+  /* Neutral fallback only. The summary itself comes from data/processed/findings/*.json. */
   intro: {
-    title: "Cyclone Arnab and the Godavari delta",
-    lead: "Cyclone Arnab crossed the Andhra Pradesh coast on 27 and 28 October 2026. A radar satellite called NISAR looked at the land before and after. It shows where the land was probably under water.",
-    landfall_unknown: "The exact time the storm reached land is still being confirmed by IMD.",
+    title: "Latest radar pass",
+    lead: "Summary not available yet.",
+    landfall_unknown: "",
     how_to_read: "Click a mandal on the map or in the list. Each box says what we found, how sure we are, and what radar cannot tell you."
   },
 
@@ -54,24 +55,15 @@ window.FINDINGS = {
     cannot: "Radar cannot tell you how deep the water was, how long it stayed, or whether homes or crops were damaged. Water under thick crops can be missed, so the real flooded share may be higher."
   },
 
-  cyclone: {
-    title: "The cyclone's path",
-    lead: "The storm came from the Bay of Bengal and crossed the coast near the Godavari delta.",
-    category: "Very Severe Cyclonic Storm",
-    wind: "About 125 to 135 km/h wind near landfall, with gusts to about 150 km/h (IMD).",
-    eye: "The calm eye was about {eye} km from centre to edge, give or take {eye_err} km.",
-    rough: "The roughest sea was about {peak} km from the centre of the eye.",
-    where: "Landfall point on the map: near 16.45 N, 81.9 E (Narasapuram and Razole area).",
-    cannot: "Radar sees how rough the sea is. It does not measure wind speed in km/h. The wind numbers come from IMD, not from the satellite.",
-    track_note: "The path joins the positions IMD reported. The real path between them may differ."
-  },
+  /* Event wording (landfall, eye profile, wind, before/after, other-water caveat) is NOT here:
+     it comes from data/processed/events.json `story` and shows only with an event chip or in the Events archive. */
 
   confidence: {
     title: "How sure are we?",
     items: [
       "We say \"probably\" on purpose. Radar change points to flood water. Nobody has checked it on the ground.",
       "The radar could see through clouds and rain, so the picture is clear.",
-      "Numbers are shares of each mandal, not square kilometres. They come with a give-or-take figure."
+      "Mandal numbers are shares of each mandal. They come with a give-or-take figure."
     ]
   },
 
@@ -86,8 +78,8 @@ window.FINDINGS = {
         why: "Water under crop stems shows up. Thick crops can hide some water, so some floods are missed." },
       { verdict: "no",     claim: "Radar tells you how fast the wind blew.",
         why: "A rougher sea looks brighter. That is a clue, not a speed." },
-      { verdict: "no",     claim: "Radar tells you the flooded area in square kilometres.",
-        why: "The colours are labels from a change threshold. They are shares, not measurements." }
+      { verdict: "no",     claim: "Radar tells you how deep the water is.",
+        why: "It shows where the surface looks like open water. It does not measure depth or what was lost." }
     ]
   },
 
