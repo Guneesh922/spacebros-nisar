@@ -1,6 +1,33 @@
 # STATUS — live task board (update this at the end of every session)
 
-Last updated: 2026-11-14 16:15 IST by Opus planning session.
+Last updated: 2026-11-14 21:20 IST by Opus planning session (Wave 4 commits).
+
+## Wave 4 (14 Nov, evening) — live coast monitor
+Plan/contract: `docs/review/WAVE4_PLAN.md`. Tests: story 16, findings 10, events 13, manifest 17, all pass (`docs/review/ACCEPTANCE_DATA.md`).
+
+### Done
+- WP1 findings: `data/processed/findings/<date>.json` is write-once with revisions (28 Oct and 9 Nov are at revision 4, logged; nothing published yet) plus `latest.json`. Template states: big_change / quiet / no_new_pass / numbers_coming / no_baseline. Lower-confidence flag (provisional baseline; season rule from `data/seasons.json`). Radar finding: 28 Oct `no_clear_change`, 9 Nov `change_seen`.
+- WP2 alerts and events: alerts-v2 = GDACS + SACHET filtered to Andhra Pradesh (the Jammu and Kashmir bug is fixed). `data/processed/events.json` holds Arnab (24-28 Oct from IMD press releases 5-6; end = last bulletin date; aftermath 45 days) plus two auto drafts, Murasu and Flood in India (GDACS, not reviewed). `data/events/arnab-2026.json` is superseded by `events.json` (kept; still the fallback).
+- WP3 dashboard: latest pass home, event chips, events archive, alerts for the area, sidebar collapse, About and sources (`app/dashboard-mockup/README.md`, section "WP3").
+- WP4 area config: `config/areas.json` drives boxes, tracks, baseline and alert matching. Site title "Coast Radar Watch"; name options Coast Radar Watch / Pass by Pass / Delta Radar Watch (team picks; one config value). Only configured tracks are ingested (T120/T127 SEA are listed, not ingested).
+- WP1e pipeline: `tools/pipeline/run_all.py` holds the single step order. `update.yml` and `pages.yml` are gated by tests (actionlint clean; emulated locally including a forced failure with `tools/sim/`; NOT run on GitHub).
+- WP5 resource audit: `docs/review/RESOURCE_AUDIT.md`. About card cites the Data User Guide, StoryMaps, white papers, ARSET. CSA RCM/RADARSAT-1, CONAE SAOCOM and UAVSAR Postcards are not used (reason to confirm by the team).
+- WP6 L-band tests (`docs/review/LBAND_TEST.md`): wet-crops HH / HV / ratio tested, not adopted. Sea +4 dB on 27 Oct is mostly the storm (8 Nov vs 15 Oct is +0.1 dB); 3 Oct is unusable as a reference.
+- WP7 S-band: no files in `data/h5/S_*` or `data/raw/nisar_s`, so NOT done.
+- SACHET and GDACS are reachable from the Mac; untested from a GitHub runner (fails soft, keeps the snapshot with its real date).
+
+### Left / placeholder
+- S-band (no files). A real run on a GitHub runner. Domain review of the English templates. GDACS gives a centroid only.
+- The sea chip names Murasu "Tropical Cyclone MURASU-26" but "Cyclone Murasu" elsewhere.
+- Open items from `docs/review/ACCEPTANCE_UI.md` (found 14 Nov, not re-tested after): B1 Arnab wording outside an Arnab chip; B2 auto drafts show "Radar passes linked" instead of alert_only; B3 archive finding wording differs from the plan phrases; B5 two different "updated" times; B6 "Radar tells you the flooded area" line contradicts the 84 km2 figure; B7 sea-difference title and limits name different dates; B4 console errors not reproduced.
+
+### Needs the team
+- S-band download (Bhoonidhi login). `EARTHDATA_TOKEN` secret. Pages source = GitHub Actions and workflow read/write permission. Push (main is ahead of origin). Final site name. Submission form. Confirm the CSA/CONAE reason. Fable evaluation, on the user's say-so.
+
+### Older items now done (verified in the docs above)
+- Alerts J&K bug (W3 "Open" note at the bottom of this file): fixed, AP only.
+- Sea +3.7 dB check against 3 Oct: done (WP6; 3 Oct is unusable, the 27 Oct signal is mostly storm).
+- W3-H "PRO review" mandal card follow-up and "mandal card follows the day selector": not verified, left open.
 
 ## Real vs placeholder (14 Nov, end of session)
 - REAL: all 8 L-band H5 subsets in data/h5/ (259 MB) and their 8 map layers; sea difference map 27 Oct vs 15 Oct;
@@ -34,7 +61,7 @@ Native coast is far over 50 MB; 2x2 is still 56 MB (slightly over the 50 MB targ
 4. [ ] mandal_rank.json from the class maps x mandal polygons (data/interim/F/mandal_rank.* is the old prototype format);
        profile.json (eye profile) from L_SEA_20261027 VV along a transect through the eye (data/interim/A/profile*.json
        is the old format). Replace the invented numbers; keep the same JSON shape the dashboard reads.
-5. [ ] Sea difference: check 15 Oct (PROVISIONAL) vs 3 Oct calibration offset before quoting numbers (median diff is +3.7 dB).
+5. [x] (done in Wave 4, see WP6) Sea difference: check 15 Oct (PROVISIONAL) vs 3 Oct calibration offset before quoting numbers (median diff is +3.7 dB).
 6a. [x] One-command S-band subsetting written (14 Nov 2026): `python src/fetch/bhoonidhi_s_band.py subset --preset arnab` streams only box chunks over HTTP Range (RangeFile), S-band grid/pols in subset_h5.py, `--local` for portal files; see docs/PIPELINE.md "S-band in one command". Tested on synthetic SSAR files + local Range server only.
 6. [ ] S-band: user RUNS the subset command (replaces downloading the 4 full files; old `download` still works),
        inspect format with h5py, extend subset_h5.py for S-band (band S, same schema), add layers.
@@ -117,6 +144,6 @@ and shown well. Verified 16:18 IST in the browser: radar overlays draw in the ri
 - Bugs fixed on the way: eye-profile hover threw (`L` shadowed Leaflet); an unbroken alert headline made the page 1031 px wide at 800 px.
 - Still placeholder / open: S-band (none yet); no English-template domain review; HEAD size probes show `net::ERR_ABORTED` in the browser tool but return 200 (tool artefact, all GET requests 200, no 404s, no console messages); the "Water + crops" table mode scrolls sideways inside its box at 800 px; mandal-card and ranking still read the newest day, not the day chosen in the share-map selector.
 
-- Open (Opus, 14 Nov 17:40): data/processed/alerts.json holds Jammu & Kashmir SACHET alerts, not Andhra Pradesh -> wrong region on
+- Open (Opus, 14 Nov 17:40; alerts part DONE in Wave 4): data/processed/alerts.json holds Jammu & Kashmir SACHET alerts, not Andhra Pradesh -> wrong region on
   the alerts card; refetch AP alerts (src/fetch/sachet_snapshot.py) or mark it placeholder. Rename the sea-diff layer id to match
   its date when convenient (update dash.js references). Mandal card should follow the share-map day selector.
