@@ -23,7 +23,7 @@ headers = {"Authorization": f"Bearer {access_token}"}
 # bbox format: [min_lon, min_lat, max_lon, max_lat]
 search_payload = {
     "collections": ["NISAR_SSAR_GCOV","NISAR_SSAR_GOFF"],
-    "bbox": [76.8, 28.4, 77.4, 28.9],
+    "bbox": [78.49, 8.643, 94.501, 19.533],
     "datetime": "2026-10-13T00:00:00Z/2026-11-04T23:59:59Z",
     "filter": {
         "op": "eq",
