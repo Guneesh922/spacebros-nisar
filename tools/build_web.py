@@ -33,6 +33,19 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "tools", "pipeline"))
+
+
+def _area_cfg():
+    """The default area from config/areas.json (env SPACEBROS_AREAS selects another file), or None if unreadable.
+    build_web reads the H5 files themselves for boxes and grids; the config supplies the baseline dates and the
+    mandal boundary file."""
+    try:
+        import common
+        return common.area()
+    except Exception as exc:  # noqa: BLE001 - never block a build on the config; fall back to the manifest
+        print("WARN  config/areas.json not used (%s); falling back to the manifest" % exc)
+        return None
 
 STRETCH = {"COAST": (-25.0, 0.0), "SEA": (-25.0, 0.0)}
 MAX_DIM = 2400          # longest side of the first-try output image, px
@@ -544,6 +557,15 @@ def _coast_sources(manifest):
     without any code change), by_date = {yyyymmdd: absolute h5 path}."""
     an = manifest["analyses"][0]
     pre = [_compact(d) for d in an["normal_period"]]
+    cfg = _area_cfg()
+    if cfg:
+        bl = (cfg.get("baselines") or {}).get("COAST") or {}
+        dates = next((v["dates"] for v in bl.values() if v.get("dates")), None)   # first COAST track with baseline dates
+        if dates and len(dates) == 2:
+            cpre = [_compact(d) for d in dates]
+            if cpre != pre:
+                print("WARN  baseline in config/areas.json %s differs from manifest normal_period %s; config wins" % (cpre, pre))
+            pre = cpre
     by_date, track = {}, {}
     for l in manifest["layers"]:
         if l.get("id", "").startswith("nisar_l_coast_") and l.get("h5") and os.path.exists(os.path.join(ROOT, l["h5"])):
@@ -930,7 +952,9 @@ def build_mandal_rank(manifest, out_dir, r=None):
     nrow, ncol = len(y), len(x)
     dx, dy = float(x[1] - x[0]), float(y[1] - y[0])
     tf = Transformer.from_crs(4326, epsg, always_xy=True)
-    with open(os.path.join(ROOT, "data", "processed", "mandals.geojson"), encoding="utf-8") as fh:
+    cfg = _area_cfg()
+    mandals_rel = ((cfg or {}).get("boundaries") or {}).get("mandals") or "data/processed/mandals.geojson"
+    with open(os.path.join(ROOT, mandals_rel), encoding="utf-8") as fh:
         gj = json.load(fh)
     dist = _district_table()
     feats = []

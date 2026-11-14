@@ -19,11 +19,14 @@ Usage:
   python tools/pipeline/discover.py                      # table of everything found + the NEW list
   python tools/pipeline/discover.py --json new.json      # write NEW (and upgrades) as JSON for ingest.py
   python tools/pipeline/discover.py --all                # show all scenes, not only new ones
+Only tracks configured for a role in config/areas.json ("tracks") are ingested. Other qualifying tracks are LISTED under
+"other tracks seen, not ingested (add to config/areas.json to include)" and never become NEW. --tracks overrides the config.
 Exit code 0 always when the search worked (also with no new scenes); 2 when CMR is unreachable.
 """
 import argparse
 import datetime as dt
 import json
+import os
 import sys
 import urllib.error
 import urllib.parse
@@ -31,14 +34,15 @@ import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import (BOX, CATALOG, GRANULE_RE, START_DATE, freq_a_pols, load_json, scene_key)  # noqa: E402
+from common import (AREAS_ENV, CATALOG, GRANULE_RE, area, freq_a_pols, load_json, role_box, scene_key,  # noqa: E402
+                    search_box)
 
 CMR = "https://cmr.earthdata.nasa.gov/search"
 SHORT_NAMES = {"NISAR_L2_GCOV_V1": "VALIDATED", "NISAR_L2_GCOV_PROVISIONAL_V1": "PROVISIONAL"}
 FALLBACK_IDS = {"NISAR_L2_GCOV_V1": "C3622241360-ASF", "NISAR_L2_GCOV_PROVISIONAL_V1": "C2854338529-ASF"}
-# T48 F80 (the eye-pass strip, 17 s long) covers 21-23 % of the sea box, so SEA needs a low threshold;
+# Boxes, pols and min_cover per role come from config/areas.json (see common.area()).
+# T48 F80 (the eye-pass strip, 17 s long) covers 21-23 % of the sea box, so SEA's min_cover is low (0.2);
 # neighbouring frames of the same pass sit at 17-19 %, the margin is real but small.
-MIN_COVER = {"COAST": 0.5, "SEA": 0.2}
 
 
 def http_json(url, retries=3):
@@ -69,8 +73,8 @@ def collection_ids():
     return ids
 
 
-def search_granules(cid, since, until):
-    w, s, e, n = BOX["SEA"]   # the sea box contains the delta box
+def search_granules(cid, since, until, ar):
+    w, s, e, n = search_box(ar)   # union of the area's boxes (the sea box contains the delta box)
     out, page = [], 1
     while True:
         q = urllib.parse.urlencode({"collection_concept_id": cid, "bounding_box": f"{w},{s},{e},{n}",
@@ -123,7 +127,7 @@ def coverage(rings, box, n=40):
     return sum(hit) / len(hit)
 
 
-def parse(entry, status, short_name):
+def parse(entry, status, short_name, ar):
     gid = entry["producer_granule_id"] if "producer_granule_id" in entry else entry["title"]
     m = GRANULE_RE.match(gid)
     if not m:
@@ -137,7 +141,7 @@ def parse(entry, status, short_name):
     if not href:
         return None
     rings = polygon_rings(entry)
-    cov = {r: coverage(rings, BOX[r]) for r in BOX}
+    cov = {r: coverage(rings, role_box(ar, r)) for r in ar["boxes"]}
     return {"granule": gid, "url": href, "status": status, "collection": short_name, "kind": m["kind"],
             "cycle": int(m["cycle"]), "track": int(m["track"]), "frame": int(m["frame"]),
             "direction": m["dir"], "mode": m["mode"], "pol_code": m["pols"], "pols": pols,
@@ -145,14 +149,16 @@ def parse(entry, status, short_name):
             "date": entry["time_start"][:10], "size_mb": round(float(entry.get("granule_size", 0)), 1),
             "production_utc": (entry.get("production_date_time") or "")[:19] + "Z" if entry.get("production_date_time") else None,
             "available_utc": (entry.get("updated") or "")[:19] + "Z" if entry.get("updated") else None,
-            "cover_coast": round(cov["COAST"], 3), "cover_sea": round(cov["SEA"], 3)}
+            "cover_coast": round(cov.get("COAST", 0.0), 3), "cover_sea": round(cov.get("SEA", 0.0), 3)}
 
 
-def classify(g):
-    if "VV" in g["pols"] and g["cover_sea"] >= MIN_COVER["SEA"]:
-        return "SEA"
-    if "HH" in g["pols"] and g["cover_coast"] >= MIN_COVER["COAST"]:
-        return "COAST"
+def classify(g, ar):
+    """SEA is tested first (SEA wins when both match); a role matches when its first configured pol is in frequency A
+    and the footprint covers >= min_cover of that role's box."""
+    for role in ("SEA", "COAST"):
+        cfg = ar["roles"].get(role)
+        if cfg and cfg["pols"][0] in g["pols"] and g["cover_" + role.lower()] >= cfg["min_cover"]:
+            return role
     return None
 
 
@@ -161,11 +167,11 @@ def rank(g):
     return (g["status"] == "VALIDATED", g["kind"] == "PR", cov, -g["size_mb"])
 
 
-def select(granules):
+def select(granules, ar):
     """Classify, collapse duplicates of one pass, keep one granule per (role, date, track)."""
     by_pass = {}
     for g in granules:
-        role = classify(g)
+        role = classify(g, ar)
         if not role:
             continue
         g["role"] = role
@@ -191,14 +197,27 @@ def select(granules):
     return scenes
 
 
-def compare(scenes, catalog_path, tracks=None):
+def configured_tracks(ar):
+    """{role: {track numbers}} from config/areas.json (`tracks`). Only these are ingested; other tracks are listed, not ingested."""
+    return {role: {int(t["track"]) for t in lst} for role, lst in (ar.get("tracks") or {}).items()}
+
+
+def compare(scenes, catalog_path, tracks=None, ar=None):
+    """tracks (explicit --tracks) overrides the config; otherwise a scene is ingested only if its track is configured for its role."""
     cat = load_json(catalog_path, {"scenes": []})
     have = {}
     for e in cat.get("scenes", []):
         have[scene_key(e["role"], e["date"], e["track"])] = e
+    conf = configured_tracks(ar) if (ar and not tracks) else None
     new, upgrades, known, other = [], [], [], []
     for s in scenes:
-        if tracks and s["track"] not in tracks:
+        if tracks:
+            ok = s["track"] in tracks
+        elif conf is not None:
+            ok = s["track"] in conf.get(s["role"], set())
+        else:
+            ok = True
+        if not ok:
             other.append(s)
             continue
         e = have.get(s["scene_key"])
@@ -220,37 +239,43 @@ def fmt(s):
             f"{s['granule'][:60]}{alt}")
 
 
-def run(since=START_DATE, until=None, catalog=CATALOG, tracks=None):
+def run(since=None, until=None, catalog=CATALOG, tracks=None, area_id=None):
+    ar = area(area_id)
+    since = since or ar["_defaults"]["search_since"]
     until = until or dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     ids = collection_ids()
     raw = []
     for sn, cid in ids.items():
-        for e in search_granules(cid, since, until):
-            g = parse(e, SHORT_NAMES[sn], sn)
+        for e in search_granules(cid, since, until, ar):
+            g = parse(e, SHORT_NAMES[sn], sn, ar)
             if g:
                 raw.append(g)
-    scenes = select(raw)
-    new, upgrades, known, other = compare(scenes, catalog, tracks)
+    scenes = select(raw, ar)
+    new, upgrades, known, other = compare(scenes, catalog, tracks, ar)
     return {"collections": ids, "n_granules": len(raw), "scenes": scenes, "new": new, "upgrades": upgrades,
             "known": known, "other_tracks": other}
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--since", default=START_DATE)
+    ap.add_argument("--since", default=None, help="default: config defaults.search_since")
+    ap.add_argument("--area", default=None, help="area id in config/areas.json (default: default_area)")
+    ap.add_argument("--config", default=None, help=f"areas config file (default config/areas.json; env {AREAS_ENV})")
     ap.add_argument("--until", default=None, help="default: now (UTC)")
     ap.add_argument("--catalog", default=str(CATALOG))
     ap.add_argument("--tracks", default=None, help="comma list of tracks to keep, e.g. 48,55 (default: all)")
     ap.add_argument("--json", help="write {new, upgrades} to this file for ingest.py")
     ap.add_argument("--all", action="store_true", help="also print scenes we already have")
     a = ap.parse_args()
+    if a.config:
+        os.environ[AREAS_ENV] = a.config
     try:
         tracks = {int(t) for t in a.tracks.split(',')} if a.tracks else None
-        r = run(a.since, a.until, a.catalog, tracks)
+        r = run(a.since, a.until, a.catalog, tracks, a.area)
     except ConnectionError as e:
         print(f"CMR unreachable: {e}", file=sys.stderr)
         return 2
-    print(f"CMR collections {r['collections']}; {r['n_granules']} usable granules intersect the boxes since {a.since}")
+    print(f"CMR collections {r['collections']}; {r['n_granules']} usable granules intersect the boxes since {a.since or area(a.area)['_defaults']['search_since']}")
     if a.all:
         print(f"\nAlready in catalog ({len(r['known'])}):")
         for s in r["known"]:
@@ -259,7 +284,7 @@ def main():
     for s in r["new"]:
         print("  " + fmt(s))
     if r["other_tracks"]:
-        print(f"\nSkipped by --tracks ({len(r['other_tracks'])}, would qualify otherwise; not in catalog unless listed above):")
+        print(f"\nOther tracks seen, not ingested ({len(r['other_tracks'])}; add to config/areas.json to include):")
         for s in r["other_tracks"]:
             print("  " + fmt(s))
     if r["upgrades"]:

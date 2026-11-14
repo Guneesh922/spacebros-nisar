@@ -56,3 +56,45 @@ lossless for every product we derive.
 Leaflet `imageOverlay`), `{layer_id}.json` (bounds, percentiles, nan fraction), and the derived products.
 `.github/workflows/pages.yml` runs it on push to main and deploys the site to GitHub Pages
 (user must set Settings → Pages → Source: GitHub Actions once).
+
+## Areas, events and alerts (Wave 4, 14 Nov 2026)
+Adding an area is one config entry; numbers start once that area has two calm baseline passes.
+
+### `config/areas.json` (schema `areas-v1`)
+Read through `tools/pipeline/common.py`: `load_areas(root=None, path=None)` (whole document) and `area(id=None)` (one area, default
+`default_area`; adds `_defaults`). Env `SPACEBROS_AREAS=<file>` (or `--config` on discover/ingest/alerts/events) selects a scratch config.
+Keys: `site` {title, tagline, name_options}; `default_area`; `defaults` {aftermath_days 30, search_since}; per area `id`, `name`,
+`state`, `country`, `boxes` {COAST, SEA} (W,S,E,N), `roles` {pols, posting_m, multilook, min_cover, analysis}, `tracks`
+{role: [{track, direction, frame}]}, `baselines` (COAST: per track `season` (an id in data/seasons.json) + two calm `dates`;
+SEA: per track `reference_date`), `boundaries.mandals`, `alert_match` {bbox, states, keywords}.
+Used by: `discover.py` (search box = union of boxes, per-role pols and min_cover), `ingest.py` (posting per role),
+`build_web.py` (COAST baseline dates, mandal boundary file; falls back to the manifest if the config cannot be read).
+`data/sources.yaml` boxes stay as history only. A second area with no data does not change anything for the first one.
+Open limit: `data/h5/catalog.json` is not yet split per area; `discover.py` compares against the whole catalogue.
+
+### `data/processed/alerts.json` (schema `alerts-v2`) — written by `tools/pipeline/alerts.py`
+`{schema, area_id, built_utc, gdacs{fetched_utc, ok, error, url, credit, items[]}, sachet{snapshot_utc, ok, error, url, credit,
+items[], feed_item_count, feed_pubdate, feed_newest_item}, none_text}`. GDACS item: id, type (TC|FL), name, alert_level
+(Green|Orange|Red), from, to (UTC), link, countries, current (bool), point [lon,lat], severity_text. SACHET item: id, headline,
+area (CAP areaDesc), issued (IST), source (issuing office), link, category.
+GDACS: public API `gdacsapi/api/events/geteventlist/SEARCH` (TC + FL, last 60 days, 100 per page); kept when the event point
+touches `alert_match.bbox`. SACHET: `rss_india.xml` + each item's CAP areaDesc; kept when headline + areaDesc + office mention
+a state or a whole-word keyword. A failed fetch keeps the previous items with their old real timestamp and sets `ok:false` plus
+`error`. `--fixture <json>` replaces the network (simulations); `--now` fakes the clock. `tools/check_manifest.py` validates v2
+(the old snapshot shape is still accepted). Nothing in this file says radar confirms an alert.
+
+### `data/processed/events.json` (schema `events-v1`) — seeded by hand (Arnab), maintained by `tools/pipeline/events.py`
+One entry per event: `id, name, type (cyclone|flood), area_id, start, end, aftermath_days, window_source, source, credit,
+severity {as_given, by}, status (alert_only|radar_linked|closed|dismissed), status_text, reviewed_by_human, linked_passes
+[{scene_id, date, role, relation (during|after), radar_finding (change_seen|no_clear_change|numbers_coming|sea_no_public_finding)}],
+description, cannot_tell[], confounders[], story{landfall_caption, eye_profile, before_after, murasu_caveat, ...} (+ `story_from`
+saying which app file each sentence was copied from), landfall, imd, baseline, official_links, alert_refs[], edit_log[]`.
+Rules: a pass is linked when its date lies in [start, end + aftermath_days] of an event in the same area ("during" up to `end`,
+"after" beyond); auto drafts are `auto_<SOURCE>_<id>`, `alert_only`, `reviewed_by_human:false`, created only from cyclone/flood
+alerts still inside their window; an alert that overlaps a human-reviewed event of the same type is added to its `alert_refs`
+instead of creating a duplicate; human events are never deleted or rewritten (only `alert_refs` and `linked_passes` grow).
+Idempotent (a second run changes only `updated_utc`). The findings step sets `radar_finding` with
+`events.set_radar_finding(events, event_id, scene_id, finding)`.
+Arnab window: 24 Oct to 28 Oct 2026, from the IMD press releases in `docs/imd_bulletins/` (see `window_source`); the end is the
+date of the last bulletin, not an IMD-stated end. `data/events/arnab-2026.json` stays in place until the readers are switched.
+Tests: `python tools/tests/test_events.py`.

@@ -30,7 +30,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import catalog as catalog_mod  # noqa: E402
 import discover  # noqa: E402
-from common import CATALOG, H5_DIR, MAX_SUBSET_BYTES, POSTING_M, ROOT, load_json  # noqa: E402
+from common import AREAS_ENV, CATALOG, H5_DIR, MAX_SUBSET_BYTES, ROOT, area, load_json  # noqa: E402
 
 SUBSET = ROOT / "src" / "fetch" / "subset_h5.py"
 
@@ -43,9 +43,10 @@ def scene_id_of(s):
     return f"L_{s['role']}_{s['date'].replace('-', '')}_T{s['track']:03d}"
 
 
-def subset_cmd(py, src, scene_id, role, outdir, status=None, granule=None, collection=None, band=None, posting=None):
+def subset_cmd(py, src, scene_id, role, outdir, status=None, granule=None, collection=None, band=None, posting=None,
+               area_id=None):
     cmd = [py, str(SUBSET), "--scene", scene_id, "--role", role, "--src", src, "--out", str(outdir),
-           "--posting", str(posting or POSTING_M[role]), "--no-log"]
+           "--posting", str(posting or area(area_id)["roles"][role]["posting_m"]), "--no-log"]
     for flag, val in (("--status", status), ("--granule", granule), ("--collection", collection), ("--band", band)):
         if val:
             cmd += [flag, val]
@@ -90,6 +91,8 @@ def main():
     ap.add_argument("--max", type=int, default=6, help="at most this many scenes per run (default 6)")
     ap.add_argument("--no-upgrades", action="store_true", help="ignore provisional -> validated upgrades")
     ap.add_argument("--tracks", default=None, help="restrict to these tracks, e.g. 48,55")
+    ap.add_argument("--area", default=None, help="area id in config/areas.json (default: default_area)")
+    ap.add_argument("--config", default=None, help=f"areas config file (default config/areas.json; env {AREAS_ENV})")
     ap.add_argument("--python", default=sys.executable)
     ap.add_argument("--local", help="local H5 (S-band or manual download) to subset instead of discovering")
     ap.add_argument("--role", choices=["COAST", "SEA"], help="with --local")
@@ -99,6 +102,8 @@ def main():
     ap.add_argument("--granule", help="with --local: source granule id (default: file stem)")
     ap.add_argument("--posting", type=float, help="with --local: output posting in m (default 20 COAST / 100 SEA)")
     a = ap.parse_args()
+    if a.config:
+        os.environ[AREAS_ENV] = a.config
 
     jobs = []   # (label, cmd-builder args)
     times = {}  # source granule -> CMR production / available time (goes to data/h5/granule_times.json)
@@ -116,7 +121,7 @@ def main():
         else:
             try:
                 tracks = {int(t) for t in a.tracks.split(",")} if a.tracks else None
-                r = discover.run(tracks=tracks)
+                r = discover.run(tracks=tracks, area_id=a.area)
             except ConnectionError as e:
                 print(f"CMR unreachable: {e}", file=sys.stderr)
                 return 2
@@ -144,7 +149,7 @@ def main():
         print(f"\n== {label}")
         tmp = Path(tempfile.mkdtemp(prefix="nisar_ingest_"))
         try:
-            cmd = subset_cmd(a.python, outdir=tmp, **kw)
+            cmd = subset_cmd(a.python, outdir=tmp, area_id=a.area, **kw)
             shown = [("<url>" if c.startswith("http") else c) for c in cmd]
             print("  " + " ".join(shown))
             if a.dry_run:
