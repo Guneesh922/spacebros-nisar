@@ -90,10 +90,10 @@
   "sources": [
     {
       "id": "asf_nisar_l",
-      "provider": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "provider": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
       "access": "pipeline",
       "licence": "NASA Earth science data, open by default (CC0 unless marked); follow ASF DAAC terms",
-      "credit_line": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "credit_line": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
       "credit_confirmed": true,
       "can_host": true,
       "delay_hint": "1-3 days after the pass",
@@ -229,7 +229,7 @@
       "limit": "ground truth (single date, none yet)",
       "source": "T55 F10 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
-      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
       "png": "data/web/nisar_l_coast_20261109_t55_hh.png",
       "bounds": [
         [
@@ -278,7 +278,7 @@
       "limit": "whether water is still rising (one look)",
       "source": "T55 F10 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
-      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
       "png": "data/web/nisar_l_coast_20261028_t55_hh.png",
       "bounds": [
         [
@@ -327,7 +327,7 @@
       "limit": "wet soil apart from shallow water",
       "source": "T55 F10 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
-      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
       "png": "data/web/nisar_l_coast_20261016_t55_hh.png",
       "bounds": [
         [
@@ -376,7 +376,7 @@
       "limit": "wet soil apart from shallow water",
       "source": "T55 F10 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
-      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
       "png": "data/web/nisar_l_coast_20261004_t55_hh.png",
       "bounds": [
         [
@@ -425,7 +425,7 @@
       "limit": "wind speed; brightness shows roughness",
       "source": "T48 F80 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
-      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
       "png": "data/web/nisar_l_sea_20261108_t48_vv.png",
       "bounds": [
         [
@@ -474,7 +474,7 @@
       "limit": "wind speed; brightness shows roughness",
       "source": "T48 F80 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
-      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
       "png": "data/web/nisar_l_sea_20261027_t48_vv.png",
       "bounds": [
         [
@@ -523,7 +523,7 @@
       "limit": "an average sea (one calm day only)",
       "source": "T48 F80 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
-      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
       "png": "data/web/nisar_l_sea_20261015_t48_vv.png",
       "bounds": [
         [
@@ -572,7 +572,7 @@
       "limit": "an average sea (one calm day only)",
       "source": "T48 F80 · NASA/ISRO via ASF",
       "source_id": "asf_nisar_l",
-      "credit": "NASA/JPL-Caltech and ISRO via ASF DAAC",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
       "png": "data/web/nisar_l_sea_20261003_t48_vv.png",
       "bounds": [
         [
@@ -651,13 +651,14 @@
         {
           "id": "new_water",
           "label": "likely new open water",
-          "colour": "#2A6FB0",
+          "colour": "#3FA7F5",
           "style": "fill",
-          "default_on": true
+          "default_on": true,
+          "alpha": 235
         }
       ],
       "default_on": false,
-      "opacity": 0.75,
+      "opacity": 1.0,
       "status": "ready",
       "placeholder": null,
       "id": "nisar_class_new_water",
@@ -723,13 +724,14 @@
         {
           "id": "wet_crops",
           "label": "likely wet or flooded crops",
-          "colour": "#E09A2B",
+          "colour": "#F2A93B",
           "style": "fill",
-          "default_on": true
+          "default_on": true,
+          "alpha": 210
         }
       ],
       "default_on": false,
-      "opacity": 0.75,
+      "opacity": 1.0,
       "status": "ready",
       "placeholder": null,
       "id": "nisar_class_wet_crops",
@@ -886,34 +888,890 @@
         "kind": "diverging",
         "unit": "dB",
         "colour_blind_safe": true,
+        "centre": 0.0,
+        "symmetric": true,
         "stops": [
           {
-            "value": -15.0,
-            "hex": "#1D4E89",
-            "label": "much darker (smoother sea)"
+            "value": -6.0,
+            "hex": "#2F7DC4",
+            "label": "darker (smoother sea)"
           },
           {
-            "value": -7.5,
-            "hex": "#6BAED6",
+            "value": -3.0,
+            "hex": "#8FBFE8",
             "label": null
           },
           {
             "value": 0.0,
             "hex": "#F7F7F7",
-            "label": "no change"
+            "label": "no clear change"
           },
           {
-            "value": 7.5,
-            "hex": "#F6A04D",
+            "value": 3.0,
+            "hex": "#F6B48A",
             "label": null
           },
           {
-            "value": 15.0,
-            "hex": "#B54708",
-            "label": "much brighter (rougher sea)"
+            "value": 6.0,
+            "hex": "#D9541E",
+            "label": "brighter (rougher sea)"
           }
         ],
-        "note": "negative = sea darker than the calm reference, positive = brighter (rougher); grey-white = no change"
+        "words": {
+          "darker": "darker",
+          "no_change": "no clear change",
+          "brighter": "brighter"
+        },
+        "saturation_limit_db": 6.0,
+        "saturation_rule": "min(3 x P99 of |change|, 6 dB)",
+        "p99_abs_change_db": 11.05,
+        "three_p99_db": 33.15,
+        "cap_db": 6.0,
+        "p99_basis": "offshore common valid pixels more than 1 km offshore",
+        "sigma_db": 1.29,
+        "sigma": {
+          "source": "robust (MAD) sigma of this difference over the common valid pixels more than 1 km offshore; no calm-fortnight pair exists for the sea (3 Oct is a different acquisition mode)",
+          "median_db": 0.34,
+          "n_pixels": 2437609
+        },
+        "grey": {
+          "hex": "#9BA1A7",
+          "alpha": 175,
+          "band_db": [
+            -1.29,
+            1.29
+          ],
+          "label": "no clear change",
+          "rule": "pixels with |change| < 1 sigma are drawn grey, not coloured"
+        },
+        "note": "negative = darker than the reference, positive = brighter; white = no change; grey = change smaller than 1 sigma of normal variation",
+        "previous_range_db": [
+          -15.0,
+          15.0
+        ],
+        "previous_range_note": "before 15 Nov 2026 the sea difference used a fixed -15..+15 dB stretch"
+      }
+    },
+    {
+      "group": "after",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-11-09",
+      "time_utc": "2026-11-09T00:01:07Z",
+      "latest_of": "nisar_l_coast_change_hh",
+      "shows": "Change in land radar brightness, HH, 9 Nov minus the 4 and 16 Oct baseline (dB); blue = darker, orange-red = brighter, grey = change smaller than normal",
+      "limit": "it is a brightness change, not a flood map; baseline scenes are PROVISIONAL products; crop and wind effects also change brightness",
+      "source": "SpaceBros difference map",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_coast_change_20261109_hh.png",
+      "bounds": [
+        [
+          16.1949,
+          81.59718
+        ],
+        [
+          17.10546,
+          82.60745
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "HH",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.85,
+      "status": "ready",
+      "id": "nisar_l_coast_change_20261109_hh",
+      "name": "Coast radar brightness change (9 Nov minus baseline)",
+      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 H5 subsets (data/web/nisar_l_coast_change_20261109_hh.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_COAST_20261004_T055.h5",
+        "data/h5/L_COAST_20261016_T055.h5",
+        "data/h5/L_COAST_20261109_T055.h5"
+      ],
+      "change_date": "2026-11-09",
+      "ramp": {
+        "name": "blue-white-orange (colour-blind safe)",
+        "kind": "diverging",
+        "unit": "dB",
+        "colour_blind_safe": true,
+        "centre": 0.0,
+        "symmetric": true,
+        "stops": [
+          {
+            "value": -6.0,
+            "hex": "#2F7DC4",
+            "label": "darker"
+          },
+          {
+            "value": -3.0,
+            "hex": "#8FBFE8",
+            "label": null
+          },
+          {
+            "value": 0.0,
+            "hex": "#F7F7F7",
+            "label": "no clear change"
+          },
+          {
+            "value": 3.0,
+            "hex": "#F6B48A",
+            "label": null
+          },
+          {
+            "value": 6.0,
+            "hex": "#D9541E",
+            "label": "brighter"
+          }
+        ],
+        "words": {
+          "darker": "darker",
+          "no_change": "no clear change",
+          "brighter": "brighter"
+        },
+        "saturation_limit_db": 6.0,
+        "saturation_rule": "min(3 x P99 of |change|, 6 dB)",
+        "p99_abs_change_db": 9.781,
+        "three_p99_db": 29.34,
+        "cap_db": 6.0,
+        "p99_basis": "valid non-permanent-water pixels of this date",
+        "sigma_db": 0.883,
+        "sigma": {
+          "source": "robust (MAD) sigma of the normal-fortnight difference, 16 Oct minus 4 Oct, HH, over land (docs/METHODS.md step 6)",
+          "baseline_dates": [
+            "2026-10-04",
+            "2026-10-16"
+          ],
+          "note": "the event-minus-baseline difference uses a two-date mean baseline, so its true noise is a little smaller: 1 sigma is a cautious grey band"
+        },
+        "grey": {
+          "hex": "#9BA1A7",
+          "alpha": 175,
+          "band_db": [
+            -0.883,
+            0.883
+          ],
+          "label": "no clear change",
+          "rule": "pixels with |change| < 1 sigma are drawn grey, not coloured"
+        },
+        "note": "negative = darker than the reference, positive = brighter; white = no change; grey = change smaller than 1 sigma of normal variation"
+      }
+    },
+    {
+      "group": "during",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-28",
+      "time_utc": "2026-10-28T00:01:07Z",
+      "latest_of": "nisar_l_coast_change_hh",
+      "shows": "Change in land radar brightness, HH, 28 Oct minus the 4 and 16 Oct baseline (dB); blue = darker, orange-red = brighter, grey = change smaller than normal",
+      "limit": "it is a brightness change, not a flood map; baseline scenes are PROVISIONAL products; crop and wind effects also change brightness",
+      "source": "SpaceBros difference map",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_coast_change_20261028_hh.png",
+      "bounds": [
+        [
+          16.1949,
+          81.59718
+        ],
+        [
+          17.10546,
+          82.60745
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "HH",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.85,
+      "status": "ready",
+      "id": "nisar_l_coast_change_20261028_hh",
+      "name": "Coast radar brightness change (28 Oct minus baseline)",
+      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 H5 subsets (data/web/nisar_l_coast_change_20261028_hh.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_COAST_20261004_T055.h5",
+        "data/h5/L_COAST_20261016_T055.h5",
+        "data/h5/L_COAST_20261028_T055.h5"
+      ],
+      "change_date": "2026-10-28",
+      "ramp": {
+        "name": "blue-white-orange (colour-blind safe)",
+        "kind": "diverging",
+        "unit": "dB",
+        "colour_blind_safe": true,
+        "centre": 0.0,
+        "symmetric": true,
+        "stops": [
+          {
+            "value": -6.0,
+            "hex": "#2F7DC4",
+            "label": "darker"
+          },
+          {
+            "value": -3.0,
+            "hex": "#8FBFE8",
+            "label": null
+          },
+          {
+            "value": 0.0,
+            "hex": "#F7F7F7",
+            "label": "no clear change"
+          },
+          {
+            "value": 3.0,
+            "hex": "#F6B48A",
+            "label": null
+          },
+          {
+            "value": 6.0,
+            "hex": "#D9541E",
+            "label": "brighter"
+          }
+        ],
+        "words": {
+          "darker": "darker",
+          "no_change": "no clear change",
+          "brighter": "brighter"
+        },
+        "saturation_limit_db": 6.0,
+        "saturation_rule": "min(3 x P99 of |change|, 6 dB)",
+        "p99_abs_change_db": 6.141,
+        "three_p99_db": 18.42,
+        "cap_db": 6.0,
+        "p99_basis": "valid non-permanent-water pixels of this date",
+        "sigma_db": 0.883,
+        "sigma": {
+          "source": "robust (MAD) sigma of the normal-fortnight difference, 16 Oct minus 4 Oct, HH, over land (docs/METHODS.md step 6)",
+          "baseline_dates": [
+            "2026-10-04",
+            "2026-10-16"
+          ],
+          "note": "the event-minus-baseline difference uses a two-date mean baseline, so its true noise is a little smaller: 1 sigma is a cautious grey band"
+        },
+        "grey": {
+          "hex": "#9BA1A7",
+          "alpha": 175,
+          "band_db": [
+            -0.883,
+            0.883
+          ],
+          "label": "no clear change",
+          "rule": "pixels with |change| < 1 sigma are drawn grey, not coloured"
+        },
+        "note": "negative = darker than the reference, positive = brighter; white = no change; grey = change smaller than 1 sigma of normal variation"
+      }
+    },
+    {
+      "group": "after",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-11-09",
+      "time_utc": "2026-11-09T00:01:07Z",
+      "latest_of": "nisar_l_coast_rgb",
+      "shows": "Land and sea radar colour composite, 9 Nov: red = HH, green = HV, blue = HH minus HV (dB)",
+      "limit": "two polarisations only: a hint about the kind of surface, not proof; a rough sea looks bright, it is not a flood; not a Freeman-Durden decomposition",
+      "source": "SpaceBros dual-pol composite",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_coast_rgb_20261109.png",
+      "bounds": [
+        [
+          16.1949,
+          81.59718
+        ],
+        [
+          17.10546,
+          82.60745
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "HH+HV",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.9,
+      "status": "ready",
+      "id": "nisar_l_coast_rgb_20261109",
+      "processing_level": "validated",
+      "name": "Coast radar colour composite (HH, HV), 9 Nov",
+      "bounds_source": "H5 subset footprint warped to lat/lon (data/web/nisar_l_coast_rgb_20261109.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_COAST_20261109_T055.h5"
+      ],
+      "rgb": {
+        "channels": {
+          "R": "HH",
+          "G": "HV",
+          "B": "HH minus HV (dB)"
+        },
+        "stretch": {
+          "R": {
+            "lo": -21.14,
+            "hi": -1.64
+          },
+          "G": {
+            "lo": -26.85,
+            "hi": -10.63
+          },
+          "B": {
+            "lo": 3.95,
+            "hi": 14.72
+          }
+        },
+        "gamma": {
+          "R": 2.0,
+          "G": 1.0,
+          "B": 2.0
+        }
+      },
+      "rgb_of": "nisar_l_coast_20261109_t55_hh"
+    },
+    {
+      "group": "during",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-28",
+      "time_utc": "2026-10-28T00:01:07Z",
+      "latest_of": "nisar_l_coast_rgb",
+      "shows": "Land and sea radar colour composite, 28 Oct: red = HH, green = HV, blue = HH minus HV (dB)",
+      "limit": "two polarisations only: a hint about the kind of surface, not proof; a rough sea looks bright, it is not a flood; not a Freeman-Durden decomposition",
+      "source": "SpaceBros dual-pol composite",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_coast_rgb_20261028.png",
+      "bounds": [
+        [
+          16.1949,
+          81.59718
+        ],
+        [
+          17.10546,
+          82.60745
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "HH+HV",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.9,
+      "status": "ready",
+      "id": "nisar_l_coast_rgb_20261028",
+      "processing_level": "validated",
+      "name": "Coast radar colour composite (HH, HV), 28 Oct",
+      "bounds_source": "H5 subset footprint warped to lat/lon (data/web/nisar_l_coast_rgb_20261028.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_COAST_20261028_T055.h5"
+      ],
+      "rgb": {
+        "channels": {
+          "R": "HH",
+          "G": "HV",
+          "B": "HH minus HV (dB)"
+        },
+        "stretch": {
+          "R": {
+            "lo": -21.14,
+            "hi": -1.64
+          },
+          "G": {
+            "lo": -26.85,
+            "hi": -10.63
+          },
+          "B": {
+            "lo": 3.95,
+            "hi": 14.72
+          }
+        },
+        "gamma": {
+          "R": 2.0,
+          "G": 1.0,
+          "B": 2.0
+        }
+      },
+      "rgb_of": "nisar_l_coast_20261028_t55_hh"
+    },
+    {
+      "group": "before",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-16",
+      "time_utc": "2026-10-16T00:01:06Z",
+      "latest_of": "nisar_l_coast_rgb",
+      "shows": "Land and sea radar colour composite, 16 Oct: red = HH, green = HV, blue = HH minus HV (dB)",
+      "limit": "two polarisations only: a hint about the kind of surface, not proof; a rough sea looks bright, it is not a flood; not a Freeman-Durden decomposition",
+      "source": "SpaceBros dual-pol composite",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_coast_rgb_20261016.png",
+      "bounds": [
+        [
+          16.1949,
+          81.59718
+        ],
+        [
+          17.10546,
+          82.60745
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "HH+HV",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.9,
+      "status": "ready",
+      "id": "nisar_l_coast_rgb_20261016",
+      "processing_level": "provisional",
+      "name": "Coast radar colour composite (HH, HV), 16 Oct",
+      "bounds_source": "H5 subset footprint warped to lat/lon (data/web/nisar_l_coast_rgb_20261016.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_COAST_20261016_T055.h5"
+      ],
+      "rgb": {
+        "channels": {
+          "R": "HH",
+          "G": "HV",
+          "B": "HH minus HV (dB)"
+        },
+        "stretch": {
+          "R": {
+            "lo": -21.14,
+            "hi": -1.64
+          },
+          "G": {
+            "lo": -26.85,
+            "hi": -10.63
+          },
+          "B": {
+            "lo": 3.95,
+            "hi": 14.72
+          }
+        },
+        "gamma": {
+          "R": 2.0,
+          "G": 1.0,
+          "B": 2.0
+        }
+      },
+      "rgb_of": "nisar_l_coast_20261016_t55_hh"
+    },
+    {
+      "group": "before",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-04",
+      "time_utc": "2026-10-04T00:01:06Z",
+      "latest_of": "nisar_l_coast_rgb",
+      "shows": "Land and sea radar colour composite, 4 Oct: red = HH, green = HV, blue = HH minus HV (dB)",
+      "limit": "two polarisations only: a hint about the kind of surface, not proof; a rough sea looks bright, it is not a flood; not a Freeman-Durden decomposition",
+      "source": "SpaceBros dual-pol composite",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_coast_rgb_20261004.png",
+      "bounds": [
+        [
+          16.1949,
+          81.59718
+        ],
+        [
+          17.10546,
+          82.60745
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "HH+HV",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.9,
+      "status": "ready",
+      "id": "nisar_l_coast_rgb_20261004",
+      "processing_level": "provisional",
+      "name": "Coast radar colour composite (HH, HV), 4 Oct",
+      "bounds_source": "H5 subset footprint warped to lat/lon (data/web/nisar_l_coast_rgb_20261004.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_COAST_20261004_T055.h5"
+      ],
+      "rgb": {
+        "channels": {
+          "R": "HH",
+          "G": "HV",
+          "B": "HH minus HV (dB)"
+        },
+        "stretch": {
+          "R": {
+            "lo": -21.14,
+            "hi": -1.64
+          },
+          "G": {
+            "lo": -26.85,
+            "hi": -10.63
+          },
+          "B": {
+            "lo": 3.95,
+            "hi": 14.72
+          }
+        },
+        "gamma": {
+          "R": 2.0,
+          "G": 1.0,
+          "B": 2.0
+        }
+      },
+      "rgb_of": "nisar_l_coast_20261004_t55_hh"
+    },
+    {
+      "group": "after",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-11-08",
+      "time_utc": "2026-11-08T13:01:51Z",
+      "latest_of": "nisar_l_sea_rgb",
+      "rgb_of": "nisar_l_sea_20261108_t48_vv",
+      "shows": "Sea and coast radar colour composite, 8 Nov: red = VV, green = VH, blue = VV minus VH (dB)",
+      "limit": "two polarisations only: a hint about the kind of surface, not proof; a rough sea looks bright, it is not a flood; not a Freeman-Durden decomposition",
+      "source": "SpaceBros dual-pol composite",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_sea_rgb_20261108.png",
+      "bounds": [
+        [
+          15.29757,
+          81.27202
+        ],
+        [
+          18.04115,
+          84.4841
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "VV+VH",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.9,
+      "status": "ready",
+      "id": "nisar_l_sea_rgb_20261108",
+      "processing_level": "validated",
+      "name": "Sea radar colour composite (VV, VH), 8 Nov",
+      "bounds_source": "H5 subset footprint warped to lat/lon (data/web/nisar_l_sea_rgb_20261108.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_SEA_20261108_T048.h5"
+      ],
+      "rgb": {
+        "channels": {
+          "R": "VV",
+          "G": "VH",
+          "B": "VV minus VH (dB)"
+        },
+        "stretch": {
+          "R": {
+            "lo": -21.35,
+            "hi": -3.8
+          },
+          "G": {
+            "lo": -27.25,
+            "hi": -10.15
+          },
+          "B": {
+            "lo": 3.46,
+            "hi": 15.42
+          }
+        },
+        "gamma": {
+          "R": 2.0,
+          "G": 1.0,
+          "B": 3.0
+        }
+      }
+    },
+    {
+      "group": "during",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-27",
+      "time_utc": "2026-10-27T13:01:51Z",
+      "latest_of": "nisar_l_sea_rgb",
+      "rgb_of": "nisar_l_sea_20261027_t48_vv",
+      "shows": "Sea and coast radar colour composite, 27 Oct: red = VV, green = VH, blue = VV minus VH (dB)",
+      "limit": "two polarisations only: a hint about the kind of surface, not proof; a rough sea looks bright, it is not a flood; not a Freeman-Durden decomposition",
+      "source": "SpaceBros dual-pol composite",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_sea_rgb_20261027.png",
+      "bounds": [
+        [
+          15.29757,
+          81.27202
+        ],
+        [
+          18.04115,
+          84.4841
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "VV+VH",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.9,
+      "status": "ready",
+      "id": "nisar_l_sea_rgb_20261027",
+      "processing_level": "validated",
+      "name": "Sea radar colour composite (VV, VH), 27 Oct",
+      "bounds_source": "H5 subset footprint warped to lat/lon (data/web/nisar_l_sea_rgb_20261027.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_SEA_20261027_T048.h5"
+      ],
+      "rgb": {
+        "channels": {
+          "R": "VV",
+          "G": "VH",
+          "B": "VV minus VH (dB)"
+        },
+        "stretch": {
+          "R": {
+            "lo": -21.35,
+            "hi": -3.8
+          },
+          "G": {
+            "lo": -27.25,
+            "hi": -10.15
+          },
+          "B": {
+            "lo": 3.46,
+            "hi": 15.42
+          }
+        },
+        "gamma": {
+          "R": 2.0,
+          "G": 1.0,
+          "B": 3.0
+        }
+      }
+    },
+    {
+      "group": "before",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-15",
+      "time_utc": "2026-10-15T13:01:50Z",
+      "latest_of": "nisar_l_sea_rgb",
+      "rgb_of": "nisar_l_sea_20261015_t48_vv",
+      "shows": "Sea and coast radar colour composite, 15 Oct: red = VV, green = VH, blue = VV minus VH (dB)",
+      "limit": "two polarisations only: a hint about the kind of surface, not proof; a rough sea looks bright, it is not a flood; not a Freeman-Durden decomposition",
+      "source": "SpaceBros dual-pol composite",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_sea_rgb_20261015.png",
+      "bounds": [
+        [
+          15.29757,
+          81.27202
+        ],
+        [
+          18.04115,
+          84.4841
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "VV+VH",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.9,
+      "status": "ready",
+      "id": "nisar_l_sea_rgb_20261015",
+      "processing_level": "provisional",
+      "name": "Sea radar colour composite (VV, VH), 15 Oct",
+      "bounds_source": "H5 subset footprint warped to lat/lon (data/web/nisar_l_sea_rgb_20261015.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_SEA_20261015_T048.h5"
+      ],
+      "rgb": {
+        "channels": {
+          "R": "VV",
+          "G": "VH",
+          "B": "VV minus VH (dB)"
+        },
+        "stretch": {
+          "R": {
+            "lo": -21.35,
+            "hi": -3.8
+          },
+          "G": {
+            "lo": -27.25,
+            "hi": -10.15
+          },
+          "B": {
+            "lo": 3.46,
+            "hi": 15.42
+          }
+        },
+        "gamma": {
+          "R": 2.0,
+          "G": 1.0,
+          "B": 3.0
+        }
+      }
+    },
+    {
+      "group": "before",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-10-03",
+      "time_utc": "2026-10-03T13:01:33Z",
+      "latest_of": "nisar_l_sea_rgb",
+      "rgb_of": "nisar_l_sea_20261003_t48_vv",
+      "shows": "Sea and coast radar colour composite, 3 Oct: red = VV, green = HV, blue = VV minus HV (dB)",
+      "limit": "two polarisations only: a hint about the kind of surface, not proof; a rough sea looks bright, it is not a flood; not a Freeman-Durden decomposition",
+      "source": "SpaceBros dual-pol composite",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_sea_rgb_20261003.png",
+      "bounds": [
+        [
+          15.29757,
+          81.27202
+        ],
+        [
+          18.04115,
+          84.4841
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "VV+HV",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.9,
+      "status": "ready",
+      "id": "nisar_l_sea_rgb_20261003",
+      "processing_level": "provisional",
+      "name": "Sea radar colour composite (VV, HV), 3 Oct",
+      "bounds_source": "H5 subset footprint warped to lat/lon (data/web/nisar_l_sea_rgb_20261003.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_SEA_20261003_T048.h5"
+      ],
+      "rgb": {
+        "channels": {
+          "R": "VV",
+          "G": "HV",
+          "B": "VV minus HV (dB)"
+        },
+        "stretch": {
+          "R": {
+            "lo": -21.35,
+            "hi": -3.8
+          },
+          "G": {
+            "lo": -27.25,
+            "hi": -10.15
+          },
+          "B": {
+            "lo": 3.46,
+            "hi": 15.42
+          }
+        },
+        "gamma": {
+          "R": 2.0,
+          "G": 1.0,
+          "B": 3.0
+        }
       }
     },
     {

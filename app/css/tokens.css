@@ -1,8 +1,8 @@
 /* Design tokens. The ONLY file in the app that contains hex values.
-   Fonts: this @import loads Anek Latin (variable width+weight), Anek Telugu and
+   Fonts: this @import loads Anek Latin (variable width+weight) and
    IBM Plex Mono. If you prefer <link> tags in index.html, use the same URL and
    delete the @import. */
-@import url("https://fonts.googleapis.com/css2?family=Anek+Latin:wdth,wght@75..125,100..800&family=Anek+Telugu:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anek+Latin:wdth,wght@75..125,100..800&family=IBM+Plex+Mono:wght@400;500&display=swap");
 
 :root {
   /* text */
@@ -32,7 +32,6 @@
 
   /* fonts */
   --font-ui: "Anek Latin", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-te: "Anek Telugu", "Anek Latin", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
   --heading-stretch: 88%;
   --heading-weight: 600;
@@ -81,7 +80,6 @@ body {
   font-size: var(--fs-body);
   line-height: var(--lh-body);
 }
-html[lang="te"] body { font-family: var(--font-te); }
 @media (max-width: 767px) {
   :root { --fs-body: 15px; }
 }

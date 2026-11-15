@@ -4,8 +4,10 @@
 Sources (both public, no key):
   GDACS  https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH  (GeoJSON, tropical cyclones + floods).
          Kept when the event's point/bbox falls inside the area's alert_match.bbox. GDACS gives a centroid point for
-         cyclones and floods; the full footprint is a separate API call we do not make, so an event whose centre is
-         just outside the bbox is not kept (documented limit).
+         cyclones and floods. For kept FLOOD items one more small request (properties.url.geometry) fetches the
+         "Poly_Affected" polygon; its bbox is stored as affected_bbox. If that request fails the item keeps its
+         centroid only (affected_bbox null). `source` (e.g. GLOFAS = river-flow model) is passed through.
+         Cyclone footprints are not fetched, so a cyclone whose centre is just outside the bbox is not kept.
   SACHET https://sachet.ndma.gov.in/cap_public_website/rss/rss_india.xml (NDMA CAP feed, via src/fetch/sachet_snapshot.py).
          The CAP areaDesc of every item is fetched (one small request each, 8 in parallel, ~1 s for ~100 items).
          Kept when headline + areaDesc + issuing office mention one of alert_match.states (e.g. "Andhra Pradesh") or one
@@ -88,7 +90,8 @@ def _word_re(words):
 
 
 def sachet_matches(item, am):
-    text = " ".join([item.get("headline") or "", item.get("area") or "", item.get("source") or ""]).lower()
+    text = " ".join([item.get("headline") or "", item.get("area") or "", item.get("source") or "",
+                     item.get("_match_text") or ""]).lower()   # _match_text = original-language text, never output
     for st in am.get("states", []):
         if st.lower() in text:
             return True
@@ -145,17 +148,39 @@ def norm_gdacs(f):
         "lon": coords[0] if coords else None, "lat": coords[1] if coords else None,
         "bbox": list(bbox) if bbox else None,
         "iscurrent": str(p.get("iscurrent")).lower() == "true",
+        "source": (p.get("source") or "").strip() or None,
+        "geometry_url": (p.get("url") or {}).get("geometry"),
         "severity_text": ((p.get("severitydata") or {}).get("severitytext") or "").strip(),
     }
+
+
+def fetch_affected_bbox(url, timeout=25):
+    """GDACS geometry URL -> bbox [W, S, E, N] of the Poly_Affected feature, or None (any failure keeps the centroid only)."""
+    if not url:
+        return None
+    try:
+        d = json.loads(http_get(url, timeout=timeout))
+        for f in d.get("features", []):
+            if (f.get("properties") or {}).get("Class") == "Poly_Affected":
+                b = f.get("bbox")
+                if b and len(b) == 4:
+                    return [float(x) for x in b]
+    except Exception:  # noqa: BLE001 - footprint is optional
+        return None
+    return None
 
 
 def out_gdacs_item(g, now):
     to = g.get("to") or ""
     current = bool(g.get("iscurrent")) if "iscurrent" in g else bool(to and utc(to) >= now)
-    return {"id": g["id"], "type": g["type"], "name": g["name"], "alert_level": g["alert_level"], "from": g.get("from"),
-            "to": g.get("to"), "link": g.get("link"), "countries": g.get("countries", ""),
-            "current": current, "point": [g["lon"], g["lat"]] if g.get("lon") is not None else None,
-            "severity_text": g.get("severity_text") or None}
+    o = {"id": g["id"], "type": g["type"], "name": g["name"], "alert_level": g["alert_level"], "from": g.get("from"),
+         "to": g.get("to"), "link": g.get("link"), "countries": g.get("countries", ""),
+         "current": current, "point": [g["lon"], g["lat"]] if g.get("lon") is not None else None,
+         "severity_text": g.get("severity_text") or None}
+    if g.get("type") == "FL":      # optional keys (alerts-v2 stays valid): model source and the affected-area bbox
+        o["source"] = g.get("source") or None
+        o["affected_bbox"] = g.get("affected_bbox") or None
+    return o
 
 
 # ---------- SACHET ----------
@@ -166,7 +191,16 @@ def fetch_sachet():
 
 
 def out_sachet_item(i):
-    return {k: i.get(k) for k in ("id", "headline", "area", "issued", "source", "link", "category")}
+    """Output fields only; English only. Optional link_label / lang_note appear for alerts with no English text."""
+    import sachet_snapshot as ss
+    o = {k: i.get(k) for k in ("id", "headline", "area", "issued", "source", "link", "category")}
+    if not all(ss.is_latin_text(str(v)) for k, v in o.items() if k not in ("link",)):
+        ss.english_fallback_rss(i)       # safety net: anything still non-Latin becomes the English fallback line
+        o = {k: i.get(k) for k in o}
+    for k in ("link_label", "lang_note"):
+        if i.get(k):
+            o[k] = i[k]
+    return o
 
 
 # ---------- build ----------
@@ -192,7 +226,12 @@ def build(area_id=None, now=None, fixture=None, prev=None, do_gdacs=True, do_sac
                 raw = [dict(x) for x in fx]
             else:
                 raw = fetch_gdacs(now)
-            kept = [out_gdacs_item(g, now) for g in raw if g.get("type") in GDACS_TYPES and gdacs_matches(g, am)]
+            hit = [g for g in raw if g.get("type") in GDACS_TYPES and gdacs_matches(g, am)]
+            if fixture is None:        # live: footprint of the kept floods only (fixtures carry affected_bbox themselves)
+                for g in hit:
+                    if g.get("type") == "FL" and not g.get("affected_bbox"):
+                        g["affected_bbox"] = fetch_affected_bbox(g.get("geometry_url"))
+            kept = [out_gdacs_item(g, now) for g in hit]
             kept.sort(key=lambda x: (x.get("from") or ""), reverse=True)
             res["gdacs"] = {"fetched_utc": iso(now), "ok": True, "error": None, "url": GDACS_API,
                             "credit": GDACS_CREDIT, "items": kept}

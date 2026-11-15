@@ -21,9 +21,16 @@ event_chip, sea, evidence_layers, age. Date files are WRITE-ONCE: rewritten only
 revision + 1 and a revision_log line). latest.json is rebuilt every run; data/web/story.json = latest.json content.
 Optional inputs: config/areas.json (baselines per track), data/processed/events.json (events-v1; falls back to data/events/*.json).
 
+Presentation switch (config/areas.json "presentation": {"show_data_caveats": false, "cannot_tell_position": "end"}): when show_data_caveats
+is false, apply_presentation() removes every user-visible data-quality caveat from the PUBLIC story.json, feed.json and atom.xml (badges.provisional
+and badges.sample false, provisional_text null, caveats [], confidence normal, confounders [] and the caveat sentences inside sub / lead / update
+text). The original values move to story["internal"] for docs, tests and the pitch deck. Numbers are unchanged. findings/*.json keep all caveats
+(no revisions); only data/web/story.json and the feeds are filtered. story["presentation"] carries the switch so dash.js can gate its own strings.
+
 Usage: python3 tools/build_story.py [--root DIR] [--now 2026-11-14T12:00:00Z] [--out DIR] [--no-findings]
 """
 import argparse
+import copy
 import datetime as dt
 import glob
 import hashlib
@@ -242,6 +249,30 @@ def scene_status(by_date_block, catalog_scene):
     return (by_date_block or {}).get("product_status") or (catalog_scene or {}).get("product_status")
 
 
+CREDIT_NISAR = "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)"
+DISCLAIMER = ("Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, "
+              "and not a warning service.")
+
+
+def credits_block(scene=None, track=None, pol=None):
+    """story.json `credits`: exact credit strings. `nisar_line` adds scene date, track, polarisation and PROVISIONAL/VALIDATED status
+    when the pass is known (scene = {"date", "status"}). Other sources are credited in full where the page shows their data."""
+    nisar = CREDIT_NISAR
+    if scene and scene.get("date"):
+        bits = ["scene %s" % scene["date"]]
+        if track:
+            bits.append("track %s" % track)
+        if pol:
+            bits.append("polarisation %s" % pol)
+        if scene.get("status"):
+            bits.append(str(scene["status"]).upper())
+        nisar = "%s; %s" % (CREDIT_NISAR, ", ".join(bits))
+    return {"nisar": CREDIT_NISAR, "nisar_line": nisar, "derived": "Maps and numbers: SpaceBros, derived from NISAR data",
+            "imd": "IMD / RSMC New Delhi bulletins", "ndma_sachet": "NDMA SACHET", "gdacs": "GDACS (EC JRC and UN OCHA)",
+            "boundaries": "geoBoundaries (ODbL-1.0, boundary year 2018); district names from the 2022 AP district lists",
+            "basemap": "Map data: Esri, HERE, Garmin, OpenStreetMap contributors", "disclaimer": DISCLAIMER}
+
+
 def build(inp, now):
     """Pure function: inputs dict -> story dict. ``now`` = aware datetime (UTC)."""
     rules, S, seasons = inp["rules"], inp["strings"], inp.get("seasons") or {}
@@ -254,7 +285,8 @@ def build(inp, now):
     pass_date = inp.get("_pass_date") or (dates[-1] if dates else (coast_dates[-1] if coast_dates else None))
     event = pick_event(inp.get("events") or [], now, rules, pass_date)
     story = {"schema": "story-v1", "built_utc": iso_utc(now), "built_text": ist_text(now) + " IST", "event_id": event["id"] if event else None,
-             "official_banner": S["official_banner"], "official_links": (event or {}).get("official_links") or []}
+             "official_banner": S["official_banner"], "official_links": (event or {}).get("official_links") or [],
+             "credits": credits_block()}
     # --- latest radar scene (any role) and staleness
     scenes = [s for s in catalog if s.get("start_utc")]
     newest = max(scenes, key=lambda s: s["start_utc"]) if scenes else None
@@ -384,6 +416,7 @@ def build(inp, now):
     story["mandal_sentences"] = cur["mandal_sentences"]
     story["mandals"] = cur["mandals"]
     story["scene"] = {"date": newest_d, "scene_id": cur["scene_id"], "status": cur["status"], "start_utc": cur["start_utc"], "days_after_landfall": days_after}
+    story["credits"] = credits_block(story["scene"], (cur.get("track") if isinstance(cur, dict) else None) or ((story.get("next_pass") or {}).get("track")), "HH")
     # --- archive
     ups = [cards[d]["update"] for d in dates]
     ups += sea_updates(catalog, event, landfall, profile, S, rules, dates)
@@ -446,6 +479,11 @@ def severity_rank(e):
     return 0
 
 
+def draft_linked_here(e, iso):
+    """True when events.json links a radar pass of this date to the event (written by tools/pipeline/events.py)."""
+    return any(str(lp.get("date"))[:10] == str(iso)[:10] for lp in e.get("linked_passes") or [])
+
+
 def chips_for(events, iso, area_id, S, rules):
     """Every event whose window holds the pass date, reviewed first, then most severe, then newest start. Drafts (auto events nobody has
     reviewed) are included, with chip text that says so. Dismissed / needs_review events never get a chip."""
@@ -461,6 +499,8 @@ def chips_for(events, iso, area_id, S, rules):
         rel = chip_relation(e, iso, rules)
         if not rel:
             continue
+        if not reviewed and not draft_linked_here(e, iso):
+            continue        # an alert nobody reviewed and radar was never linked to for this pass (e.g. a flood alert far from the box): no chip
         text = fill(S["chip"][rel], event=e.get("name")) if reviewed else fill(S["chip_draft"][rel], event=display_name(e.get("name")))
         start = dt.date.fromisoformat((event_window(e, rules)[0] or "1970-01-01")[:10]).toordinal()
         out.append(((not reviewed, -severity_rank(e), -start), {"event_id": e["id"], "relation": rel, "text": text, "reviewed": reviewed}))
@@ -735,7 +775,7 @@ def all_strings(o, path=""):
     elif isinstance(o, dict):
         for k, v in o.items():
             if k in ("official_banner", "official_links", "provisional_text", "sources", "shown_numbers", "revision_log", "inputs_detail", "evidence_layers", "pass",
-                     "alerts_ref", "area_id", "inputs_sha256", "source", "err_source", "fmt", "err_fmt", "crop_stage"):
+                     "alerts_ref", "credits", "area_id", "inputs_sha256", "internal", "presentation", "source", "err_source", "fmt", "err_fmt", "crop_stage"):
                 continue
             yield from all_strings(v, path + "/" + str(k))
     elif isinstance(o, list):
@@ -774,17 +814,88 @@ def validate(story, rules):
         raise StoryError("story guard failed:\n  " + "\n  ".join(errs))
 
 
+# ------------------------------------------------------------------ presentation switch
+PRESENTATION_DEFAULT = {"show_data_caveats": False, "cannot_tell_position": "end"}
+CANNOT_TELL_POSITIONS = ("end", "inline")
+_KEEP_KEYS = ("internal", "presentation", "official_banner", "official_links", "credits", "inputs_detail", "inputs_sha256", "revision_log", "sources", "shown_numbers")
+
+
+def presentation_cfg(areas):
+    """config/areas.json "presentation" merged over the defaults (caveats hidden, cannot-tell block at the end)."""
+    cfg = dict(PRESENTATION_DEFAULT)
+    cfg.update((areas or {}).get("presentation") or {})
+    if not isinstance(cfg["show_data_caveats"], bool):
+        raise StoryError("presentation.show_data_caveats must be true or false, got %r" % (cfg["show_data_caveats"],))
+    if cfg["cannot_tell_position"] not in CANNOT_TELL_POSITIONS:
+        raise StoryError("presentation.cannot_tell_position must be one of %s, got %r" % (CANNOT_TELL_POSITIONS, cfg["cannot_tell_position"]))
+    return cfg
+
+
+def caveat_phrases(story, S):
+    """Caveat sentences that are woven into public prose (longest first): provisional line, season line, 'numbers likely to change' line,
+    the practice-numbers prefix and every confounder note ('Other causes') of the story and of its updates."""
+    ph = [S.get("provisional"), (S.get("caveat") or {}).get("season"), (S.get("headline") or {}).get("practice_prefix")]
+    for tpl in ((S.get("lead") or {}).get("recovery") or "",):
+        ph += [x for x in re.split(r"(?<=[.!?])\s+", tpl) if "likely to change" in x.lower()]
+    ph += list(story.get("confounders") or [])
+    ph += list(story.get("caveats") or [])
+    for u in story.get("updates") or []:
+        ph += list(u.get("confounders") or [])
+    return sorted({p for p in ph if p and "{" not in p}, key=len, reverse=True)
+
+
+def _strip_text(o, phrases):
+    if isinstance(o, str):
+        if not any(p in o for p in phrases):
+            return o
+        for p in phrases:
+            o = o.replace(p, "")
+        return re.sub(r"\s{2,}", " ", o).strip()
+    if isinstance(o, dict):
+        return {k: (v if k in _KEEP_KEYS else _strip_text(v, phrases)) for k, v in o.items()}
+    if isinstance(o, list):
+        return [_strip_text(v, phrases) for v in o]
+    return o
+
+
+def apply_presentation(story, cfg, S):
+    """Public copy of a story (or findings) dict. Always adds story["presentation"]. With show_data_caveats false the caveat fields are emptied and
+    their originals are kept in story["internal"]; numbers are never touched. With true the story is returned unchanged apart from the two new keys."""
+    out = copy.deepcopy(story)
+    out["presentation"] = {"show_data_caveats": bool(cfg["show_data_caveats"]), "cannot_tell_position": cfg["cannot_tell_position"]}
+    internal = {"badges": copy.deepcopy(story.get("badges")), "provisional_text": story.get("provisional_text"), "caveats": copy.deepcopy(story.get("caveats")),
+                "confidence": copy.deepcopy(story.get("confidence")), "confounders": copy.deepcopy(story.get("confounders")),
+                "sub": story.get("sub"), "lead": story.get("lead"),
+                "updates": {u["id"]: {"text": u.get("text"), "headline": u.get("headline"), "confounders": copy.deepcopy(u.get("confounders"))} for u in story.get("updates") or []}}
+    out["internal"] = internal
+    if cfg["show_data_caveats"]:
+        return out
+    phrases = caveat_phrases(story, S)
+    out = _strip_text(out, phrases)
+    out["badges"] = dict(story.get("badges") or {}, provisional=False, sample=False)
+    out["provisional_text"] = None
+    out["caveats"] = []
+    out["confidence"] = {"level": "normal", "reasons": []}
+    out["confounders"] = []
+    for u in out.get("updates") or []:
+        u["confounders"] = []
+    return out
+
+
 # ------------------------------------------------------------------ feeds
-def feeds(story, strings, rules, event):
+def feeds(story, strings, rules, event, site_title=None, show_data_caveats=True):
     site = rules.get("site_url", "").rstrip("/") + "/"
     title = fill(strings["feed"]["title"], event=(event or {}).get("name") or "NISAR coast")
+    if site_title:
+        title = "%s: %s" % (site_title, title)
     items = []
     for u in story.get("updates", []):
         stat = (u.get("status") or "").lower() or "unknown"
         when = u.get("cataloged_utc") or u.get("start_utc") or story["built_utc"]
         items.append({"id": "spacebros-nisar:%s:%s:%s" % ((event or {}).get("id") or "none", u["kind"], u["id"]), "url": site + u["permalink"],
-                      "title": fill(strings["feed"]["item"], headline=u["headline"], status=stat), "content_text": u["text"],
-                      "summary": u["headline"], "date_published": when, "tags": [u["kind"], stat]})
+                      "title": fill(strings["feed"]["item"], headline=u["headline"], status=stat) if show_data_caveats else u["headline"],   # status = validated / provisional
+                      "content_text": u["text"], "summary": u["headline"], "date_published": when,
+                      "tags": [u["kind"], stat] if show_data_caveats else [u["kind"]]})
     jf = {"version": "https://jsonfeed.org/version/1.1", "title": title, "home_page_url": site, "feed_url": site.rsplit("app/", 1)[0] + "data/web/feed.json",
           "description": strings["official_banner"], "language": "en", "items": items}
     upd = max([i["date_published"] for i in items] + [story["built_utc"]])
@@ -870,15 +981,18 @@ def coast_passes(inp):
     return sorted([s for s in cat if s.get("role") == "COAST" and s["date"] not in bl and s["date"] > last_bl], key=lambda s: (s["start_utc"], s["scene_id"]))
 
 
-def norm_event(e, rules):
+def norm_event(e, rules, iso=None):
     """The parts of an event that decide a finding (hashed). Lists of linked passes, edit logs and alert refs are left out on purpose:
     the pipeline writes those back, which would change the hash of the file that caused the write."""
     st, en, af = event_window(e, rules)
     status = e.get("status")
     if e.get("reviewed_by_human") is False and status != "dismissed":
         status = "draft"
-    return {"id": e.get("id"), "name": e.get("name"), "status": status, "reviewed_by_human": e.get("reviewed_by_human"), "start": st, "end": en, "aftermath_days": af,
-            "landfall": event_landfall(e), "confounders": e.get("confounders"), "story": e.get("story"), "official_links": e.get("official_links"), "monitor_days": e.get("monitor_days")}
+    out = {"id": e.get("id"), "name": e.get("name"), "status": status, "reviewed_by_human": e.get("reviewed_by_human"), "start": st, "end": en, "aftermath_days": af,
+           "landfall": event_landfall(e), "confounders": e.get("confounders"), "story": e.get("story"), "official_links": e.get("official_links"), "monitor_days": e.get("monitor_days")}
+    if iso and e.get("reviewed_by_human") is False:
+        out["linked_to_this_pass"] = draft_linked_here(e, iso)       # decides whether a draft gets a chip on this pass
+    return out
 
 
 def sha(o):
@@ -894,7 +1008,7 @@ def input_groups(inp, d, sc):
     cat = [x for x in (inp.get("catalog") or {}).get("scenes", []) if x["date"] <= d]
     area, _ = area_config(inp)
     return {"by_date": by, "class_stats": {"classes": classes, "scenes": scenes, "baseline_dates": cs.get("baseline_dates"), "thresholds": cs.get("thresholds")},
-            "catalog": cat, "events": [norm_event(e, inp["rules"]) for e in (inp.get("events") or []) if chip_relation(e, d, inp["rules"])],   # only events whose window holds this pass: a new alert elsewhere must not revise an old finding
+            "catalog": cat, "events": [norm_event(e, inp["rules"], d) for e in (inp.get("events") or []) if chip_relation(e, d, inp["rules"])],   # only events whose window holds this pass: a new alert elsewhere must not revise an old finding
             "templates": inp["strings"], "rules": inp["rules"], "seasons": inp.get("seasons"),
             "baseline": {"area": (area or {}).get("baselines"), "track": sc["track"]}, "builder": BUILDER_VERSION}
 
@@ -1035,6 +1149,7 @@ def finding(inp, sc, now, archive):
     # --- pass, event chip, sea, layers, age
     story["area_id"] = (area_config(inp)[0] or {}).get("id", "godavari")
     story["pass"] = {"date": d, "time_utc": sc["start_utc"], "time_ist_text": ist_text(as_of) + " IST", "role": "COAST", "track": track, "scene_id": sc["scene_id"], "product_status": sstat}
+    story["credits"] = credits_block({"date": d, "status": sstat}, track, "HH")
     chips = chips_for(inp.get("events"), d, story["area_id"], S, rules)
     story["event_chips"] = chips                     # all events whose window holds this pass: reviewed first, then most severe
     story["event_chip"] = chips[0] if chips else None   # the reviewed / most severe one (same keys as before + "reviewed")
@@ -1187,8 +1302,11 @@ def main():
         else:
             story, report = build_findings(inp, a.root, now, a.regenerate_findings)
         validate(story, inp["rules"])
+        pres = presentation_cfg(inp.get("areas"))
+        story = apply_presentation(story, pres, inp["strings"])      # data/processed/findings/ keeps the caveats; only the public story.json is filtered
+        validate(story, inp["rules"])
         ev = next((e for e in inp["events"] if e.get("id") == story.get("event_id")), None)
-        jf, atom = feeds(story, inp["strings"], inp["rules"], ev)
+        jf, atom = feeds(story, inp["strings"], inp["rules"], ev, ((inp.get("areas") or {}).get("site") or {}).get("title"), pres["show_data_caveats"])
         validate({"feed": [{"title": i["title"], "text": i["content_text"]} for i in jf["items"]]}, inp["rules"])
     except StoryError as e:
         print("build_story FAILED: %s" % e, file=sys.stderr)

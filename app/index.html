@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SpaceBros NISAR workspace</title>
+<title>Pass by Pass</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
 <link rel="stylesheet" href="css/tokens.css?v=1">
 <link rel="stylesheet" href="css/app.css?v=2">
@@ -38,15 +38,6 @@
     <button type="button" class="hdr-download" id="download-brief">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
       <span data-i18n="header.brief"></span>
-    </button>
-  </div>
-
-  <div class="lang-group" role="group" aria-label="Language" data-i18n-aria="header.lang.label">
-    <button type="button" class="lang-btn is-active" id="lang-en" aria-pressed="true" lang="en">
-      <span class="lang-full" data-i18n="header.lang.en"></span><span class="lang-short" aria-hidden="true" data-i18n="shell.lang_en_short"></span>
-    </button>
-    <button type="button" class="lang-btn" id="lang-te" aria-disabled="true" aria-pressed="false" lang="te" data-i18n-aria="shell.lang_te_aria">
-      <span class="lang-full"><span data-i18n="header.lang.te"></span> <span class="lang-soon">· <span data-i18n="header.lang.soon"></span></span></span><span class="lang-short" aria-hidden="true" data-i18n="shell.lang_te_short"></span>
     </button>
   </div>
 
@@ -128,7 +119,6 @@
     Array.prototype.forEach.call(document.querySelectorAll('[data-i18n-aria]'), function (el) {
       el.setAttribute('aria-label', App.t(el.getAttribute('data-i18n-aria')));
     });
-    $('lang-te').title = App.t('header.lang.soon');
     updateLayersCount();
   }
 
@@ -205,11 +195,6 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && h.getAttribute('data-menu') === 'open') { closeMenu(); b.focus(); }
     });
-  }
-
-  /* ---- language group ---- */
-  function wireLang() {
-    $('lang-te').addEventListener('click', function (e) { e.preventDefault(); });
   }
 
   /* ---- Layers button ---- */
@@ -344,7 +329,7 @@
       var App = window.App;
       return App.load().then(function () {
         applyStrings();
-        wireTabs(); wireMenu(); wireLang(); wireLayersBtn(); wireBrief(); wireAbout();
+        wireTabs(); wireMenu(); wireLayersBtn(); wireBrief(); wireAbout();
         App.on('lang', function () { applyStrings(); });
 
         var fromHash = viewFromHash();

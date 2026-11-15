@@ -145,14 +145,6 @@
     });
     return Promise.all(jobs).then(function () { return true; });
   };
-  App.setLang = function (lang) {
-    return App.loadStrings(lang).then(function () {
-      App.setState({ lang: lang });
-      try { document.documentElement.lang = lang; } catch (e) { /* ignore */ }
-      App.emit('lang', lang);
-      return lang;
-    });
-  };
 
   /* ---------------- fetch with fallback ---------------- */
   var memLast = {};

@@ -47,7 +47,10 @@ def _area_cfg():
         print("WARN  config/areas.json not used (%s); falling back to the manifest" % exc)
         return None
 
-STRETCH = {"COAST": (-25.0, 0.0), "SEA": (-25.0, 0.0)}
+STRETCH = {"COAST": (-25.0, 0.0), "SEA": (-25.0, 0.0)}   # FALLBACK only (no valid pixels / --only without data); the real stretch is pooled per role, see pooled_stretches()
+CREDIT = "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)"   # carried by every layer json and class_stats.json
+BOUNDARIES_CREDIT = "geoBoundaries gbOpen IND ADM3 (ODbL 1.0)"
+STRETCH_PCT = (2.0, 98.0)   # backscatter stretch: these percentiles of the pooled valid pixels of ALL dates of a role (and polarisation)
 MAX_DIM = 2400          # longest side of the first-try output image, px
 MIN_DIM = 200           # never shrink below this when meeting the size cap
 
@@ -183,14 +186,65 @@ def _pols_in(h5file):
         return list(f["backscatter"].keys())
 
 
-def build_layer(layer, h5file, out_dir, max_kb):
+def pooled_stretches(manifest):
+    """{(role, pol): stretch dict} for the backscatter layers of the manifest. Per role (COAST, SEA) and shown polarisation the
+    pooled valid pixels (finite, not fill) of EVERY date of that role give lo/hi = STRETCH_PCT percentiles. Counting is done in
+    a 0.01 dB histogram (the H5 stores int16 dB x 100, so this is exact to the data's own resolution) to keep memory flat."""
+    import h5py
+    import numpy as np
+    groups = {}
+    for l in manifest.get("layers", []):
+        if not (l.get("h5") and l.get("pol") and str(l.get("id", "")).startswith("nisar_l_")):
+            continue
+        p = l["h5"] if os.path.isabs(l["h5"]) else os.path.join(ROOT, l["h5"])
+        if not os.path.exists(p):
+            continue
+        with h5py.File(p, "r") as f:
+            root = {k: _attr(v) for k, v in f.attrs.items()}
+        groups.setdefault((role_of(l, root), l["pol"]), []).append((l, p))
+    step, lo0, hi0 = 0.01, -100.0, 50.0
+    edges = (np.arange(int(round((hi0 - lo0) / step)) + 2) - 0.5) * step + lo0    # bin k holds the values k*0.01 + lo0 (+-0.005)
+    out = {}
+    for (role, pol), items in sorted(groups.items()):
+        cnt = np.zeros(len(edges) - 1, dtype="int64")
+        used = []
+        for l, p in items:
+            db = read_backscatter(p, pol)[0]
+            v = db[np.isfinite(db)]
+            cnt += np.histogram(np.clip(v, lo0, hi0), bins=edges)[0]
+            used.append({"layer_id": l["id"], "date": l.get("date"), "n_pixels": int(v.size)})
+            del db, v
+        n = int(cnt.sum())
+        if not n:
+            continue
+        cum = np.cumsum(cnt)
+        q = []
+        for pc in STRETCH_PCT:
+            k = int(np.searchsorted(cum, pc / 100.0 * n, side="left"))
+            q.append(round(float(lo0 + k * step), 2))
+        out[(role, pol)] = {"lo": q[0], "hi": q[1], "unit": "dB", "percentiles": list(STRETCH_PCT), "n_pixels": n,
+                            "scope": "pooled valid pixels of all %d dates of role %s, polarisation %s" % (len(items), role, pol),
+                            "pooled_over": used, "method": "fixed per role: %g and %g percent of the pooled pixels (0.01 dB histogram); a new date changes it on the next build"
+                            % STRETCH_PCT, "previous_fixed_db": list(STRETCH[role])}
+    return out
+
+
+def build_layer(layer, h5file, out_dir, max_kb, stretches=None):
     import numpy as np
     pol = layer.get("pol")
     if not pol:
         raise ValueError("layer has no 'pol'")
     db, x, y, epsg, root = read_backscatter(h5file, pol)
     role = role_of(layer, root)
-    lo, hi = layer.get("stretch") or STRETCH[role]
+    st = (stretches or {}).get((role, pol))
+    if layer.get("stretch"):                       # explicit override in the manifest wins
+        lo, hi = layer["stretch"]
+        st = {"lo": lo, "hi": hi, "unit": "dB", "method": "manifest override"}
+    elif st:
+        lo, hi = st["lo"], st["hi"]
+    else:
+        lo, hi = STRETCH[role]
+        st = {"lo": lo, "hi": hi, "unit": "dB", "method": "fixed fallback (no pooled data)"}
     valid = np.isfinite(db)
     nv = int(valid.sum())
     if nv:
@@ -216,11 +270,13 @@ def build_layer(layer, h5file, out_dir, max_kb):
         "pol": pol,
         "role": role,
         "stretch_db": [lo, hi],
+        "stretch": st,
         "p2": p2, "p50": p50, "p98": p98,
         "nan_frac": round(nan_frac, 4),
         "source_granule": root.get("source_granule"),
         "product_status": root.get("product_status"),
         "scene_id": root.get("scene_id"),
+        "credit": CREDIT, "acquisition_date": str(root.get("start_utc", ""))[:10] or None, "track": root.get("track"), "polarisation": pol,
         "h5": os.path.relpath(h5file, ROOT) if h5file.startswith(ROOT) else h5file,
         "image_px": [int(img.shape[1]), int(img.shape[0])],
         "png_kb": round(len(png) / 1024.0, 1),
@@ -242,31 +298,82 @@ def build_layer(layer, h5file, out_dir, max_kb):
     return meta
 
 
-DIFF_RANGE = (-15.0, 15.0)   # dB, diverging stretch of the sea difference map
-# Colour-blind-safe diverging ramp (blue - white - orange; no red/green pair; lightness is highest at 0). The same stops
-# are written into the json so the UI can draw the legend.
-DIFF_STOPS = [(-15.0, "#1D4E89", "much darker (smoother sea)"), (-7.5, "#6BAED6", None), (0.0, "#F7F7F7", "no change"),
-              (7.5, "#F6A04D", None), (15.0, "#B54708", "much brighter (rougher sea)")]
+# ---- change / difference maps: one colour rule for the sea difference and the coast change layers ------------------------
+# Colour-blind-safe diverging ramp, centred on 0 and symmetric: blue = darker, white = no change, orange-red = brighter.
+# Stops are fractions of the saturation limit (-1 .. +1); the json carries them in dB. Hues come from the UI palette
+# (--water #2A6FB0 for the blue side, --crops #E09A2B pulled towards red for the orange side); tools/colour_check.py checks
+# lightness order, contrast on the dark basemap and the colour-vision distances. Rationale: docs/review/COLOUR_CHECK.md.
+OLD_DIFF_RANGE = (-15.0, 15.0)   # dB, the fixed sea-difference range before 15 Nov 2026 (logged when the rule changes it)
+DIFF_STOPS_UNIT = [(-1.0, "#2F7DC4"), (-0.5, "#8FBFE8"), (0.0, "#F7F7F7"), (0.5, "#F6B48A"), (1.0, "#D9541E")]
+SAT_MULT, SAT_CAP_DB, SAT_PCT = 3.0, 6.0, 99.0      # saturation limit = min(3 x 99th percentile of |change|, 6 dB)
+CHANGE_GREY_HEX, CHANGE_GREY_ALPHA = "#9BA1A7", 175   # |change| < 1 sigma: greyed out (neutral grey, partly transparent)
+CHANGE_LEVELS = 100                                  # colour steps per side in the palette PNG (1 % of the limit; invisible, keeps PNGs small)
+CHANGE_WORDS = {"darker": "darker", "no_change": "no clear change", "brighter": "brighter"}
 
 
 def _hex_rgb(h):
     return [int(h[i:i + 2], 16) for i in (1, 3, 5)]
 
 
-def _diverging_rgb(t):
-    """t in 0..1 (0 = most negative, 0.5 = no change, 1 = most positive) -> uint8 RGB along DIFF_STOPS (piecewise linear)."""
+def _ramp_rgb(frac):
+    """frac in -1..1 (fraction of the saturation limit) -> uint8 RGB along DIFF_STOPS_UNIT (piecewise linear in sRGB)."""
     import numpy as np
-    lo, hi = DIFF_RANGE
-    v = np.clip(t, 0.0, 1.0) * (hi - lo) + lo
-    xs = [s[0] for s in DIFF_STOPS]
-    chans = [np.interp(v, xs, [_hex_rgb(s[1])[c] for s in DIFF_STOPS]) for c in range(3)]
+    v = np.clip(frac, -1.0, 1.0)
+    xs = [q[0] for q in DIFF_STOPS_UNIT]
+    chans = [np.interp(v, xs, [_hex_rgb(q[1])[c] for q in DIFF_STOPS_UNIT]) for c in range(3)]
     return np.rint(np.stack(chans, axis=-1)).astype("uint8")
 
 
-def _ramp_json():
+def _change_ramp(change_valid, sigma, sigma_info, end_labels=None, basis=""):
+    """The ramp rule for one change map. ``change_valid`` = 1-D array of the dB changes the rule looks at (valid pixels).
+    Returns the ``ramp`` json dict (stops, sigma, saturation limit, p99, words ...) and the limit in dB."""
+    import numpy as np
+    p99 = float(np.percentile(np.abs(change_valid), SAT_PCT))
+    sat_raw = SAT_MULT * p99
+    sat = round(min(sat_raw, SAT_CAP_DB), 1)
+    labs = end_labels or (None, None)
+    names = {-1.0: labs[0] or CHANGE_WORDS["darker"], 0.0: CHANGE_WORDS["no_change"], 1.0: labs[1] or CHANGE_WORDS["brighter"]}
+    stops = [{"value": round(f * sat, 2) + 0.0, "hex": hx, "label": names.get(f)} for f, hx in DIFF_STOPS_UNIT]
     return {"name": "blue-white-orange (colour-blind safe)", "kind": "diverging", "unit": "dB", "colour_blind_safe": True,
-            "stops": [{"value": s[0], "hex": s[1], "label": s[2]} for s in DIFF_STOPS],
-            "note": "negative = sea darker than the calm reference, positive = brighter (rougher); grey-white = no change"}
+            "centre": 0.0, "symmetric": True, "stops": stops, "words": dict(CHANGE_WORDS),
+            "saturation_limit_db": sat, "saturation_rule": "min(%g x P%g of |change|, %g dB)" % (SAT_MULT, SAT_PCT, SAT_CAP_DB),
+            "p99_abs_change_db": round(p99, 3), "three_p99_db": round(sat_raw, 2), "cap_db": SAT_CAP_DB, "p99_basis": basis,
+            "sigma_db": round(float(sigma), 3), "sigma": sigma_info,
+            "grey": {"hex": CHANGE_GREY_HEX, "alpha": CHANGE_GREY_ALPHA, "band_db": [round(-float(sigma), 3), round(float(sigma), 3)],
+                     "label": CHANGE_WORDS["no_change"], "rule": "pixels with |change| < 1 sigma are drawn grey, not coloured"},
+            "note": "negative = darker than the reference, positive = brighter; white = no change; grey = change smaller than 1 sigma of normal variation"}, sat
+
+
+def _change_png(img_db, sat, sigma):
+    """Change image (dB, NaN = no data) -> palette PNG bytes: transparent no-data, grey for |change| < sigma, 2 x 100 ramp levels."""
+    import numpy as np
+    from PIL import Image
+    n = CHANGE_LEVELS
+    fr = np.linspace(-1.0, 1.0, 2 * n + 1)
+    rgb = _ramp_rgb(fr)
+    pal = [0, 0, 0] + _hex_rgb(CHANGE_GREY_HEX) + [int(c) for c in rgb.reshape(-1)]
+    alpha = bytes([0, CHANGE_GREY_ALPHA] + [255] * (2 * n + 1))
+    ok = np.isfinite(img_db)
+    idx = np.zeros(img_db.shape, dtype="uint8")
+    v = np.where(ok, img_db, 0.0)
+    lev = np.clip(np.rint(v / sat * n), -n, n).astype("int32") + n + 2
+    idx[ok] = lev[ok].astype("uint8")
+    idx[ok & (np.abs(v) < sigma)] = 1
+    im = Image.fromarray(idx, "P")
+    im.putpalette(pal)
+    buf = io.BytesIO()
+    im.save(buf, format="PNG", optimize=True, transparency=alpha)
+    return buf.getvalue()
+
+
+def _png_fit(img_fn, max_kb, start_dim):
+    """Render with img_fn(max_dim) -> (png bytes, img, bounds), shrinking until the PNG is <= max_kb (like the other layers)."""
+    max_dim = start_dim
+    while True:
+        png, img, bounds = img_fn(max_dim)
+        if len(png) <= max_kb * 1024 or max_dim <= MIN_DIM:
+            return png, img, bounds
+        max_dim = max(MIN_DIM, int(max_dim * 0.8))
 
 
 def _sea_diff_one(pa, pb, pol, lid, max_kb, bound_ref):
@@ -310,20 +417,28 @@ def _sea_diff_one(pa, pb, pol, lid, max_kb, bound_ref):
         mean = round(float(diff[valid].mean()), 2)
     else:
         p2 = p50 = p98 = mean = None
-    lo, hi = DIFF_RANGE
-    max_dim = MAX_DIM
-    while True:
-        img, bounds = warp_to_latlon(diff, xa, ya, epsg_a, max_dim)
-        ok = np.isfinite(img)
-        rgb = _diverging_rgb((np.nan_to_num(img, nan=0.0) - lo) / (hi - lo))
-        a = np.where(ok, 255, 0).astype("uint8")
-        im = Image.fromarray(np.dstack([rgb, a]), "RGBA")
-        buf = io.BytesIO()
-        im.save(buf, format="PNG", optimize=True)
-        png = buf.getvalue()
-        if len(png) <= max_kb * 1024 or max_dim <= MIN_DIM:
-            break
-        max_dim = max(MIN_DIM, int(max_dim * 0.8))
+    # noise level and limit: there is no usable calm-fortnight pair for the sea (the only pre-event pair, 3 Oct vs 15 Oct, is a
+    # different acquisition mode, see docs/METHODS.md), so sigma is the robust (MAD) sigma of THIS difference over the common valid
+    # pixels more than 1 km offshore, and the limit rule uses the same pixels.
+    sea = valid & _erode(~_land_mask(diff.shape, xa, ya, epsg_a), max(1, int(round(1000.0 / step))))   # sea pixels whose whole 1 km neighbourhood is sea
+    if int(sea.sum()) < 1000:
+        sea = valid
+        basis_note = "common valid pixels (land mask unavailable or too little sea)"
+    else:
+        basis_note = "common valid pixels more than 1 km offshore"
+    med_s, sig_s = _robust(diff[sea])
+    sigma_info = {"source": "robust (MAD) sigma of this difference over the " + basis_note + "; no calm-fortnight pair exists for the sea (3 Oct is a different acquisition mode)",
+                  "median_db": round(med_s, 3), "n_pixels": int(sea.sum())}
+    ramp, sat = _change_ramp(diff[sea], sig_s, sigma_info, ("darker (smoother sea)", "brighter (rougher sea)"), "offshore " + basis_note)
+    ramp["previous_range_db"] = list(OLD_DIFF_RANGE)
+    ramp["previous_range_note"] = "before 15 Nov 2026 the sea difference used a fixed -15..+15 dB stretch"
+    print("sea diff %s: range +-%.1f dB (was +-%.0f), sigma %.2f dB, P99|d| %.2f dB" % (lid, sat, OLD_DIFF_RANGE[1], sig_s, ramp["p99_abs_change_db"]))
+    lo, hi = -sat, sat
+
+    def render(md):
+        img, bounds = warp_to_latlon(diff, xa, ya, epsg_a, md)
+        return _change_png(img, sat, sig_s), img, bounds
+    png, img, bounds = _png_fit(render, max_kb, MAX_DIM)
     with open(os.path.join(out_dir, lid + ".png"), "wb") as fh:
         fh.write(png)
     meta = {
@@ -331,10 +446,12 @@ def _sea_diff_one(pa, pb, pol, lid, max_kb, bound_ref):
         "png": "data/web/%s.png" % lid,
         "bounds": [[round(bounds[0][0], 5), round(bounds[0][1], 5)], [round(bounds[1][0], 5), round(bounds[1][1], 5)]],
         "pol": pol,
+        "credit": CREDIT, "acquisition_date": str(ra.get("start_utc", ""))[:10] or None, "track": ra.get("track"), "polarisation": pol,
+        "product_status": ra.get("product_status"), "reference_product_status": rb.get("product_status"),
         "kind": "difference_db",
         "definition": "VV(after) minus VV(before), dB",
         "ramp_db": [lo, hi],
-        "ramp": _ramp_json(),
+        "ramp": ramp,
         "p2": p2, "p50": p50, "p98": p98, "mean": mean,
         "nan_frac": round(1.0 - float(valid.sum()) / float(valid.size), 4),
         "grid_check": crop,
@@ -426,7 +543,13 @@ def update_sea_diff_manifest(manifest_path, metas):
 # ----------------------------------------------------------------------------------------------------------
 
 CLASS_CODES = {"invalid": 0, "no_change": 1, "new_water": 2, "wet_crops": 3, "permanent_water": 4}
-CLASS_RGBA = {"new_water": (0x2A, 0x6F, 0xB0, 255), "wet_crops": (0xE0, 0x9A, 0x2B, 255), "no_change": (200, 205, 210, 40)}
+# Class colours for the dark Esri basemap, derived from the UI palette (tokens.css): same hue family, lighter for separation on dark.
+#   new_water  : --water #2A6FB0 (hue 208) -> #3FA7F5 (hue 207), alpha 235 (the main class: near opaque)
+#   wet_crops  : --crops #E09A2B (hue 37)  -> #F2A93B (hue 37), alpha 210 (weak class, unproven; slightly more see-through)
+#   no_change  : --on-stage-muted #C4D0D2 tint, alpha 36 (near transparent on purpose)
+# Reasons and numbers: docs/review/COLOUR_CHECK.md (tools/colour_check.py).
+CLASS_RGBA = {"new_water": (0x3F, 0xA7, 0xF5, 235), "wet_crops": (0xF2, 0xA9, 0x3B, 210), "no_change": (0xC4, 0xD0, 0xD2, 36)}
+CLASS_LAYER_OPACITY = {"new_water": 1.0, "wet_crops": 1.0}   # layer opacity in the manifest: the per-pixel alpha above is the intended strength, so the layer must not dim it again (was 0.75)
 SMOOTH_PX = 3            # boxcar (linear power) before classifying: 3x3 px = 60 m, tames 20 m speckle
 EDGE_PX = 2              # pixels dropped next to no-data / swath edge
 K_SIGMA = 3.0            # change threshold in robust sigmas of the 4->16 Oct "normal fortnight" difference
@@ -663,7 +786,7 @@ def compute_coast_classes(manifest):
         return cls
 
     ks = (K_SIGMA - K_ERR, K_SIGMA, K_SIGMA + K_ERR)
-    cls, sens, shifts, events = {}, {}, {}, []
+    cls, sens, shifts, events, chg = {}, {}, {}, [], {}
     perm_v = valid & (S[(pre[0], "HH")] < valley) & (S[(pre[1], "HH")] < valley)
     land_v = valid & ~perm_v
 
@@ -683,6 +806,7 @@ def compute_coast_classes(manifest):
         for k in ks:
             cls[(d, k)] = classify(o["HH"], o["HV"], base_hh, base_hv, k, T, perm_d, land_d)
         sens[d] = sens_of(classify(o["HH"], o["HV"], base_hh, base_hv, K_SIGMA, valley, perm_v & valid_d, land_v & valid_d))
+        chg[d] = np.where(land_d, o["HH"] - base_hh, np.nan).astype("float16")     # HH change on land (smoothed, as the class maps), for the change layers
         shifts[d] = {"median_dHH_vs_baseline_db": round(float(np.median((o["HH"] - base_hh)[land_d])), 2),
                      "median_dHV_vs_baseline_db": round(float(np.median((o["HV"] - base_hv)[land_d])), 2)}
         events.append(d)
@@ -710,7 +834,7 @@ def compute_coast_classes(manifest):
         stats["%s|k=%.1f" % (key[0], key[1])] = cnt
     res = {
         "pre": pre, "events": events, "by_date": by_date, "grid": grid, "px_km2": px_km2, "valid": valid, "perm": perm,
-        "cls": cls, "ks": ks, "stats": stats, "shifts": shifts, "sens": sens, "scene": scene,
+        "cls": cls, "chg": chg, "sigma_hh": sig_hh, "ks": ks, "stats": stats, "shifts": shifts, "sens": sens, "scene": scene,
         "thresholds": {"water_hh_db": round(T, 2), "otsu_hh_db": round(T, 2), "histogram_valley_hh_db": round(valley, 2),
                        "histogram_modes_hh_db": [round(pk1, 1), round(pk2, 1)],
                        "k_sigma": K_SIGMA, "hv_crops_sigma": HV_CROPS_SIGMA,
@@ -764,6 +888,9 @@ def build_class_maps(manifest, out_dir):
         "schema": "spacebros-class-stats-v1",
         "created_utc": NOW(),
         "analysis_id": manifest["analyses"][0]["id"],
+        "credit": CREDIT, "acquisition_date": _iso(r["events"][-1]), "track": r["scene"][r["events"][-1]].get("track"), "polarisation": "HH+HV",
+        "product_status": r["scene"][r["events"][-1]].get("product_status"),
+        "colours": {k: "#%02X%02X%02X" % v[:3] for k, v in CLASS_RGBA.items()}, "class_alpha": {k: v[3] for k, v in CLASS_RGBA.items()},
         "baseline_dates": r["pre"], "event_dates": r["events"], "latest_date": r["events"][-1],
         "scenes": {_iso(d): r["scene"][d] for d in r["pre"] + r["events"] if d in r["scene"]},
         "h5_sources": sources,
@@ -788,6 +915,117 @@ def build_class_maps(manifest, out_dir):
         fh.write("\n")
     r["files"], r["bounds"], r["image_px"] = files, bnd, image_px
     return r
+
+
+def build_coast_change(manifest, out_dir, r, max_kb=600):
+    """Coast change maps: event HH minus baseline HH (baseline = mean of the two pre-event dates in linear power, as in the class
+    maps), dB, on the class 20 m grid, 3 x 3 smoothed the same way, land only (permanent water is blank, as in the class maps).
+    One map per coast date after the baseline: data/web/nisar_l_coast_change_{yyyymmdd}_hh.png/.json. Colour rule = _change_ramp:
+    sigma = robust sigma of 16 Oct minus 4 Oct (METHODS step 6, HH), limit = min(3 x P99 |change|, 6 dB). Returns the metas."""
+    import numpy as np
+    x, y, epsg = r["grid"]
+    sigma = r["sigma_hh"]
+    metas = []
+    for d in r["events"]:
+        c = r["chg"][d].astype("float32")
+        v = c[np.isfinite(c)]
+        if not v.size:
+            continue
+        sc = r["scene"][d]
+        sigma_info = {"source": "robust (MAD) sigma of the normal-fortnight difference, 16 Oct minus 4 Oct, HH, over land (docs/METHODS.md step 6)",
+                      "baseline_dates": [_iso(q) for q in r["pre"]], "note": "the event-minus-baseline difference uses a two-date mean baseline, so its true noise is a little smaller: 1 sigma is a cautious grey band"}
+        ramp, sat = _change_ramp(v, sigma, sigma_info, None, "valid non-permanent-water pixels of this date")
+
+        def render(md, c=c):
+            img, bounds = warp_to_latlon(c, x, y, epsg, md)
+            return _change_png(img, sat, sigma), img, bounds
+        png, img, bounds = _png_fit(render, max_kb, CLASS_MAX_DIM)
+        lid = "nisar_l_coast_change_%s_hh" % d
+        with open(os.path.join(out_dir, lid + ".png"), "wb") as fh:
+            fh.write(png)
+        p2, p50, p98 = [round(float(q), 2) for q in np.percentile(v, [2, 50, 98])]
+        meta = {
+            "layer_id": lid, "png": "data/web/%s.png" % lid,
+            "bounds": [[round(bounds[0][0], 5), round(bounds[0][1], 5)], [round(bounds[1][0], 5), round(bounds[1][1], 5)]],
+            "pol": "HH", "credit": CREDIT, "acquisition_date": _iso(d), "track": sc.get("track"), "polarisation": "HH",
+            "product_status": sc.get("product_status"),
+            "reference_product_status": [(r["scene"].get(q) or {}).get("product_status") for q in r["pre"]],
+            "kind": "difference_db",
+            "definition": "event HH minus baseline HH, dB (baseline = mean of %s and %s in linear power; 3 x 3 smoothed in linear power; land only)" % (_iso(r["pre"][0]), _iso(r["pre"][1])),
+            "ramp_db": [-sat, sat], "ramp": ramp,
+            "p2": p2, "p50": p50, "p98": p98, "mean": round(float(v.mean()), 2),
+            "n_valid_px": int(v.size), "grid": {"epsg": epsg, "posting_m": abs(float(x[1] - x[0])), "same_as": "data/web/class_stats.json"},
+            "after": {"h5": _rel(r["by_date"][d]), "date": _iso(d), "start_utc": sc.get("start_utc"), "product_status": sc.get("product_status")},
+            "before": {"h5": [_rel(r["by_date"][q]) for q in r["pre"]], "dates": [_iso(q) for q in r["pre"]]},
+            "note": "difference of calibrated backscatter on the class grid; negative = darker (e.g. new open water), positive = brighter. Not a flood map by itself.",
+            "image_px": [int(img.shape[1]), int(img.shape[0])], "png_kb": round(len(png) / 1024.0, 1), "built_utc": NOW(),
+        }
+        with open(os.path.join(out_dir, lid + ".json"), "w", encoding="utf-8") as fh:
+            json.dump(meta, fh, indent=1)
+            fh.write("\n")
+        print("coast change %s: limit +-%.1f dB (3xP99 %.2f), sigma %.2f dB, P99|d| %.2f dB, %.0f KB" % (lid, sat, ramp["three_p99_db"], sigma, ramp["p99_abs_change_db"], len(png) / 1024.0))
+        metas.append(meta)
+        del c, v, img
+    return metas
+
+
+def update_change_manifest(manifest_path, metas, r):
+    """Register the coast change maps (one manifest layer per date, id nisar_l_coast_change_{yyyymmdd}_hh, newest first, inserted
+    after the sea difference layer). Only these layers are touched; nothing is written when nothing changed."""
+    if not metas:
+        return []
+    with open(manifest_path, encoding="utf-8") as fh:
+        m = json.load(fh)
+    layers = m["layers"]
+    tmpl = next((l for l in layers if l["id"] == "nisar_class_new_water"), None)
+    if tmpl is None:
+        return []
+    changed = []
+    for meta in metas:
+        lid, d = meta["layer_id"], meta["after"]["date"]
+        coast = next((l for l in layers if l["id"].startswith("nisar_l_coast_2") and l.get("date") == d), {})
+        group = "before" if d < "2026-10-27" else "during" if d <= "2026-10-28" else "after"
+        new = {
+            "group": group, "type": "derived", "chip": "nisar", "kind": "image", "date": d, "time_utc": meta["after"]["start_utc"],
+            "latest_of": "nisar_l_coast_change_hh",
+            "shows": "Change in land radar brightness, HH, %s minus the 4 and 16 Oct baseline (dB); blue = darker, orange-red = brighter, grey = change smaller than normal" % _human_date(d),
+            "limit": "it is a brightness change, not a flood map; baseline scenes are PROVISIONAL products; crop and wind effects also change brightness",
+            "source": "SpaceBros difference map", "source_id": tmpl["source_id"], "credit": CREDIT,
+            "png": meta["png"], "bounds": meta["bounds"], "bounds_inferred": False, "url_template": None,
+            "band": "L", "pol": "HH", "track": meta["track"], "frame": tmpl.get("frame"), "direction": tmpl.get("direction"),
+            "regions": tmpl["regions"], "event_id": None, "classes": None, "default_on": False, "opacity": 0.85,
+            "status": "ready", "placeholder": None, "id": lid,
+            "name": "Coast radar brightness change (%s minus baseline)" % _human_date(d),
+            "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 H5 subsets (data/web/%s.json, built by tools/build_web.py)" % lid,
+            "h5_sources": meta["before"]["h5"] + [meta["after"]["h5"]], "change_date": d,
+            "ramp": meta["ramp"],
+        }
+        cur = next((l for l in layers if l["id"] == lid), None)
+        if cur is None:
+            cur = {}
+            layers.append(cur)
+            changed.append("%s (added)" % lid)
+        for k, v in new.items():
+            if k == "credit" and cur.get("credit"):
+                continue                       # never overwrite a credit someone else already set
+            if cur.get(k) != v:
+                cur[k] = v
+                changed.append("%s.%s" % (lid, k))
+    # keep the change layers together, newest first, right after the sea difference layer
+    chg = sorted((l for l in layers if l["id"].startswith("nisar_l_coast_change_")), key=lambda l: l["date"], reverse=True)
+    rest = [l for l in layers if not l["id"].startswith("nisar_l_coast_change_")]
+    at = next((k for k, l in enumerate(rest) if l["id"].startswith("nisar_sea_diff")), len(rest) - 1) + 1
+    new_order = rest[:at] + chg + rest[at:]
+    if [l["id"] for l in new_order] != [l["id"] for l in layers]:
+        changed.append("layer order")
+    m["layers"] = new_order
+    if changed:
+        tmp = manifest_path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as fh:
+            json.dump(m, fh, indent=2, ensure_ascii=False)
+            fh.write("\n")
+        os.replace(tmp, manifest_path)
+    return changed
 
 
 def _human_date(iso):
@@ -858,7 +1096,15 @@ def update_class_manifest(manifest_path, r):
     for l in m["layers"]:
         if l["id"] in limits:
             which = l["id"].replace("nisar_class_", "")
+            cls_new = [dict(c) for c in (l.get("classes") or [])]
+            for c in cls_new:
+                if c.get("style") != "outline" and c.get("id") in CLASS_RGBA:
+                    c["colour"] = "#%02X%02X%02X" % CLASS_RGBA[c["id"]][:3]
+                    c["alpha"] = CLASS_RGBA[c["id"]][3]
+            lay_opacity = CLASS_LAYER_OPACITY.get(which)
             new = {
+                "classes": cls_new,
+                **({"opacity": lay_opacity} if lay_opacity is not None else {}),
                 "png": r["files"]["%s/%s" % (d, which)]["png"], "bounds": r["bounds"], "bounds_inferred": False,
                 "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 H5 subsets (tools/build_web.py)",
                 "status": "ready", "placeholder": None, "h5_sources": srcs, "limit": limits[l["id"]], "processing": processing,
@@ -921,7 +1167,7 @@ def _district_table():
 
 def _provenance(r, what):
     return {
-        "created_utc": NOW(), "tool": "tools/build_web.py (%s)" % what, "h5_sources": {d: _rel(r["by_date"][d]) for d in r["pre"] + r["events"]},
+        "created_utc": NOW(), "credit": CREDIT, "tool": "tools/build_web.py (%s)" % what, "h5_sources": {d: _rel(r["by_date"][d]) for d in r["pre"] + r["events"]},
         "baseline_dates": r["pre"], "event_dates": r["events"],
         "method": ("L-band HH+HV on the 20 m coast grid; %dx%d boxcar in linear power; baseline = mean of the two pre-event dates; "
                    "permanent water = HH below the water threshold on both baseline dates (excluded); new water = HH and HV both fall by >= %.0f sigma and HH ends below the threshold; "
@@ -1104,6 +1350,7 @@ def build_mandal_rank(manifest, out_dir, r=None):
         "rank_basis": "total_pct", "rank_water_basis": "water_pct",
         "dates": sorted(by_date),
         "rows": ranked, "flagged_not_ranked": flagged, "by_date": by_date,
+        "boundaries_credit": BOUNDARIES_CREDIT,
         "provenance": _provenance(r, "build_mandal_rank"),
     }
     os.makedirs(out_dir, exist_ok=True)
@@ -1451,7 +1698,7 @@ def build_profile(manifest, out_dir):
                        "n_local_minima": found["n_local_minima"], "n_candidates": len(found["candidates"]),
                        "prominence_db": round(best["prominence_db"], 2), "smoothed_vv_db": round(best["smoothed_vv_db"], 2),
                        "centre_by_sigma_km": [{"sigma_km": q[0], "lat": round(q[1], 3), "lon": round(q[2], 3), "offset_km": round(q[3], 1)} for q in spread]},
-        "provenance": {"created_utc": NOW(), "tool": "tools/build_web.py (build_profile)", "h5_sources": [lay["h5"]], "source_granule": root.get("source_granule"),
+        "provenance": {"created_utc": NOW(), "credit": CREDIT, "tool": "tools/build_web.py (build_profile)", "h5_sources": [lay["h5"]], "source_granule": root.get("source_granule"),
                        "product_status": root.get("product_status"), "band": "L", "pol": "VV", "track": root.get("track"),
                        "method": "see eye_search, points_definition and transect; docs/METHODS.md",
                        "caveats": ["single scene, single band", "weak eye contrast", "level carries an incidence-angle trend across the swath", "no ground truth or best-track comparison beyond the IMD fix interpolation"],
@@ -1462,6 +1709,245 @@ def build_profile(manifest, out_dir):
         json.dump(out, fh, indent=1)
         fh.write("\n")
     return out
+
+
+# ---- dual-pol colour composite of every scene (co-pol + cross-pol only: NOT a Freeman-Durden / Yamaguchi decomposition) ----
+# R = co-pol (HH or VV), G = cross-pol (HV or VH), B = co minus cross in dB (the co/cross ratio). The polarisations are READ FROM EACH
+# H5 (/backscatter keys), nothing is hard-coded to a band: any band/role group of scenes that has a co-pol and a cross-pol gets one layer
+# per date. Each channel: smoothed 3 x 3 in linear power where the posting is <= 30 m (coast, 20 m; the sea is already a 100 m
+# multilook, not smoothed again), stretched linearly between the 2nd and 98th percentile of the pooled valid pixels of ALL dates of that
+# band and role, then a gamma chosen by eye over the dark basemap (RGB_GAMMA). Recipe and honesty notes: docs/review/RGB_COMPOSITE.md.
+RGB_GAMMA = {"COAST": {"R": 2.0, "G": 1.0, "B": 2.0}, "SEA": {"R": 2.0, "G": 1.0, "B": 3.0}}
+RGB_GAMMA_DEFAULT = {"R": 2.0, "G": 1.0, "B": 2.0}
+CO_POLS, CROSS_POLS = ("HH", "VV"), ("HV", "VH")
+# Legend swatches: the MEDIAN colour the recipe gives to pixels that follow a plain dB rule (co, cross, ratio; all dates of the group pooled).
+# The rules only choose representative pixels; they are not classes and feed no count. (id, short label, colour word, meaning, rule text, rule)
+RGB_LEGEND_GROUPS = {
+    "COAST": [
+        ("water", "Smooth water", "Dark", "smooth water", "HH < -18 dB", lambda c, x, r: c < -18),
+        ("vegetation", "Vegetation", "Green", "vegetation", "HH -12 to -6 dB and HV -18 to -13 dB", lambda c, x, r: (c > -12) & (c < -6) & (x > -18) & (x < -13)),
+        ("bright_weak_cross", "Very bright with weak cross-pol", "Red or magenta", "very bright with weak cross-pol, possible double bounce (flooded vegetation, buildings)", "HH > -3 dB and HH minus HV > 11 dB", lambda c, x, r: (c > -3) & (r > 11)),
+        ("smooth_ground", "Smooth bare or wet ground", "Bluish", "smooth bare or wet ground", "HH -17 to -12 dB and HH minus HV > 9 dB", lambda c, x, r: (c > -17) & (c < -12) & (r > 9)),
+    ],
+    "SEA": [
+        ("calm_sea", "Calm or smooth sea", "Dark", "calm or smooth sea", "VV < -18 dB", lambda c, x, r: c < -18),
+        ("moderate_sea", "Moderately rough sea", "Dark purple", "moderately rough sea", "VV -15 to -11 dB and VH < -22 dB", lambda c, x, r: (c > -15) & (c < -11) & (x < -22)),
+        ("rough_sea", "Rough sea", "Purple or violet", "rough, wind-driven sea (strong wind, waves)", "VV > -11 dB and VH < -21 dB", lambda c, x, r: (c > -11) & (x < -21)),
+        ("land_veg", "Land", "Green or yellow", "land and vegetation", "VH > -18 dB", lambda c, x, r: x > -18),
+    ],
+}
+
+
+def _pol_pair(h5file):
+    """(co, cross) polarisation names found in /backscatter, or None. Co-pol HH or VV, cross-pol HV or VH."""
+    pols = _pols_in(h5file)
+    co = next((p for p in CO_POLS if p in pols), None)
+    cr = next((p for p in CROSS_POLS if p in pols), None)
+    return (co, cr) if co and cr else None
+
+
+def _rgb_channels(h5file, smooth=None):
+    """Smoothed co-pol, cross-pol in dB and the ratio co minus cross, NaN where either is invalid or aux/mask != 1.
+    Returns ({R, G, B}, x, y, epsg, root, (co, cross))."""
+    import numpy as np
+    pair = _pol_pair(h5file)
+    co, x, y, epsg, root = read_backscatter(h5file, pair[0])
+    cr = read_backscatter(h5file, pair[1])[0]
+    n = smooth if smooth else (SMOOTH_PX if abs(float(x[1] - x[0])) <= 30.0 else 1)
+    a, b = (_box_db(co, n), _box_db(cr, n)) if n > 1 else (co, cr)
+    if n > 1:
+        del co, cr
+    ok = np.isfinite(a) & np.isfinite(b)
+    m = _read_mask(h5file)
+    if m is not None:
+        ok &= (m == 1)
+    a[~ok] = np.nan
+    b[~ok] = np.nan
+    return {"R": a, "G": b, "B": (a - b)}, x, y, epsg, root, pair
+
+
+def _rgb_limits(h5files, role):
+    """Pooled 2/98 percentile per channel over all dates of the group (0.01 dB histogram, exact to the data's resolution),
+    and the legend swatches of the role. Returns (limits dict, n pixels, legend list)."""
+    import numpy as np
+    gam = RGB_GAMMA.get(role, RGB_GAMMA_DEFAULT)
+    step, lo0, hi0 = 0.01, -100.0, 100.0
+    edges = (np.arange(int(round((hi0 - lo0) / step)) + 2) - 0.5) * step + lo0
+    cnt = {k: np.zeros(len(edges) - 1, dtype="int64") for k in "RGB"}
+    n = 0
+    samp = {"R": [], "G": []}
+    names = {"R": set(), "G": set()}
+    for p in h5files:
+        ch, _, _, _, _, pair = _rgb_channels(p)
+        names["R"].add(pair[0])
+        names["G"].add(pair[1])
+        for k in "RGB":
+            v = ch[k][np.isfinite(ch[k])]
+            cnt[k] += np.histogram(np.clip(v, lo0, hi0), bins=edges)[0]
+            if k in samp:
+                samp[k].append(v[::7].copy())       # every 7th valid pixel, for the legend colours
+        n += int(np.isfinite(ch["R"]).sum())
+        del ch
+    co, cr = "/".join(sorted(names["R"])), "/".join(sorted(names["G"]))
+    labels = {"R": co + " (dB)", "G": cr + " (dB)", "B": "%s minus %s, i.e. the co/cross ratio (dB)" % (co, cr)}
+    out = {}
+    for k in "RGB":
+        cum, tot = np.cumsum(cnt[k]), int(cnt[k].sum())
+        q = [round(float(lo0 + int(np.searchsorted(cum, pc / 100.0 * tot, side="left")) * step), 2) for pc in STRETCH_PCT]
+        out[k] = {"lo": q[0], "hi": q[1], "unit": "dB", "channel": labels[k], "gamma": gam[k], "percentiles": list(STRETCH_PCT)}
+    c, x = np.concatenate(samp["R"]), np.concatenate(samp["G"])
+    ra = c - x
+    legend = []
+    for gid, label, word, meaning, rule, m in RGB_LEGEND_GROUPS.get(role, []):
+        sel = m(c, x, ra)
+        px = []
+        for a, k in ((c, "R"), (x, "G"), (ra, "B")):
+            f = np.clip((a[sel] - out[k]["lo"]) / (out[k]["hi"] - out[k]["lo"]), 0.0, 1.0) ** gam[k]
+            px.append(int(round(float(np.median(f)) * 255.0)) if sel.any() else 0)
+        legend.append({"id": gid, "label": label, "colour_word": word, "meaning": meaning, "hex": "#%02X%02X%02X" % tuple(px),
+                       "rule": rule, "share_of_pixels_pct": round(100.0 * float(sel.mean()), 2)})
+    return out, n, legend
+
+
+def _rgb_png(imgs, limits):
+    """dict of warped dB channels (NaN = no data) -> RGBA PNG bytes."""
+    import numpy as np
+    from PIL import Image
+    valid = np.isfinite(imgs["R"]) & np.isfinite(imgs["G"]) & np.isfinite(imgs["B"])
+    px = np.zeros(valid.shape + (4,), dtype="uint8")
+    for i, k in enumerate("RGB"):
+        lo, hi = limits[k]["lo"], limits[k]["hi"]
+        f = np.clip((np.where(valid, imgs[k], lo) - lo) / (hi - lo), 0.0, 1.0) ** limits[k]["gamma"]
+        px[..., i] = np.rint(f * 255.0).astype("uint8")
+    px[..., 3] = np.where(valid, 255, 0).astype("uint8")
+    buf = io.BytesIO()
+    Image.fromarray(px, "RGBA").save(buf, format="PNG", optimize=True)
+    return buf.getvalue()
+
+
+def _rgb_groups(manifest):
+    """{(band, role): [(grey layer, absolute h5 path)]} for every NISAR image layer of the manifest that has an H5 with a co and a cross pol."""
+    import re
+    groups = {}
+    for l in manifest["layers"]:
+        mm = re.match(r"^nisar_([a-z])_(coast|sea)_(\d{8})", l.get("id", ""))
+        if not mm or "_rgb_" in l["id"] or not l.get("h5"):
+            continue
+        p = os.path.join(ROOT, l["h5"])
+        if os.path.exists(p) and _pol_pair(p):
+            groups.setdefault((mm.group(1), mm.group(2)), []).append((l, p))
+    return groups
+
+
+def build_coast_rgb(manifest, out_dir, max_kb=600):
+    """One RGB composite layer per scene of every (band, role) group: data/web/nisar_{band}_{role}_rgb_{yyyymmdd}[_t{track}].png/.json
+    (the track suffix only when the group has more than one track, like the grey ids). Name kept for the call site."""
+    import numpy as np
+    metas = []
+    for (band, role), items in sorted(_rgb_groups(manifest).items()):
+        items = sorted(items, key=lambda it: it[0]["date"])
+        rl = role.upper()
+        limits, npool, legend = _rgb_limits([p for _, p in items], rl)
+        tracks = {str(l.get("track")) for l, _ in items}
+        dates = [_compact(l["date"]) for l, _ in items]
+        for l, p in items:
+            ch, x, y, epsg, root, pair = _rgb_channels(p)
+            d = _compact(l["date"])
+
+            def render(md, ch=ch):
+                imgs, bounds = {}, None
+                for k in "RGB":
+                    imgs[k], bounds = warp_to_latlon(ch[k], x, y, epsg, md)
+                return _rgb_png(imgs, limits), imgs["R"], bounds
+            png, img, bounds = _png_fit(render, max_kb, MAX_DIM)
+            lid = "nisar_%s_%s_rgb_%s%s" % (band, role, d, ("_t%s" % l.get("track")) if len(tracks) > 1 else "")
+            with open(os.path.join(out_dir, lid + ".png"), "wb") as fh:
+                fh.write(png)
+            pol = "%s+%s" % pair
+            meta = {
+                "layer_id": lid, "rgb_of": l["id"], "png": "data/web/%s.png" % lid,
+                "bounds": [[round(bounds[0][0], 5), round(bounds[0][1], 5)], [round(bounds[1][0], 5), round(bounds[1][1], 5)]],
+                "kind": "rgb_composite_dual_pol", "role": rl, "band": band.upper(),
+                "pol": pol, "polarisation": pol, "credit": CREDIT, "acquisition_date": str(root.get("start_utc", ""))[:10] or None,
+                "track": root.get("track"), "product_status": root.get("product_status"), "scene_id": root.get("scene_id"),
+                "source_granule": root.get("source_granule"),
+                "definition": "R = %s, G = %s, B = %s minus %s (dB, the co/cross ratio); each channel stretched between fixed pooled 2 and 98 percent limits of all %s %s dates, then gamma. Two polarisations only: NOT a Freeman-Durden or Yamaguchi decomposition." % (pair[0], pair[1], pair[0], pair[1], band.upper() + "-band", role),
+                "channels": {"R": pair[0], "G": pair[1], "B": "%s minus %s (dB)" % pair},
+                "stretch": limits, "gamma": {k: limits[k]["gamma"] for k in "RGB"}, "legend": legend,
+                "legend_note": "swatch = median colour of the pixels that follow the dB rule (all dates of this group pooled); a hint about what a colour often means, not a class",
+                "stretch_scope": "pooled valid pixels of all %d %s-band %s dates (%s), %d pixels; a new date moves the limits on the next build" % (len(dates), band.upper(), role, ", ".join(_iso(q) for q in dates), npool),
+                "smoothing_px": SMOOTH_PX if abs(float(x[1] - x[0])) <= 30.0 else 1,
+                "h5": os.path.relpath(p, ROOT), "image_px": [int(img.shape[1]), int(img.shape[0])], "png_kb": round(len(png) / 1024.0, 1), "built_utc": NOW(),
+            }
+            with open(os.path.join(out_dir, lid + ".json"), "w", encoding="utf-8") as fh:
+                json.dump(meta, fh, indent=1)
+                fh.write("\n")
+            print("rgb %s: %dx%d px, %.0f KB" % (lid, img.shape[1], img.shape[0], len(png) / 1024.0))
+            metas.append(meta)
+            del ch, img
+        print("rgb limits %s-%s (dB): " % (band, role) + ", ".join("%s %.2f..%.2f" % (k, limits[k]["lo"], limits[k]["hi"]) for k in "RGB"))
+    return metas
+
+
+def update_rgb_manifest(manifest_path, metas):
+    """Register the RGB layers (one per scene, newest first within a group, right after the coast change layers or the grey scenes).
+    Credit is never overwritten."""
+    if not metas:
+        return []
+    with open(manifest_path, encoding="utf-8") as fh:
+        m = json.load(fh)
+    layers = m["layers"]
+    tmpl = next((l for l in layers if l["id"] == "nisar_class_new_water"), None)
+    if tmpl is None:
+        return []
+    changed = []
+    for meta in metas:
+        lid, d = meta["layer_id"], meta["acquisition_date"]
+        grey = next((l for l in layers if l["id"] == meta["rgb_of"]), {})
+        group = "before" if d < "2026-10-27" else "during" if d <= "2026-10-28" else "after"
+        sea = meta["role"] == "SEA"
+        new = {
+            "group": grey.get("group", group), "type": "derived", "chip": "nisar", "kind": "image", "date": d, "time_utc": grey.get("time_utc"),
+            "latest_of": "nisar_%s_%s_rgb" % (meta["band"].lower(), meta["role"].lower()), "rgb_of": meta["rgb_of"],
+            "shows": "%s radar colour composite, %s: red = %s, green = %s, blue = %s minus %s (dB)" % ("Sea and coast" if sea else "Land and sea", _human_date(d), meta["channels"]["R"], meta["channels"]["G"], meta["channels"]["R"], meta["channels"]["G"]),
+            "limit": "two polarisations only: a hint about the kind of surface, not proof; a rough sea looks bright, it is not a flood; not a Freeman-Durden decomposition",
+            "source": "SpaceBros dual-pol composite", "source_id": tmpl["source_id"], "credit": CREDIT,
+            "png": meta["png"], "bounds": meta["bounds"], "bounds_inferred": False, "url_template": None,
+            "band": meta["band"], "pol": meta["pol"], "track": meta["track"], "frame": grey.get("frame"), "direction": grey.get("direction"),
+            "regions": grey.get("regions") or tmpl["regions"], "event_id": None, "classes": None, "default_on": False, "opacity": 0.9,
+            "status": "ready", "placeholder": None, "id": lid, "processing_level": grey.get("processing_level"),
+            "name": "%s radar colour composite (%s), %s" % ("Sea" if sea else "Coast", meta["pol"].replace("+", ", "), _human_date(d)),
+            "bounds_source": "H5 subset footprint warped to lat/lon (data/web/%s.json, built by tools/build_web.py)" % lid,
+            "h5_sources": [meta["h5"]], "rgb": {"channels": meta["channels"], "stretch": {k: {"lo": v["lo"], "hi": v["hi"]} for k, v in meta["stretch"].items()}, "gamma": meta["gamma"]},
+        }
+        cur = next((l for l in layers if l["id"] == lid), None)
+        if cur is None:
+            cur = {}
+            layers.append(cur)
+            changed.append("%s (added)" % lid)
+        for k, v in new.items():
+            if k == "credit" and cur.get("credit"):
+                continue
+            if cur.get(k) != v:
+                cur[k] = v
+                changed.append("%s.%s" % (lid, k))
+    isrgb = lambda l: "_rgb_" in l["id"] and l["id"].startswith("nisar_")
+    rgb = sorted((l for l in layers if isrgb(l)), key=lambda l: (l["id"].split("_rgb_")[0], l["date"]), reverse=False)
+    rgb = sorted(rgb, key=lambda l: l["date"], reverse=True)
+    rgb = sorted(rgb, key=lambda l: 0 if "_coast_" in l["id"] else 1)
+    rest = [l for l in layers if not isrgb(l)]
+    at = max((k for k, l in enumerate(rest) if l["id"].startswith("nisar_l_coast_change_")), default=len(rest) - 1) + 1
+    new_order = rest[:at] + rgb + rest[at:]
+    if [l["id"] for l in new_order] != [l["id"] for l in layers]:
+        changed.append("layer order")
+    m["layers"] = new_order
+    if changed:
+        tmp = manifest_path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as fh:
+            json.dump(m, fh, indent=2, ensure_ascii=False)
+            fh.write("\n")
+        os.replace(tmp, manifest_path)
+    return changed
 
 
 def main():
@@ -1502,9 +1988,16 @@ def main():
 
     os.makedirs(args.out, exist_ok=True)
     rows, failed = [], 0
+    try:
+        stretches = pooled_stretches(manifest)      # fixed per role, pooled over ALL dates (not only the layers being built)
+        for (role_, pol_), st_ in sorted(stretches.items()):
+            print("stretch %s %s: %.2f .. %.2f dB (P%g-P%g of %d pooled pixels)" % (role_, pol_, st_["lo"], st_["hi"], STRETCH_PCT[0], STRETCH_PCT[1], st_["n_pixels"]))
+    except Exception as exc:
+        stretches = {}
+        print("WARN  pooled stretch failed (%s); fixed fallback used" % exc)
     for l, p in todo:
         try:
-            rows.append(build_layer(l, p, args.out, args.max_kb))
+            rows.append(build_layer(l, p, args.out, args.max_kb, stretches))
         except Exception as exc:  # keep building the others
             failed += 1
             print("FAIL  %s: %s" % (l["id"], exc))
@@ -1544,12 +2037,28 @@ def main():
                       % (d, st["new_water_km2"], st["new_water_pct_of_land"], st["wet_crops_km2"], st["wet_crops_pct_of_land"], st["no_change_km2"], st["permanent_water_km2"]))
             print("thresholds: %s" % json.dumps(res["thresholds"]))
             patch_water_threshold(args.out, manifest, res)
+            try:
+                cm = build_coast_change(manifest, args.out, res, args.max_kb)
+                if cm and not args.no_write_manifest:
+                    ch = update_change_manifest(args.manifest, cm, res)
+                    print("manifest coast change layers (%d) -> %s" % (len(cm), "%d fields changed" % len(ch) if ch else "already current"))
+            except Exception as exc:
+                failed += 1
+                print("FAIL  coast change: %s" % exc)
             if not args.no_write_manifest:     # normal builds (CI too) retarget the class layers at the newest coast date
                 ch = update_class_manifest(args.manifest, res)
                 print("manifest class layers -> %s (%s)" % (res["events"][-1], "%d fields changed" % len(ch) if ch else "already current"))
         except Exception as exc:
             failed += 1
             print("FAIL  class maps: %s" % exc)
+        try:
+            rm = build_coast_rgb(manifest, args.out, args.max_kb)
+            if rm and not args.no_write_manifest:
+                ch = update_rgb_manifest(args.manifest, rm)
+                print("manifest coast rgb layers (%d) -> %s" % (len(rm), "%d fields changed" % len(ch) if ch else "already current"))
+        except Exception as exc:
+            failed += 1
+            print("FAIL  coast rgb: %s" % exc)
         if res is not None:
             try:
                 o = build_mandal_rank(manifest, args.processed_out, res)

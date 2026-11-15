@@ -1,0 +1,13 @@
+Vendored third-party code
+=========================
+name:        fflate (zip / deflate in the browser)
+version:     0.8.2
+file:        fflate-0.8.2.min.js (UMD build, global `fflate`, already minified)
+source URL:  https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js
+checked vs:  https://unpkg.com/fflate@0.8.2/umd/index.js (second fetch, identical bytes)
+sha256:      c3b34f2e9f5e74d4d7d64e01cac7a0c01954c6c406414d42185c7b53d6875ddf  (fflate-0.8.2.min.js, 32665 bytes)
+licence:     MIT, Copyright (c) 2023 Arjun Barrett
+licence file: fflate-0.8.2.LICENSE.txt  (from https://cdn.jsdelivr.net/npm/fflate@0.8.2/LICENSE)
+licence sha256: 805f6cb28bb8b6d3a0badd83c93bccd9671fa01a3b4b92b7042b0743325ac243
+vendored:    2026-11-15
+used by:     app/dashboard-mockup/js/export.js (zip of the official brief and data files). Loaded from this folder, no CDN at runtime.

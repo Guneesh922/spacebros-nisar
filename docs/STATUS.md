@@ -1,6 +1,22 @@
 # STATUS — live task board (update this at the end of every session)
 
-Last updated: 2026-11-14 21:20 IST by Opus planning session (Wave 4 commits).
+Last updated: 2026-11-15 06:00 IST by the review session (overnight work committed and pushed; newest notes are the dated 15 Nov sections, the 14 Nov "Real vs placeholder" section below is history).
+
+## 15 Nov review (06:00 IST): open items
+All 6 test suites pass; both tabs clean in the browser at 1440 px. Open: `docs/` is not copied in `pages.yml`, so the METHODS link 404s on Pages; `story.internal` is public; geoBoundaries credit says ODbL in 6 files (site says CC BY 4.0); root redirect title still "SpaceBros NISAR"; phone: map captures scroll, "Cyclone eye" button cut off at 375 px, small tap targets; headline sentence "0 mandals were probably flooded and now 8 are"; GDACS 222 km/h next to IMD 125-135 km/h; `docs/submission/` drafts stale; S-band absent; `update.yml` never run on GitHub.
+
+## 15 Nov: product without data-quality notes (dash.js)
+`cav()` in dash.js = story.presentation.show_data_caveats === true (missing = hidden). Off: no Provisional/sample/weak-signal/lower-confidence/caveat notes, no status words in the pass card, archive, map caption or legend credit; alert-sourced chips read '(alert)'; 'What radar cannot tell you' is one note at the end of What happened (cannot_tell_position 'end'); the detailed can/cannot card moved to the Data tab (`#d-cannot`). PROVISIONAL/VALIDATED stay in Scenes, Downloads, Layers. Phone legend: swatches + 'Credit' disclosure.
+
+## 15 Nov: dual-pol RGB composite (coast)
+Layers `nisar_{band}_{role}_rgb_YYYYMMDD` for every H5 (co-pol, cross-pol read from the file; coast HH/HV gamma 2/1/2 at 502 px, sea VV/VH gamma 2/1/3 at 785 px, 600 KB cap), fixed pooled 2-98 % limits per channel. Dashboard: LOOK Grey | Colour in Radar, Before and after and Eye, in Radar by date, Colour key card, colour PNGs in Scenes and Downloads (`look=colour` in the hash). Dual-pol only, not a decomposition. Recipe, table comparison, colour-blind result (dark vs bluish fails dE00 20): `docs/review/RGB_COMPOSITE.md`, `tools/colour_check.py --rgb-sheet`.
+
+## 15 Nov: P2-A flood guard + presentation switch
+- P2-A: GDACS flood footprint (`Poly_Affected` bbox) fetched in `alerts.py` (fails soft to the centroid); `events.py` links a flood draft to radar passes only if within `defaults.flood_link_km` (config, 50) of the COAST box; `auto_GDACS_1104248` is ~175 km away: alert_only, "Alert only, outside the radar area", links dropped, model + distance lines in `cannot_tell`. Drafts get a chip only on passes they are linked to. Findings 28 Oct and 9 Nov revised 4 -> 5 (inputs: events). 5 FL tests in `test_events.py`.
+- Presentation switch: `config/areas.json` `presentation {show_data_caveats:false, cannot_tell_position:"end"}`. `build_story.apply_presentation` filters only data/web/story.json, feed.json, atom.xml (findings keep caveats, no revisions); originals in `story.internal`; switch exposed as `story.presentation`. dash.js must gate its own caveat strings on it (field list in the session report).
+
+## 15 Nov: colour coding (task 1B)
+Per-role percentile stretch, new coast change layers (`nisar_l_coast_change_{date}_hh`), common change-map ramp (sigma grey, limit min(3 x P99, 6 dB)), dark-map class colours. Details and checks: `docs/review/COLOUR_CHECK.md`, `tools/colour_check.py`. dash.js legends not yet reading the new json fields.
 
 ## Wave 4 (14 Nov, evening) — live coast monitor
 Plan/contract: `docs/review/WAVE4_PLAN.md`. Tests: story 16, findings 10, events 13, manifest 17, all pass (`docs/review/ACCEPTANCE_DATA.md`).
@@ -147,3 +163,27 @@ and shown well. Verified 16:18 IST in the browser: radar overlays draw in the ri
 - Open (Opus, 14 Nov 17:40; alerts part DONE in Wave 4): data/processed/alerts.json holds Jammu & Kashmir SACHET alerts, not Andhra Pradesh -> wrong region on
   the alerts card; refetch AP alerts (src/fetch/sachet_snapshot.py) or mark it placeholder. Rename the sea-diff layer id to match
   its date when convenient (update dash.js references). Mandal card should follow the share-map day selector.
+
+## Interface name (15 Nov)
+- Old visible name: "Coast Radar Watch" (options were Coast Radar Watch / Pass by Pass / Delta Radar Watch). New: "Pass by Pass". Other candidates: "Coast Radar View", "Delta Radar Notes". "Watch" dropped: it reads as an official flood watch and sits next to NOAA CoastWatch and the FloodWatch app; a quick web search found no product called Pass by Pass, Coast Radar View or Delta Radar Notes (not a trademark check).
+- To revert: set `config/areas.json` `site.title` back to "Coast Radar Watch"; in `app/dashboard-mockup/index.html` put back `<title>`, `<h1 class="hdr__title">` and the org line "SpaceBros &middot; NISAR coast watch"; `app/strings/strings.en.json` `app.name` was "SpaceBros NISAR workspace" and `app/index.html` `<title>` the same. Feed titles now read "<site title>: <event>: radar updates" (`feeds(..., site_title)` in `tools/build_story.py`).
+- Header org line is now "Team SpaceBros". Footer (`#site-foot` in index.html) and About intro carry: "Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service."
+- `story.json` gets a `credits` block (build_story.py `credits_block`). About card wording fixed in `app/strings/strings.en.json` (CMR + ASF search API named, Vertex not used, background reading marked, geoBoundaries and Esri added). Tests: story 19, findings 10, events 14, manifest 17 all pass.
+- dash.js edits still to do (owner of dash.js): see the report of this task (fallback title, citation text, Esri line, footer, layer credit fields).
+
+## Part 1 overnight summary (15 Nov, ~00:15-02:00 IST) — P0-A/B/C done, NOT yet seen in a browser
+- 1A English only: language switch, Telugu font and strings removed from `app/`; SACHET uses the English CAP info block, else one English line from structured fields plus link "Original alert (not in English)". New test `tools/tests/test_english_only.py` (in run_all and pages.yml).
+- 1B colours: per-role 2-98 % greyscale stretch (limits in layer JSON `stretch`); new coast change layers `nisar_l_coast_change_<date>_hh`; sea diff and coast change on a symmetric blue-white-orange ramp, grey below 1 sigma, saturation min(3 x P99, 6 dB) (sea diff was +-15 dB, now +-6); class colours water #3FA7F5, crops #F2A93B on the dark basemap. Checks: `tools/colour_check.py`, `docs/review/COLOUR_CHECK.md/.png`.
+- 1C name: "Pass by Pass" (see "Interface name (15 Nov)" above for the revert). 1D: no NASA/NISAR/ISRO/Space Apps marks found; exact credit strings in manifest, story.json `credits`, dash.js (captions, cite, downloads, scene rows); footer + About disclaimer; RESOURCE_AUDIT corrected.
+- Full pipeline `run_all.py --offline --skip-ingest`: exit 0, all 5 tests pass. Numbers unchanged: 9 Nov new water 83.8 km2 (61-108), eye 16.226 N 82.539 E, radius 6.4 km.
+- Browser check done 15 Nov (1440 and 375 px): console clean, no overflow; phone legend credit overlaps the Esri attribution slightly.
+- Part 2 plan: `docs/PLAN_P1_P2.md`. Nothing from P1/P2 built.
+
+## Decision (15 Nov, user): no data-quality disclaimers in the product
+Provisional / early-data / lower-confidence / weak-signal / sample badges and caveat notes are removed from the public pages and the demo; they belong in the pitch deck and docs. The numbers and the methods docs are unchanged. Credits and the 'not official / not a warning service' footer stay. 'What radar cannot tell you' moves to one note at the end of the page. There is no external approver for this project (Pratham/Netlify belong to the Echelle site).
+
+## Final state (15 Nov, ~07:30 IST) — all of the overnight plan built
+- Built: English only; colour coding on ALL 8 H5 scenes (grey stretch, change ramp, classes, RGB composite coast HH/HV and sea VV/VH) with an on-map Colour key and a Data-tab Colour key card; name "Pass by Pass"; credits; P2-A flood link rule (flood_link_km 50); P1 brief + zip (app/dashboard-mockup/js/export.js, app/vendor/fflate-0.8.2); P2-B mangrove experiment (analysis only, no detectable change, outside the pipeline).
+- Product rule: no data-quality disclaimers in the UI (config presentation.show_data_caveats=false); everything removed is logged in docs/REMOVED_FROM_PRODUCT.md for a later review. The old name "Coast Radar Watch" and the old StoryMaps/white-paper lines earlier in this file are history.
+- Pipeline `run_all.py --skip-ingest` exit 0; tests: story 24, findings 11, events 19, english_only 11, export 14, manifest 17, all pass.
+- Not verified: real Chrome print preview of the brief, a real new-tab 'Open brief' (pane blocks pop-ups), Safari/iOS download, GitHub Actions run.

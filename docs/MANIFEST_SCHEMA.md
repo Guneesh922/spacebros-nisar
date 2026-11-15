@@ -113,3 +113,9 @@ v1 fields (always present, same meaning): `id, group, name, chip, date, shows, s
 - **Marine URL.** The Open-Meteo marine request URL is built in `app/js/live.js`. The `url_template` of the marine layer is ignored for it.
 - **Case study.** The Case study tab uses the first event with `case_study: true`. It finds its layers by id prefix: `nisar_l_sea_` and `nisar_l_coast_`.
 - **Class swatch colours.** Only the classes `new_water` and `wet_crops` have their own swatch colour. Any other class gets the teal default.
+
+## Colour fields (15 Nov 2026)
+- Class layers: `classes[].colour` is the dark-map colour (#3FA7F5 water, #F2A93B crops) and `classes[].alpha` (0-255) the intended pixel alpha; water and crops layers carry `opacity` 1.0 so the alpha is not dimmed twice.
+- Dual-pol colour layers (`nisar_{band}_{role}_rgb_{yyyymmdd}`, one per H5 scene, type `derived`, `pol` e.g. "HH+HV" or "VV+VH" read from the H5, `rgb_of` = id of the grey scene layer, `latest_of` `nisar_{band}_{role}_rgb`): `rgb` = `{channels {R,G,B}, stretch {R,G,B: {lo, hi}} dB, gamma {R,G,B}}`; the legend swatches are in `data/web/<id>.json` `legend[]`.
+- Difference layers (sea difference and `nisar_l_coast_change_{yyyymmdd}_hh`, one per coast date after the baseline, newest first, `latest_of` `nisar_l_coast_change_hh`): `ramp` = `{kind "diverging", unit "dB", stops [{value, hex, label}] (-limit, -limit/2, 0, +limit/2, +limit), words {darker, no_change, brighter}, sigma_db, saturation_limit_db, p99_abs_change_db, grey {hex, alpha, band_db}}`.
+- Backscatter stretch (lo/hi dB) is in the layer json under `stretch`, not in the manifest (a manifest `stretch` field would be an override).

@@ -59,3 +59,12 @@ Page start-up reads, all relative to the repo root (any failure of an optional f
 Side panel: "Close panel" (inside the panel) and "Hide panel" (on the map) both toggle it; `aria-expanded` is kept in step, focus moves to the map button, state is saved in localStorage (`spacebros.nisar.panelCollapsed.v1`, in try/catch) and the map is resized afterwards. Works at 390 px (panel sits under the map; collapsed, the map grows).
 
 Permalinks: format unchanged (`#tab=..&mode=..&m=..&l=..&c=..&z=..&d=..`). A `c`/`z` that is outside the study area (with a margin) or at a zoom below 5 is ignored and the map fits the area bounds. The page no longer writes `c`/`z` while the map has no real size (hidden or not laid out).
+
+## Name, credits and labels (15 Nov)
+
+- Visible name: "Pass by Pass" (`config/areas.json` `site.title`; earlier "Coast Radar Watch", dropped because "Watch" can read as an official flood watch and clashes with NOAA CoastWatch). Header org line: "Team SpaceBros".
+- Footer (in `index.html`, `#site-foot`) and the About intro (`app/strings/strings.en.json`, `dash.about.intro`): "Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service."
+- About and sources list: `dash.about.sN.name/what/url` in `app/strings/strings.en.json` (not in dash.js). Background-reading items are marked "not a data source".
+- Credit string for NISAR layers: "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)" plus scene date, track, polarisation and PROVISIONAL/VALIDATED. `data/web/story.json` carries it in `credits` (`nisar`, `nisar_line`, `derived`, `imd`, `ndma_sachet`, `gdacs`, `boundaries`, `basemap`, `disclaimer`), written by `tools/build_story.py`.
+- No NASA, ISRO or Space Apps logo, insignia or look-alike is used. The header mark (`.hdr__mark`) is the team's own two teal rings.
+

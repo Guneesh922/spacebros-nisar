@@ -5783,8 +5783,10 @@
    "n_ranked": 54
   }
  },
+ "boundaries_credit": "geoBoundaries gbOpen IND ADM3 (ODbL 1.0)",
  "provenance": {
-  "created_utc": "2026-11-14T15:34:25Z",
+  "created_utc": "2026-11-15T00:04:04Z",
+  "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
   "tool": "tools/build_web.py (build_mandal_rank)",
   "h5_sources": {
    "20261004": "data/h5/L_COAST_20261004_T055.h5",

@@ -21,6 +21,17 @@
    "what": "NDMA alert portal"
   }
  ],
+ "credits": {
+  "nisar": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+  "nisar_line": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata); scene 2026-10-28, track 55, polarisation HH, VALIDATED",
+  "derived": "Maps and numbers: SpaceBros, derived from NISAR data",
+  "imd": "IMD / RSMC New Delhi bulletins",
+  "ndma_sachet": "NDMA SACHET",
+  "gdacs": "GDACS (EC JRC and UN OCHA)",
+  "boundaries": "geoBoundaries (ODbL-1.0, boundary year 2018); district names from the 2022 AP district lists",
+  "basemap": "Map data: Esri, HERE, Garmin, OpenStreetMap contributors",
+  "disclaimer": "Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service."
+ },
  "data_as_of": "2026-10-28T00:01:07Z",
  "data_as_of_text": "Radar picture taken 28 Oct 2026, 05:31, IST",
  "timestamps": {
@@ -1343,12 +1354,6 @@
    "relation": "during",
    "text": "During Cyclone Arnab",
    "reviewed": true
-  },
-  {
-   "event_id": "auto_GDACS_1104248",
-   "relation": "during",
-   "text": "During Flood in India (alert, not reviewed)",
-   "reviewed": false
   }
  ],
  "event_chip": {
@@ -1377,7 +1382,7 @@
  "archive": true,
  "as_of_utc": "2026-10-28T00:01:07Z",
  "alerts_ref": "data/processed/alerts.json",
- "revision": 4,
+ "revision": 5,
  "revision_log": [
   {
    "revision": 2,
@@ -1404,18 +1409,26 @@
     "templates"
    ],
    "reason": "inputs changed"
+  },
+  {
+   "revision": 5,
+   "utc": "2026-11-14T23:36:28Z",
+   "changed": [
+    "events"
+   ],
+   "reason": "inputs changed"
   }
  ],
  "inputs_detail": {
   "by_date": "050ef3be44e93a06045455662eb779d0465bc797af281f1e5ada61cf018abc28",
   "class_stats": "492eba20efa3a6a85c20e557a5a8ec150531c8a548b895ce181362f206134c5b",
   "catalog": "693c7381e12033b1fdb0ad27edd172031745580eabe2004dcb9569fe44687089",
-  "events": "cb7c55c4c6f88d2b70c042640f5694051446651eb742fb4c2f71bfcd2fc4d9a9",
+  "events": "9e66b33235a15c5add213a90717537d7ed906b201c2d699bbaf43da5b247a910",
   "templates": "1ecf296b055ea4e9626f22cf4d5cfe28783578a40e2d5305213ed6a6bd2f5efd",
   "rules": "f7d99448034094cdd3b1dbde5eee7252875b85c16aced1029aef71723e8892d9",
   "seasons": "8d75e9d4ba5b7047baa2fbf6f8929f67f383b37bd9e5682a013ef51e25402855",
   "baseline": "837adb1a918e3fe4dc560ebd017699fed522a11ccc256fa16726f64fe24e994a",
   "builder": "010f4579d37ac9409e3324c71306385d7be210f5879c9cbab8e8df3193c1d395"
  },
- "inputs_sha256": "852547b1b69c7dac031461d03b532226e046226f987f406bf49f6831cdc5cc1c"
+ "inputs_sha256": "521c3849a9a8a169edbe1021640dae5e327f956ae4483c75812af422fd796559"
 }

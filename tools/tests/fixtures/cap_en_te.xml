@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alert xmlns="urn:oasis:names:tc:emergency:cap:1.2">
+  <identifier>SYNTH-ENTE-1</identifier>
+  <sender>sdma@example.invalid</sender>
+  <sent>2026-11-14T11:31:42+00:00</sent>
+  <status>Actual</status><msgType>Alert</msgType><scope>Public</scope>
+  <info>
+    <language>te-IN</language>
+    <category>Met</category><event>భారీ అలలు</event>
+    <urgency>Expected</urgency><severity>Moderate</severity><certainty>Likely</certainty>
+    <headline>సముద్రంలో భారీఅలలు వచ్చే అవకాశం ఉంది</headline>
+    <area><areaDesc>ముక్కాం నుంచి చింతపల్లి</areaDesc></area>
+  </info>
+  <info>
+    <language>en-IN</language>
+    <category>Met</category><event>High waves</event>
+    <urgency>Expected</urgency><severity>Moderate</severity><certainty>Likely</certainty>
+    <senderName>Andhra Pradesh SDMA</senderName>
+    <headline>High waves of 3 to 6 m likely off the coast; stay away from beaches</headline>
+    <area><areaDesc>Mukkam To Chintapalli</areaDesc></area>
+  </info>
+</alert>

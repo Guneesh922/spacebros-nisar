@@ -1288,7 +1288,8 @@
   ]
  },
  "provenance": {
-  "created_utc": "2026-11-14T15:34:27Z",
+  "created_utc": "2026-11-15T00:04:05Z",
+  "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
   "tool": "tools/build_web.py (build_profile)",
   "h5_sources": [
    "data/h5/L_SEA_20261027_T048.h5"

@@ -81,12 +81,6 @@
     eq(App.t('no.such.key'), '⟨no.such.key⟩', 't() missing key returns marker');
     console.warn = origWarn;
     ok(warned === 1, 't() missing key calls console.warn');
-    // fallback lang -> en
-    App.addStrings('te', { 'common.close': 'TE-close' });
-    App.state.lang = 'te';
-    eq(App.t('common.close'), 'TE-close', 'te string used when present');
-    eq(App.t('common.loading'), 'Loading', 'te falls back to en when key missing');
-    App.state.lang = 'en';
 
     // ---- fetchJSON ----
     var threw = false, r;

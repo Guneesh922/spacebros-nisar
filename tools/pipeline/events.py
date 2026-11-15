@@ -15,6 +15,11 @@ What it does, in order (all idempotent: a second run with the same inputs and --
      link moves to status radar_linked. New links start with radar_finding "numbers_coming" (COAST roles analysed for flood
      classes) or "sea_no_public_finding" (roles configured analysis "none_public"). The findings step later calls
      set_radar_finding() to turn "numbers_coming" into "change_seen" or "no_clear_change".
+     FLOOD drafts (P2-A): a GDACS flood is a model point or small area, not a flood map. The draft stores `footprint`
+     {point, affected_bbox, source_model, distance_km, basis} (km from the footprint, else the point, to the COAST box).
+     An UNREVIEWED flood draft farther than defaults.flood_link_km (config, default 50) from the COAST box gets NO linked
+     passes (status alert_only, status_text "Alert only, outside the radar area"); links it already had are dropped
+     (drafts only, logged). Its cannot_tell says it is a river-flow model alert and how far it is from the radar area.
   3. Human-reviewed events are NEVER deleted or rewritten; only alert_refs and linked_passes grow. Dismissed events are skipped.
 Wording rule: this file never says radar confirms an alert.
 
@@ -24,20 +29,23 @@ Usage: python tools/pipeline/events.py [--area godavari] [--now 2026-11-14T10:00
 import argparse
 import copy
 import datetime as dt
+import math
 import re
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import AREAS_ENV, CATALOG, ROOT, area as load_area, dump_json, load_json  # noqa: E402
+from common import AREAS_ENV, CATALOG, DEFAULT_FLOOD_LINK_KM, ROOT, area as load_area, dump_json, load_json  # noqa: E402
 
 SCHEMA = "events-v1"
 EVENTS = ROOT / "data" / "processed" / "events.json"
 ALERTS = ROOT / "data" / "processed" / "alerts.json"
-STATUS_TEXT = {"alert_only": "Alert only, not yet seen by radar", "radar_linked": "Radar passes linked",
+STATUS_TEXT = {"alert_only": "Alert only, not yet seen by radar", "outside": "Alert only, outside the radar area", "radar_linked": "Radar passes linked",
                "closed": "Closed", "dismissed": "Dismissed"}
 FINDINGS = ("change_seen", "no_clear_change", "numbers_coming", "sea_no_public_finding")
 GDACS_KIND = {"TC": "cyclone", "FL": "flood"}
+GENERIC_CANNOT = "This is an alert from an outside source. Radar has not been checked against it yet."
+MODEL_NAME = {"GLOFAS": "a river-flow model (GloFAS)"}
 SACHET_KIND_RX = [("cyclone", re.compile(r"cyclon", re.I)), ("flood", re.compile(r"flood", re.I))]
 
 
@@ -74,6 +82,101 @@ def window(ev):
     """(start, end, last_day) as dates; last_day = end + aftermath_days"""
     s, e = day(ev["start"]), day(ev["end"])
     return s, e, e + dt.timedelta(days=int(ev.get("aftermath_days", 30)))
+
+
+# ---------- flood footprint distance ----------
+def _hav(lon1, lat1, lon2, lat2):
+    r = 6371.0088
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    a = math.sin((p2 - p1) / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(math.radians(lon2 - lon1) / 2) ** 2
+    return 2 * r * math.asin(math.sqrt(a))
+
+
+def _near(lo1, hi1, lo2, hi2):
+    """Coordinate of interval 1 closest to interval 2 and the matching coordinate of interval 2."""
+    if hi1 < lo2:
+        return hi1, lo2
+    if hi2 < lo1:
+        return lo1, hi2
+    v = max(lo1, lo2)   # overlap: same value on this axis
+    return v, v
+
+
+def radar_distance_km(item, ar, role="COAST"):
+    """Great-circle km from the alert footprint (affected_bbox, else the point) to the nearest edge of the role box
+    (default COAST). 0 when they overlap. None when the item has neither. item: {affected_bbox, point}."""
+    box = ar["boxes"].get(role) or next(iter(ar["boxes"].values()))
+    b = item.get("affected_bbox")
+    if not b:
+        pt = item.get("point")
+        if not pt or pt[0] is None:
+            return None
+        b = [pt[0], pt[1], pt[0], pt[1]]
+    x1, x2 = _near(b[0], b[2], box[0], box[2])
+    y1, y2 = _near(b[1], b[3], box[1], box[3])
+    return round(_hav(x1, y1, x2, y2), 1)
+
+
+def flood_footprint(c, ar):
+    """The footprint block stored on a flood draft."""
+    d = radar_distance_km(c, ar)
+    return {"point": c.get("point"), "affected_bbox": c.get("affected_bbox"), "source_model": c.get("source_model"),
+            "distance_km": d, "basis": "affected_area" if c.get("affected_bbox") else "point"}
+
+
+def flood_cannot_tell(fp, ar):
+    src = (fp.get("source_model") or "").upper()
+    model = MODEL_NAME.get(src) or (f"the source model ({fp['source_model']})" if fp.get("source_model") else "a flood model")
+    out = [GENERIC_CANNOT,
+           f"GDACS flood alerts here come from {model} and give a point or a small area, not a flood map. "
+           "The alert is a model estimate and is not confirmed by radar."]
+    d = fp.get("distance_km")
+    if d is not None:
+        what = "its affected area" if fp.get("basis") == "affected_area" else "its point"
+        out.append("This alert overlaps the radar area." if d <= 0 else
+                   f"This alert is about {round(d)} km from the radar area (measured from {what}).")
+    return out
+
+
+def flood_outside(ev, ar):
+    """True for an UNREVIEWED flood draft whose footprint is farther than flood_link_km from the COAST box."""
+    fp = ev.get("footprint") or {}
+    km = float(ar["_defaults"].get("flood_link_km", DEFAULT_FLOOD_LINK_KM))
+    return (ev.get("type") == "flood" and not ev.get("reviewed_by_human") and fp.get("distance_km") is not None
+            and fp["distance_km"] > km)
+
+
+def apply_flood(ev, c, ar, now):
+    """Set footprint + flood wording on an unreviewed flood draft. Returns True if anything changed."""
+    fp = flood_footprint(c, ar)
+    if ev.get("footprint") == fp:
+        return False
+    ev["footprint"] = fp
+    ev["cannot_tell"] = flood_cannot_tell(fp, ar)
+    log(ev, now, "flood footprint: " + (f"{fp['distance_km']} km from the radar area ({fp['basis']})"
+                                         if fp["distance_km"] is not None else "no footprint given"))
+    return True
+
+
+def settle_flood(ev, ar, now):
+    """Outside the radar distance: drop links, alert_only. Inside again: plain alert_only text. Drafts only."""
+    if ev.get("type") != "flood" or ev.get("reviewed_by_human") or "footprint" not in ev:
+        return False
+    changed = False
+    if flood_outside(ev, ar):
+        if ev.get("linked_passes"):
+            n = len(ev["linked_passes"])
+            ev["linked_passes"] = []
+            log(ev, now, f"removed {n} linked pass(es): alert is {round(ev['footprint']['distance_km'])} km from the radar area "
+                         f"(limit {ar['_defaults'].get('flood_link_km', DEFAULT_FLOOD_LINK_KM)} km)")
+            changed = True
+        if ev.get("status") != "alert_only" or ev.get("status_text") != STATUS_TEXT["outside"]:
+            ev["status"], ev["status_text"] = "alert_only", STATUS_TEXT["outside"]
+            changed = True
+    elif ev.get("status") == "alert_only" and ev.get("status_text") == STATUS_TEXT["outside"]:
+        ev["status_text"] = STATUS_TEXT["alert_only"]
+        changed = True
+    return changed
 
 
 # ---------- public API for the findings step ----------
@@ -125,6 +228,7 @@ def alert_candidates(alerts, now):
         out.append({"source": "GDACS", "id": str(g["id"]), "kind": kind, "name": g.get("name") or f"GDACS {g['id']}",
                     "start": day(g["from"]), "end": day(g.get("to") or g["from"]), "issued": g["from"],
                     "headline": g.get("name") or "", "link": g.get("link"),
+                    "point": g.get("point"), "affected_bbox": g.get("affected_bbox"), "source_model": g.get("source"),
                     "severity": {"as_given": f"{g.get('alert_level')} alert" if g.get("alert_level") else None,
                                  "by": "GDACS"}, "credit": (alerts.get("gdacs") or {}).get("credit") or "GDACS"})
     for s in (alerts.get("sachet") or {}).get("items", []):
@@ -168,10 +272,13 @@ def new_draft(c, ar, now):
         "confounders": [], "alert_refs": [ref_of(c)], "edit_log": [],
     }
     log(ev, now, f"draft created from {c['source']} alert {c['id']}")
+    if c["kind"] == "flood" and c["source"] == "GDACS":
+        apply_flood(ev, c, ar, now)
+        settle_flood(ev, ar, now)
     return ev
 
 
-def refresh_draft(ev, c, now):
+def refresh_draft(ev, c, now, ar=None):
     """Update an auto draft from its alert (never a reviewed event). Returns True if anything changed."""
     changed = []
     for k, v in (("start", c["start"].isoformat()), ("end", c["end"].isoformat())):
@@ -186,6 +293,11 @@ def refresh_draft(ev, c, now):
         changed.append("severity")
     if changed:
         log(ev, now, f"updated from {c['source']} alert {c['id']}: {', '.join(changed)}")
+    if ar is not None and c["kind"] == "flood" and c["source"] == "GDACS" and ev.get("type") == "flood":
+        if apply_flood(ev, c, ar, now):
+            changed.append("footprint")
+        if settle_flood(ev, ar, now):
+            changed.append("links")
     return bool(changed)
 
 
@@ -197,6 +309,8 @@ def default_finding(ar, role):
 
 def link_passes(ev, scenes, ar, now):
     """Add catalogue scenes inside [start, end + aftermath_days]. Returns number of new links."""
+    if flood_outside(ev, ar):
+        return 0     # model alert far from the radar box: nothing to link
     s, e, last = window(ev)
     have = {lp["scene_id"] for lp in ev.get("linked_passes", [])}
     added = []
@@ -233,7 +347,7 @@ def update(doc, alerts, catalog, ar, now):
             continue   # alert (plus its aftermath window) is over: no new draft; existing events keep their refs
         holder = next((ev for ev in evs if mine(ev) and has_ref(ev, c)), None)
         if holder:
-            if not holder.get("reviewed_by_human") and holder.get("status") != "dismissed" and refresh_draft(holder, c, now):
+            if not holder.get("reviewed_by_human") and holder.get("status") != "dismissed" and refresh_draft(holder, c, now, ar):
                 changes.append(f"refreshed {holder['id']}")
             continue
         twin = next((ev for ev in evs if mine(ev) and ev.get("reviewed_by_human") and ev.get("type") == c["kind"]
@@ -252,6 +366,8 @@ def update(doc, alerts, catalog, ar, now):
     for ev in evs:
         if not mine(ev) or ev.get("status") == "dismissed":
             continue
+        if settle_flood(ev, ar, now):
+            changes.append(f"{ev['id']}: flood alert outside radar area, links settled")
         n = link_passes(ev, scenes, ar, now)
         if n:
             changes.append(f"{ev['id']}: +{n} pass(es)")

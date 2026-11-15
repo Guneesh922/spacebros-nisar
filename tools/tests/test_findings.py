@@ -326,6 +326,28 @@ def test_season_and_confidence():
     assert B.baseline_for(inp, 55)["season"] == "post_monsoon" and B.baseline_for(inp, 128) is None
 
 
+def test_presentation_switch_never_changes_findings():
+    """Findings keep every caveat (write-once, no revision); the switch only filters the public story/feed copy, in both states."""
+    with tempfile.TemporaryDirectory() as tmp:
+        make_root(tmp, [("2026-10-28", flooded(3), 1.6, "VALIDATED"), ("2027-01-20", flooded(3), 1.6, "VALIDATED")], baseline_status="PROVISIONAL")
+        inp, fs = all_findings(tmp)
+        f = fs["2027-01-20"]
+        assert f["confidence"]["level"] == "lower" and f["caveats"], "findings data keeps the caveats"
+        before = json.dumps(f, sort_keys=True)
+        hidden = B.apply_presentation(f, B.presentation_cfg({"presentation": {"show_data_caveats": False}}), inp["strings"])
+        shown = B.apply_presentation(f, B.presentation_cfg({"presentation": {"show_data_caveats": True}}), inp["strings"])
+        assert json.dumps(f, sort_keys=True) == before, "the findings dict is not edited"
+        season = inp["strings"]["caveat"]["season"]
+        assert hidden["caveats"] == [] and hidden["confidence"] == {"level": "normal", "reasons": []} and season not in hidden["sub"]
+        assert hidden["internal"]["caveats"] == f["caveats"] and hidden["internal"]["confidence"] == f["confidence"]
+        assert season in hidden["internal"]["sub"]
+        assert shown["caveats"] == f["caveats"] and season in shown["sub"] and shown["confidence"] == f["confidence"]
+        for k in ("three_numbers", "comparison_line", "shown_numbers", "sources", "revision", "inputs_sha256"):
+            assert hidden[k] == f[k] == shown[k], k
+        B.validate(hidden, inp["rules"])
+        B.validate(shown, inp["rules"])
+
+
 def test_events_fallback_to_event_files():
     """No data/processed/events.json: the reader falls back to data/events/*.json and takes the window from the IMD bulletin dates."""
     with tempfile.TemporaryDirectory() as tmp:

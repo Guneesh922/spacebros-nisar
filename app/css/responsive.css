@@ -3,7 +3,7 @@
 
 /* ---------- compact header (menu mode): everything below 1200px ----------
    Not enough room for the full single row, so region, date, tabs, About and Download move into the
-   hamburger panel. The header itself stays one row: brand, language, menu button. */
+   hamburger panel. The header itself stays one row: brand, menu button. */
 @media (max-width: 1199px) {
   .app-header {
     flex-wrap: nowrap;
@@ -12,12 +12,6 @@
   }
   .brand { flex: 1; gap: var(--s-2); min-width: 0; }
   .brand-name { overflow: hidden; text-overflow: ellipsis; }
-
-  .lang-group { order: 1; margin-left: 0; border: 0; border-radius: 0; flex: none; }
-  .lang-btn { padding: 0 8px; min-width: var(--touch); background: transparent; color: var(--ink-2); }
-  .lang-btn.is-active { background: transparent; color: var(--ink); font-weight: 600; }
-  .lang-full { display: none; }
-  .lang-short { display: inline; }
 
   .menu-btn { display: inline-flex; flex: none; order: 2; }
 
@@ -40,7 +34,7 @@
   }
   .app-header[data-menu="open"] .hdr-menu { display: flex; }
   .hdr-region, .hdr-date, .tabs-nav, .hdr-link, .hdr-download { order: 0; }
-  .hdr-link { align-self: flex-start; }
+  .hdr-link { align-self: flex-start; margin-left: 0; }
   .hdr-download { justify-content: center; }
   .tabs-nav { align-self: stretch; }
   .hdr-region .ctl__select, .hdr-date .ctl__select { width: 100%; }
@@ -62,9 +56,6 @@
 /* 1200-1359px: tighter gaps and selects keep one row with the full app name */
 @media (min-width: 1200px) and (max-width: 1359px) {
   .app-header { gap: var(--s-2); }
-  .lang-btn { padding: 0 8px; }
-  .lang-full { display: none; }
-  .lang-short { display: inline; }
   .brand-name { overflow: visible; text-overflow: clip; }
   .tab { padding: 0 8px; }
   .hdr-link { padding: 0 4px; }

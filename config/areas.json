@@ -1,12 +1,13 @@
 {
   "schema": "areas-v1",
   "site": {
-    "title": "Coast Radar Watch",
+    "title": "Pass by Pass",
     "tagline": "What the newest NISAR radar passes show on the Andhra Pradesh coast, next to official alerts.",
-    "name_options": ["Coast Radar Watch", "Pass by Pass", "Delta Radar Watch"]
+    "name_options": ["Pass by Pass", "Coast Radar View", "Delta Radar Notes"]
   },
+  "presentation": {"show_data_caveats": false, "cannot_tell_position": "end"},
   "default_area": "godavari",
-  "defaults": {"aftermath_days": 30, "search_since": "2026-10-01"},
+  "defaults": {"aftermath_days": 30, "search_since": "2026-10-01", "flood_link_km": 50},
   "areas": [
     {
       "id": "godavari",

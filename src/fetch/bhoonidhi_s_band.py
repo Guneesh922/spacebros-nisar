@@ -26,9 +26,9 @@ import urllib.request, urllib.error, urllib.parse
 API = os.environ.get("BHOONIDHI_API", "https://bhoonidhi-api.nrsc.gov.in")   # env override only for local tests
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 # covers the delta box and the sea (T48) box of the Arnab event
-DEFAULT_BBOX = "80.5,15.0,85.0,18.5"
+DEFAULT_BBOX = "80,15,87,19"   # W,S,E,N: every S- and L-band scene we use lies fully inside this
 DEFAULT_DT = "2026-10-01T00:00:00Z/2026-11-14T23:59:59Z"
-DEFAULT_COLLS = "NISAR_SSAR_GCOV,NISAR_SSAR_GSLC,NISAR_SSAR_RSLC"
+DEFAULT_COLLS = "NISAR_SSAR_GCOV"   # NISAR Validated Geocoded Polarimetric Covariance Product (V1)
 
 
 def call(method, path, body=None, token=None, raw=False):
@@ -55,7 +55,20 @@ class Session:
         self.renew()
 
     def renew(self):
-        t = call("POST", "/auth/token", {"userId": self._user, "password": self._pw, "grant_type": "password"})
+        body = json.dumps({"userId": self._user, "password": self._pw, "grant_type": "password"}).encode()
+        req = urllib.request.Request(API + "/auth/token", data=body, method="POST",
+                                     headers={"Content-Type": "application/json"})
+        try:
+            t = json.load(urllib.request.urlopen(req, timeout=120))
+        except urllib.error.HTTPError as e:
+            msg = e.read()[:300].decode(errors="replace")
+            if e.code == 401:
+                sys.exit("Login refused (HTTP 401 Invalid Credentials). The password prompt hides what you type, so "
+                         "re-check it (log in on the Bhoonidhi website to confirm). If it is right, the login limit "
+                         "(20/hour per IP) may be used up: wait an hour, then try once.\n" + msg)
+            if e.code == 429:
+                sys.exit("Login rate-limited (HTTP 429; 20 logins/hour per IP). Wait ~1 hour, then run once.")
+            sys.exit(f"HTTP {e.code} on POST /auth/token: {msg}")
         self.token = t["access_token"]
         return self.token
 
@@ -64,13 +77,36 @@ def login():
     return Session().token
 
 
+def _footprint(p, geom=None):
+    """(W,S,E,N) of the imaged area: ImgLatLon, else ProdLatLon, else the STAC geometry. None if unknown."""
+    pts = []
+    for k in ("ImgLatLon", "ProdLatLon"):
+        try:
+            pts = [(float(x), float(y)) for x, y in (p.get(k) or [])]
+        except (TypeError, ValueError):
+            pts = []
+        if pts:
+            break
+    if not pts and geom and geom.get("type") == "Polygon":
+        pts = [(float(x), float(y)) for x, y in geom["coordinates"][0]]
+    if not pts:
+        return None
+    xs, ys = [x for x, _ in pts], [y for _, y in pts]
+    return min(xs), min(ys), max(xs), max(ys)
+
+
+def _inside(fp, box):
+    return fp[0] >= box[0] and fp[1] >= box[1] and fp[2] <= box[2] and fp[3] <= box[3]
+
+
 def search(a):
     token = login()
     west, south, east, north = [float(x) for x in a.bbox.split(",")]
     rows, seen = [], set()
     for coll in a.collections.split(","):
         body = {"collections": [coll], "datetime": a.datetime,
-                "bbox": [west, south, east, north], "limit": 500}
+                "bbox": [west, south, east, north], "limit": 500,
+                "filter-lang": "cql2-json", "filter": {"op": "eq", "args": [{"property": "Online"}, "Y"]}}
         while True:
             res = call("POST", "/data/search", body, token)
             for f in res.get("features", []):
@@ -78,8 +114,11 @@ def search(a):
                     continue
                 seen.add(f["id"])
                 p = f.get("properties", {}) or {}
+                fp = _footprint(p, f.get("geometry"))
                 rows.append({"collection": f.get("collection", coll), "id": f["id"],
                              "datetime": p.get("datetime", ""), "online": p.get("Online", ""),
+                             "footprint_wsen": ",".join(f"{v:.3f}" for v in fp) if fp else "",
+                             "inside_bbox": "Y" if fp and _inside(fp, (west, south, east, north)) else "N",
                              "properties": json.dumps(p)})
             nxt = [l for l in res.get("links", []) if l.get("rel") == "next"]
             if not nxt:
@@ -87,11 +126,18 @@ def search(a):
             body = nxt[0].get("body") or {**body, "token": nxt[0].get("href", "").split("token=")[-1]}
             time.sleep(0.4)  # stay under 3 searches/second
         print(f"{coll}: {sum(r['collection'] == coll for r in rows)} items")
-    out = os.path.join(ROOT, "data", "reference", "nisar_s_candidates.csv")
+    cols = ["collection", "id", "datetime", "online", "footprint_wsen", "inside_bbox", "properties"]
+    ref = os.path.join(ROOT, "data", "reference")
+    with open(os.path.join(ref, "nisar_s_candidates_all.csv"), "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=cols); w.writeheader(); w.writerows(rows)
+    hits = rows if a.intersects else [r for r in rows if r["inside_bbox"] == "Y"]
+    out = os.path.join(ref, "nisar_s_candidates.csv")
     with open(out, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=["collection", "id", "datetime", "online", "properties"])
-        w.writeheader(); w.writerows(rows)
-    print(f"wrote {len(rows)} rows -> {out}")
+        w = csv.DictWriter(fh, fieldnames=cols); w.writeheader(); w.writerows(hits)
+    print(f"{len(rows)} items touch the bbox; {len(hits)} kept "
+          f"({'all touching' if a.intersects else 'footprint fully inside ' + a.bbox}) -> {out}")
+    for r in sorted(hits, key=lambda r: r["datetime"]):
+        print(f"  {r['datetime'][:16]}  {r['id']}  [{r['footprint_wsen']}]")
     if not rows:
         print("0 results: widen --bbox/--datetime, or the S-band scene may not be online yet.")
 
@@ -274,9 +320,23 @@ class RangeFile(io.RawIOBase):
             h["Authorization"] = "Bearer " + self._tok()
         return h
 
+    _pace_lock = threading.Lock()
+    _next_start = 0.0
+    MIN_GAP = 31.0     # Bhoonidhi counts EVERY range request as a download: 2 per minute per IP
+
+    @classmethod
+    def _pace(cls):
+        with cls._pace_lock:
+            wait = cls._next_start - time.time()
+            if wait > 0:
+                time.sleep(wait)
+            cls._next_start = time.time() + cls.MIN_GAP
+
     def _open(self, start, end):
         """GET the byte range, following redirects by hand. Returns the open response (caller closes it)."""
         url = self._final or self.url
+        if self._is_auth_host(urllib.parse.urlparse(url).hostname or ""):
+            self._pace()
         for _ in range(8):
             req = urllib.request.Request(url, headers=self._headers(url, start, end))
             try:
@@ -342,10 +402,35 @@ class RangeFile(io.RawIOBase):
         raise OSError(f"range read of bytes={start}-{end} failed after {self.retries} retries: {last}")
 
     def _probe(self):
-        try:
-            r, url = self._open(0, 1023)
-        except urllib.error.HTTPError as e:
-            raise OSError(f"probe failed: HTTP {e.code} {e.read()[:200].decode(errors='replace')}") from e
+        renewed = False
+        for attempt in range(self.retries + 1):
+            try:
+                r, url = self._open(0, 1023)
+                break
+            except urllib.error.HTTPError as e:
+                code, ra = e.code, (e.headers.get("Retry-After") or "")
+                body = e.read()[:200].decode(errors="replace")
+                e.close()
+                if code == 429 and attempt < self.retries:
+                    wait = int(ra) if ra.isdigit() else 65          # download limit is 2/min
+                    print(f"  probe got 429 (rate limit); waiting {wait}s (try {attempt + 1}/{self.retries})")
+                    time.sleep(wait)
+                    continue
+                if code in (401, 403, 410) and not renewed and self.session:
+                    renewed = True
+                    self._final = None
+                    self.session.renew()
+                    continue
+                if code >= 500 and attempt < self.retries:
+                    time.sleep(min(60, 2 ** attempt))
+                    continue
+                raise OSError(f"probe failed: HTTP {code} {body}") from e
+            except (urllib.error.URLError, http.client.HTTPException, TimeoutError, ConnectionError) as e:
+                if attempt >= self.retries:
+                    raise OSError(f"probe failed: {e}") from e
+                wait = min(60, 2 ** attempt)
+                print(f"  probe failed ({type(e).__name__}); retry in {wait}s")
+                time.sleep(wait)
         with r:
             status, hdr = r.status, r.headers
             if status != 206:
@@ -471,6 +556,12 @@ def subset(a):
         coll = a.collection or GCOV_COLLECTION
         url = download_url(coll, item)
         print(f"\n[{n}/{len(jobs)}] {sid}  {role}  {item}")
+        md, mt = re.search(r"_(\d{8})T\d{6}_", item), re.search(r"GCOV_\d+_(\d+)_", item)
+        done = os.path.join(a.out or os.path.join(ROOT, "data", "h5"),
+                            f"S_{role}_{md.group(1)}_T{int(mt.group(1)):03d}.h5") if (md and mt) else None
+        if done and os.path.exists(done) and not a.plan:
+            print(f"  already have {os.path.relpath(done, ROOT)}; skipping (delete it to redo)")
+            continue
         try:
             rf = RangeFile(url, session=sess, block=int(a.block_mb * (1 << 20)), workers=a.workers)
         except RangeUnsupported as e:
@@ -491,8 +582,6 @@ def subset(a):
         rf._progress(force=True)
         total += rf.bytes_fetched
         print(f"  {sid}: fetched {rf.bytes_fetched / 1e6:.1f} MB ({100 * rf.bytes_fetched / rf.size:.2f} % of the file)")
-        if n < len(jobs):
-            time.sleep(2)
     print(f"\ndone. Total fetched {total / 1e6:.0f} MB for {len(jobs)} scene(s). "
           + ("(plan only, nothing written)" if a.plan else "Files are in data/h5/. Next: python3 tools/pipeline/catalog.py "
              "(refresh data/h5/catalog.json), then sync_manifest and build_web."))
@@ -505,6 +594,7 @@ if __name__ == "__main__":
     s.add_argument("--bbox", default=DEFAULT_BBOX)
     s.add_argument("--datetime", default=DEFAULT_DT)
     s.add_argument("--collections", default=DEFAULT_COLLS)
+    s.add_argument("--intersects", action="store_true", help="keep scenes that only touch the bbox (default: fully inside)")
     s.set_defaults(fn=search)
     d = sub.add_parser("download")
     d.add_argument("--collection", required=True)
@@ -522,8 +612,9 @@ if __name__ == "__main__":
     u.add_argument("--only", choices=["COAST", "SEA"], help="with --preset: just the 3 coast scenes or just the sea scene")
     u.add_argument("--out", help="output folder (default data/h5/)")
     u.add_argument("--no-log", action="store_true", help="do not append to data/logs/nisar_h5_subset.md")
-    u.add_argument("--block-mb", type=float, default=4.0, help="range block size in MB (default 4)")
-    u.add_argument("--workers", type=int, default=3, help="parallel range requests (default 3; drops to 1 on HTTP 429)")
+    u.add_argument("--block-mb", type=float, default=32.0,
+                   help="range block size in MB (default 32: few, big requests, because each counts as a download)")
+    u.add_argument("--workers", type=int, default=2, help="parallel range requests (default 2; drops to 1 on HTTP 429)")
     u.set_defaults(fn=subset)
     a = ap.parse_args()
     a.fn(a)

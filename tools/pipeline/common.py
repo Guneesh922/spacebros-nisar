@@ -16,6 +16,7 @@ AREAS_FILE = ROOT / "config" / "areas.json"
 AREAS_ENV = "SPACEBROS_AREAS"
 DEFAULT_AFTERMATH_DAYS = 30
 DEFAULT_SEARCH_SINCE = "2026-10-01"
+DEFAULT_FLOOD_LINK_KM = 50   # a flood alert farther than this from the COAST box gets no radar links
 
 MAX_SUBSET_BYTES = 90 * 1000 * 1000   # refuse to keep a subset bigger than this (GitHub hard limit is 100 MB)
 
@@ -59,7 +60,7 @@ def area(id=None, root=None, path=None):
         if a["id"] == aid:
             a = dict(a)
             a["_defaults"] = {"aftermath_days": DEFAULT_AFTERMATH_DAYS, "search_since": DEFAULT_SEARCH_SINCE,
-                              **(d.get("defaults") or {})}
+                              "flood_link_km": DEFAULT_FLOOD_LINK_KM, **(d.get("defaults") or {})}
             return a
     raise KeyError(f"area {aid!r} not in {areas_path(root, path)}")
 

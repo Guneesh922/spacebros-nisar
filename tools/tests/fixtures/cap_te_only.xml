@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alert xmlns="urn:oasis:names:tc:emergency:cap:1.2">
+  <identifier>SYNTH-TE-1</identifier>
+  <sender>sdma@example.invalid</sender>
+  <sent>2026-11-14T11:31:42+00:00</sent>
+  <status>Actual</status><msgType>Alert</msgType><scope>Public</scope>
+  <info>
+    <language>te-IN</language>
+    <category>Met</category>
+    <event>భారీ అలలు</event>
+    <urgency>Expected</urgency><severity>Moderate</severity><certainty>Likely</certainty>
+    <senderName>ఆంధ్రప్రదేశ్ ప్రభుత్వం</senderName>
+    <headline>సముద్రంలో భారీఅలలు వచ్చే అవకాశం ఉంది</headline>
+    <area><areaDesc>ముక్కాం నుంచి చింతపల్లి</areaDesc></area>
+  </info>
+</alert>

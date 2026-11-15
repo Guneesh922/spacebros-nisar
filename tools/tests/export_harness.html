@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><title>export harness</title>
+<body style="margin:0"><pre id="out">loading</pre><iframe id="f" style="width:900px;height:1200px;border:0"></iframe>
+<script src="../../app/vendor/fflate-0.8.2.min.js"></script><script src="../../app/dashboard-mockup/js/export.js"></script>
+<script>
+var P = '../../data/processed/', j = function (u) { return fetch(u).then(function (r) { return r.json(); }); };
+window.run = function (date, mandal, mutate) {
+  return Promise.all([j(P + 'mandal_rank.json'), j(P + 'mandals.geojson'), j(P + 'manifest.json'), j('../../data/h5/catalog.json'), j('../../config/areas.json'), j(P + 'findings/' + date + '.json')]).then(function (a) {
+    var rank = a[0]; if (mutate) mutate(rank);
+    return SpacebrosExport.build({ rank: rank, mandals: a[1], manifest: a[2], catalog: a[3], cfg: a[4], findings: a[5], date: date, mandalName: mandal,
+      classImageUrl: '../../data/web/class_' + date.replace(/-/g, '') + '_new_water.png', pageUrl: location.href });
+  }).then(function (b) {
+    var f = document.getElementById('f'); f.srcdoc = b.briefHtml;
+    return new Promise(function (res) { f.onload = function () { setTimeout(function () {
+      var pg = f.contentDocument.querySelector('.page'), img = f.contentDocument.querySelector('image');
+      res({ size: b.briefHtml.length, scrollH: pg.scrollHeight, clientH: pg.clientHeight, fits: pg.scrollHeight <= pg.clientHeight, hasImg: !!img, imgBytes: img ? img.getAttribute('href').length : 0,
+        credBottom: f.contentDocument.querySelector('.foot').getBoundingClientRect().bottom - pg.getBoundingClientRect().top }); }, 400); }; });
+  });
+};
+document.getElementById('out').textContent = 'ready';
+</script>

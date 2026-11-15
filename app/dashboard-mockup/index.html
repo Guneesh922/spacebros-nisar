@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Coast Radar Watch</title>
+<title>Pass by Pass</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="css/dash.css">
@@ -15,8 +15,8 @@
   <div class="hdr__top">
     <span class="hdr__mark" aria-hidden="true"></span>
     <div class="hdr__titles">
-      <p class="hdr__org">SpaceBros &middot; NISAR coast watch</p>
-      <h1 class="hdr__title">Coast Radar Watch</h1>
+      <p class="hdr__org">Team SpaceBros</p>
+      <h1 class="hdr__title">Pass by Pass</h1>
       <p class="hdr__sub">What the newest NISAR radar passes show on the coast, next to official alerts.</p>
     </div>
     <div class="hdr__meta is-loading" id="hdr-meta">Loading data&hellip;</div>
@@ -37,6 +37,7 @@
       <p class="visually-hidden" role="status">Loading findings</p>
     </section>
     <section id="sec-data" role="tabpanel" aria-labelledby="tab-data" class="sec" hidden></section>
+    <p class="small muted site-foot" id="site-foot" style="padding:0 var(--s-4) var(--s-5)">Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service.</p>
   </aside>
 
   <div class="stage">
@@ -61,6 +62,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script src="js/findings.js"></script>
+<script src="../vendor/fflate-0.8.2.min.js"></script>
+<script src="js/export.js"></script>
 <script src="js/dash.js"></script>
 </body>
 </html>

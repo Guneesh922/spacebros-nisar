@@ -28,7 +28,7 @@ Result (km2 and % of valid land, k = 3): 9 Nov new water 83.7 km2 (1.60 %, range
 With the histogram valley (-14.45 dB) as T instead of Otsu, 9 Nov new water is 60 km2.
 
 Display PNGs: `data/web/class_{20261028,20261109}_{new_water,wet_crops,no_change}.png`, RGBA, lat/lon, nearest-neighbour warp to <= 3000 px
-(about 36 m, so thin 20 m features thin out on screen; all counts are on the 20 m grid). Colours from the manifest: water #2A6FB0, crops #E09A2B, no change pale grey, low alpha.
+(about 36 m, so thin 20 m features thin out on screen; all counts are on the 20 m grid). Colours (dark-basemap versions of the UI palette, docs/review/COLOUR_CHECK.md): water #3FA7F5 alpha 235, crops #F2A93B alpha 210, no change #C4D0D2 alpha 36 (near transparent).
 
 ## 2. Mandal ranking (W3-H update)
 Every coast date after the baseline is tallied; `mandal_rank.json` top level (`rows`, `flagged_not_ranked`) = the newest date, `by_date[YYYY-MM-DD].rows` = every date (ranked and flagged rows).
@@ -62,7 +62,8 @@ Scene: `L_SEA_20261027_T048.h5`, VV, 100 m, acquired 13:01:51 to 13:02:08 UTC (V
 
 ## Histograms and ramps (W3-H phase 2)
 - Every layer json has `hist`: `range_db` [-35, 5], `bin_db` 0.5, `counts[pol]` (raw pixels, HH/HV or VV/VH, out-of-range values clipped into the end bins), `n_valid[pol]`. Coast layers also have `counts_smoothed3x3.HH/HV` (the 3 x 3 smoothed image the class rules use) and `water_threshold_db` {pol HH, value -12.3} drawn on the smoothed histogram.
-- Backscatter PNGs stay greyscale (-25..0 dB). The sea difference PNG uses a colour-blind-safe diverging blue - white - orange ramp, -15..+15 dB; the stops are in the json (`ramp.stops`, with labels) and in the manifest layer so the UI can draw the legend.
+- Backscatter PNGs stay greyscale. The stretch is fixed per role (COAST HH, SEA VV): 2 and 98 percent of the pooled valid pixels of ALL dates of that role (today COAST -22.16 .. -1.06 dB, SEA -26.50 .. -4.22 dB); lo, hi, percentiles and pixel count are in each layer json under `stretch` (the old fixed -25..0 dB is `previous_fixed_db`). A new date moves it on the next build.
+- Change maps (sea difference and coast change) share one rule. Ramp: colour-blind-safe blue (darker) - white (no change) - orange-red (brighter), symmetric about 0; pixels with |change| < 1 sigma are grey ("no clear change"); limit = min(3 x P99 of |change|, 6 dB). Stops, sigma, limit, P99 and the legend words are in the json (`ramp`, and in the manifest layer). Coast change: `nisar_l_coast_change_{date}_hh`, event HH minus the baseline (mean of 4 and 16 Oct, linear power) on the 20 m class grid, 3 x 3 smoothed like the classes, land only; sigma = the HH sigma of step 6 (0.88 dB). Sea difference: no usable calm-fortnight pair, so sigma = robust sigma of the difference over common valid pixels more than 1 km offshore; the old +-15 dB range became +-6.0 dB. Colour reasons and checks: `docs/review/COLOUR_CHECK.md`, `tools/colour_check.py`.
 
 ## Live story (W3-H phase 2)
 `tools/build_story.py` turns the numbers above into plain-language text with templates only (no model at build time). A mandal counts as flooded when likely new open water (water class only) is >= 3 % of its seen land, >= 2 times its normal-fortnight water share, and the radar saw >= 50 % of it. "Went down / up" needs a change of at least max(1 point, 2 x error). The `provisional` badge is on when the newest scene or either baseline scene is a PROVISIONAL product (today the baseline is). Where an event file lists a confounder for a scene date (9 Nov: Cyclone Murasu and the river peak) the text says so.

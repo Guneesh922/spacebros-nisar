@@ -181,6 +181,100 @@ def test_old_alert_does_not_create_draft():
     assert doc["events"] == []
 
 
+# ---------- P2-A: floods (GDACS FL) ----------
+def fx(name):
+    with open(os.path.join(HERE, "fixtures", name)) as f:
+        return json.load(f)
+
+
+FL_SCENES = [scene("2026-10-27", "SEA"), scene("2026-10-28"), scene("2026-11-09")]
+
+
+def test_fl_inside_box_makes_draft_and_links():
+    al = build_alerts(fx("gdacs_fl_inside.json"))
+    item = al["gdacs"]["items"][0]
+    assert item["type"] == "FL" and item["source"] == "GLOFAS" and item["affected_bbox"] == [82.0, 16.6, 82.2, 16.8]
+    doc, _ = run(None, al, FL_SCENES)
+    ev = doc["events"][0]
+    assert ev["id"] == "auto_GDACS_7001" and ev["type"] == "flood" and ev["reviewed_by_human"] is False
+    assert ev["footprint"]["distance_km"] == 0 and ev["footprint"]["basis"] == "affected_area"
+    assert len(ev["linked_passes"]) == 3 and ev["status"] == "radar_linked"
+    txt = " ".join(ev["cannot_tell"])
+    assert "river-flow model (GloFAS)" in txt and "not a flood map" in txt and "overlaps the radar area" in txt, txt
+
+
+def test_fl_like_1104248_outside_makes_draft_without_links():
+    al = build_alerts(fx("gdacs_fl_outside.json"))
+    assert [i["id"] for i in al["gdacs"]["items"]] == ["1104248"]
+    doc, _ = run(None, al, FL_SCENES)
+    ev = doc["events"][0]
+    assert ev["id"] == "auto_GDACS_1104248"
+    assert ev["linked_passes"] == [] and ev["status"] == "alert_only"
+    assert ev["status_text"] == "Alert only, outside the radar area"
+    assert ev["footprint"]["distance_km"] > 100, ev["footprint"]
+    txt = " ".join(ev["cannot_tell"])
+    assert "km from the radar area" in txt and "model" in txt and "not confirmed by radar" in txt, txt
+    assert ar_default_km() == 50
+    # an old draft that was linked before this rule loses its links on the next run (drafts only, logged)
+    old = copy.deepcopy(doc)
+    old["events"][0].pop("footprint")
+    old["events"][0]["linked_passes"] = [{"scene_id": "L_COAST_20261028", "date": "2026-10-28", "role": "COAST",
+                                          "relation": "during", "radar_finding": "no_clear_change"}]
+    old["events"][0]["status"], old["events"][0]["status_text"] = "radar_linked", "Radar passes linked"
+    fixed, ch = run(old, al, FL_SCENES)
+    ev2 = fixed["events"][0]
+    assert ev2["linked_passes"] == [] and ev2["status"] == "alert_only" and ch
+    assert any("removed 1 linked pass" in x["what"] for x in ev2["edit_log"])
+
+
+def ar_default_km():
+    return AR["_defaults"]["flood_link_km"]
+
+
+def test_fl_failed_footprint_fetch_uses_centroid_rule():
+    real = A.http_get
+    try:
+        def boom(url, timeout=40):
+            raise OSError("geometry request failed")
+        A.http_get = boom
+        assert A.fetch_affected_bbox("https://example.invalid/geometry") is None
+        assert A.fetch_affected_bbox(None) is None
+    finally:
+        A.http_get = real
+    al = build_alerts(fx("gdacs_fl_centroid_only.json"))
+    assert all(i["affected_bbox"] is None for i in al["gdacs"]["items"])
+    doc, _ = run(None, al, FL_SCENES)
+    by = {e["id"]: e for e in doc["events"]}
+    far, near = by["auto_GDACS_7003"], by["auto_GDACS_7004"]
+    assert far["footprint"]["basis"] == "point" and 50 < far["footprint"]["distance_km"] < 100
+    assert far["linked_passes"] == [] and far["status_text"] == "Alert only, outside the radar area"
+    assert near["footprint"]["basis"] == "point" and 0 < near["footprint"]["distance_km"] <= 50
+    assert len(near["linked_passes"]) == 3 and near["status"] == "radar_linked"
+
+
+def test_human_flood_event_absorbs_fl_alert():
+    human = {"id": "flood_review", "name": "Flood X", "type": "flood", "area_id": "godavari", "start": "2026-10-19",
+             "end": "2026-11-03", "aftermath_days": 30, "window_source": "test", "status": "radar_linked",
+             "status_text": "Radar passes linked", "reviewed_by_human": True, "linked_passes": [], "alert_refs": [],
+             "edit_log": [], "description": "keep me", "severity": {"as_given": "x", "by": "y"}}
+    doc = {"schema": "events-v1", "updated_utc": None, "events": [copy.deepcopy(human)]}
+    out, _ = run(doc, build_alerts(fx("gdacs_fl_outside.json")), FL_SCENES)
+    assert [e["id"] for e in out["events"]] == ["flood_review"], "FL alert must attach to the human event"
+    ev = out["events"][0]
+    assert ev["alert_refs"][0]["id"] == "1104248" and ev["description"] == "keep me"
+    assert "footprint" not in ev and len(ev["linked_passes"]) == 3, "a reviewed event is linked by its own window, never guarded"
+
+
+def test_fl_idempotent_second_run():
+    for name in ("gdacs_fl_inside.json", "gdacs_fl_outside.json", "gdacs_fl_centroid_only.json"):
+        al = build_alerts(fx(name))
+        d1, _ = run(None, al, FL_SCENES)
+        d2, ch2 = run(d1, al, FL_SCENES)
+        assert ch2 == [] and d2 == d1, (name, ch2)
+        d3, ch3 = run(d1, al, FL_SCENES, E.parse_now("2026-11-14T18:00Z"))
+        assert ch3 == [] and E.strip_stamp(d3) == E.strip_stamp(d1), name
+
+
 def test_real_files_validate():
     import importlib.util
     spec = importlib.util.spec_from_file_location("cm", os.path.join(ROOT, "tools", "check_manifest.py"))

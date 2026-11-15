@@ -1,6 +1,6 @@
 {
  "schema": "events-v1",
- "updated_utc": "2026-11-14T15:34:27Z",
+ "updated_utc": "2026-11-15T00:04:06Z",
  "events": [
   {
    "id": "arnab_2026",
@@ -307,42 +307,15 @@
     "as_given": "Green alert",
     "by": "GDACS"
    },
-   "status": "radar_linked",
-   "status_text": "Radar passes linked",
+   "status": "alert_only",
+   "status_text": "Alert only, outside the radar area",
    "reviewed_by_human": false,
-   "linked_passes": [
-    {
-     "scene_id": "L_SEA_EYE_1027",
-     "date": "2026-10-27",
-     "role": "SEA",
-     "relation": "during",
-     "radar_finding": "sea_no_public_finding"
-    },
-    {
-     "scene_id": "L_COAST_1028",
-     "date": "2026-10-28",
-     "role": "COAST",
-     "relation": "during",
-     "radar_finding": "no_clear_change"
-    },
-    {
-     "scene_id": "L_SEA_AFTER_1108",
-     "date": "2026-11-08",
-     "role": "SEA",
-     "relation": "after",
-     "radar_finding": "sea_no_public_finding"
-    },
-    {
-     "scene_id": "L_COAST_1109",
-     "date": "2026-11-09",
-     "role": "COAST",
-     "relation": "after",
-     "radar_finding": "change_seen"
-    }
-   ],
+   "linked_passes": [],
    "description": "Flood in India",
    "cannot_tell": [
-    "This is an alert from an outside source. Radar has not been checked against it yet."
+    "This is an alert from an outside source. Radar has not been checked against it yet.",
+    "GDACS flood alerts here come from a river-flow model (GloFAS) and give a point or a small area, not a flood map. The alert is a model estimate and is not confirmed by radar.",
+    "This alert is about 168 km from the radar area (measured from its affected area)."
    ],
    "confounders": [],
    "alert_refs": [
@@ -378,8 +351,38 @@
      "utc": "2026-11-14T15:05:40Z",
      "by": "pipeline",
      "what": "radar_finding L_COAST_1028: change_seen -> no_clear_change"
+    },
+    {
+     "utc": "2026-11-14T23:35:21Z",
+     "by": "pipeline",
+     "what": "flood footprint: 174.8 km from the radar area (point)"
+    },
+    {
+     "utc": "2026-11-14T23:35:21Z",
+     "by": "pipeline",
+     "what": "removed 4 linked pass(es): alert is 175 km from the radar area (limit 50 km)"
+    },
+    {
+     "utc": "2026-11-15T00:02:50Z",
+     "by": "pipeline",
+     "what": "flood footprint: 168.2 km from the radar area (affected_area)"
     }
-   ]
+   ],
+   "footprint": {
+    "point": [
+     80.1661,
+     15.446
+    ],
+    "affected_bbox": [
+     80.1211,
+     15.4009,
+     80.2112,
+     15.491
+    ],
+    "source_model": "GLOFAS",
+    "distance_km": 168.2,
+    "basis": "affected_area"
+   }
   }
  ]
 }

@@ -61,23 +61,53 @@ or put `machine urs.earthdata.nasa.gov login USER password PASS` in `~/.netrc`.
 3. **Urban growth / construction**: new bright HH returns (Dwarka Expressway, Noida, Jewar airport).
 4. **Land subsidence** (GUNW): parts of Delhi-NCR are documented as sinking from groundwater extraction.
 
-## Web app (app/)
+## Web app: "Pass by Pass"
 
-A static page (plain HTML, CSS and JS, no build step): a daily NISAR-centred coastal-hazard workspace for the Andhra Pradesh coast, with a saved Cyclone Arnab event and a Case study tab.
+A static page (plain HTML, CSS and JS, no build step): the dashboard in `app/dashboard-mockup/` (tabs "What happened" and "Data for officials and researchers", one Leaflet map) for the Andhra Pradesh coast (Godavari delta and the sea off it), showing what NISAR L-band radar saw around Cyclone Arnab (landfall 28 Oct 2026) and the Murasu aftermath. English only.
 
-- **Run it:** from the repo root run `python3 -m http.server 8000`, then open <http://localhost:8000/app/>.
-- **What it reads:** everything comes from `data/processed/manifest.json` (regions, layers, events, sources, analyses) and the files it points to (`mandals.geojson`, `mandal_rank.json`, `profile.json`, `alerts.json`, `img/*`). Adding a layer, event or region means editing the manifest only. Schema: `docs/MANIFEST_SCHEMA.md`.
-- **Sample values:** anything that is not real data yet is tagged on screen ("Sample values", "Quick-look sample", "Draft: to be reviewed"). The list is in `docs/PLACEHOLDERS.md`; what the backend still owes is in `docs/BACKEND_GAPS.md` (section 13 was added during the frontend review).
-- **Needs internet:** Leaflet, Chart.js, Scrollama, Google Fonts, Esri basemap tiles and the live GIBS, Open-Meteo and GDACS feeds are loaded from the web; live feeds fail soft with an "unavailable" message.
+- **Run it:** from the repo root run `python3 -m http.server 8000`, then open <http://localhost:8000/app/dashboard-mockup/>. The GitHub Pages root redirects there. Needs internet for Leaflet, fonts, the Esri dark basemap and the live GIBS, Open-Meteo and GDACS feeds (live feeds fail soft).
+- **What it reads:** `data/processed/manifest.json` (schema: `docs/MANIFEST_SCHEMA.md`), `data/processed/*.json` and the display files in `data/web/` (git-ignored, built by `tools/build_web.py`). The data of record is the 8 L-band H5 subsets in `data/h5/` (4 coast scenes of track 55, 4 sea scenes of track 48).
+- **Colour coding:** radar pictures are greyscale with a per-role stretch (coast HH, sea VV); change layers use one change ramp (grey band for "no clear change", darker and brighter ends); class maps use fixed colours (new open water blue, wet or flooded crops amber, no change as a faint grey outline); a dual-pol colour composite (RGB) is available beside the grey view. Checks: `docs/review/COLOUR_CHECK.md`, `docs/review/RGB_COMPOSITE.md`.
+- **Presentation switch:** `config/areas.json` `presentation.show_data_caveats` is `false`: the product shows no data-quality disclaimers, only source credits and one "not an official product, not a warning service" line. The caveats live in the pitch deck and in `docs/METHODS.md`.
+- **Alerts and events:** GDACS and SACHET (Andhra Pradesh only) feed draft events. A GDACS flood alert is linked to radar passes only if its footprint is within `defaults.flood_link_km` (50 km) of the coast box; otherwise it is shown as "alert only".
+- **Brief and zip download (P1):** in progress, not built yet.
+- **Experimental, outside the pipeline:** `tools/experimental/mangrove_change.py` (mangrove HV-minus-HH change at Coringa; about 2 minutes and about 3 GB RAM; run `.venv/bin/python -I tools/experimental/mangrove_change.py`). Result: no detectable change; see `docs/review/MANGROVE_EXPERIMENT.md`. Not shown in the UI.
+
+### Pipeline and tests
+
+```bash
+.venv/bin/python tools/pipeline/run_all.py --offline --skip-ingest   # catalogue, alerts, events, build_web, tests, story/findings
+.venv/bin/python tools/build_web.py                                  # only the display assets from data/h5/
+# the five checks run by run_all.py and pages.yml (each exits non-zero on failure):
+.venv/bin/python tools/tests/test_story.py
+.venv/bin/python tools/tests/test_findings.py
+.venv/bin/python tools/tests/test_events.py
+.venv/bin/python tools/tests/test_english_only.py
+.venv/bin/python tools/check_manifest.py
+```
+
+Adding a daily scene needs `EARTHDATA_TOKEN` (ingest step only). The daily workflow `.github/workflows/update.yml` has been emulated locally (`tools/sim/`) but not run on GitHub.
+
+### Where the docs are
+
+`docs/STATUS.md` (live board), `docs/METHODS.md` (methods and caveats), `docs/PIPELINE.md`, `docs/DATA_STORAGE.md`, `docs/MANIFEST_SCHEMA.md`, `docs/ADDING_CONTENT.md`, `docs/PLACEHOLDERS.md` (what is still open), `docs/review/` (colour, RGB, L-band test, mangrove, acceptance, resource audit), `docs/PLAN_P1_P2.md`, `docs/REPORT_OVERNIGHT.md`, `docs/submission/` (drafts for the hand-in).
 
 ## Community & links
 
 - Delhi WhatsApp community: <https://chat.whatsapp.com/G51kBazKRdnHrRxi5VPRoS>
 - Instagram: <https://www.instagram.com/nasaspaceappsbyuwr/> · Website: <https://www.spaceappsindia.com>
-- ASF Vertex (browse NISAR by map): <https://search.asf.alaska.edu/> · NISAR data user guide: via the challenge Resources tab
+- ASF Vertex (a map browser for NISAR scenes; listed as a challenge resource, not used by our code, which calls the NASA CMR API and the ASF search API) <https://search.asf.alaska.edu/> · NISAR data user guide: via the challenge Resources tab (background reading)
 - Schedule: hackathon starts Sat 14 Nov 09:30 IST, ends **Sun 15 Nov 23:59 IST**
 
 ## Data credits
 
-NISAR data: NASA/JPL-Caltech and ISRO, distributed by the Alaska Satellite Facility DAAC.
-Basemaps: © OpenStreetMap contributors; Esri World Imagery.
+Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service. The dashboard is called "Pass by Pass" (earlier name: "Coast Radar Watch").
+
+Exact credit strings (use them wherever the data is shown, copied or downloaded):
+
+- NISAR: `NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)`, followed by scene date, track, polarisation and PROVISIONAL or VALIDATED status. Maps and numbers made by us: `SpaceBros, derived from NISAR data`.
+- Alerts and storm facts: IMD / RSMC New Delhi bulletins; NDMA SACHET; GDACS (EC JRC and UN OCHA).
+- Mandal outlines: geoBoundaries gbOpen India ADM3, boundary year 2018, ODbL-1.0 (attribution and share-alike). District names for the mandals: the 2022 Andhra Pradesh district lists (see `data/interim/C/mandal_district_2022_complete.csv`).
+- Basemap: `Map data: Esri, HERE, Garmin, OpenStreetMap contributors` (Esri World Dark Gray Canvas; the line is shown in the map corner).
+- Other live layers: NASA GIBS (VIIRS, IMERG, Himawari), Open-Meteo.com (CC BY 4.0), MOSDAC/SAC/ISRO link.
+- Images: no NASA, ISRO or Space Apps logos or insignia, and no AI-generated images, are used. All pictures on the site are radar or map products built from the H5 files.

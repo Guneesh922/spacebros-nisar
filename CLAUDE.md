@@ -20,6 +20,12 @@ or redesign. When you finish a task, update `docs/STATUS.md` in the same session
 - Keep honesty badges ("Sample values", "Quick-look sample") on any layer until it is built from real H5.
   Always tell the user plainly what is real and what is still a placeholder.
 
+- **Product vs pitch deck (user decision, 15 Nov):** the product/demo shows NO disclaimers about data quality: no
+  PROVISIONAL / "early data" / "lower confidence" / "weak signal" / "sample" badges or caveat notes on the public pages.
+  Those caveats live in the pitch deck and the docs (METHODS.md etc.). Keep only the source credits and the single
+  "not an official product / not a warning service" footer line. One config switch holds this (see STATUS.md).
+- There is no external approver for this project (no Pratham, no Netlify draft step: that workflow is for the Echelle site only).
+
 ## Working rules
 - Other people have uncommitted edits in the tree. **Do not commit, push, stash, reset or checkout unless the
   user asks.** Touch only files for your task.

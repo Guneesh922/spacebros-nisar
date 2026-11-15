@@ -85,3 +85,18 @@ Open point: the calibration check in `STATUS.md:37` is not done. The 3 Oct scene
 - Used and cited: Earthdata/ASF DAAC (L-band), ISRO credit (joint mission).
 - Polarisations: coast = HH and HV; sea and sea difference and eye profile = VV; VH only in sea histograms; `build_story.py` reads no pol directly.
 - Calibration: **not applied in code** (`build_web.py:293`). **Shown to the user partly**: the manifest `limit` text on the sea layer (`manifest.json:837`) says the 15 Oct reference is provisional and the level may be overstated. The +3.7 dB figure is not shown. The check in `STATUS.md:37` is still open.
+
+## Corrections (15 Nov): what the code really calls, and what the About card may claim
+
+Checked by grep over `src/`, `tools/`, `app/` (js, html, strings) on 15 Nov.
+
+| resource | what the code really does | file |
+|---|---|---|
+| NASA CMR API | Public granule search, no login: `https://cmr.earthdata.nasa.gov/search/granules.json` (daily discovery); collections search `cmr.earthdata.nasa.gov/search/collections.json` | `tools/pipeline/discover.py:4,40`; `src/fetch/D_asf_manifest.py:183` |
+| ASF search API | `https://api.daac.asf.alaska.edu/services/search/param` (scene manifest) and the `asf_search` Python package (scene search, event quick-look catalogue) | `src/fetch/D_asf_manifest.py:23`; `src/nisar_search.py:18`; `src/event_scenes.py:22` |
+| Earthdata login + `earthaccess` | File reads over HTTPS from ASF DAAC, subset to the study box; a bearer token (stdlib) or `earthaccess` with `.netrc` | `src/fetch/subset_h5.py:22,293-295`; `tools/pipeline/ingest.py:11`; `src/gcov_subset.py:19,127`; `src/fetch/subset_arnab.py:123` |
+| Bhoonidhi (ISRO S-band) | Search and download code only; no S-band file was obtained | `src/fetch/bhoonidhi_s_band.py` |
+| ASF Vertex | NOT used by any code, and no Vertex search is recorded. It is only a link in `README.md` (now labelled "not used") and a claim in the submission draft | none |
+| StoryMaps, white papers, ARSET, Data User Guide | NOT used by any code or page text. `dash.js` "storymap" is an unrelated "Show on the map" button (`dash.js:485,723,1185`). They are now listed in the About card as "Background reading only", not as sources | `app/strings/strings.en.json` `dash.about.s3` to `s7` |
+
+Earlier text in this file said the dashboard "has no separate About dialog". It now has an "About and sources" card (`dash.js:559-566`, text in `app/strings/strings.en.json`, keys `dash.about.*`, not in dash.js). Gap 1 above is done there: "found with the NASA CMR search API and the ASF search API". Gap 2 is done: the card says "ASF Vertex was not used". Gaps 3 and 9 (Data User Guide) stay open until a team member has read the guide text; the card calls it background reading only. `docs/submission/PROJECT_PAGE_DRAFT.md` lines 52, 53 and 75 and the status line "About card cites ... StoryMaps, white papers, ARSET" in `docs/STATUS.md` (WP5) are stale: those four are background reading, not used resources.

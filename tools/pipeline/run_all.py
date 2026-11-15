@@ -36,7 +36,7 @@ import time
 from pathlib import Path
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[2]
-TEST_CMDS = [["tools/tests/test_story.py"], ["tools/tests/test_findings.py"], ["tools/tests/test_events.py"], ["tools/check_manifest.py"]]
+TEST_CMDS = [["tools/tests/test_story.py"], ["tools/tests/test_findings.py"], ["tools/tests/test_events.py"], ["tools/tests/test_english_only.py"], ["tools/tests/test_export.py"], ["tools/check_manifest.py"]]
 WATCH = ["data/h5", "data/processed", "data/web/story.json", "data/web/feed.json", "data/web/atom.xml", "config"]
 SECRET = "EARTHDATA_TOKEN"
 
@@ -285,7 +285,7 @@ class Run:
                 bad.append(cmd[0])
         self.extra["tests"] = {"ok": ok, "failed": bad}
         if ok:
-            return "ok", "4 test commands passed"
+            return "ok", "%d test commands passed" % len(TEST_CMDS)
         self.exit_code = 2
         return "failed", "FAILED: %s" % ", ".join(bad)
 

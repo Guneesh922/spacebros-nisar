@@ -1,0 +1,24 @@
+{
+ "gdacs": [
+  {
+   "type": "FL",
+   "alert_level": "Green",
+   "from": "2026-10-20T01:00:00Z",
+   "to": "2026-11-04T01:00:00Z",
+   "countries": "India",
+   "source": "GLOFAS",
+   "id": "1104248",
+   "name": "Flood in India",
+   "link": "https://example.invalid/1104248",
+   "lon": 80.1661,
+   "lat": 15.446,
+   "affected_bbox": [
+    80.1211,
+    15.4009,
+    80.2112,
+    15.491
+   ]
+  }
+ ],
+ "sachet": []
+}

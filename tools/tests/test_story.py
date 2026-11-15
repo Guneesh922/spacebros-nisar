@@ -248,6 +248,100 @@ def test_guards():
     B.validate(s, inp["rules"])
 
 
+CONF = [{"id": "m", "name": "Cyclone Murasu", "affects_dates": ["2026-11-09"], "text": "Cyclone Murasu also put water on the land.", "limit_text": "Murasu"}]
+
+
+def caveat_story():
+    """A story with every caveat source on: provisional pass, confounder, practice (sample) numbers."""
+    inp = inputs({"2026-10-28": block("2026-10-28", flooded_rows(0)), "2026-11-09": block("2026-11-09", flooded_rows(3), status="PROVISIONAL")},
+                 ev=event(confounders=CONF))
+    s = run(inp)
+    s["caveats"] = [STRINGS["provisional"]] + s["confounders"]
+    s["confidence"] = {"level": "lower", "reasons": [STRINGS["confidence"]["provisional_pass"]]}
+    return inp, s
+
+
+def numbers_of(s):
+    return json.dumps({k: s[k] for k in ("big_numbers", "mandals", "mandal_sentences", "scene", "next_pass")}, sort_keys=True)
+
+
+def test_presentation_default_is_caveats_hidden():
+    assert B.presentation_cfg(None) == {"show_data_caveats": False, "cannot_tell_position": "end"}
+    assert B.presentation_cfg({"presentation": {"show_data_caveats": True}})["show_data_caveats"] is True
+    cfg = B.jload(os.path.join(ROOT, "config", "areas.json"))["presentation"]
+    assert cfg == {"show_data_caveats": False, "cannot_tell_position": "end"}, cfg
+    for bad in ({"show_data_caveats": "no"}, {"cannot_tell_position": "top"}):
+        try:
+            B.presentation_cfg({"presentation": bad})
+            raise AssertionError("bad presentation accepted")
+        except B.StoryError:
+            pass
+
+
+def test_presentation_caveats_hidden():
+    inp, s = caveat_story()
+    assert s["badges"]["provisional"] is True and STRINGS["provisional"] in s["sub"]
+    pub = B.apply_presentation(s, B.presentation_cfg(None), inp["strings"])
+    B.validate(pub, inp["rules"])
+    assert pub["presentation"] == {"show_data_caveats": False, "cannot_tell_position": "end"}
+    assert pub["badges"] == {"provisional": False, "sample": False}
+    assert pub["provisional_text"] is None and pub["caveats"] == [] and pub["confounders"] == []
+    assert pub["confidence"] == {"level": "normal", "reasons": []}
+    public = json.dumps({k: v for k, v in pub.items() if k != "internal"})
+    for banned in (STRINGS["provisional"], "Early data", "Murasu", "Practice numbers", "likely to change", "Lower confidence"):
+        assert banned not in public, banned
+    assert all(u["confounders"] == [] and "Murasu" not in u["text"] for u in pub["updates"])
+    assert numbers_of(pub) == numbers_of(s), "numbers must not change"
+    assert "looked" in pub["updates"][0]["text"], "the finding itself stays"
+    # the originals are kept for docs, tests and the deck
+    i = pub["internal"]
+    assert i["badges"]["provisional"] is True and i["provisional_text"] == STRINGS["provisional"]
+    assert i["confounders"] == ["Cyclone Murasu also put water on the land."] and i["confidence"]["level"] == "lower"
+    assert STRINGS["provisional"] in i["sub"] and "Murasu" in i["lead"]
+    assert i["updates"]["2026-11-09"]["confounders"] and "Murasu" in i["updates"]["2026-11-09"]["text"]
+    assert s["badges"]["provisional"] is True, "the input story is not edited in place"
+
+
+def test_presentation_caveats_shown():
+    inp, s = caveat_story()
+    pub = B.apply_presentation(s, {"show_data_caveats": True, "cannot_tell_position": "inline"}, inp["strings"])
+    assert pub["presentation"] == {"show_data_caveats": True, "cannot_tell_position": "inline"}
+    assert pub["badges"]["provisional"] is True and pub["provisional_text"] == STRINGS["provisional"]
+    assert pub["sub"] == s["sub"] and pub["caveats"] == s["caveats"] and pub["confidence"]["level"] == "lower"
+    assert pub["confounders"] == s["confounders"] and pub["updates"] == s["updates"]
+    assert pub["internal"]["badges"]["provisional"] is True
+
+
+def test_feeds_respect_presentation():
+    inp, s = caveat_story()
+    for show in (True, False):
+        pub = B.apply_presentation(s, {"show_data_caveats": show, "cannot_tell_position": "end"}, inp["strings"])
+        jf, atom = B.feeds(pub, inp["strings"], inp["rules"], inp["events"][0], None, show)
+        root = ET.fromstring(atom)
+        ns = {"a": "http://www.w3.org/2005/Atom"}
+        assert len(root.findall("a:entry", ns)) == len(jf["items"]) == 2
+        blob = json.dumps(jf) + atom
+        if show:
+            assert "(provisional)" in blob and "Murasu" in blob and any("provisional" in i["tags"] for i in jf["items"])
+        else:
+            assert "provisional" not in blob.lower() and "Murasu" not in blob and "Early data" not in blob, blob
+            assert all("(" not in i["title"] and i["tags"] == ["coast"] for i in jf["items"])
+            assert all("looked" in i["content_text"] for i in jf["items"])
+
+
+def test_draft_chip_needs_a_linked_pass():
+    d = "2026-10-28"
+    ev = {"id": "auto_GDACS_1", "name": "Flood in India", "type": "flood", "area_id": "godavari", "start": "2026-10-20", "end": "2026-11-04",
+          "aftermath_days": 30, "status": "alert_only", "reviewed_by_human": False, "linked_passes": []}
+    assert B.chips_for([ev], d, "godavari", STRINGS, RULES) == [], "no linked pass, no chip"
+    ev["linked_passes"] = [{"scene_id": "L_COAST_1028", "date": d, "role": "COAST", "relation": "during", "radar_finding": "numbers_coming"}]
+    ch = B.chips_for([ev], d, "godavari", STRINGS, RULES)
+    assert len(ch) == 1 and "not reviewed" in ch[0]["text"]
+    assert B.norm_event(ev, RULES, d)["linked_to_this_pass"] is True
+    assert B.norm_event(dict(ev, linked_passes=[]), RULES, d)["linked_to_this_pass"] is False
+    assert "linked_to_this_pass" not in B.norm_event(dict(ev, reviewed_by_human=True), RULES, d)
+
+
 def test_feeds():
     inp = inputs({"2026-10-28": block("2026-10-28", flooded_rows(0)), "2026-11-09": block("2026-11-09", flooded_rows(3))}, ev=event())
     s = run(inp)
