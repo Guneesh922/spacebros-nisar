@@ -1,7 +1,7 @@
 {
  "schema": "findings-v1",
- "built_utc": "2026-11-15T12:54:35Z",
- "built_text": "15 Nov 2026, 18:24 IST",
+ "built_utc": "2026-11-15T15:39:14Z",
+ "built_text": "15 Nov 2026, 21:09 IST",
  "event_id": "arnab_2026",
  "official_banner": "This is not an official warning. For alerts, follow IMD, APSDMA and your district officers.",
  "official_links": [
@@ -36,7 +36,7 @@
  "data_as_of_text": "Radar picture taken 9 Nov 2026, 05:31, IST",
  "timestamps": {
   "picture": "Radar picture taken 9 Nov 2026, 05:31, IST",
-  "built": "Summary updated 15 Nov 2026, 18:24 IST"
+  "built": "Summary updated 15 Nov 2026, 21:09 IST"
  },
  "stale": false,
  "next_pass": {

@@ -1,9 +1,9 @@
 {
  "schema": "alerts-v2",
  "area_id": "godavari",
- "built_utc": "2026-11-15T12:50:59Z",
+ "built_utc": "2026-11-15T15:36:25Z",
  "gdacs": {
-  "fetched_utc": "2026-11-15T12:50:59Z",
+  "fetched_utc": "2026-11-15T15:36:25Z",
   "ok": true,
   "error": null,
   "url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH",
@@ -83,7 +83,7 @@
   ]
  },
  "sachet": {
-  "snapshot_utc": "2026-11-15T12:50:59Z",
+  "snapshot_utc": "2026-11-15T15:36:25Z",
   "ok": true,
   "error": null,
   "url": "https://sachet.ndma.gov.in/cap_public_website/rss/rss_india.xml",
