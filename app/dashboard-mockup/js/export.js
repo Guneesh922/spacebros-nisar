@@ -374,7 +374,7 @@
     var rank = ctx.rank || {}, cfg = ctx.cfg || {}, findings = ctx.findings || null;
     var rows = rowsFor(rank, ctx.date);
     var rankedRows = rows.filter(function (r) { return isNum(r.rank_water); });
-    var title = (cfg.site && cfg.site.title) || 'Pass by Pass';
+    var title = (cfg.site && cfg.site.title) || 'Matsya';
     var mode = ctx.mandalName ? 'mandal' : 'area';
     var row = null;
     if (mode === 'mandal') rows.forEach(function (r) { if (r.mandal === ctx.mandalName) row = r; });
@@ -487,7 +487,7 @@
       if (!ff || !ff.zipSync) throw new Error('The zip library did not load.');
       var entries = {};
       Object.keys(b.files).forEach(function (k) { entries[k] = ff.strToU8(b.files[k]); });
-      return { bytes: ff.zipSync(entries, { level: 6 }), name: 'pass-by-pass_' + (b.mode === 'mandal' ? slug(ctx.mandalName) : 'area') + '_' + ctx.date + '.zip', build: b };
+      return { bytes: ff.zipSync(entries, { level: 6 }), name: 'matsya_' + (b.mode === 'mandal' ? slug(ctx.mandalName) : 'area') + '_' + ctx.date + '.zip', build: b };
     });
   }
   function zip(ctx, opts) {

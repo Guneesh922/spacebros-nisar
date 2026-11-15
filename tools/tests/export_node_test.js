@@ -48,7 +48,7 @@ async function test(name, fn) {
   await test('every case builds 5 files with the expected names', () => {
     for (const [d, m] of cases) {
       const b = built[d + '|' + m];
-      const want = ['pass-by-pass_' + (m ? m.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : 'area') + '_' + d + '.html', 'mandals_' + d + '.csv', 'mandals_' + d + '.geojson', 'findings_' + d + '.json', 'README.txt'];
+      const want = ['matsya_' + (m ? m.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : 'area') + '_' + d + '.html', 'mandals_' + d + '.csv', 'mandals_' + d + '.geojson', 'findings_' + d + '.json', 'README.txt'];
       assert.deepStrictEqual(Object.keys(b.files).sort(), want.slice().sort());
       assert.strictEqual(b.briefName, want[0]);
     }
@@ -107,7 +107,7 @@ async function test(name, fn) {
       assert.ok(h.includes('@page{size:A4;margin:0}') && h.includes('print-color-adjust:exact'));
       assert.ok(h.includes('Generated 15 Nov 2026, 14:30 IST'), 'stamp');
       assert.ok(h.includes('https://example.invalid/app/dashboard-mockup/#tab=data'));
-      assert.ok(h.includes('Pass by Pass'));
+      assert.ok(h.includes('Matsya'));
       assert.ok(Buffer.byteLength(h) < 300 * 1024, 'size ' + Buffer.byteLength(h));
       const rd = b.files['README.txt'];
       assert.deepStrictEqual(badLetters(rd), []); assert.ok(!/[^\x00-\x7F]/.test(rd), 'README ascii'); assert.ok(!FORBID.test(rd), k + ' README banned');
@@ -147,7 +147,7 @@ async function test(name, fn) {
     for (const r of top.slice(0, 10)) assert.ok(h.includes('<td>' + r.mandal + '</td>'), r.mandal);
     assert.ok(!h.includes('Mandals next to this one')); assert.ok(h.includes('84 <small>km&sup2;</small>'));
     assert.ok(built['2026-10-28|null'].briefHtml.includes('Area brief'));
-    assert.ok(built['2026-11-09|null'].briefName === 'pass-by-pass_area_2026-11-09.html');
+    assert.ok(built['2026-11-09|null'].briefName === 'matsya_area_2026-11-09.html');
   });
 
   await test('geojson: every ranked mandal has a polygon with the CSV columns as properties', () => {
@@ -172,7 +172,7 @@ async function test(name, fn) {
     const u = fflate.unzipSync(z.bytes); const names = Object.keys(u).sort(); assert.strictEqual(names.length, 5);
     const b = built['2026-11-09|Nidadavole'];
     names.forEach((k) => assert.strictEqual(Buffer.from(u[k]).toString('utf8'), b.files[k]));
-    assert.strictEqual(z.name, 'pass-by-pass_nidadavole_2026-11-09.zip'); assert.ok(z.bytes.length < 400 * 1024, 'zip ' + z.bytes.length);
+    assert.strictEqual(z.name, 'matsya_nidadavole_2026-11-09.zip'); assert.ok(z.bytes.length < 400 * 1024, 'zip ' + z.bytes.length);
     const blob = await X.zip(ctxFor('2026-11-09', null), { cropFn, now: NOW, fflate }); assert.ok(blob.size > 1000);
   });
 

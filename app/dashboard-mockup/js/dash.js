@@ -1211,7 +1211,7 @@
   /* ---------- citation ---------- */
   function pageUrl() { return location.href.split('#')[0]; }
   function citeYear() { return '2026'; }
-  function siteTitle() { return (X.cfg && X.cfg.site && X.cfg.site.title) || 'Pass by Pass'; }
+  function siteTitle() { return (X.cfg && X.cfg.site && X.cfg.site.title) || 'Matsya'; }
   function citeText() {
     var sc = sceneList(), ds = sc.map(function (l) { return l.date; }).filter(Boolean).sort();
     var span = ds.length ? ' NISAR L-band scenes from ' + dshort(ds[0]) + ' to ' + dshort(ds[ds.length - 1]) + '.' : '';

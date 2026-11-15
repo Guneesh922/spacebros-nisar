@@ -72,7 +72,7 @@ jobs:
             cat > _site/index.html <<'HTML'
           <!doctype html>
           <meta charset="utf-8">
-          <title>Pass by Pass</title>
+          <title>Matsya</title>
           <meta http-equiv="refresh" content="0; url=app/dashboard-mockup/">
           <a href="app/dashboard-mockup/">Open the dashboard</a>
           HTML

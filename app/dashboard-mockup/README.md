@@ -1,6 +1,6 @@
 # Dashboard mockup: one page, two sections, one map
 
-This is the Pass by Pass dashboard. It uses `app/css/tokens.css`, `app/strings/` and `app/vendor/`.
+This is the Matsya dashboard. It uses `app/css/tokens.css`, `app/strings/` and `app/vendor/`.
 
 ## Run
 From the repo root: `python3 -m http.server 8000`, then open http://localhost:8000/app/dashboard-mockup/ (add `#data` for the second section). Needs internet for Leaflet, fonts and the dark basemap (same CDNs as the main app).
@@ -62,7 +62,7 @@ Permalinks: format unchanged (`#tab=..&mode=..&m=..&l=..&c=..&z=..&d=..`). A `c`
 
 ## Name, credits and labels (15 Nov)
 
-- Visible name: "Pass by Pass" (`config/areas.json` `site.title`; earlier "Coast Radar Watch", dropped because "Watch" can read as an official flood watch and clashes with NOAA CoastWatch). Header org line: "Team SpaceBros".
+- Visible name: "Matsya" (renamed from "Pass by Pass" on 15 Nov) (`config/areas.json` `site.title`; earlier "Coast Radar Watch", dropped because "Watch" can read as an official flood watch and clashes with NOAA CoastWatch). Header org line: "Team SpaceBros".
 - Footer (in `index.html`, `#site-foot`) and the About intro (`app/strings/strings.en.json`, `dash.about.intro`): "Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service."
 - About and sources list: `dash.about.sN.name/what/url` in `app/strings/strings.en.json` (not in dash.js). Background-reading items are marked "not a data source".
 - Credit string for NISAR layers: "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)" plus scene date, track, polarisation and PROVISIONAL/VALIDATED. `data/web/story.json` carries it in `credits` (`nisar`, `nisar_line`, `derived`, `imd`, `ndma_sachet`, `gdacs`, `boundaries`, `basemap`, `disclaimer`), written by `tools/build_story.py`.

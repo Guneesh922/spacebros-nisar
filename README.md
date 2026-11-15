@@ -1,12 +1,12 @@
-# Pass by Pass · team SpaceBros
+# Matsya · team SpaceBros
 
 Team **SpaceBros** (Arkadeep Ray, Guneesh Gupta), NASA Space Apps Challenge 2026, Delhi local event.
 Challenge: [Dancing with the SARs](https://www.spaceappschallenge.org/2026/challenges/dancing-with-the-sars/).
 
-Pass by Pass shows what the **NISAR** L-band radar saw on the Andhra Pradesh coast (Godavari delta and the sea off it) around Cyclone Arnab (landfall 28 October 2026), one satellite pass at a time: a plain-language page for the public and a data page for officials and researchers.
+Matsya shows what the **NISAR** L-band radar saw on the Andhra Pradesh coast (Godavari delta and the sea off it) around Cyclone Arnab (landfall 28 October 2026), one satellite pass at a time: a plain-language page for the public and a data page for officials and researchers.
 
 - **Live site:** <https://guneesh922.github.io/spacebros-nisar/>
-- **Pitch deck (PDF):** [docs/submission/Pass by Pass — SpaceBros — Dancing with the SARs_pitchdeck.pdf](docs/submission/Pass%20by%20Pass%20%E2%80%94%20SpaceBros%20%E2%80%94%20Dancing%20with%20the%20SARs_pitchdeck.pdf)
+- **Pitch deck (PDF):** [docs/submission/Matsya — SpaceBros — Dancing with the SARs_pitchdeck.pdf](docs/submission/Matsya%20%E2%80%94%20SpaceBros%20%E2%80%94%20Dancing%20with%20the%20SARs_pitchdeck.pdf)
 - **AI use disclosure:** [docs/submission/AI_USE_DISCLOSURE.md](docs/submission/AI_USE_DISCLOSURE.md)
 - **Methods and limits:** [docs/METHODS.md](docs/METHODS.md)
 - **Licence:** Apache-2.0 ([LICENSE](LICENSE))
@@ -25,7 +25,7 @@ Pass by Pass shows what the **NISAR** L-band radar saw on the Andhra Pradesh coa
 | `.github/workflows/` | `pages.yml` (build, test, deploy) and `update.yml` (daily data update) |
 | `docs/` | Methods, pipeline, data storage, manifest schema, colour and L-band checks, IMD bulletins used, submission files |
 
-## Web app: "Pass by Pass"
+## Web app: "Matsya"
 
 A static page (plain HTML, CSS and JS, no build step): the dashboard in `app/dashboard-mockup/` (tabs "What happened" and "Data for officials and researchers", one Leaflet map) for the Andhra Pradesh coast (Godavari delta and the sea off it), showing what NISAR L-band radar saw around Cyclone Arnab (landfall 28 Oct 2026) and the Murasu aftermath. English only.
 
@@ -62,7 +62,7 @@ A starter repository (NISAR scene search and quick-look tools for Delhi) was com
 
 ## Data credits
 
-Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service. The dashboard is called "Pass by Pass" (earlier name: "Coast Radar Watch").
+Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service. The dashboard is called "Matsya" (earlier names: "Pass by Pass", "Coast Radar Watch").
 
 Exact credit strings (use them wherever the data is shown, copied or downloaded):
 
