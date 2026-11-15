@@ -6,10 +6,18 @@ Challenge: [Dancing with the SARs](https://www.spaceappschallenge.org/2026/chall
 Matsya shows what the **NISAR** L-band radar saw on the Andhra Pradesh coast (Godavari delta and the sea off it) around Cyclone Arnab (landfall 28 October 2026), one satellite pass at a time: a plain-language page for the public and a data page for officials and researchers.
 
 - **Live site:** <https://guneesh922.github.io/spacebros-nisar/>
-- **Pitch deck (PDF):** [docs/submission/Matsya — SpaceBros — Dancing with the SARs_pitchdeck.pdf](docs/submission/Matsya%20%E2%80%94%20SpaceBros%20%E2%80%94%20Dancing%20with%20the%20SARs_pitchdeck.pdf)
+- **Pitch deck (PDF, 7 slides; our Space Apps project demo):** <https://github.com/Guneesh922/spacebros-nisar/blob/main/docs/submission/Matsya%20%E2%80%94%20SpaceBros%20%E2%80%94%20Dancing%20with%20the%20SARs_pitchdeck.pdf>
 - **AI use disclosure:** [docs/submission/AI_USE_DISCLOSURE.md](docs/submission/AI_USE_DISCLOSURE.md)
 - **Methods and limits:** [docs/METHODS.md](docs/METHODS.md)
 - **Licence:** Apache-2.0 ([LICENSE](LICENSE))
+
+## Space Apps submission links
+
+| Form field | Link |
+|---|---|
+| Link to Project Demo (7-slide deck) | <https://github.com/Guneesh922/spacebros-nisar/blob/main/docs/submission/Matsya%20%E2%80%94%20SpaceBros%20%E2%80%94%20Dancing%20with%20the%20SARs_pitchdeck.pdf> |
+| Link to Final Project (live app) | <https://guneesh922.github.io/spacebros-nisar/> |
+| Source code | <https://github.com/Guneesh922/spacebros-nisar> |
 
 ## What is in this repository
 
