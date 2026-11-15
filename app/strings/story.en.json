@@ -62,7 +62,15 @@
     "chip_down": "went down",
     "chip_same": "about the same",
     "chip_up": "went up",
-    "text": "Between {prev_date} and {date}, {n_prev} mandals were probably flooded and now {n_now} are. {receded} went down, {still} stayed about the same, {worse} went up.",
+    "prev_none": "On {prev_date} no mandal looked probably flooded.",
+    "prev_one": "On {prev_date}, {n_prev} mandal looked probably flooded.",
+    "prev_many": "On {prev_date}, {n_prev} mandals looked probably flooded.",
+    "now_none": "On {date}, none do.",
+    "now_one": "On {date}, {n_now} does.",
+    "now_many": "On {date}, {n_now} do.",
+    "tail_down": "{receded} went down",
+    "tail_same": "{still} stayed about the same",
+    "tail_up": "{worse} went up",
     "since_landfall": "Since the landfall pass, the share in {top_mandal} has changed. It was about {lik_then} then and is about {lik} now, in every 100 acres."
   },
   "bignums": {

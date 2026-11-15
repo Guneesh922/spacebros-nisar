@@ -13,7 +13,7 @@
   var FOOTER = 'Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service.';
   var NISAR_CREDIT = 'NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)';
   var DERIVED_CREDIT = 'Derived by SpaceBros from NISAR data';
-  var BOUNDARY_CREDIT = 'Mandal boundaries: geoBoundaries gbOpen (geoboundaries.org), boundary year 2018, licence CC BY 4.0';
+  var BOUNDARY_CREDIT = 'Mandal boundaries: geoBoundaries gbOpen (geoboundaries.org), boundary year 2018, licence ODbL 1.0';
   var BOUNDARY_CITE = 'Runfola et al. 2020, PLoS ONE 15(4): e0231866';
   var DISTRICT_SOURCE = 'District names: 2022 Andhra Pradesh district lists (AP district portals and lgdirectory.gov.in, as recorded in data/sources.yaml, item DOCS_DISTRICTS)';
   var NISAR_LICENCE = 'NASA Earth science data, open by default (CC0 unless marked); follow ASF DAAC terms';

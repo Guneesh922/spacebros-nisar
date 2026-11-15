@@ -60,12 +60,19 @@ jobs:
           done
           [ -d data/web ] && cp -r data/web _site/data/web || echo "no data/web (no H5 yet)"
           [ -d data/h5 ] && cp -r data/h5 _site/data/h5 || echo "no data/h5 yet"
+          # the page links ../../docs/METHODS.md (HEAD probe, hidden on 404): publish that one file only, not the rest of docs/
+          mkdir -p _site/docs
+          cp docs/METHODS.md _site/docs/METHODS.md
+          # data/internal/ (caveat text kept out of the product) must never be published
+          if [ -e _site/data/internal ] || grep -q '"internal"' _site/data/web/story.json 2>/dev/null; then
+            echo "::error::internal caveat text would be published"; exit 1
+          fi
           # root redirect only if the repo has no root index.html
           if [ ! -f index.html ]; then
             cat > _site/index.html <<'HTML'
           <!doctype html>
           <meta charset="utf-8">
-          <title>SpaceBros NISAR</title>
+          <title>Pass by Pass</title>
           <meta http-equiv="refresh" content="0; url=app/dashboard-mockup/">
           <a href="app/dashboard-mockup/">Open the dashboard</a>
           HTML

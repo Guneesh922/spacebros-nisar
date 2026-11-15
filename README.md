@@ -107,7 +107,7 @@ Exact credit strings (use them wherever the data is shown, copied or downloaded)
 
 - NISAR: `NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)`, followed by scene date, track, polarisation and PROVISIONAL or VALIDATED status. Maps and numbers made by us: `SpaceBros, derived from NISAR data`.
 - Alerts and storm facts: IMD / RSMC New Delhi bulletins; NDMA SACHET; GDACS (EC JRC and UN OCHA).
-- Mandal outlines: geoBoundaries gbOpen India ADM3, boundary year 2018, ODbL-1.0 (attribution and share-alike). District names for the mandals: the 2022 Andhra Pradesh district lists (see `data/interim/C/mandal_district_2022_complete.csv`).
+- Mandal outlines: geoBoundaries gbOpen India ADM3, boundary year 2018, ODbL 1.0 (attribution and share-alike; licence as reported by the geoBoundaries API, source Pathways Data Pvt. Ltd. / lgdirectory.gov.in). District names for the mandals: the 2022 Andhra Pradesh district lists (see `data/interim/C/mandal_district_2022_complete.csv`).
 - Basemap: `Map data: Esri, HERE, Garmin, OpenStreetMap contributors` (Esri World Dark Gray Canvas; the line is shown in the map corner).
 - Other live layers: NASA GIBS (VIIRS, IMERG, Himawari), Open-Meteo.com (CC BY 4.0), MOSDAC/SAC/ISRO link.
 - Images: no NASA, ISRO or Space Apps logos or insignia, and no AI-generated images, are used. All pictures on the site are radar or map products built from the H5 files.

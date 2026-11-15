@@ -28,7 +28,7 @@
   "imd": "IMD / RSMC New Delhi bulletins",
   "ndma_sachet": "NDMA SACHET",
   "gdacs": "GDACS (EC JRC and UN OCHA)",
-  "boundaries": "geoBoundaries (ODbL-1.0, boundary year 2018); district names from the 2022 AP district lists",
+  "boundaries": "geoBoundaries (ODbL 1.0, boundary year 2018); district names from the 2022 AP district lists",
   "basemap": "Map data: Esri, HERE, Garmin, OpenStreetMap contributors",
   "disclaimer": "Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service."
  },
@@ -102,7 +102,7 @@
    "up": "went up"
   },
   "title": "Since the last pass",
-  "text": "Between 28 Oct and 9 Nov, 0 mandals were probably flooded and now 8 are. 0 went down, 1 stayed about the same, 7 went up.",
+  "text": "On 28 Oct no mandal looked probably flooded. On 9 Nov, 8 do. 1 stayed about the same, 7 went up.",
   "water_pct_change": {
    "mandal": "Nidadavole",
    "prev": 0.0,
@@ -1080,7 +1080,7 @@
      "up": "went up"
     },
     "title": "Since the last pass",
-    "text": "Between 28 Oct and 9 Nov, 0 mandals were probably flooded and now 8 are. 0 went down, 1 stayed about the same, 7 went up.",
+    "text": "On 28 Oct no mandal looked probably flooded. On 9 Nov, 8 do. 1 stayed about the same, 7 went up.",
     "water_pct_change": {
      "mandal": "Nidadavole",
      "prev": 0.0,
@@ -1556,7 +1556,7 @@
  "archive": true,
  "as_of_utc": "2026-11-09T00:01:07Z",
  "alerts_ref": "data/processed/alerts.json",
- "revision": 5,
+ "revision": 6,
  "revision_log": [
   {
    "revision": 2,
@@ -1590,18 +1590,27 @@
     "events"
    ],
    "reason": "inputs changed"
+  },
+  {
+   "revision": 6,
+   "utc": "2026-11-15T00:24:13Z",
+   "changed": [
+    "events",
+    "templates"
+   ],
+   "reason": "inputs changed: event record wording changed (landfall caption, names or edit log); English templates changed (since-last sentence: a zero start now reads 'On 28 Oct no mandal looked probably flooded. On 9 Nov, 8 do.'; Cyclone Murasu shown as Cyclone Murasu; IMD window wording)"
   }
  ],
  "inputs_detail": {
   "by_date": "2bba30d341a29605838c8dd946f5e7668efc04eb90699faafe707b2fa105fc86",
   "class_stats": "7af376192d78225a5f2fc8e69a68e5e686ce40af5529d94ad0dce72279b09358",
   "catalog": "4de61ca976e7c376b4563f064b9c1bf852c2d4d1b7dae30e120f1b41d2f4015a",
-  "events": "19dc86d2c6366b8fd44039627f4ff2937192f69b78667c462f359b2430ce80ba",
-  "templates": "1ecf296b055ea4e9626f22cf4d5cfe28783578a40e2d5305213ed6a6bd2f5efd",
+  "events": "181ca0fb9ff787b3eaed2d7f6c46311b584bb7e11ada11415faaf9ee51d064c1",
+  "templates": "56fed20c859bd857d4bf5423ce73305200378f8d8cccccf464449e174627b675",
   "rules": "f7d99448034094cdd3b1dbde5eee7252875b85c16aced1029aef71723e8892d9",
   "seasons": "8d75e9d4ba5b7047baa2fbf6f8929f67f383b37bd9e5682a013ef51e25402855",
   "baseline": "837adb1a918e3fe4dc560ebd017699fed522a11ccc256fa16726f64fe24e994a",
   "builder": "010f4579d37ac9409e3324c71306385d7be210f5879c9cbab8e8df3193c1d395"
  },
- "inputs_sha256": "66347ba96aac47ef56679671e8b453d4f6ede13ac0c89468a2c2f4745162ed49"
+ "inputs_sha256": "c49c6436d89109efb755959a71228cd4c92baaf4745e61b592cf1f05b9259c88"
 }

@@ -24,7 +24,7 @@ Optional inputs: config/areas.json (baselines per track), data/processed/events.
 Presentation switch (config/areas.json "presentation": {"show_data_caveats": false, "cannot_tell_position": "end"}): when show_data_caveats
 is false, apply_presentation() removes every user-visible data-quality caveat from the PUBLIC story.json, feed.json and atom.xml (badges.provisional
 and badges.sample false, provisional_text null, caveats [], confidence normal, confounders [] and the caveat sentences inside sub / lead / update
-text). The original values move to story["internal"] for docs, tests and the pitch deck. Numbers are unchanged. findings/*.json keep all caveats
+text). The original values are kept in story["internal"] in memory and written by main() to data/internal/story.internal.json (NOT published by pages.yml; never in data/web/story.json). Numbers are unchanged. findings/*.json keep all caveats
 (no revisions); only data/web/story.json and the feeds are filtered. story["presentation"] carries the switch so dash.js can gate its own strings.
 
 Usage: python3 tools/build_story.py [--root DIR] [--now 2026-11-14T12:00:00Z] [--out DIR] [--no-findings]
@@ -135,6 +135,16 @@ def fill(tpl, **kw):
             raise StoryError("template %r needs value for {%s}" % (tpl[:60], k))
         return str(kw[k])
     return re.sub(r"\{([a-z_0-9]+)\}", rep, tpl)
+
+
+def since_text(T, prev_date, date, n_prev, n_now, receded, still, worse):
+    """The 'since the last pass' sentence(s): 'On 28 Oct no mandal looked probably flooded. On 9 Nov, 8 do.' Handles 0, 1 and many (singular/plural),
+    so a zero start or end reads naturally. The went down / stayed / went up counts follow as one short sentence, leaving out the zero ones."""
+    k = lambda n: "none" if n == 0 else ("one" if n == 1 else "many")
+    a = fill(T["prev_" + k(n_prev)], prev_date=prev_date, n_prev=n_prev)
+    b = fill(T["now_" + k(n_now)], date=date, n_now=n_now)
+    parts = [fill(T[key], receded=receded, still=still, worse=worse) for key, n in (("tail_down", receded), ("tail_same", still), ("tail_up", worse)) if n]
+    return " ".join([a, b] + ([", ".join(parts) + "."] if parts else []))
 
 
 def num(v):
@@ -269,7 +279,7 @@ def credits_block(scene=None, track=None, pol=None):
         nisar = "%s; %s" % (CREDIT_NISAR, ", ".join(bits))
     return {"nisar": CREDIT_NISAR, "nisar_line": nisar, "derived": "Maps and numbers: SpaceBros, derived from NISAR data",
             "imd": "IMD / RSMC New Delhi bulletins", "ndma_sachet": "NDMA SACHET", "gdacs": "GDACS (EC JRC and UN OCHA)",
-            "boundaries": "geoBoundaries (ODbL-1.0, boundary year 2018); district names from the 2022 AP district lists",
+            "boundaries": "geoBoundaries (ODbL 1.0, boundary year 2018); district names from the 2022 AP district lists",
             "basemap": "Map data: Esri, HERE, Garmin, OpenStreetMap contributors", "disclaimer": DISCLAIMER}
 
 
@@ -623,8 +633,7 @@ def card_for(d, by_date, prev_d, event, landfall, rules, S, sample, inp, profile
                  "receded": cmp_["receded"], "still": cmp_["still"], "worse": cmp_["worse"],
                  "chips": {"down": S["since_last"]["chip_down"], "same": S["since_last"]["chip_same"], "up": S["since_last"]["chip_up"]},
                  "title": S["since_last"]["title"]}
-        since["text"] = fill(S["since_last"]["text"], prev_date=dmon(prev_d), date=dmon(d), n_prev=cmp_["flooded_prev"], n_now=cmp_["flooded_now"],
-                             receded=cmp_["receded"], still=cmp_["still"], worse=cmp_["worse"])
+        since["text"] = since_text(S["since_last"], dmon(prev_d), dmon(d), cmp_["flooded_prev"], cmp_["flooded_now"], cmp_["receded"], cmp_["still"], cmp_["worse"])
         if top and top["mandal"] in prev_by:
             p = prev_by[top["mandal"]]
             since["water_pct_change"] = {"mandal": top["mandal"], "prev": p["water_pct"], "now": top["water_pct"],
@@ -856,6 +865,13 @@ def _strip_text(o, phrases):
     if isinstance(o, list):
         return [_strip_text(v, phrases) for v in o]
     return o
+
+
+def split_internal(story):
+    """(public, internal): the public story WITHOUT the `internal` key, and that key's content (the original caveat text). main() writes the first to
+    data/web/story.json and the second to data/internal/story.internal.json, which pages.yml does not publish."""
+    public = {k: v for k, v in story.items() if k != "internal"}
+    return public, story.get("internal")
 
 
 def apply_presentation(story, cfg, S):
@@ -1182,6 +1198,15 @@ def write_json(path, obj):
         fh.write("\n")
 
 
+REASONS = {"events": "event record wording changed (landfall caption, names or edit log)", "templates": "English templates changed (since-last sentence)",
+           "rank": "mandal numbers changed", "class_stats": "new-water numbers changed", "catalog": "scene catalogue changed", "profile": "eye profile changed"}
+
+
+def revision_reason(changed):
+    """Why a write-once findings file got a new revision, in words: 'inputs changed: <what>'."""
+    return "inputs changed: " + "; ".join(REASONS.get(k, k) for k in changed)
+
+
 def build_findings(inp, root, now, regenerate=False):
     """Write data/processed/findings/<date>.json (write-once) for every coast pass after the baseline + latest.json. Returns (latest, report)."""
     fdir = os.path.join(root, "data", "processed", "findings")
@@ -1200,7 +1225,7 @@ def build_findings(inp, root, now, regenerate=False):
         if old:
             rev = int(old.get("revision", 1)) + 1
             changed = sorted(k for k, v in f["inputs_detail"].items() if (old.get("inputs_detail") or {}).get(k) != v)
-            f["revision"], f["revision_log"] = rev, list(old.get("revision_log") or []) + [{"revision": rev, "utc": iso_utc(now), "changed": changed, "reason": "inputs changed"}]
+            f["revision"], f["revision_log"] = rev, list(old.get("revision_log") or []) + [{"revision": rev, "utc": iso_utc(now), "changed": changed, "reason": revision_reason(changed)}]
             report["revised"].append(sc["date"])
         else:
             f["revision"], f["revision_log"] = 1, []
@@ -1313,6 +1338,12 @@ def main():
         return 1
     out = a.out or os.path.join(a.root, "data", "web")
     os.makedirs(out, exist_ok=True)
+    story, internal = split_internal(story)          # the caveat text never goes into the public build output
+    idir = os.path.join(os.path.dirname(os.path.abspath(out)), "internal")     # sibling of the output dir: data/internal for data/web
+    os.makedirs(idir, exist_ok=True)
+    with open(os.path.join(idir, "story.internal.json"), "w", encoding="utf-8") as fh:
+        json.dump(internal, fh, indent=1, ensure_ascii=False)
+        fh.write("\n")
     with open(os.path.join(out, "story.json"), "w", encoding="utf-8") as fh:
         json.dump(story, fh, indent=1, ensure_ascii=False)
         fh.write("\n")

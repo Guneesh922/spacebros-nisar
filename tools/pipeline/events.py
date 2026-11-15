@@ -258,16 +258,22 @@ def overlaps(ev, c, slack=1):
     return c["start"] <= e + dt.timedelta(days=slack) and c["end"] >= s - dt.timedelta(days=slack)
 
 
+def display_name(name):
+    """GDACS's own cyclone title -> the name the page shows: 'Tropical Cyclone MURASU-26' -> 'Cyclone Murasu'. Anything else is kept as is."""
+    m = re.match(r"^Tropical Cyclone ([A-Za-z]+)-\d+$", (name or "").strip())
+    return "Cyclone %s" % m.group(1).title() if m else (name or "")
+
+
 def new_draft(c, ar, now):
     aft = int(ar["_defaults"]["aftermath_days"])
     ev = {
-        "id": f"auto_{c['source']}_{c['id']}", "name": c["name"], "type": c["kind"], "area_id": ar["id"],
+        "id": f"auto_{c['source']}_{c['id']}", "name": display_name(c["name"]), "source_name": c["name"], "type": c["kind"], "area_id": ar["id"],
         "start": c["start"].isoformat(), "end": c["end"].isoformat(), "aftermath_days": aft,
         "window_source": f"{c['source']} alert {c['id']}: from {c['start'].isoformat()} to {c['end'].isoformat()} "
                          f"(as published; not checked by a person)",
         "source": {"name": c["source"], "url": c.get("link"), "ids": [c["id"]]}, "credit": c["credit"],
         "severity": c["severity"], "status": "alert_only", "status_text": STATUS_TEXT["alert_only"],
-        "reviewed_by_human": False, "linked_passes": [], "description": c["headline"] or c["name"],
+        "reviewed_by_human": False, "linked_passes": [], "description": display_name(c["headline"] or c["name"]),
         "cannot_tell": ["This is an alert from an outside source. Radar has not been checked against it yet."],
         "confounders": [], "alert_refs": [ref_of(c)], "edit_log": [],
     }
@@ -281,6 +287,12 @@ def new_draft(c, ar, now):
 def refresh_draft(ev, c, now, ar=None):
     """Update an auto draft from its alert (never a reviewed event). Returns True if anything changed."""
     changed = []
+    if ev.get("source_name") is None and c.get("name"):      # drafts made before 15 Nov carry GDACS's title as the name: keep it apart, show the plain name
+        ev["source_name"] = c["name"]
+        for k in ("name", "description"):
+            if ev.get(k) == c["name"] or ev.get(k) == c.get("headline"):
+                ev[k] = display_name(ev[k])
+        changed.append("display name")
     for k, v in (("start", c["start"].isoformat()), ("end", c["end"].isoformat())):
         if ev.get(k) != v:
             ev[k] = v

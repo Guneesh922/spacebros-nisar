@@ -10,7 +10,8 @@ const J = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
 
 const rank = J('data/processed/mandal_rank.json'), mandals = J('data/processed/mandals.geojson'), manifest = J('data/processed/manifest.json');
 const catalog = J('data/h5/catalog.json'), cfg = J('config/areas.json'), events = J('data/processed/events.json').events;
-const story = J('data/web/story.json');
+// story.json is a build output written AFTER the tests (and absent in a dry run): read it like the page does, with findings/latest.json (committed) as the fallback. export.js only uses story.area_id.
+const story = fs.existsSync(path.join(ROOT, 'data/web/story.json')) ? J('data/web/story.json') : J('data/processed/findings/latest.json');
 const FOOT = 'Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service.';
 const NOW = new Date('2026-11-15T09:00:00Z');
 // stub canvas: tiny valid PNG data URI, records the requested crop
@@ -100,7 +101,7 @@ async function test(name, fn) {
       const b = built[k], h = b.briefHtml;
       assert.deepStrictEqual(badLetters(h), [], k);
       assert.ok(h.includes(FOOT), k); assert.ok(h.includes('NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)'), k);
-      assert.ok(h.includes('Derived by SpaceBros from NISAR data') && h.includes('geoBoundaries') && h.includes('CC BY 4.0'));
+      assert.ok(h.includes('Derived by SpaceBros from NISAR data') && h.includes('geoBoundaries') && h.includes('ODbL 1.0'));
       assert.ok(!FORBID.test(h), k + ' banned word: ' + (h.match(FORBID) || [])[0]);
       assert.ok(!/(src|href)="https?:/i.test(h) && !/@import|url\(http/i.test(h), 'no external requests');
       assert.ok(h.includes('@page{size:A4;margin:0}') && h.includes('print-color-adjust:exact'));
@@ -110,7 +111,7 @@ async function test(name, fn) {
       assert.ok(Buffer.byteLength(h) < 300 * 1024, 'size ' + Buffer.byteLength(h));
       const rd = b.files['README.txt'];
       assert.deepStrictEqual(badLetters(rd), []); assert.ok(!/[^\x00-\x7F]/.test(rd), 'README ascii'); assert.ok(!FORBID.test(rd), k + ' README banned');
-      assert.ok(rd.includes(FOOT) && rd.includes('CC BY 4.0') && rd.includes('NISAR L2 GCOV') && rd.includes('lgdirectory.gov.in'));
+      assert.ok(rd.includes(FOOT) && rd.includes('ODbL 1.0') && rd.includes('NISAR L2 GCOV') && rd.includes('lgdirectory.gov.in'));
       assert.ok(!/Esri/.test(h + rd));
     }
   });

@@ -504,3 +504,29 @@ details.lim--card > summary { font-size: var(--fs-small); }
 .dt tr.grp th { text-align: left; font-size: var(--fs-caption); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--paper, #F3F6F5); padding: 8px 10px; }
 .dt tr.is-on td { background: rgba(23, 99, 95, .09); }
 .tl .seg button:disabled { opacity: .45; cursor: not-allowed; }
+
+/* ---------- touch gestures on the map (phones) ---------- */
+.gesture-hint { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1100; max-width: calc(100% - 48px); text-align: center; background: rgba(0,0,0,.72); color: var(--white); padding: 10px 16px; border-radius: var(--r-md); font-size: var(--fs-small); font-weight: 500; pointer-events: none; opacity: 0; transition: opacity .2s; }
+.gesture-hint.is-on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .gesture-hint { transition: none; } }
+.leaflet-container.gesture-on { touch-action: pan-x pan-y !important; }
+
+/* ---------- map controls above the swipe slider: keep the slider clear of the caption ---------- */
+.swipe { bottom: calc(var(--cap-h, 146px) + 24px); }
+
+/* ---------- phones: reachable controls and 40 px tap targets ---------- */
+@media (max-width: 800px) {
+  .swipe { bottom: 12px; }
+  .maptools { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .maptools::-webkit-scrollbar { display: none; }
+  .maptools.has-more { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); }
+  .maptools > * { flex: 0 0 auto; }
+  .mt-btn, .seg button, .tl .seg button, .segl button, .btn, .btn--sm, .panel__x, .copybtn { min-height: 40px; }
+  .row > .linkbtn, .arch__s, .sd__acts .linkbtn, #rankmore, .legend__g, .row--between > .linkbtn, .chips a, a.chip--event, .leaflet-control-zoom a, .legend__sum, .legend__cd summary, .leaflet-control-attribution summary {
+    display: inline-flex; align-items: center; min-height: 40px; }
+  .arch__s, .sd__acts .linkbtn, #rankmore, .legend__g, .row > .linkbtn { padding-left: 6px; padding-right: 6px; }
+  .leaflet-touch .leaflet-control-zoom a { width: 40px; height: 40px; line-height: 40px; justify-content: center; }
+  .tools input[type="search"], select { min-height: 40px; }
+  .tl { top: 56px; }
+  .tl__k { min-height: 40px; display: inline-flex; align-items: center; }
+}

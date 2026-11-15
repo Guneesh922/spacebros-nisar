@@ -174,7 +174,7 @@ sources:
     group: boundaries
     url: https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/IND/ADM3/geoBoundaries-IND-ADM3.geojson
     api: https://www.geoboundaries.org/api/current/gbOpen/IND/ADM3/
-    licence: ODbL-1.0 (boundary year 2018, source Pathways Data / lgdirectory.gov.in)
+    licence: ODbL 1.0 (boundary year 2018, source Pathways Data Pvt. Ltd. / lgdirectory.gov.in; API boundaryLicense checked 15 Nov 2026)
     auth: none
     priority: P0
     dest: data/reference/mandals_delta.geojson (raw 106 MB in data/raw/boundaries/)
@@ -186,7 +186,7 @@ sources:
     group: boundaries
     url: https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/IND/ADM2/geoBoundaries-IND-ADM2.geojson
     api: https://www.geoboundaries.org/api/current/gbOpen/IND/ADM2/
-    licence: ODbL-1.0 (boundary year 2021, pre-2022 AP split)
+    licence: ODbL 1.0 (boundary year 2021, pre-2022 AP split)
     auth: none
     priority: P0
     dest: data/reference/districts_delta_gb2021.geojson

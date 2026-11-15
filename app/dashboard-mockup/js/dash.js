@@ -236,6 +236,54 @@
 
     map.on('move zoomend resize', clipBefore);
     map.on('moveend', function () { writeHash(); });
+    initGestureHandling();
+    initStageLayout();
+  }
+
+  /* keep the before/after slider above the caption (caption height varies) and give the mode row a "more to the right" cue */
+  function initStageLayout() {
+    var cap = $('#caption'), stage = cap && cap.parentNode, tools = $('.maptools');
+    if (cap && stage) {
+      var sync = function () { if (cap.offsetHeight) stage.style.setProperty('--cap-h', cap.offsetHeight + 'px'); };
+      if (window.ResizeObserver) new ResizeObserver(sync).observe(cap);
+      if (window.MutationObserver) new MutationObserver(sync).observe(cap, { childList: true, subtree: true, characterData: true });
+      window.addEventListener('resize', sync); sync();
+    }
+    if (tools) {
+      var upd = function () { tools.classList.toggle('has-more', tools.scrollWidth - tools.clientWidth - tools.scrollLeft > 4); };
+      tools.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd);
+      if (window.ResizeObserver) new ResizeObserver(upd).observe(tools);
+      upd();
+    }
+  }
+
+  /* Phones: one finger scrolls the page, two fingers move/zoom the map, wheel never zooms. Desktop is untouched. */
+  function initGestureHandling() {
+    var box = map.getContainer(), mq = window.matchMedia('(max-width: 800px)'), hint = null, timer = null;
+    var touchy = function () { return mq.matches && ((navigator.maxTouchPoints || 0) > 0 || 'ontouchstart' in window || window.matchMedia('(pointer: coarse)').matches); };
+    function apply() {
+      if (mq.matches) map.scrollWheelZoom.disable(); else map.scrollWheelZoom.enable();
+      var t = touchy();
+      if (t) map.dragging.disable(); else map.dragging.enable();
+      box.classList.toggle('gesture-on', t);
+      if (!t && hint) hint.classList.remove('is-on');
+    }
+    function showHint() {
+      if (!hint) {
+        hint = document.createElement('div'); hint.className = 'gesture-hint'; hint.setAttribute('aria-hidden', 'true');
+        hint.textContent = 'Use two fingers to move the map'; box.parentNode.appendChild(hint);
+      }
+      hint.classList.add('is-on'); clearTimeout(timer);
+      timer = setTimeout(function () { hint.classList.remove('is-on'); }, 1600);
+    }
+    box.addEventListener('touchmove', function (e) {
+      if (!touchy()) return;
+      if (e.touches.length > 1) { if (e.cancelable) e.preventDefault(); if (hint) hint.classList.remove('is-on'); }
+      else showHint();
+    }, { passive: false });
+    if (mq.addEventListener) mq.addEventListener('change', apply); else if (mq.addListener) mq.addListener(apply);
+    window.addEventListener('resize', apply);
+    apply();
   }
 
   function shadeRows() { var d = shareDate(); return (X.rowsBy[d] || X.rowsBy[Object.keys(X.rowsBy).sort().pop()] || { byName: X.byName }).byName; }
@@ -646,7 +694,7 @@
     var h = '';
     h += head('GDACS', g, g.fetched_utc) + (gi.length ? gi.map(function (x) {
       return '<div class="alert"><b>' + esc(x.name || x.id) + '</b>' + (x.alert_level ? ' <span class="chip chip--partly">' + esc(x.alert_level) + '</span>' : '') +
-        '<div class="alert__m">' + esc(x.severity_text || '') + (x.from ? ' · ' + esc(dshort(String(x.from).slice(0, 10))) + (x.to ? ' to ' + esc(dshort(String(x.to).slice(0, 10))) : '') : '') + (x.current === false ? ' · not current' : '') + (x.link ? ' · <a href="' + esc(x.link) + '" target="_blank" rel="noopener">GDACS report</a>' : '') + '</div></div>';
+        '<div class="alert__m">' + (x.severity_text ? 'GDACS estimate: ' : '') + esc(x.severity_text || '') + (x.from ? ' · ' + esc(dshort(String(x.from).slice(0, 10))) + (x.to ? ' to ' + esc(dshort(String(x.to).slice(0, 10))) : '') : '') + (x.current === false ? ' · not current' : '') + (x.link ? ' · <a href="' + esc(x.link) + '" target="_blank" rel="noopener">GDACS report</a>' : '') + '</div></div>';
     }).join('') : '<p class="small muted">No items.</p>');
     h += head('SACHET', sa, sa.snapshot_utc) + (si.length ? si.map(function (x) {
       return '<div class="alert"><b>' + esc(x.headline) + '</b><div class="alert__m">' + esc(x.area || '') + (x.source ? ' · ' + esc(x.source) : '') + (x.issued ? ' · issued ' + esc(tl(x.issued)) : '') + (x.link && x.link_label ? ' · <a href="' + esc(x.link) + '" target="_blank" rel="noopener">' + esc(x.link_label) + '</a>' : '') + (x.lang_note ? ' <small>' + esc(x.lang_note) + '</small>' : '') + '</div></div>';
@@ -1100,7 +1148,7 @@
   function alertsBlock() { return alertsHtml(); }
 
   var DL = [
-    ['manifest.json', 'Catalogue of layers, sources and events'], ['mandals.geojson', 'Mandal outlines (geoBoundaries gbOpen (CC BY 4.0))'],
+    ['manifest.json', 'Catalogue of layers, sources and events'], ['mandals.geojson', 'Mandal outlines (geoBoundaries gbOpen (ODbL 1.0))'],
     ['mandal_rank.json', 'Flooded share for each mandal, with uncertainty'], ['profile.json', 'Eye profile: sea brightness by distance'],
     ['alerts.json', 'Alerts snapshot'], ['imd_track_arnab.geojson', 'Cyclone path and position fixes from IMD']
   ];
@@ -1359,7 +1407,7 @@
   function setPanel(c, remember) {
     $('#main').classList.toggle('collapsed', c);
     ['#panel-toggle', '#panel-close'].forEach(function (id) { $(id).setAttribute('aria-expanded', String(!c)); });
-    $('#panel-toggle').classList.toggle('is-collapsed', c); $('#panel-toggle-txt').textContent = c ? 'Show panel' : 'Hide panel';
+    $('#panel-toggle').classList.toggle('is-collapsed', c); $('#panel-toggle-txt').textContent = c ? 'Show panel' : 'Hide panel'; $('#panel-toggle').setAttribute('aria-label', c ? 'Show panel' : 'Hide panel');
     $('#panel').setAttribute('aria-hidden', String(c));
     if (c) $('#panel').setAttribute('inert', ''); else $('#panel').removeAttribute('inert');
     if (remember) { try { localStorage.setItem(PANEL_KEY, c ? '1' : '0'); } catch (e) { /* storage blocked */ } }

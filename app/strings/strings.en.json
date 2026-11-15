@@ -231,7 +231,7 @@
   "dash.about.s10.what": "India Meteorological Department: storm category, wind and landfall details.",
   "dash.about.s10.url": "https://mausam.imd.gov.in/",
   "dash.about.s11.name": "geoBoundaries",
-  "dash.about.s11.what": "Mandal outlines (ADM3, boundary year 2018, ODbL-1.0). District names for the mandals are from the 2022 Andhra Pradesh district lists.",
+  "dash.about.s11.what": "Mandal outlines (ADM3, boundary year 2018, ODbL 1.0). District names for the mandals are from the 2022 Andhra Pradesh district lists.",
   "dash.about.s11.url": "https://www.geoboundaries.org/",
   "dash.about.s12.name": "Esri basemap",
   "dash.about.s12.what": "Map data: Esri, HERE, Garmin, OpenStreetMap contributors.",

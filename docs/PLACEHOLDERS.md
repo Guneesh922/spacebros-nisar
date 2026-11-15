@@ -25,7 +25,7 @@ Checked on 15 Nov 2026 against `data/processed/manifest.json`, `data/processed/*
 | Item | Where | Needed | Who |
 |---|---|---|---|
 | GDACS credit line is `GDACS` with `credit_confirmed: false` (alerts.json uses "GDACS (EC JRC / UN OCHA)") | manifest `sources[gdacs]` | pick one wording and set `credit_confirmed` | owner |
-| geoBoundaries licence: manifest says to check geoboundaries.org (project site states CC BY 4.0; earlier notes said ODbL-1.0) | manifest `sources[geoboundaries]` | confirm the licence and fix every credit string that says ODbL | owner |
+| geoBoundaries licence: DONE 15 Nov. The geoBoundaries API (gbOpen IND ADM3) reports ODbL 1.0, source Pathways Data Pvt. Ltd., lgdirectory.gov.in, year 2018; credit strings say ODbL 1.0 everywhere, including dash.js, export.js and the export test | manifest `sources[geoboundaries]` | nothing | done |
 | VIIRS satellite for saved events (NOAA-21 used; SNPP stops 2 Nov in `gibs_layers.json`) | layer `gibs_viirs_truecolor` | a human picks the satellite | owner |
 | Landfall time (`time_utc: null`, note "time being confirmed (IMD)") | event `arnab_2026` | a human decides what to state (IMD texts disagree) | owner |
 | Two auto drafts, Murasu (`auto_GDACS_1001346`, radar_linked) and Flood in India (`auto_GDACS_1104248`, alert_only) | `data/processed/events.json` | not reviewed by a person | owner |
@@ -35,7 +35,7 @@ Checked on 15 Nov 2026 against `data/processed/manifest.json`, `data/processed/*
 
 | Item | Where | Status | Who |
 |---|---|---|---|
-| S-band | `data/h5/S_*`, `data/raw/nisar_s` | no files exist, nothing built | backend |
+| S-band | `data/h5/S_*`, `data/raw/nisar_s` | dropped 15 Nov (user decision, "not worth the time"): L-band only; S-band code stays in the repo, unused | none |
 | Optical and INSIGHT links | `docs/BACKEND_GAPS.md` (optical image row), layer `gibs_viirs_truecolor` | VIIRS true colour is a live GIBS layer; no optical image is exported or linked. No INSIGHT link was found in the manifest, config, docs or the dashboard code, so its state is not verified. | backend / owner |
 | Domain review of the English templates (findings text, "what radar cannot tell you") | `data/processed/findings/*.json`, `app/dashboard-mockup/js/findings.js` | not reviewed by a domain expert; the dashboard shows the tag "Draft: to be reviewed" on the "cannot tell" verdicts (`dash.js`, `F.cannot_tell.draft_tag`) | domain expert |
 | Wet-crops class | `docs/METHODS.md`, `docs/review/LBAND_TEST.md` | unproven: not separable from normal field change (a normal fortnight gives 112 km2 against 140 km2 on 28 Oct), no ground truth. Headlines use new open water only. | owner |

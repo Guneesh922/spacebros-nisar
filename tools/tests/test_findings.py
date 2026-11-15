@@ -140,6 +140,9 @@ def test_real_data_every_pass_validates():
     newest = passes[-1]
     latest = B.finding(inp, newest, NOW, False)
     key = "%s|k=3.0" % newest["date"].replace("-", "")
+    if not inp.get("class_stats"):      # data/web/class_stats.json is a git-ignored build output: absent in a dry run, so the number comparison is skipped
+        print("SKIP  real-data number comparison: data/web/class_stats.json not built")
+        return
     stats = inp["class_stats"]["classes"].get(key)
     # numbers_coming / no_baseline passes carry no change numbers; only compare when both sides exist
     if latest["template_state"] in ("big_change", "quiet") and latest.get("three_numbers") and stats:

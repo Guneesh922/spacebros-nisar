@@ -10,6 +10,7 @@ if a source fails, the file is missing and the log says why.
 | `reference/` | Small, clipped or typed inputs the pipeline and the page rely on: `imd_track_arnab.csv`, `scene_manifest.csv`, `asf_probe_*.csv`, `mandals_delta.geojson`, `districts_delta_gb2021.geojson`, `mandal_district_2022.csv`, coastline clips, `gibs_layers.json`, `era5_wind_summary.csv` | Yes (keep each file < 5 MB) |
 | `interim/` | Working rasters/arrays between raw and processed (e.g. `gsw_occurrence_delta.tif`, co-registered stacks, class maps before colouring) | Rasters/arrays ignored; small CSV/JSON tracked |
 | `processed/` | Web-ready outputs read by `app/` via `manifest.json`: PNG overlays with bounds, JSON numbers (`eye.json`, mandal stats) | Yes (page budget: 15 MB total) |
+| `internal/` | `story.internal.json`: the caveat text removed from the public story (written by `tools/build_story.py`). Not copied into the Pages site (`pages.yml` copies only listed folders and checks it). | Yes |
 | `logs/` | One markdown report per fetch package / processing run | Yes |
 | `events/`, `catalogue/`, `browse/` | Pre-event catalogues and quick-looks (unchanged) | as before |
 | `subsets/` | Old Delhi default output of `src/gcov_subset.py` (ignored) | No |

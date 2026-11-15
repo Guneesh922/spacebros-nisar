@@ -1,6 +1,6 @@
 {
  "schema": "events-v1",
- "updated_utc": "2026-11-15T00:04:06Z",
+ "updated_utc": "2026-11-15T00:24:13Z",
  "events": [
   {
    "id": "arnab_2026",
@@ -83,9 +83,9 @@
     }
    ],
    "story": {
-    "landfall_caption": "Landfall point on the map: near 16.45 N, 81.9 E (Narasapuram and Razole area). The exact time the storm reached land is still being confirmed by IMD.",
+    "landfall_caption": "Landfall point on the map: near 16.45 N, 81.9 E (Narasapuram and Razole area). IMD gives a window of 02:00 to 08:00 IST on 28 October.",
     "eye_profile": "The calm eye was about {eye} km from centre to edge, give or take {eye_err} km. The roughest sea was about {peak} km from the centre of the eye. Radar sees how rough the sea is. It does not measure wind speed in km/h. The wind numbers come from IMD, not from the satellite. The eye is small and weak in this radar view (about 5 km core, bright ring near 14 km).",
-    "before_after": "Cyclone Arnab crossed the Andhra Pradesh coast on 27 and 28 October 2026. A radar satellite called NISAR looked at the land before and after. It shows where the land was probably under water. The left side is the coast on {before}. The right side is the newest radar pass, on {after}.",
+    "before_after": "Cyclone Arnab crossed the Andhra Pradesh coast on 28 October 2026, in a window IMD gives as 02:00 to 08:00 IST. A radar satellite called NISAR looked at the land before and after. It shows where the land was probably under water. The left side is the coast on {before}. The right side is the newest radar pass, on {after}.",
     "murasu_caveat": "Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone.",
     "wind": "About 125 to 135 km/h wind near landfall, with gusts to about 150 km/h (IMD).",
     "sea_caveat": "The brightness-rise chart compares 27 Oct with a provisional calm scene (15 Oct) that has dark patches, so read its shape, not its level.",
@@ -184,6 +184,11 @@
      "what": "migrated from data/events/arnab-2026.json (all fields), window set from IMD press releases 5 and 6, story wording copied from app/strings and findings.js"
     },
     {
+     "utc": "2026-11-15T00:00:00Z",
+     "by": "human",
+     "what": "story.landfall_caption and story.before_after reworded: the caption said the landfall time was still being confirmed while the description gives IMD's window of 0200 to 0800 IST on 28 October, and before_after said 27 and 28 October. Both now follow the IMD window (28 October). time_utc stays null."
+    },
+    {
      "utc": "2026-11-14T14:30:00Z",
      "by": "pipeline",
      "what": "added alert_ref GDACS 1001345 (same event)"
@@ -217,7 +222,7 @@
   },
   {
    "id": "auto_GDACS_1001346",
-   "name": "Tropical Cyclone MURASU-26",
+   "name": "Cyclone Murasu",
    "type": "cyclone",
    "area_id": "godavari",
    "start": "2026-11-01",
@@ -255,7 +260,7 @@
      "radar_finding": "change_seen"
     }
    ],
-   "description": "Tropical Cyclone MURASU-26",
+   "description": "Cyclone Murasu",
    "cannot_tell": [
     "This is an alert from an outside source. Radar has not been checked against it yet."
    ],
@@ -283,8 +288,14 @@
      "utc": "2026-11-14T15:01:12Z",
      "by": "pipeline",
      "what": "radar_finding L_COAST_1109: numbers_coming -> change_seen"
+    },
+    {
+     "utc": "2026-11-15T00:22:57Z",
+     "by": "pipeline",
+     "what": "updated from GDACS alert 1001346: display name"
     }
-   ]
+   ],
+   "source_name": "Tropical Cyclone MURASU-26"
   },
   {
    "id": "auto_GDACS_1104248",
@@ -366,6 +377,11 @@
      "utc": "2026-11-15T00:02:50Z",
      "by": "pipeline",
      "what": "flood footprint: 168.2 km from the radar area (affected_area)"
+    },
+    {
+     "utc": "2026-11-15T00:22:57Z",
+     "by": "pipeline",
+     "what": "updated from GDACS alert 1104248: display name"
     }
    ],
    "footprint": {
@@ -382,7 +398,8 @@
     "source_model": "GLOFAS",
     "distance_km": 168.2,
     "basis": "affected_area"
-   }
+   },
+   "source_name": "Flood in India"
   }
  ]
 }

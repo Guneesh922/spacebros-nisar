@@ -13,7 +13,7 @@ or redesign. When you finish a task, update `docs/STATUS.md` in the same session
   No PNG/GeoTIFF/JPG as data of record. Display PNGs/JSON are *build outputs* in `data/web/` (git-ignored),
   made by `tools/build_web.py` from the H5. Full NISAR granules (0.85–7.5 GB) never go in git and should
   not stay on disk once their subset is verified.
-- Both bands: L-band (NASA, ASF DAAC, Earthdata login) and S-band (ISRO, Bhoonidhi STAC API, user's portal login).
+- L-band only for this submission (NASA, ASF DAAC, Earthdata login); S-band code stays in the repo, unused (dropped 15 Nov by user decision, "not worth the time").
 - The dashboard UI in `app/dashboard-mockup/` (tabs "What happened" / "Data for officials and researchers",
   one Leaflet map) is **approved. Do not redesign.** Only wire data into it and fix listed bugs.
 - Landfall time is disputed in IMD bulletins: keep `time_utc: null`.

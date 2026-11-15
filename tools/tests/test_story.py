@@ -300,6 +300,9 @@ def test_presentation_caveats_hidden():
     assert STRINGS["provisional"] in i["sub"] and "Murasu" in i["lead"]
     assert i["updates"]["2026-11-09"]["confounders"] and "Murasu" in i["updates"]["2026-11-09"]["text"]
     assert s["badges"]["provisional"] is True, "the input story is not edited in place"
+    public_story, internal = B.split_internal(pub)
+    assert "internal" not in public_story, "the public story.json must not carry the internal block"
+    assert internal["badges"]["provisional"] is True and "internal" in pub, "split_internal does not edit its input"
 
 
 def test_presentation_caveats_shown():
@@ -403,6 +406,24 @@ def test_analysis_failed_sub_fits_state():
     inp["_pass_date"] = "2026-11-21"
     s = B.build(inp, now("2026-11-22T12:00:00Z"))
     assert s["state"] == "event" and "No storm is being tracked" not in s["sub"], s["sub"]
+
+
+def test_since_text_zero_one_many():
+    T = STRINGS["since_last"]
+    f = B.since_text
+    assert f(T, "28 Oct", "9 Nov", 0, 8, 0, 1, 7) == "On 28 Oct no mandal looked probably flooded. On 9 Nov, 8 do. 1 stayed about the same, 7 went up."
+    assert f(T, "28 Oct", "9 Nov", 3, 8, 0, 1, 2).startswith("On 28 Oct, 3 mandals looked probably flooded. On 9 Nov, 8 do.")
+    assert f(T, "28 Oct", "9 Nov", 8, 0, 8, 0, 0) == "On 28 Oct, 8 mandals looked probably flooded. On 9 Nov, none do. 8 went down."
+    assert f(T, "28 Oct", "9 Nov", 1, 1, 0, 1, 0) == "On 28 Oct, 1 mandal looked probably flooded. On 9 Nov, 1 does. 1 stayed about the same."
+    assert f(T, "28 Oct", "9 Nov", 0, 0, 0, 0, 0) == "On 28 Oct no mandal looked probably flooded. On 9 Nov, none do."
+    # through the real build: 0 -> n
+    s = run(inputs({"2026-10-28": block("2026-10-28", [row("D%d" % i, 0.2) for i in range(4)]), "2026-11-09": block("2026-11-09", flooded_rows(3, n_dry=1))}, ev=event()))
+    assert s["since_last"]["text"].startswith("On 28 Oct no mandal looked probably flooded. On 9 Nov, 3 do."), s["since_last"]["text"]
+    # n -> 0 and 1 -> 1
+    s = run(inputs({"2026-10-28": block("2026-10-28", flooded_rows(2, n_dry=2)), "2026-11-09": block("2026-11-09", [row("D%d" % i, 0.2) for i in range(4)])}, ev=event()))
+    assert "On 9 Nov, none do." in s["since_last"]["text"], s["since_last"]["text"]
+    s = run(inputs({"2026-10-28": block("2026-10-28", flooded_rows(1, n_dry=2)), "2026-11-09": block("2026-11-09", flooded_rows(1, n_dry=2))}, ev=event()))
+    assert s["since_last"]["text"].startswith("On 28 Oct, 1 mandal looked probably flooded. On 9 Nov, 1 does."), s["since_last"]["text"]
 
 
 def main():

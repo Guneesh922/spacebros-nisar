@@ -1,5 +1,7 @@
 # STATUS — live task board (update this at the end of every session)
 
+S-band is dropped by user decision (15 Nov, "not worth the time"): this submission is L-band only; S-band code stays in the repo, unused.
+
 Last updated: 2026-11-15 06:00 IST by the review session (overnight work committed and pushed; newest notes are the dated 15 Nov sections, the 14 Nov "Real vs placeholder" section below is history).
 
 ## 15 Nov review (06:00 IST): open items
@@ -33,12 +35,12 @@ Plan/contract: `docs/review/WAVE4_PLAN.md`. Tests: story 16, findings 10, events
 - SACHET and GDACS are reachable from the Mac; untested from a GitHub runner (fails soft, keeps the snapshot with its real date).
 
 ### Left / placeholder
-- S-band (no files). A real run on a GitHub runner. Domain review of the English templates. GDACS gives a centroid only.
+- S-band: dropped 15 Nov (user decision). A real run on a GitHub runner. Domain review of the English templates. GDACS gives a centroid only.
 - The sea chip names Murasu "Tropical Cyclone MURASU-26" but "Cyclone Murasu" elsewhere.
 - `docs/review/ACCEPTANCE_UI.md` bugs, resolved 14 Nov (fix pass + fresh browser re-check, console clean at 1468 and 390 wide): B1 earlier-updates entries now show their own event chips; B5 header "Radar layers built" vs footer "Summary updated"; B6 contradicting km2 line removed; B7 sea-difference limit made date-neutral; B4 was a stale tab (not reproduced). By design, not bugs: B2 (a draft moves alert_only -> radar_linked once a pass falls in its window; still tagged "not reviewed"), B3 (plan phrases were examples; archive shows each pass's own headline). Also fixed from ACCEPTANCE_DATA.md: 28 Oct top-mandal contradiction, 20-word guard on filled text, Murasu caveat hedged, numbers_coming sub per state, no_new_pass day count + rolling next pass, only configured tracks ingested.
 
 ### Needs the team
-- S-band download (Bhoonidhi login). `EARTHDATA_TOKEN` secret. Pages source = GitHub Actions and workflow read/write permission. Push (main is ahead of origin). Final site name. Submission form. Confirm the CSA/CONAE reason. Fable evaluation, on the user's say-so.
+- S-band download (Bhoonidhi login): dropped 15 Nov (user decision). `EARTHDATA_TOKEN` secret. Pages source = GitHub Actions and workflow read/write permission. Push (main is ahead of origin). Final site name. Submission form. Confirm the CSA/CONAE reason. Fable evaluation, on the user's say-so.
 
 ### Older items now done (verified in the docs above)
 - Alerts J&K bug (W3 "Open" note at the bottom of this file): fixed, AP only.
@@ -46,6 +48,8 @@ Plan/contract: `docs/review/WAVE4_PLAN.md`. Tests: story 16, findings 10, events
 - W3-H "PRO review" mandal card follow-up and "mandal card follows the day selector": not verified, left open.
 
 ## Real vs placeholder (14 Nov, end of session)
+Superseded by `docs/PLACEHOLDERS.md` (kept as history; do not rely on it).
+
 - REAL: all 8 L-band H5 subsets in data/h5/ (259 MB) and their 8 map layers; sea difference map 27 Oct vs 15 Oct;
   scene catalogues, IMD bulletins, district/mandal vectors, approved dashboard UI.
 - PLACEHOLDER: class maps (new water, wet crops, no change), data/processed/mandal_rank.json,
@@ -78,10 +82,10 @@ Native coast is far over 50 MB; 2x2 is still 56 MB (slightly over the 50 MB targ
        profile.json (eye profile) from L_SEA_20261027 VV along a transect through the eye (data/interim/A/profile*.json
        is the old format). Replace the invented numbers; keep the same JSON shape the dashboard reads.
 5. [x] (done in Wave 4, see WP6) Sea difference: check 15 Oct (PROVISIONAL) vs 3 Oct calibration offset before quoting numbers (median diff is +3.7 dB).
-6a. [x] One-command S-band subsetting written (14 Nov 2026): `python src/fetch/bhoonidhi_s_band.py subset --preset arnab` streams only box chunks over HTTP Range (RangeFile), S-band grid/pols in subset_h5.py, `--local` for portal files; see docs/PIPELINE.md "S-band in one command". Tested on synthetic SSAR files + local Range server only.
-6. [ ] S-band: user RUNS the subset command (replaces downloading the 4 full files; old `download` still works),
+6a. [x] (dropped 15 Nov (user decision)) One-command S-band subsetting written (14 Nov 2026): `python src/fetch/bhoonidhi_s_band.py subset --preset arnab` streams only box chunks over HTTP Range (RangeFile), S-band grid/pols in subset_h5.py, `--local` for portal files; see docs/PIPELINE.md "S-band in one command". Tested on synthetic SSAR files + local Range server only.
+6. [ ] (dropped 15 Nov (user decision)) S-band: user RUNS the subset command (replaces downloading the 4 full files; old `download` still works),
        inspect format with h5py, extend subset_h5.py for S-band (band S, same schema), add layers.
-7. [ ] Email Bhoonidhi support about missing S-band: 27 Oct sea eye pass, 15 Oct + 8 Nov sea, 9 Nov delta.
+7. [ ] (dropped 15 Nov (user decision)) Email Bhoonidhi support about missing S-band: 27 Oct sea eye pass, 15 Oct + 8 Nov sea, 9 Nov delta.
 8. [ ] Drop badges only for layers now built from H5; update docs/PLACEHOLDERS.md; tidy docs/BACKEND_GAPS.md and
        docs/handoff/NEXT_SESSION_PROMPT.md (older handoff; CLAUDE.md + this file supersede it).
 
@@ -108,7 +112,7 @@ and shown well. Verified 16:18 IST in the browser: radar overlays draw in the ri
 - [x] W3-A derived products from H5: class maps, mandal_rank.json, profile.json (agent: Sonnet, 14 Nov). Built by `tools/build_web.py`, method in `docs/METHODS.md`. Still placeholder: all S-band layers; the wet-crops class is not distinguishable from normal field change; no ground truth; baseline scenes PROVISIONAL; dashboard text/badges that say "sample" are hard-coded in app/ (owned by W3-C).
 - [x] W3-B automatic update pipeline: discover (CMR) -> ingest -> catalog -> manifest sync -> daily Action `.github/workflows/update.yml`; see docs/PIPELINE.md. Needs the user: secret EARTHDATA_TOKEN, push, Pages on (agent: Sonnet)
 - [x] W3-C dashboard: timeline of all scenes, "Save this day" + permalinks, fix 404s (agent: Sonnet, 14 Nov). Done: 404s were size-probe HEADs with a wrong path (fixed); class-map PNGs 404 only if ticked (UI shows "Not loaded yet"); dates come from manifest layers (type nisar, ready); date timeline on the map for Radar/Before-after/Eye; "This view" card with Save this day / Copy link / Download this day / Saved days; view state in the URL hash; layer table no longer scrolls sideways; fit-after-mode-switch fixed. Saved days live in localStorage (per browser). Open: class PNGs still missing in data/processed/img/ (W3-A).
-- [ ] W3-D S-band: blocked until the user downloads the 4 scenes (needs their Bhoonidhi login)
+- [ ] W3-D (dropped 15 Nov (user decision)) S-band: blocked until the user downloads the 4 scenes (needs their Bhoonidhi login)
 - [ ] W3-E final evaluation of data use and presentation (agent: Fable), after A–C
 - [ ] W3-F review of the professional tab -> docs/review/PRO_TAB_REVIEW.md (agent: Sonnet, read-only)
 - [ ] W3-G spec for a live, newsletter-style public tab driven by the latest scenes -> docs/review/LIVE_STORY_SPEC.md (agent: Sonnet, read-only)
@@ -187,3 +191,14 @@ Provisional / early-data / lower-confidence / weak-signal / sample badges and ca
 - Product rule: no data-quality disclaimers in the UI (config presentation.show_data_caveats=false); everything removed is logged in docs/REMOVED_FROM_PRODUCT.md for a later review. The old name "Coast Radar Watch" and the old StoryMaps/white-paper lines earlier in this file are history.
 - Pipeline `run_all.py --skip-ingest` exit 0; tests: story 24, findings 11, events 19, english_only 11, export 14, manifest 17, all pass.
 - Not verified: real Chrome print preview of the brief, a real new-tab 'Open brief' (pane blocks pop-ups), Safari/iOS download, GitHub Actions run.
+
+
+## 15 Nov fixes (backend, workflow, text)
+- Pages: `pages.yml` now copies `docs/METHODS.md` only into `_site/docs/` (the page's Methods link no longer 404s), refuses to build if `data/internal/` or an `internal` key reaches `_site`, and the root redirect title is "Pass by Pass".
+- `story.internal` moved out of the public build: `tools/build_story.py` writes it to `data/internal/story.internal.json` (not published); `data/web/story.json` has no `internal` key (test added). dash.js never read it.
+- geoBoundaries licence checked against the API (gbOpen IND ADM3): ODbL 1.0, source Pathways Data Pvt. Ltd., lgdirectory.gov.in, boundary year 2018. Every credit string now says "ODbL 1.0". Still different, outside this task's files: `app/dashboard-mockup/js/dash.js` (Downloads list) and `app/dashboard-mockup/js/export.js` (brief credit) say CC BY 4.0, and `tools/tests/export_node_test.js` asserts it; change them together.
+- Headline sentence: "On 28 Oct no mandal looked probably flooded. On 9 Nov, 8 do. 1 stayed about the same, 7 went up." (0, 1 and many handled; zero counts dropped from the tail). Findings 28 Oct and 9 Nov revised, revision log says why.
+- Names: auto GDACS drafts show "Cyclone Murasu"; GDACS's own title is kept in `source_name` and in `alert_refs` (alerts card unchanged).
+- Landfall wording: caption and "Before and after" sentence now follow IMD's window (02:00 to 08:00 IST on 28 October); `time_utc` still null; edit_log entry added; fallback file aligned.
+- Clean-checkout fix: tests no longer need `data/web/story.json` or `class_stats.json` (see the workflow order in `pages.yml`; tests gate `build_story.py`).
+- S-band dropped (user decision); notes added here, in PLACEHOLDERS.md section 3 and CLAUDE.md.

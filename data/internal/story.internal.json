@@ -1,0 +1,46 @@
+{
+ "badges": {
+  "provisional": true,
+  "sample": false
+ },
+ "provisional_text": "Early data. NISAR has not finished checking it. Numbers may change.",
+ "caveats": [
+  "Early data. NISAR has not finished checking it. Numbers may change.",
+  "Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone."
+ ],
+ "confidence": {
+  "level": "lower",
+  "reasons": [
+   "The baseline radar pictures are early data that NISAR has not finished checking."
+  ]
+ },
+ "confounders": [
+  "Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone."
+ ],
+ "sub": "The satellite looked again on 9 Nov, 12 days after landfall. The numbers are likely to change as more radar pictures arrive. Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone. Early data. NISAR has not finished checking it. Numbers may change.",
+ "lead": "The satellite looked again on 9 Nov, 12 days after landfall. The numbers are likely to change as more radar pictures arrive. Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone.",
+ "updates": {
+  "2026-11-09": {
+   "text": "The satellite looked again on 9 Nov, 12 days after landfall. The numbers are likely to change as more radar pictures arrive. Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone. Radar points to about 84 square km of new open water (61 to 108 with other settings). That is more than ten times a normal fortnight.",
+   "headline": "More land is probably flooded than on the last radar pass.",
+   "confounders": [
+    "Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone."
+   ]
+  },
+  "2026-11-08": {
+   "text": "Radar picture of the sea on 8 Nov.",
+   "headline": "Radar picture of the sea on 8 Nov.",
+   "confounders": []
+  },
+  "2026-10-28": {
+   "text": "NISAR looked at the coast on 28 Oct, the day Cyclone Arnab reached land. Radar shows only small patches of likely new open water, too few to call any mandal flooded. Radar points to about 8 square km of new open water (5 to 13 with other settings). That is about 4 times a normal fortnight.",
+   "headline": "No mandal looks probably flooded in this radar picture.",
+   "confounders": []
+  },
+  "2026-10-27": {
+   "text": "Radar picture of the sea on 27 Oct, with the calm centre (eye) of Cyclone Arnab.",
+   "headline": "Radar picture of the sea on 27 Oct, with the calm centre (eye) of Cyclone Arnab.",
+   "confounders": []
+  }
+ }
+}
