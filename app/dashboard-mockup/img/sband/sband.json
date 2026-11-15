@@ -1,0 +1,79 @@
+{
+ "note": "Static event pictures, not pipeline output. Built by tools/static/sband_georef.py.",
+ "bounds": [
+  [
+   15.93854,
+   80.69216
+  ],
+  [
+   18.17042,
+   83.42206
+  ]
+ ],
+ "scenes": [
+  {
+   "date": "2026-10-16",
+   "time_utc": "2026-10-16T00:01:03Z",
+   "file": "sband_coast_rgb_20261016.webp",
+   "granule": "NISAR_S2_PR_GCOV_033_055_A_010_3700_DHNA_A_20261016T000103_20261016T000131_P00500_M_P_I_001",
+   "track": 55,
+   "frame": 10,
+   "direction": "ascending",
+   "polarisation": "HH+HV",
+   "size_px": [
+    1365,
+    1167
+   ],
+   "swath": [
+    [
+     80.693445,
+     17.614037
+    ],
+    [
+     82.985191,
+     18.170423
+    ],
+    [
+     83.422063,
+     16.488482
+    ],
+    [
+     81.142305,
+     15.938543
+    ]
+   ]
+  },
+  {
+   "date": "2026-10-28",
+   "time_utc": "2026-10-28T00:01:03Z",
+   "file": "sband_coast_rgb_20261028.webp",
+   "granule": "NISAR_S2_PR_GCOV_034_055_A_010_3700_DHNA_A_20261028T000103_20261028T000131_P00500_M_P_I_001",
+   "track": 55,
+   "frame": 10,
+   "direction": "ascending",
+   "polarisation": "HH+HV",
+   "size_px": [
+    1365,
+    1167
+   ],
+   "swath": [
+    [
+     80.692158,
+     17.613556
+    ],
+    [
+     82.985079,
+     18.170207
+    ],
+    [
+     83.419828,
+     16.49638
+    ],
+    [
+     81.138854,
+     15.946151
+    ]
+   ]
+  }
+ ]
+}

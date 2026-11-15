@@ -9,9 +9,37 @@
   var SHARE_MAX = 15, GRAY = [-25, 0];
   var NISAR_CREDIT = 'NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)';
   var DERIVED_CREDIT = 'Derived by SpaceBros from NISAR data';
-  var MODES = [['share', 'Flood share'], ['radar', 'Radar, after'], ['swipe', 'Before and after'], ['eye', 'Cyclone eye']];
+  var MODES = [['share', 'Flood share'], ['radar', 'Radar, after'], ['swipe', 'Before and after'], ['eye', 'Cyclone eye'], ['sband', 'S-band']];
 
-  var S = { section: 'happened', mapMode: 'share', shareD: null, rankBy: 'water', histId: null, fm: false, sel: null, swipe: 50, showAll: false, storyD: null, evOpen: {}, sort: { k: 'rank', d: 1 }, q: '', role: 'coast', colour: false, dates: {}, dEye: null, prevMode: null, saved: [], storeOK: true, notice: '', undo: null };
+  /* S-band, Cyclone Arnab: two STATIC colour pictures as map layers. Event material only: they are defined here, added to the
+     layer list in memory after the manifest loads, and never written to manifest.json, the H5 store or the pipeline.
+     Files and bounds: app/dashboard-mockup/img/sband/ (made once by tools/static/sband_georef.py). */
+  var SB0 = '2026-10-16', SB1 = '2026-10-28', SB_BOUNDS = [[15.93854, 80.69216], [18.17042, 83.42206]];
+  function sbId(d) { return 'sband_coast_rgb_' + d.replace(/-/g, ''); }
+  var SBAND = {
+    credit: 'NISAR S-band SAR, ISRO. Colour pictures made by team SpaceBros',
+    land: [
+      ['#0b0f1a', 'Black', 'calm open water: rivers, lakes, ponds'],
+      ['#8fe36a', 'Green', 'plants: forest and dense crops'],
+      ['#d977e0', 'Pink', 'bare or harvested fields, dry soil, town street grids'],
+      ['#eef3d2', 'Pale, near white', 'very strong echo: dense towns, or crops standing in water'],
+      ['#4a3fd0', 'Blue to violet', 'smooth bare ground or very wet soil']
+    ],
+    sea: [
+      ['#0a1030', 'Dark navy sea', 'calm, smooth water (16 Oct)'],
+      ['#2418d8', 'Bright blue sea', 'roughened by the cyclone wind (28 Oct)']
+    ],
+    layers: [[SB0, '16 Oct', 'before', 'twelve days before landfall'], [SB1, '28 Oct', 'during', 'the day Cyclone Arnab came ashore']].map(function (x) {
+      return { id: sbId(x[0]), type: 'sband', chip: 'sband', kind: 'image', status: 'ready', static_event: 'arnab-2026', group: x[2], date: x[0], time_utc: x[0] + 'T00:01:03Z',
+        name: 'S-band colour picture (HH, HV), ' + x[1], shows: 'S-band radar colour picture of the coast, ' + x[1] + ' (' + x[3] + '): red = HH, green = HV, blue = HH minus HV (dB)',
+        source: 'NISAR S-band GCOV (ISRO), colour picture by SpaceBros', credit: 'NISAR S-band SAR, ISRO', licence: 'ISRO NRSC Bhoonidhi terms',
+        png: 'app/dashboard-mockup/img/sband/' + sbId(x[0]) + '.webp', bounds: SB_BOUNDS, bounds_inferred: false,
+        band: 'S', pol: 'HH+HV', track: 55, frame: 10, direction: 'ascending', default_on: false, opacity: 0.9 };
+    })
+  };
+  function swiping() { return S.mapMode === 'swipe' || (S.mapMode === 'sband' && S.sb === 'cmp'); }
+
+  var S = { section: 'happened', mapMode: 'share', shareD: null, rankBy: 'water', histId: null, fm: false, sel: null, swipe: 50, showAll: false, storyD: null, evOpen: {}, sort: { k: 'rank', d: 1 }, q: '', role: 'coast', colour: false, sb: SB1, dates: {}, dEye: null, prevMode: null, saved: [], storeOK: true, notice: '', undo: null };
   var X = {};                                  // loaded data
   var vis = { img: {}, before: null, outlines: true, track: true };
   var ready = false, hashTimer = null, lastHash = '', missing = {}, map, imgs = {}, imgsB = {}, mandLayer, featByName = {}, trackGrp, eyeGrp, hoverRing, built = {};
@@ -102,7 +130,7 @@
                soft(D + 'events.json'), soft('../../config/areas.json'),
                soft('../strings/story.en.json'), soft('../strings/strings.en.json')])
     .then(function (a) {
-      X.manifest = a[0]; X.mandals = a[1]; X.rank = a[2]; X.profile = a[3]; X.alerts = a[4]; X.track = a[5]; X.catalog = a[6];
+      X.manifest = a[0]; X.manifest.layers = X.manifest.layers.concat(SBAND.layers); X.mandals = a[1]; X.rank = a[2]; X.profile = a[3]; X.alerts = a[4]; X.track = a[5]; X.catalog = a[6];
       X.story = a[7]; X.latest = a[7]; X.events = (a[8] && a[8].events) || []; X.cfg = a[9]; X.str = a[10] || {}; X.ui = a[11] || {};
       if (!X.story) console.warn('No findings file and no story.json: the home tab shows the neutral message.');
       return loadLayerJSON();
@@ -322,7 +350,7 @@
   }
 
   function clipBefore() {
-    var o = S.mapMode === 'swipe' && vis.before ? imgsB[vis.before] : null;
+    var o = swiping() && vis.before ? imgsB[vis.before] : null;
     if (!o || !map.hasLayer(o) || !o.getElement()) return;
     var e = o.getElement();
     var sz = map.getSize(), x = sz.x * S.swipe / 100;
@@ -340,6 +368,7 @@
     if (m === 'share') { if (o.after) vis.img[o.after] = 0.35; if (o.cls) vis.img[o.cls] = defOp(o.cls); }
     if ((m === 'radar' || m === 'eye') && o.after) vis.img[col ? o.rgb : o.after] = 0.9;
     if (m === 'swipe') { if (o.after) vis.img[col ? o.rgb : o.after] = 0.9; vis.before = col ? o.rgbB : o.before; }
+    if (m === 'sband' && o.after) { vis.img[o.after] = 0.9; vis.before = o.before; }
   }
 
   function capVars() {
@@ -350,13 +379,13 @@
   function applyMap() {
     var want = {}, wantB = {};
     Object.keys(vis.img).forEach(function (id) { if (vis.img[id]) want[id] = vis.img[id]; });
-    if (S.mapMode === 'swipe' && vis.before) wantB[vis.before] = 0.9;
+    if (swiping() && vis.before) wantB[vis.before] = 0.9;
     syncOverlays(imgs, want, false); syncOverlays(imgsB, wantB, true);
     toggleLayer(mandLayer, vis.outlines); toggleLayer(trackGrp, vis.track); toggleLayer(eyeGrp, vis.track);
     mandLayer.setStyle(mStyle);
     if (vis.outlines) mandLayer.bringToFront();
-    $('#swipe').hidden = $('#swipe-line').hidden = S.mapMode !== 'swipe';
-    if (S.mapMode === 'swipe') {
+    $('#swipe').hidden = $('#swipe-line').hidden = !swiping();
+    if (swiping()) {
       var o = viewIds(), lb = o.before && X.layers[o.before], la = o.after && X.layers[o.after];
       $('.swipe__l').textContent = (lb ? dd(lb.date) : '?') + ', before'; $('.swipe__r').textContent = (la ? dd(la.date) : '?') + ', after';
     }
@@ -366,6 +395,10 @@
     // caption (dates come from the manifest layers that are on the map)
     var key = S.mapMode === 'radar' && S.role === 'sea' ? 'radar_sea' : S.mapMode;
     var c = F.captions[key] || F.captions.custom, cv = capVars(), cant = c.cant;
+    if (S.mapMode === 'sband') {
+      c = { shows: S.sb === 'cmp' ? 'S-band radar colour pictures of the coast on {before} (before, left) and {after} (landfall day, right): red = HH, green = HV, blue = HH minus HV.' : 'S-band radar colour picture of the coast on {date}: red = HH, green = HV, blue = HH minus HV.', cant: '', src: 'NISAR S-band radar (ISRO). Static pictures for Cyclone Arnab, colour by team SpaceBros' };
+      cant = c.cant;
+    }
     if (colourOn()) {
       var ro = viewIds(), ch = rgbCh(ro.rgb), tail = ': red = ' + ch.R + ', green = ' + ch.G + ', blue = ' + ch.R + ' minus ' + ch.G + '.';
       var sea = S.mapMode === 'eye' || S.role === 'sea';
@@ -376,7 +409,7 @@
     if (S.mapMode === 'swipe') { var vo = viewIds(); [vo.before, vo.after].forEach(function (id) { var l = id && X.layers[id]; if (l && l.bounds_inferred) cant += ' The position of the ' + dshort(l.date) + ' frame is copied from a later pass.'; }); }
     $('#caption').innerHTML = '<div class="cap__row"><span class="cap__k">Shows</span><span>' + esc(fill(c.shows, cv)) + '</span></div><div class="cap__row"><span class="cap__k">Source</span><span>' + esc(c.src) + '</span></div>' + capCredits() + capTag(key);
     var gone = Object.keys(vis.img).filter(function (id) { return vis.img[id] && missing[id]; });
-    if (S.mapMode === 'swipe' && vis.before && missing[vis.before]) gone.push(vis.before);
+    if (swiping() && vis.before && missing[vis.before]) gone.push(vis.before);
     if (gone.length) $('#caption').insertAdjacentHTML('beforeend', '<div class="cap__miss" role="status"><b>This picture could not be loaded.</b> Outlines and numbers still work.</div>');
     $$('#map-modes button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.m === S.mapMode)); });
     $$('input[data-lyr]').forEach(function (cb) {
@@ -393,7 +426,7 @@
   }
   function mapCredits() {
     var ids = Object.keys(vis.img).filter(function (id) { return vis.img[id] && !missing[id] && X.layers[id]; });
-    if (S.mapMode === 'swipe' && vis.before && !missing[vis.before] && X.layers[vis.before]) ids.push(vis.before);
+    if (swiping() && vis.before && !missing[vis.before] && X.layers[vis.before]) ids.push(vis.before);
     return ids.map(function (id) { return creditFor(X.layers[id]); }).filter(Boolean).filter(function (x, i, a) { return a.indexOf(x) === i; });
   }
   function capTag(key) {
@@ -447,13 +480,14 @@
       '<span class="legend__rec" role="group" aria-label="Channel recipe">' + rc('R', ch.R) + rc('G', ch.G) + rc('B', ch.R + ' \u2212 ' + ch.G) + '</span>' + rows;
   }
   function legendHtml() {
-    var h = '', ids = Object.keys(vis.img).filter(function (id) { return vis.img[id] && !missing[id] && X.layers[id]; }), radar = null, diff = null, cls = [], rgb = null;
+    var h = '', ids = Object.keys(vis.img).filter(function (id) { return vis.img[id] && !missing[id] && X.layers[id]; }), radar = null, diff = null, cls = [], rgb = null, sb = null;
     if (S.mapMode === 'share') h += '<b class="legend__t">Mandals: probably under water</b><div class="ramp"></div><div class="ramp-l"><span>0</span><span>' + SHARE_MAX + '+ in 100</span></div>' + rankTag();
-    ids.forEach(function (id) { var l = X.layers[id]; if (l.classes && l.classes.length) cls.push(l); else if (l.rgb) rgb = l; else if (l.ramp && l.ramp.stops) diff = l; else if (l.type === 'nisar' && S.mapMode !== 'share' && !radar) radar = l; });
+    ids.forEach(function (id) { var l = X.layers[id]; if (l.type === 'sband') sb = l; else if (l.classes && l.classes.length) cls.push(l); else if (l.rgb) rgb = l; else if (l.ramp && l.ramp.stops) diff = l; else if (l.type === 'nisar' && S.mapMode !== 'share' && !radar) radar = l; });
     var kh = '';
     if (cls.length) kh += '<b class="legend__t">Map colours</b>' + cls.map(function (l) { return l.classes.map(function (c) { return '<span class="lg"><i class="sw" style="' + swatchStyle(c) + '"></i>' + esc(c.label) + (isWeak(l) ? ' (weak signal)' : '') + '</span>'; }).join(''); }).join('');
     if (diff) kh += changeLegend(diff);
     if (rgb) kh += rgbLegend(rgb);
+    if (sb || (swiping() && S.mapMode === 'sband')) kh += sbandLegend();
     if (kh) h += '<details class="legend__k"' + (S.keyOpen === false ? '' : ' open') + '><summary class="legend__sum"><b>Colour key</b></summary><div class="legend__kb">' + kh + '<button type="button" class="linkbtn legend__g" data-legend="guide">Full colour guide</button></div></details>';
     if (radar) {
       var sj = X.lj[radar.id] && X.lj[radar.id].stretch, lo = sj && isFinite(sj.lo) ? sj.lo : GRAY[0], hi = sj && isFinite(sj.hi) ? sj.hi : GRAY[1], rl = /sea/.test(radar.id) ? 'sea' : 'coast';
@@ -473,6 +507,7 @@
   }
   function creditFor(l, withStatus) {
     if (!l) return '';
+    if (l.type === 'sband') return 'Credit: ' + l.credit + ' · ' + [dshort(l.date), 'T' + l.track, 'HH+HV'].join(' · ');
     if (l.type === 'nisar') return 'Credit: ' + NISAR_CREDIT + ' · ' + nisarFacts(l, withStatus).join(' · ');
     if (l.type === 'derived') return DERIVED_CREDIT + ((l.ramp && l.ramp.stops) || l.rgb ? '. ' + NISAR_CREDIT + ' · ' + nisarFacts(l, withStatus).join(' · ') : '');
     return '';
@@ -485,6 +520,7 @@
     map.invalidateSize({ animate: false });          // size first, so the fit is not computed on a stale container
     if (!mapReady()) { S.pendingFit = m; return; }   // hidden or not laid out yet: fit when the map has a real size
     S.pendingFit = null;
+    if (m === 'sband') { map.fitBounds(SB_BOUNDS, { animate: false }); return; }
     var sea = m === 'eye' || ((m === 'radar' || m === 'swipe') && S.role === 'sea');
     map.fitBounds(sea ? SEA : DELTA, { animate: false });
   }
@@ -709,6 +745,24 @@
   }
 
   /* ---------- general panel and About ---------- */
+  /* S-band panel text: the pictures themselves are map layers (SBAND, top of this file) */
+  function sbandSw(rows) { return rows.map(function (k) { return '<span class="lg lg--rgb"><i class="sw sw--k" style="background:' + k[0] + '"></i><span><b>' + esc(k[1]) + ':</b> ' + esc(k[2]) + '</span></span>'; }).join(''); }
+  function sbandLegend() {
+    function rc(k, name) { return '<span class="rc"><i class="rc__c rc__c--' + k.toLowerCase() + '">' + k + '</i><b>' + esc(name) + '</b></span>'; }
+    return '<b class="legend__t">S-band radar colour (HH, HV)</b><span class="legend__rec" role="group" aria-label="Channel recipe">' + rc('R', 'HH') + rc('G', 'HV') + rc('B', 'HH − HV') + '</span>' + sbandSw(SBAND.land.concat(SBAND.sea));
+  }
+  function sbandCard() {
+    return '<div class="card" id="sband"><div><span class="eyebrow">A second radar · Cyclone Arnab</span><h2>The cyclone in S-band</h2></div>' +
+      '<p class="small">NISAR carries two radars. The other map views use the L-band radar (24 cm waves). For Cyclone Arnab we also hold two colour pictures from the S-band radar (9 cm waves), built by ISRO: the coast on 16 Oct 2026, and on 28 Oct 2026, the day the cyclone came ashore.</p>' +
+      '<ul class="small note__l note__l--card"><li><b>The sea turns bright blue.</b> On 16 Oct it is dark and smooth. On 28 Oct the cyclone wind has roughened it almost everywhere.</li>' +
+      '<li><b>Pink fields turn blue and violet.</b> Dry, bare ground on 16 Oct reads as wet ground on 28 Oct, after the rain.</li></ul>' +
+      '<div class="row"><button type="button" class="btn" data-act="sband">Show S-band on the map</button><button type="button" class="btn" data-act="sbandcmp">Before and after</button></div></div>';
+  }
+  function sbandKeyCard() {
+    return '<div class="card" id="d-sband"><div><h2>S-band pictures, Cyclone Arnab</h2><p class="small">Two S-band HH / HV colour pictures of the coast (track 55, frame 10, ascending): ' + SBAND.layers.map(function (l) { return esc(dshort(l.date)); }).join(' and ') + '. They are static event layers: tick them in the Layers list (group "S-band colour pictures"). There is no H5 file or statistic behind them and the update pipeline does not touch them.</p></div>' +
+      '<div class="key__g"><h3>S-band coast: HH / HV</h3><ul class="key__ch small"><li><b>Red</b> = HH (co-polarised): strong over flat surfaces and double bounce</li><li><b>Green</b> = HV (cross-polarised): strong over plant canopies</li><li><b>Blue</b> = HH minus HV, in dB (co to cross ratio): high over smooth wet surfaces and wind-roughened sea</li></ul><div class="key__sw">' + sbandSw(SBAND.land.concat(SBAND.sea)) + '</div></div>' +
+      '<p class="small muted">Scale limits are those of the pictures as supplied, not the pooled limits of the L-band layers, so colours are not comparable with the L-band colour pictures. Placed on the map from the product grid (UTM 44N) and swath corners in the scene catalogue. ' + esc(SBAND.credit) + '.</p></div>';
+  }
   function radarPanelHtml() {
     var title = T('dash.radar.title'); if (!title) return '';
     var items = []; for (var i = 1; T('dash.radar.p' + i); i++) if (cav() || i <= 3) items.push(T('dash.radar.p' + i));   // p7, p8 (what radar cannot tell, 'probably') are in the one end note
@@ -926,6 +980,7 @@
       '<div class="card" id="mcard"></div>' : '') +
 
       radarPanelHtml() +
+      sbandCard() +
 
       (cav() ? confidenceCard() : '') +
 
@@ -941,16 +996,16 @@
 
   /* ---------------- "Data" ---------------- */
   function isWeak(l) { return cav() && !!(l && (l.classes || []).some(function (c) { return c.id === 'wet_crops'; })); }
-  var LGRP = [['colour', 'Colour views', function (l) { return !!l.rgb_of; }], ['grey', 'Grey radar', function (l) { return l.type === 'nisar'; }],
+  var LGRP = [['sband', 'S-band colour pictures, Cyclone Arnab', function (l) { return l.type === 'sband'; }], ['colour', 'Colour views', function (l) { return !!l.rgb_of; }], ['grey', 'Grey radar', function (l) { return l.type === 'nisar'; }],
     ['change', 'Change maps', function (l) { return !!(l.ramp && l.ramp.stops); }], ['classes', 'Flood classes', function (l) { return !!(l.classes && l.classes.length); }]];
   function layerRow(l, src) {
     var s = src[l.source_id] || {}, drawable = isImg(l) || l.id === 'mandal_boundaries' || l.id === 'imd_track_arnab';
-    return '<tr title="' + esc(l.id) + '"' + (vis.img[l.id] ? ' class="is-on"' : '') + '><td><b>' + esc(l.name) + '</b>' + (l.chip === 'nisar' || l.type === 'nisar' ? ' <span class="chip chip--nisar">NISAR L-band</span>' : '') +
+    return '<tr title="' + esc(l.id) + '"' + (vis.img[l.id] ? ' class="is-on"' : '') + '><td><b>' + esc(l.name) + '</b>' + (l.chip === 'nisar' || l.type === 'nisar' ? ' <span class="chip chip--nisar">NISAR L-band</span>' : l.chip === 'sband' ? ' <span class="chip chip--nisar">NISAR S-band</span>' : '') +
       (isWeak(l) ? '<span class="sub">' + tag('Weak signal') + '</span>' : '') +
       (layerSample(l) ? '<span class="sub">' + tag(l.placeholder.tag) + '</span>' : '') + '</td>' +
       '<td class="num">' + esc(l.date ? dshort(l.date) : (l.access === 'live' ? 'Live' : '—')) + '</td>' +
-      '<td>' + esc(l.source || '') + '<span class="sub">' + esc(l.credit || '') + (l.type === 'nisar' || l.rgb ? ' · ' + esc(nisarFacts(l, true).join(' · ')) : '') + '</span></td>' +
-      '<td>' + esc(s.licence || '—') + '</td>' +
+      '<td>' + esc(l.source || '') + '<span class="sub">' + esc(l.credit || '') + (l.type === 'nisar' || l.rgb || l.type === 'sband' ? ' · ' + esc(nisarFacts(l, true).join(' · ')) : '') + '</span></td>' +
+      '<td>' + esc(s.licence || l.licence || '—') + '</td>' +
       '<td class="small">' + esc(l.shows || '') + '</td>' +
       '<td>' + (drawable ? '<input type="checkbox" data-lyr="' + esc(l.id) + '" aria-label="Show ' + esc(l.name) + ' on the map">' : '<span class="sub">—</span>') + '</td></tr>';
   }
@@ -1291,7 +1346,7 @@
     $('#sec-data').innerHTML =
       '<nav class="chips" aria-label="Jump to a part of this section"><a href="#d-layers">Layers</a>' + (hasRgb() ? '<a href="#d-key">Colour key</a>' : '') + '<a href="#d-mandals">Mandals</a><a href="#d-profile">Eye profile</a><a href="#d-small">Radar by date</a><a href="#d-hist">Histogram</a><a href="#d-scenes">Scenes</a><a href="#d-alerts">Alerts</a><a href="#d-files">Downloads</a><a href="#about-d">About and sources</a>' +
       '<a href="#" data-act="tohappened" class="chips__back">Plain-language view</a></nav>' +
-      '<div class="card" id="d-layers"><div class="row row--between"><div><h2>Layers</h2><p class="small">Every map layer with its source, licence and known limits.</p></div><span class="small muted">Tick a box to draw a layer on the map</span></div><div class="tblwrap tblwrap--tall"><table class="dt"><thead><tr><th scope="col">Layer</th><th scope="col">Date</th><th scope="col">Source and credit</th><th scope="col">Licence</th><th scope="col">What it shows</th><th scope="col">On map</th></tr></thead><tbody>' + layerRows() + '</tbody></table></div></div>' + keyCard() +
+      '<div class="card" id="d-layers"><div class="row row--between"><div><h2>Layers</h2><p class="small">Every map layer with its source, licence and known limits.</p></div><span class="small muted">Tick a box to draw a layer on the map</span></div><div class="tblwrap tblwrap--tall"><table class="dt"><thead><tr><th scope="col">Layer</th><th scope="col">Date</th><th scope="col">Source and credit</th><th scope="col">Licence</th><th scope="col">What it shows</th><th scope="col">On map</th></tr></thead><tbody>' + layerRows() + '</tbody></table></div></div>' + keyCard() + sbandKeyCard() +
       (X.rows.length && rank.period ? '<div class="card" id="d-mandals"><div class="row row--between"><div><h2>Mandal table</h2></div>' + rankTag() + '</div>' +
         '<p class="small">Share of each mandal\'s area (valid land that is not permanent water), in % (± is the uncertainty in percentage points). Radar picture of ' + dshort(rank.latest_date || rank.period[1]) + ' against the pre-storm baseline; ' + esc(tN) + '. Area figures are share × the area the radar saw.</p>' +
         '<p class="small muted">Rank is by open water. The total with wet crops is optional.</p>' +
@@ -1459,6 +1514,7 @@
       if (act === 'evswipe') { if (X.scenes.coast.length) S.role = 'coast'; setMapMode('swipe', true); }
       if (act === 'swipe') { setMapMode('swipe', false); selectMandal(S.sel, { fly: true }); }
       if (act === 'eye') setMapMode('eye', true);
+      if (act === 'sband' || act === 'sbandcmp') { S.sb = act === 'sbandcmp' ? 'cmp' : SB1; setMapMode('sband', true); }
       if (act === 'todata') { setSection('data'); selectMandal(S.sel, {}); }
       if (act === 'tohappened') setSection('happened');
       if (act === 'raw') { setSection('data'); selectMandal(S.sel, {}); var tr2 = $('#mtbody tr[data-m="' + S.sel.replace(/"/g, '\\"') + '"]'); if (tr2) setTimeout(function () { tr2.scrollIntoView({ block: 'center' }); $('#d-mandals').scrollIntoView(); tr2.scrollIntoView({ block: 'nearest' }); }, 50); }
@@ -1541,6 +1597,7 @@
     else if (m === 'radar') o.after = idAt(r, S.dates[r].after);
     else if (m === 'swipe') { o.after = idAt(r, S.dates[r].after); o.before = idAt(r, S.dates[r].before); }
     else if (m === 'eye') o.after = idAt('sea', S.dEye);
+    else if (m === 'sband') { o.after = sbId(S.sb === 'cmp' ? SB1 : S.sb); if (S.sb === 'cmp') o.before = sbId(SB0); }
     if (S.colour && (m === 'radar' || m === 'swipe' || m === 'eye')) { o.rgb = rgbOf(o.after); if (m === 'swipe') o.rgbB = rgbOf(o.before); }
     return o;
   }
@@ -1561,6 +1618,7 @@
     var m = S.mapMode;
     if (m === 'radar' || m === 'swipe') return S.dates[S.role].after;
     if (m === 'eye') return S.dEye;
+    if (m === 'sband') return S.sb === 'cmp' ? SB1 : S.sb;
     if (m === 'share') return shareDate();
     var la = latestScene('coast') || latestScene('sea'); return la ? la.date : null;
   }
@@ -1616,7 +1674,7 @@
   function renderTimeline() {
     var tl = $('#tl'); if (!tl) return;
     if (S.section === 'data' && S.mapMode === 'custom' && hasRgb()) { var kp = document.activeElement; var kk = kp && tl.contains(kp) && kp.dataset ? kp.dataset.tl + '|' + kp.dataset.v : null; tl.hidden = false; tl.innerHTML = dataTl(); if (kk) { var kb = $$('button', tl).filter(function (x) { return x.dataset.tl + '|' + x.dataset.v === kk; })[0]; if (kb) kb.focus(); } return; }
-    var m = S.mapMode, show = ((m === 'radar' || m === 'swipe' || m === 'eye') && (X.scenes.coast.length + X.scenes.sea.length) > 0) || (m === 'share' && X.shareDates.length > 1);
+    var m = S.mapMode, show = m === 'sband' || ((m === 'radar' || m === 'swipe' || m === 'eye') && (X.scenes.coast.length + X.scenes.sea.length) > 0) || (m === 'share' && X.shareDates.length > 1);
     tl.hidden = !show; if (!show) return;
     var act = document.activeElement, keep = act && tl.contains(act) && act.dataset ? act.dataset.tl + '|' + act.dataset.v : null;
     function row(k, inner) { return '<div class="tl__row"><span class="tl__k">' + k + '</span>' + inner + '</div>'; }
@@ -1635,6 +1693,9 @@
     if (m === 'radar') h += row('Date', dates('after', S.role, S.dates[S.role].after));
     if (m === 'swipe') h += row('Before', dates('before', S.role, S.dates[S.role].before)) + row('After', dates('after', S.role, S.dates[S.role].after));
     if (m === 'eye') h += row('Date', dates('eye', 'sea', S.dEye));
+    if (m === 'sband') h += row('Date', '<div class="seg" role="group" aria-label="S-band picture date">' + [[SB0, dd(SB0), 'S-band, ' + dshort(SB0) + ', before the cyclone'], [SB1, dd(SB1), 'S-band, ' + dshort(SB1) + ', landfall day'], ['cmp', 'Compare', 'Slide between the two dates']].map(function (x) {
+      return '<button type="button" data-tl="sb" data-v="' + x[0] + '" aria-pressed="' + (S.sb === x[0]) + '" title="' + esc(x[2]) + '">' + esc(x[1]) + '</button>'; }).join('') + '</div>') +
+      row('Look', '<div class="seg" role="group" aria-label="Grey or colour radar picture"><button type="button" data-tl="sblook" data-v="grey" aria-pressed="false" disabled title="The S-band pictures exist in colour only">Grey</button><button type="button" data-tl="sblook" data-v="colour" aria-pressed="true" title="Red = HH, green = HV, blue = their ratio">Colour</button></div>');
     if ((m === 'radar' || m === 'swipe' || m === 'eye') && hasRgb()) {
       var vo = viewIds(), cOk = !!rgbOf(vo.after) && (m !== 'swipe' || !!rgbOf(vo.before)), cOn = colourOn();
       h += row('Look', '<div class="seg" role="group" aria-label="Grey or colour radar picture">' + [['grey', 'Grey', !cOn, true], ['colour', 'Colour', cOn, cOk]].map(function (x) {
@@ -1650,6 +1711,7 @@
     if (st.mode === 'radar' || st.mode === 'swipe') { st.d = S.dates[S.role].after; if (st.mode === 'swipe') st.b = S.dates[S.role].before; }
     if (S.section === 'data' ? (S.colour && hasRgb()) : colourOn()) st.look = 'colour';
     if (st.mode === 'eye') st.d = S.dEye;
+    if (st.mode === 'sband') { st.d = S.sb === 'cmp' ? SB1 : S.sb; if (S.sb === 'cmp') st.b = SB0; }
     if (st.mode === 'share') st.d = shareDate();
     if (st.mode === 'custom') st.layers = Object.keys(vis.img).filter(function (k) { return vis.img[k]; });
     if (mapReady()) { var c = map.getCenter(); st.c = [+c.lat.toFixed(4), +c.lng.toFixed(4)]; st.z = +map.getZoom().toFixed(2); }
@@ -1702,7 +1764,7 @@
     st = st || {};
     var notes = [];
     var tab = st.tab === 'data' ? 'data' : 'happened';
-    var mode = ['share', 'radar', 'swipe', 'eye'].indexOf(st.mode) >= 0 ? st.mode : 'share';
+    var mode = ['share', 'radar', 'swipe', 'eye', 'sband'].indexOf(st.mode) >= 0 ? st.mode : 'share';
     S.role = (st.role === 'sea' || st.role === 'coast') && X.scenes[st.role].length ? st.role : X.def.role;
     ROLES.forEach(function (r) { S.dates[r] = { after: X.def.after[r], before: X.def.before[r] }; });
     S.dEye = X.def.eye; S.shareD = null; S.colour = false;
@@ -1715,6 +1777,7 @@
     if (tab === 'happened') {
       if (mode === 'share' && st.d) { if (X.rowsBy[st.d] && sceneBy('coast', st.d)) S.shareD = st.d; else notes.push('The flood-share day of ' + dshort(st.d) + ' is not in the archive any more, so this view shows the newest day.'); }
       if (mode === 'eye') S.dEye = pick('sea', st.d, X.def.eye);
+      if (mode === 'sband') S.sb = st.b ? 'cmp' : (st.d === SB0 ? SB0 : SB1);
       if (mode === 'radar' || mode === 'swipe') S.dates[S.role].after = pick(S.role, st.d, X.def.after[S.role]);
       if (mode === 'swipe') S.dates[S.role].before = pick(S.role, st.b, X.def.before[S.role]);
       if (st.look === 'colour') S.colour = hasRgb();
@@ -1766,7 +1829,7 @@
       'Radar layers built: <b>' + esc(ist(X.manifest.generated_utc)) + '</b>.</p>';
     renderSaved(); updateNow();
   }
-  function viewSig() { return [S.mapMode, S.role, primaryDate(), S.mapMode === 'swipe' ? S.dates[S.role].before : '', S.mapMode === 'custom' ? Object.keys(vis.img).join(',') : ''].join('|'); }
+  function viewSig() { return [S.mapMode, S.role, primaryDate(), S.mapMode === 'swipe' ? S.dates[S.role].before : '', S.mapMode === 'custom' ? Object.keys(vis.img).join(',') : '', S.mapMode === 'sband' ? S.sb : ''].join('|'); }
   function updateNow() {
     var el = $('#dc-now'); if (!el) return;
     var fb = $('#dc-files'); if (fb && !fb.hidden && fb.dataset.sig !== viewSig()) { fb.hidden = true; var fbtn = $('[data-day="files"]'); if (fbtn) fbtn.setAttribute('aria-expanded', 'false'); }
@@ -1914,7 +1977,9 @@
       var b = e.target.closest('button[data-tl]'); if (!b || b.disabled) return;
       var k = b.dataset.tl, v = b.dataset.v;
       if (k === 'dview' || k === 'drole' || k === 'ddate') { dvSet(k, v); return; }
-      if (k === 'role') S.role = v;
+      if (k === 'sblook') return;
+      if (k === 'sb') S.sb = v;
+      else if (k === 'role') S.role = v;
       else if (k === 'after') S.dates[S.role].after = v;
       else if (k === 'before') S.dates[S.role].before = v;
       else if (k === 'look') S.colour = v === 'colour';
