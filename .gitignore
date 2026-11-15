@@ -40,3 +40,6 @@ data/**/*.vrt
 !data/h5/
 !data/h5/*.h5
 data/web/
+
+# caveat text kept out of the product; build output of tools/build_story.py
+data/internal/

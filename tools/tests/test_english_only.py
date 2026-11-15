@@ -79,7 +79,7 @@ def test_place_names_latin():
 
 
 def test_no_language_switch_left():
-    for rel in ("app/index.html", "app/css/tokens.css", "app/css/app.css"):
+    for rel in ("app/dashboard-mockup/index.html", "app/css/tokens.css", "app/dashboard-mockup/css/dash.css"):
         t = open(os.path.join(ROOT, rel), encoding="utf-8").read()
         assert "Anek+Telugu" not in t and "--font-te" not in t and 'id="lang-te"' not in t, rel
 

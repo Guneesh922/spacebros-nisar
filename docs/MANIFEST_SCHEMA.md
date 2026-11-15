@@ -1,6 +1,6 @@
 # manifest.json schema v2
 
-File: `data/processed/manifest.json`. Validate with `python3 tools/check_manifest.py` (add `--files` to list referenced files that are not on disk yet). The binding definition is section 3 of `docs/FRONTEND_BUILD_PLAN.md`; this page is the field-by-field reference. Adding an event, region, layer or hazard means editing this file only (plus dropping the files it points to). No code change.
+File: `data/processed/manifest.json`. Validate with `python3 tools/check_manifest.py` (add `--files` to list referenced files that are not on disk yet). This page is the field-by-field reference. Adding an event, region, layer or hazard means editing this file only (plus dropping the files it points to). No code change.
 
 Rules the page enforces from the manifest: every caption shows `credit` (or the source `credit_line`); any layer or analysis with `placeholder.is` shows a visible tag; class labels render with a leading "likely"; an unknown `status` is treated as `unavailable`; never put a landfall time, track number or date in code.
 

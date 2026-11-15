@@ -12,7 +12,7 @@ Read this first:
 - **Some fields are read by the page, some are not.** Each table says which is which. A field marked *informational* is saved for people, the checker or later work. Changing it does not change the page.
 - **Some changes need a developer.** Section 11 lists them. If you hit one, stop and ask.
 
-Related files: `docs/MANIFEST_SCHEMA.md` (field reference), `docs/PLACEHOLDERS.md` (every sample value and its real replacement), `docs/BACKEND_GAPS.md` (what is still owed).
+Related files: `docs/MANIFEST_SCHEMA.md` (field reference), `docs/PLACEHOLDERS.md` (every sample value and its real replacement).
 
 ---
 

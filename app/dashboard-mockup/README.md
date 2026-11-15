@@ -1,6 +1,6 @@
 # Dashboard mockup: one page, two sections, one map
 
-Mockup only. It does not touch `app/` (it reuses `app/css/tokens.css`, read-only).
+This is the Pass by Pass dashboard. It uses `app/css/tokens.css`, `app/strings/` and `app/vendor/`.
 
 ## Run
 From the repo root: `python3 -m http.server 8000`, then open http://localhost:8000/app/dashboard-mockup/ (add `#data` for the second section). Needs internet for Leaflet, fonts and the dark basemap (same CDNs as the main app).
