@@ -1,9 +1,9 @@
 {
  "schema": "alerts-v2",
  "area_id": "godavari",
- "built_utc": "2026-11-15T15:36:25Z",
+ "built_utc": "2026-11-16T13:49:57Z",
  "gdacs": {
-  "fetched_utc": "2026-11-15T15:36:25Z",
+  "fetched_utc": "2026-11-16T13:49:57Z",
   "ok": true,
   "error": null,
   "url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH",
@@ -83,12 +83,21 @@
   ]
  },
  "sachet": {
-  "snapshot_utc": "2026-11-15T15:36:25Z",
+  "snapshot_utc": "2026-11-16T13:49:57Z",
   "ok": true,
   "error": null,
   "url": "https://sachet.ndma.gov.in/cap_public_website/rss/rss_india.xml",
   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
   "items": [
+   {
+    "id": "1794805423229008",
+    "headline": "SDMA Alert is Likely to occur over Palmanpeta - Bhimumipatnam. Please follow SDMA guidelines.",
+    "area": "Palmanpeta - Bhimumipatnam",
+    "issued": "2026-11-16T10:34:55+05:30",
+    "source": "Andhra Pradesh SDMA",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1794805423229008",
+    "category": "Met"
+   },
    {
     "id": "1794655829652008",
     "headline": "SDMA Alert is Very Likely to occur over Mukkam To Chintapalli. Please follow SDMA guidelines.",
@@ -101,7 +110,7 @@
   ],
   "feed_item_count": 98,
   "feed_pubdate": "Tue, 10 Nov 2026 08:54:20 GMT",
-  "feed_newest_item": "2026-11-15T18:04:40+05:30"
+  "feed_newest_item": "2026-11-16T18:24:20+05:30"
  },
  "none_text": "No current alerts for this area from GDACS or SACHET."
 }
