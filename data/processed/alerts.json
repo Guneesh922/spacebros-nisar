@@ -1,9 +1,9 @@
 {
  "schema": "alerts-v2",
  "area_id": "godavari",
- "built_utc": "2026-11-16T13:49:57Z",
+ "built_utc": "2026-11-17T14:42:00Z",
  "gdacs": {
-  "fetched_utc": "2026-11-16T13:49:57Z",
+  "fetched_utc": "2026-11-17T14:42:00Z",
   "ok": true,
   "error": null,
   "url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH",
@@ -83,7 +83,7 @@
   ]
  },
  "sachet": {
-  "snapshot_utc": "2026-11-16T13:49:57Z",
+  "snapshot_utc": "2026-11-17T14:42:00Z",
   "ok": true,
   "error": null,
   "url": "https://sachet.ndma.gov.in/cap_public_website/rss/rss_india.xml",
@@ -110,7 +110,7 @@
   ],
   "feed_item_count": 98,
   "feed_pubdate": "Tue, 10 Nov 2026 08:54:20 GMT",
-  "feed_newest_item": "2026-11-16T18:24:20+05:30"
+  "feed_newest_item": "2026-11-16T23:53:27+05:30"
  },
  "none_text": "No current alerts for this area from GDACS or SACHET."
 }
