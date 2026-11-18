@@ -1,9 +1,9 @@
 {
  "schema": "alerts-v2",
  "area_id": "godavari",
- "built_utc": "2026-11-17T14:42:00Z",
+ "built_utc": "2026-11-18T14:21:18Z",
  "gdacs": {
-  "fetched_utc": "2026-11-17T14:42:00Z",
+  "fetched_utc": "2026-11-18T14:21:18Z",
   "ok": true,
   "error": null,
   "url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH",
@@ -83,19 +83,28 @@
   ]
  },
  "sachet": {
-  "snapshot_utc": "2026-11-17T14:42:00Z",
+  "snapshot_utc": "2026-11-18T14:21:18Z",
   "ok": true,
   "error": null,
   "url": "https://sachet.ndma.gov.in/cap_public_website/rss/rss_india.xml",
   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
   "items": [
    {
-    "id": "1794805423229008",
-    "headline": "SDMA Alert is Likely to occur over Palmanpeta - Bhimumipatnam. Please follow SDMA guidelines.",
-    "area": "Palmanpeta - Bhimumipatnam",
-    "issued": "2026-11-16T10:34:55+05:30",
+    "id": "1795002709049008",
+    "headline": "Due to the impact of Cyclone Akwan in the Bay of Bengal, heavy rains accompanied by strong winds are likely in your area tomorrow. The public is advised to remain alert and take necessary precautions -Government of Andhra Pradesh",
+    "area": "heavy_rainfall_2026-11-19",
+    "issued": "2026-11-18T17:23:10+05:30",
     "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1794805423229008",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795002709049008",
+    "category": "Met"
+   },
+   {
+    "id": "1795000640273008",
+    "headline": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1130 IST of 18.11.26 near latitude 13.1N and longitude 85.4E, 540 Km southeast of Narsapur, Andhra Pradesh. Cyclone Warning for Alluri Sitharama Raju, Anakapalli, Srikakulam, Visakhapatnam, Vizianagaram.",
+    "area": "Alluri Sitharama Raju, Anakapalli, Srikakulam, Visakhapatnam, Vizianagaram districts of Andhra Pradesh",
+    "issued": "2026-11-18T16:47:26+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795000640273008",
     "category": "Met"
    },
    {
@@ -108,9 +117,9 @@
     "category": "Met"
    }
   ],
-  "feed_item_count": 98,
-  "feed_pubdate": "Tue, 10 Nov 2026 08:54:20 GMT",
-  "feed_newest_item": "2026-11-16T23:53:27+05:30"
+  "feed_item_count": 100,
+  "feed_pubdate": "Wed, 18 Nov 2026 11:22:18 GMT",
+  "feed_newest_item": "2026-11-18T17:23:10+05:30"
  },
  "none_text": "No current alerts for this area from GDACS or SACHET."
 }
