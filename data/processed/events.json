@@ -1,6 +1,6 @@
 {
  "schema": "events-v1",
- "updated_utc": "2026-11-18T14:25:41Z",
+ "updated_utc": "2026-11-19T14:34:18Z",
  "events": [
   {
    "id": "arnab_2026",
@@ -492,6 +492,288 @@
      "utc": "2026-11-18T14:21:38Z",
      "by": "pipeline",
      "what": "draft created from SACHET alert 1795000640273008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795078209488008",
+   "name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "source_name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795078209488008: from 2026-11-19 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795078209488008",
+    "ids": [
+     "1795078209488008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "Andhra Pradesh SDMA"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "Cyclone is Likely to occur over Srikakulam district of Andhra Pradesh. Please follow SDMA guidelines.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795078209488008",
+     "issued": "2026-11-19T14:21:04+05:30",
+     "headline": "Cyclone is Likely to occur over Srikakulam district of Andhra Pradesh. Please follow SDMA guidelines."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795078209488008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795072648185008",
+   "name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "source_name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795072648185008: from 2026-11-19 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795072648185008",
+    "ids": [
+     "1795072648185008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "Andhra Pradesh SDMA"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "Cyclone is Likely to occur over Vizianagaram district of Andhra Pradesh. Please follow SDMA guidelines.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795072648185008",
+     "issued": "2026-11-19T12:49:18+05:30",
+     "headline": "Cyclone is Likely to occur over Vizianagaram district of Andhra Pradesh. Please follow SDMA guidelines."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795072648185008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795069769169008",
+   "name": "Cyclone alert (IMD Visakhapatnam)",
+   "source_name": "Cyclone alert (IMD Visakhapatnam)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795069769169008: from 2026-11-19 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795069769169008",
+    "ids": [
+     "1795069769169008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "IMD Visakhapatnam"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "SCS AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 0530 IST of 19.11.26 440 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, Anakapalli, Konaseema, EG, Kakinada, Parvathipuram Manyam, Polavaram, Srikakulam, Visakhapatnam, Vizianagaram, WG",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795069769169008",
+     "issued": "2026-11-19T11:59:33+05:30",
+     "headline": "SCS AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 0530 IST of 19.11.26 440 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, Anakapalli, Konaseema, EG, Kakinada, Parvathipuram Manyam, Polavaram, Srikakulam, Visakhapatnam, Vizianagaram, WG"
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795069769169008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795063890471008",
+   "name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "source_name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795063890471008: from 2026-11-19 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795063890471008",
+    "ids": [
+     "1795063890471008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "Andhra Pradesh SDMA"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "Cyclone is Likely to occur over heavy_rainfall_2026-11-19. Please follow SDMA guidelines.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795063890471008",
+     "issued": "2026-11-19T10:22:31+05:30",
+     "headline": "Cyclone is Likely to occur over heavy_rainfall_2026-11-19. Please follow SDMA guidelines."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795063890471008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795039977725008",
+   "name": "Cyclone alert (IMD Visakhapatnam)",
+   "source_name": "Cyclone alert (IMD Visakhapatnam)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795039977725008: from 2026-11-19 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795039977725008",
+    "ids": [
+     "1795039977725008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "IMD Visakhapatnam"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 2330 IST of 18.11.26 near latitude 13.9N and longitude 85.3E, 510 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, PVP Manyam, Srikakulam, VSKP, Vizianagaram, AKP.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795039977725008",
+     "issued": "2026-11-19T03:43:07+05:30",
+     "headline": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 2330 IST of 18.11.26 near latitude 13.9N and longitude 85.3E, 510 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, PVP Manyam, Srikakulam, VSKP, Vizianagaram, AKP."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795039977725008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795018909404008",
+   "name": "Cyclone alert (IMD Visakhapatnam)",
+   "source_name": "Cyclone alert (IMD Visakhapatnam)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-18",
+   "end": "2026-11-18",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795018909404008: from 2026-11-18 to 2026-11-18 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795018909404008",
+    "ids": [
+     "1795018909404008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "IMD Visakhapatnam"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1730 IST of 18.11.26 near latitude 13.6N and longitude 85.3E, 540 Km of Kalingapatnam, Cyclone Warning for ASR, Anakapalli, Parvathipuram Manyam, Srikakulam, Visakhapatnam, Vizianagaram.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795018909404008",
+     "issued": "2026-11-18T21:51:58+05:30",
+     "headline": "SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1730 IST of 18.11.26 near latitude 13.6N and longitude 85.3E, 540 Km of Kalingapatnam, Cyclone Warning for ASR, Anakapalli, Parvathipuram Manyam, Srikakulam, Visakhapatnam, Vizianagaram."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795018909404008"
     }
    ]
   }
