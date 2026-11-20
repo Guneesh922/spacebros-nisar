@@ -1,11 +1,11 @@
 {
  "schema": "alerts-v2",
  "area_id": "godavari",
- "built_utc": "2026-11-19T14:31:31Z",
+ "built_utc": "2026-11-20T14:10:35Z",
  "gdacs": {
   "fetched_utc": "2026-11-19T14:31:31Z",
-  "ok": true,
-  "error": null,
+  "ok": false,
+  "error": "TimeoutError: The read operation timed out",
   "url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH",
   "credit": "GDACS (EC JRC / UN OCHA)",
   "items": [
@@ -83,12 +83,183 @@
   ]
  },
  "sachet": {
-  "snapshot_utc": "2026-11-19T14:31:31Z",
+  "snapshot_utc": "2026-11-20T14:10:35Z",
   "ok": true,
   "error": null,
   "url": "https://sachet.ndma.gov.in/cap_public_website/rss/rss_india.xml",
   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
   "items": [
+   {
+    "id": "1795141515464008",
+    "headline": "The CYCLONIC STORM Akvan with maximum wind speed of 80-90 gusting to 100 Kmph lays centred at 0530 IST of 20.11.26 near latitude 18.3N and longitude 84.8E, 70 Km east of Kalingapatnam, Andhra Pradesh. Cyclone Warning for Parvathipuram Manyam, Srikakulam.",
+    "area": "Parvathipuram Manyam, Srikakulam districts of Andhra Pradesh",
+    "issued": "2026-11-20T07:55:17+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795141515464008",
+    "category": "Met"
+   },
+   {
+    "id": "1795138625767008",
+    "headline": "Heavy Rain is very likely to occur at a few places over Kakinada district in next 3 hours.",
+    "area": "Kakinada district of Andhra Pradesh",
+    "issued": "2026-11-20T07:07:07+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795138625767008",
+    "category": "Met"
+   },
+   {
+    "id": "1795138501841008",
+    "headline": "Very Heavy Rain accompained with 50-60kmph gusting to 70kmph is very likely to occur at a few places over Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Visakhapatnam districts in next 3 hours.",
+    "area": "Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Visakhapatnam districts of Andhra Pradesh",
+    "issued": "2026-11-20T07:05:05+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795138501841008",
+    "category": "Met"
+   },
+   {
+    "id": "1795138125725008",
+    "headline": "Extremely Heavy Rain accompained with gale winds 80-90 kmph gusting to 100 kmph is very likely to occur at a few places over Srikakulam, Vizianagaram districts in next 3 hours.",
+    "area": "Srikakulam, Vizianagaram districts of Andhra Pradesh",
+    "issued": "2026-11-20T06:58:48+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795138125725008",
+    "category": "Met"
+   },
+   {
+    "id": "1795128249178008",
+    "headline": "Heavy Rain is very likely to occur at a few places over Kakinada district in next 3 hours.",
+    "area": "Kakinada district of Andhra Pradesh",
+    "issued": "2026-11-20T04:14:11+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795128249178008",
+    "category": "Met"
+   },
+   {
+    "id": "1795128165165008",
+    "headline": "Very Heavy Rain associated with Squally winds speed reaching 40-50 kmph Gusting to 60 kmph is very likely to occur at a few places over Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Visakhapatnam districts in next 3 hours.",
+    "area": "Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Visakhapatnam districts of Andhra Pradesh",
+    "issued": "2026-11-20T04:12:50+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795128165165008",
+    "category": "Met"
+   },
+   {
+    "id": "1795128008584008",
+    "headline": "Extremely Heavy Rain associated with Gale winds speed reaching 60-70 kmph Gusting to 80 kmph is very likely to occur at a few places over Srikakulam, Vizianagaram districts in next 3 hours.",
+    "area": "Srikakulam, Vizianagaram districts of Andhra Pradesh",
+    "issued": "2026-11-20T04:10:13+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795128008584008",
+    "category": "Met"
+   },
+   {
+    "id": "1795125226936008",
+    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
+    "area": "sklm-sompeta Mandal",
+    "issued": "2026-11-20T03:24:26+05:30",
+    "source": "Andhra Pradesh SDMA",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795125226936008",
+    "category": "Met"
+   },
+   {
+    "id": "1795120685208008",
+    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
+    "area": "sklm-kaviti, sklm-ichchapuram, sklm-kanchili mandals",
+    "issued": "2026-11-20T02:08:44+05:30",
+    "source": "Andhra Pradesh SDMA",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795120685208008",
+    "category": "Met"
+   },
+   {
+    "id": "1795117377882008",
+    "headline": "Heavy Rain is very likely to occur at a few places over Kakinada in next 3 hours.",
+    "area": "Kakinada district of Andhra Pradesh",
+    "issued": "2026-11-20T01:12:59+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795117377882008",
+    "category": "Met"
+   },
+   {
+    "id": "1795117181135008",
+    "headline": "Very Heavy Rain associated with squally wind 40-50kmph gusting to 60kmph is very likely to occur at a few places over Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Visakhapatnam districts in next 3 hours.",
+    "area": "Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Visakhapatnam districts of Andhra Pradesh",
+    "issued": "2026-11-20T01:09:44+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795117181135008",
+    "category": "Met"
+   },
+   {
+    "id": "1795116989435008",
+    "headline": "Extremely Heavy Rain associated with gale wind speed reaching 60-70kmph gusting to 80kmph is very likely to occur at a few places over Srikakulam, Vizianagaram districts in next 3 hours.",
+    "area": "Srikakulam, Vizianagaram districts of Andhra Pradesh",
+    "issued": "2026-11-20T01:06:31+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795116989435008",
+    "category": "Met"
+   },
+   {
+    "id": "1795113305349008",
+    "headline": "Heavy Rain is Very Likely to occur over Parvathipuram Manyam, Srikakulam, Vizianagaram districts of Andhra Pradesh. Please follow SDMA guidelines.",
+    "area": "Parvathipuram Manyam,Srikakulam,Vizianagaram districts of Andhra Pradesh",
+    "issued": "2026-11-20T00:05:55+05:30",
+    "source": "Andhra Pradesh SDMA",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795113305349008",
+    "category": "Met"
+   },
+   {
+    "id": "1795109529593008",
+    "headline": "Heavy Rain is very likely to occur at a few places over Kakinada in next 12 hours.",
+    "area": "Kakinada district of Andhra Pradesh",
+    "issued": "2026-11-19T23:02:11+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795109529593008",
+    "category": "Met"
+   },
+   {
+    "id": "1795109438532008",
+    "headline": "Very Heavy Rain is very likely to occur at a few places over Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Visakhapatnam in next 12 hours.",
+    "area": "Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Visakhapatnam districts of Andhra Pradesh",
+    "issued": "2026-11-19T23:00:41+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795109438532008",
+    "category": "Met"
+   },
+   {
+    "id": "1795109340175008",
+    "headline": "Extremely Heavy Rain is very likely to occur at a few places over Srikakulam, Vizianagaram in next 12 hours.",
+    "area": "Srikakulam, Vizianagaram districts of Andhra Pradesh",
+    "issued": "2026-11-19T22:59:02+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795109340175008",
+    "category": "Met"
+   },
+   {
+    "id": "1795109076136008",
+    "headline": "Heavy Rain is very likely to occur at a few places over Kakinada in next 3 hours.",
+    "area": "Kakinada district of Andhra Pradesh",
+    "issued": "2026-11-19T22:54:38+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795109076136008",
+    "category": "Met"
+   },
+   {
+    "id": "1795108896652008",
+    "headline": "Very Heavy Rain is very likely to occur at a few places over Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Visakhapatnam in next 3 hours.",
+    "area": "Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Visakhapatnam districts of Andhra Pradesh",
+    "issued": "2026-11-19T22:51:42+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795108896652008",
+    "category": "Met"
+   },
+   {
+    "id": "1795108743239008",
+    "headline": "Extremely Heavy Rain is very likely to occur at a few places over Srikakulam, Vizianagaram in next 3 hours.",
+    "area": "Srikakulam, Vizianagaram districts of Andhra Pradesh",
+    "issued": "2026-11-19T22:49:07+05:30",
+    "source": "IMD Visakhapatnam",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795108743239008",
+    "category": "Met"
+   },
    {
     "id": "1795091941957008",
     "headline": "Heavy Rain with gale wind speed reaching 60-70kmph gusting to 80kmph is very likely to occur at a few places over Srikakulam in next 3 hours.",
@@ -151,128 +322,11 @@
     "source": "IMD Visakhapatnam",
     "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795069769169008",
     "category": "Met"
-   },
-   {
-    "id": "1795064783267008",
-    "headline": "Gale wind speed reaching 60-70 kmph Gusting 80 kmph is very likely to occur at most places over Alluri Sitharama Raju, Anakapalli, Kakinada, Parvathipuram Manyam, Srikakulam, Visakhapatnam, Vizianagaram in next 3 hours.",
-    "area": "Alluri Sitharama Raju, Anakapalli, Kakinada, Parvathipuram Manyam, Srikakulam, Visakhapatnam, Vizianagaram districts of Andhra Pradesh",
-    "issued": "2026-11-19T10:36:27+05:30",
-    "source": "IMD Visakhapatnam",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795064783267008",
-    "category": "Met"
-   },
-   {
-    "id": "1795063890471008",
-    "headline": "Cyclone is Likely to occur over heavy_rainfall_2026-11-19. Please follow SDMA guidelines.",
-    "area": "heavy_rainfall_2026-11-19",
-    "issued": "2026-11-19T10:22:31+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795063890471008",
-    "category": "Met"
-   },
-   {
-    "id": "1795051101919008",
-    "headline": "SDMA Alert is Likely to occur over Ramachandrapuram to Kaviti. Please follow SDMA guidelines.",
-    "area": "Ramachandrapuram to Kaviti",
-    "issued": "2026-11-19T06:49:27+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795051101919008",
-    "category": "Met"
-   },
-   {
-    "id": "1795050596037008",
-    "headline": "SDMA Alert is Likely to occur over Palmanpeta to Bheemunipatnam. Please follow SDMA guidelines.",
-    "area": "Palmanpeta to Bheemunipatnam",
-    "issued": "2026-11-19T06:42:21+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795050596037008",
-    "category": "Met"
-   },
-   {
-    "id": "1795046532238008",
-    "headline": "Heavy Rain is Likely to occur over very_heavy_rainfall_2026-11-19, heavy_rainfall_2026-11-19. Please follow SDMA guidelines.",
-    "area": "very_heavy_rainfall_2026-11-19, heavy_rainfall_2026-11-19",
-    "issued": "2026-11-19T05:33:29+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795046532238008",
-    "category": "Met"
-   },
-   {
-    "id": "1795040432375008",
-    "headline": "Heavy to Very Heavy Rain is very likely to occur at isolated places over Dr. B.R. Ambedkar Konaseema, East Godavari, Parvathipuram Manyam, West Godavari in next 24 hours.",
-    "area": "4 districts of Andhra Pradesh",
-    "issued": "2026-11-19T04:23:28+05:30",
-    "source": "IMD Visakhapatnam",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795040432375008",
-    "category": "Met"
-   },
-   {
-    "id": "1795041656904008",
-    "headline": "Heavy Rain with Gale wind speed reaching 60-70 Kmph Gusting to 80 Kmph is very likely to occur at a few places over Anakapalli, Kakinada, Srikakulam, Visakhapatnam, Vizianagaram in next 3 hours.",
-    "area": "Anakapalli, Kakinada, Srikakulam, Visakhapatnam, Vizianagaram districts of Andhra Pradesh",
-    "issued": "2026-11-19T04:10:59+05:30",
-    "source": "IMD Visakhapatnam",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795041656904008",
-    "category": "Met"
-   },
-   {
-    "id": "1795040226348008",
-    "headline": "Extremely Heavy Rain is very likely to occur at isolated places over Alluri Sitharama Raju, Anakapalli, Kakinada, Srikakulam, Visakhapatnam, Vizianagaram in next 24 hours.",
-    "area": "Alluri Sitharama Raju, Anakapalli, Kakinada, Srikakulam, Visakhapatnam, Vizianagaram districts of Andhra Pradesh",
-    "issued": "2026-11-19T03:47:10+05:30",
-    "source": "IMD Visakhapatnam",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795040226348008",
-    "category": "Met"
-   },
-   {
-    "id": "1795039977725008",
-    "headline": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 2330 IST of 18.11.26 near latitude 13.9N and longitude 85.3E, 510 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, PVP Manyam, Srikakulam, VSKP, Vizianagaram, AKP.",
-    "area": "Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Srikakulam, Visakhapatnam, Vizianagaram districts of Andhra Pradesh",
-    "issued": "2026-11-19T03:43:07+05:30",
-    "source": "IMD Visakhapatnam",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795039977725008",
-    "category": "Met"
-   },
-   {
-    "id": "1795018909404008",
-    "headline": "SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1730 IST of 18.11.26 near latitude 13.6N and longitude 85.3E, 540 Km of Kalingapatnam, Cyclone Warning for ASR, Anakapalli, Parvathipuram Manyam, Srikakulam, Visakhapatnam, Vizianagaram.",
-    "area": "Alluri Sitharama Raju, Anakapalli, Parvathipuram Manyam, Srikakulam, Visakhapatnam, Vizianagaram districts of Andhra Pradesh",
-    "issued": "2026-11-18T21:51:58+05:30",
-    "source": "IMD Visakhapatnam",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795018909404008",
-    "category": "Met"
-   },
-   {
-    "id": "1795002709049008",
-    "headline": "Due to the impact of Cyclone Akwan in the Bay of Bengal, heavy rains accompanied by strong winds are likely in your area tomorrow. The public is advised to remain alert and take necessary precautions -Government of Andhra Pradesh",
-    "area": "heavy_rainfall_2026-11-19",
-    "issued": "2026-11-18T17:23:10+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795002709049008",
-    "category": "Met"
-   },
-   {
-    "id": "1795000640273008",
-    "headline": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1130 IST of 18.11.26 near latitude 13.1N and longitude 85.4E, 540 Km southeast of Narsapur, Andhra Pradesh. Cyclone Warning for Alluri Sitharama Raju, Anakapalli, Srikakulam, Visakhapatnam, Vizianagaram.",
-    "area": "Alluri Sitharama Raju, Anakapalli, Srikakulam, Visakhapatnam, Vizianagaram districts of Andhra Pradesh",
-    "issued": "2026-11-18T16:47:26+05:30",
-    "source": "IMD Visakhapatnam",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795000640273008",
-    "category": "Met"
-   },
-   {
-    "id": "1794655829652008",
-    "headline": "SDMA Alert is Very Likely to occur over Mukkam To Chintapalli. Please follow SDMA guidelines.",
-    "area": "Mukkam To Chintapalli",
-    "issued": "2026-11-14T17:01:42+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1794655829652008",
-    "category": "Met"
    }
   ],
   "feed_item_count": 100,
   "feed_pubdate": "Wed, 18 Nov 2026 11:22:18 GMT",
-  "feed_newest_item": "2026-11-19T19:54:28+05:30"
+  "feed_newest_item": "2026-11-20T19:30:11+05:30"
  },
  "none_text": "No current alerts for this area from GDACS or SACHET."
 }
