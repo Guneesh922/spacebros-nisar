@@ -1,6 +1,6 @@
 {
  "schema": "events-v1",
- "updated_utc": "2026-11-20T14:15:34Z",
+ "updated_utc": "2026-11-21T13:39:21Z",
  "events": [
   {
    "id": "arnab_2026",
@@ -821,6 +821,53 @@
      "utc": "2026-11-20T14:11:29Z",
      "by": "pipeline",
      "what": "draft created from SACHET alert 1795141515464008"
+    }
+   ]
+  },
+  {
+   "id": "auto_GDACS_1001351",
+   "name": "Cyclone Akvan",
+   "source_name": "Tropical Cyclone AKVAN-26",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-16",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "GDACS alert 1001351: from 2026-11-16 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "GDACS",
+    "url": "https://www.gdacs.org/report.aspx?eventid=1001351&episodeid=13&eventtype=TC",
+    "ids": [
+     "1001351"
+    ]
+   },
+   "credit": "GDACS (EC JRC / UN OCHA)",
+   "severity": {
+    "as_given": "Green alert",
+    "by": "GDACS"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "Cyclone Akvan",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "GDACS",
+     "id": "1001351",
+     "issued": "2026-11-16T18:00:00Z",
+     "headline": "Tropical Cyclone AKVAN-26"
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-21T13:36:09Z",
+     "by": "pipeline",
+     "what": "draft created from GDACS alert 1001351"
     }
    ]
   }

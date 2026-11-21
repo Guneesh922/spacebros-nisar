@@ -1,14 +1,30 @@
 {
  "schema": "alerts-v2",
  "area_id": "godavari",
- "built_utc": "2026-11-20T14:10:35Z",
+ "built_utc": "2026-11-21T13:35:49Z",
  "gdacs": {
-  "fetched_utc": "2026-11-19T14:31:31Z",
-  "ok": false,
-  "error": "TimeoutError: The read operation timed out",
+  "fetched_utc": "2026-11-21T13:35:49Z",
+  "ok": true,
+  "error": null,
   "url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH",
   "credit": "GDACS (EC JRC / UN OCHA)",
   "items": [
+   {
+    "id": "1001351",
+    "type": "TC",
+    "name": "Tropical Cyclone AKVAN-26",
+    "alert_level": "Green",
+    "from": "2026-11-16T18:00:00Z",
+    "to": "2026-11-19T18:00:00Z",
+    "link": "https://www.gdacs.org/report.aspx?eventid=1001351&episodeid=13&eventtype=TC",
+    "countries": "India",
+    "current": true,
+    "point": [
+     84.7,
+     17.2
+    ],
+    "severity_text": "Tropical Depression (maximum wind speed of 83 km/h)"
+   },
    {
     "id": "1001346",
     "type": "TC",
@@ -83,7 +99,7 @@
   ]
  },
  "sachet": {
-  "snapshot_utc": "2026-11-20T14:10:35Z",
+  "snapshot_utc": "2026-11-21T13:35:49Z",
   "ok": true,
   "error": null,
   "url": "https://sachet.ndma.gov.in/cap_public_website/rss/rss_india.xml",
@@ -268,65 +284,11 @@
     "source": "IMD Visakhapatnam",
     "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795091941957008",
     "category": "Met"
-   },
-   {
-    "id": "1795086886189008",
-    "headline": "Heavy Rain is very likely to occur at a few places over Alluri Sitharama Raju, Anakapalli, Kakinada, Parvathipuram Manyam, Visakhapatnam in next 24 hours.",
-    "area": "Alluri Sitharama Raju, Anakapalli, Kakinada, Parvathipuram Manyam, Visakhapatnam districts of Andhra Pradesh",
-    "issued": "2026-11-19T16:44:49+05:30",
-    "source": "IMD Visakhapatnam",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795086886189008",
-    "category": "Met"
-   },
-   {
-    "id": "1795086710000008",
-    "headline": "Heavy to Very Heavy Rain is very likely to occur at a few places over Vizianagaram in next 24 hours.",
-    "area": "Vizianagaram district of Andhra Pradesh",
-    "issued": "2026-11-19T16:41:51+05:30",
-    "source": "IMD Visakhapatnam",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795086710000008",
-    "category": "Met"
-   },
-   {
-    "id": "1795086564057008",
-    "headline": "Extremely Heavy Rain is most likely to occur at most places over Srikakulam in next 24 hours.",
-    "area": "Srikakulam district of Andhra Pradesh",
-    "issued": "2026-11-19T16:39:26+05:30",
-    "source": "IMD Visakhapatnam",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795086564057008",
-    "category": "Met"
-   },
-   {
-    "id": "1795078209488008",
-    "headline": "Cyclone is Likely to occur over Srikakulam district of Andhra Pradesh. Please follow SDMA guidelines.",
-    "area": "Srikakulam district of Andhra Pradesh",
-    "issued": "2026-11-19T14:21:04+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795078209488008",
-    "category": "Met"
-   },
-   {
-    "id": "1795072648185008",
-    "headline": "Cyclone is Likely to occur over Vizianagaram district of Andhra Pradesh. Please follow SDMA guidelines.",
-    "area": "Vizianagaram district of Andhra Pradesh",
-    "issued": "2026-11-19T12:49:18+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795072648185008",
-    "category": "Met"
-   },
-   {
-    "id": "1795069769169008",
-    "headline": "SCS AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 0530 IST of 19.11.26 440 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, Anakapalli, Konaseema, EG, Kakinada, Parvathipuram Manyam, Polavaram, Srikakulam, Visakhapatnam, Vizianagaram, WG",
-    "area": "Alluri Sitharama Raju, Anakapalli, Dr. B.R. Ambedkar Konaseema, East Godavari, Kakinada, Parvathipuram Manyam, Polavaram, Srikakulam, Visakhapatnam, Vizianagaram, West Godavari districts of Andhra Pradesh",
-    "issued": "2026-11-19T11:59:33+05:30",
-    "source": "IMD Visakhapatnam",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795069769169008",
-    "category": "Met"
    }
   ],
   "feed_item_count": 100,
   "feed_pubdate": "Wed, 18 Nov 2026 11:22:18 GMT",
-  "feed_newest_item": "2026-11-20T19:30:11+05:30"
+  "feed_newest_item": "2026-11-21T18:15:09+05:30"
  },
  "none_text": "No current alerts for this area from GDACS or SACHET."
 }
