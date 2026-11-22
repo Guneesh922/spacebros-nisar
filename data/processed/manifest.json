@@ -832,15 +832,15 @@
       "type": "derived",
       "chip": "nisar",
       "kind": "image",
-      "date": "2026-11-08",
-      "time_utc": "2026-11-08T13:01:51Z",
+      "date": "2026-11-20",
+      "time_utc": "2026-11-20T13:01:52Z",
       "latest_of": "nisar_sea_diff",
-      "shows": "Change in sea-surface radar brightness, 8 Nov minus calm day 15 Oct (dB); difference of two calibrated backscatter images; wind-roughened sea appears brighter",
+      "shows": "Change in sea-surface radar brightness, 20 Nov minus calm day 15 Oct (dB); difference of two calibrated backscatter images; wind-roughened sea appears brighter",
       "limit": "wind speed (it is a brightness change). Calibration check: 27 Oct read about 4 dB brighter in VV than the PROVISIONAL 15 Oct reference; 8 Nov differed by about 0.1 dB, so most of the 27 Oct brightening is likely storm signal.",
       "source": "SpaceBros difference map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",
-      "png": "data/web/nisar_sea_diff_20261108_vs_20261015.png",
+      "png": "data/web/nisar_sea_diff_20261120_vs_20261015.png",
       "bounds": [
         [
           15.29757,
@@ -871,17 +871,18 @@
       "status": "ready",
       "placeholder": null,
       "id": "nisar_sea_diff_20261027_vs_20261015",
-      "name": "Sea roughness change (8 Nov minus calm 15 Oct)",
-      "bounds_source": "H5 subset footprint (data/web/nisar_sea_diff_20261108_vs_20261015.json, built by tools/build_web.py)",
+      "name": "Sea roughness change (20 Nov minus calm 15 Oct)",
+      "bounds_source": "H5 subset footprint (data/web/nisar_sea_diff_20261120_vs_20261015.json, built by tools/build_web.py)",
       "h5_sources": [
-        "data/h5/L_SEA_20261108_T048.h5",
+        "data/h5/L_SEA_20261120_T048.h5",
         "data/h5/L_SEA_20261015_T048.h5"
       ],
-      "diff_date": "2026-11-08",
+      "diff_date": "2026-11-20",
       "diff_reference_date": "2026-10-15",
       "diff_dates": [
         "2026-10-27",
-        "2026-11-08"
+        "2026-11-08",
+        "2026-11-20"
       ],
       "ramp": {
         "name": "blue-white-orange (colour-blind safe)",
@@ -924,15 +925,15 @@
         },
         "saturation_limit_db": 6.0,
         "saturation_rule": "min(3 x P99 of |change|, 6 dB)",
-        "p99_abs_change_db": 11.05,
-        "three_p99_db": 33.15,
+        "p99_abs_change_db": 11.88,
+        "three_p99_db": 35.64,
         "cap_db": 6.0,
         "p99_basis": "offshore common valid pixels more than 1 km offshore",
         "sigma_db": 1.29,
         "sigma": {
           "source": "robust (MAD) sigma of this difference over the common valid pixels more than 1 km offshore; no calm-fortnight pair exists for the sea (3 Oct is a different acquisition mode)",
-          "median_db": 0.34,
-          "n_pixels": 2437609
+          "median_db": 1.24,
+          "n_pixels": 2457284
         },
         "grey": {
           "hex": "#9BA1A7",
@@ -1483,6 +1484,80 @@
       "type": "derived",
       "chip": "nisar",
       "kind": "image",
+      "date": "2026-11-20",
+      "time_utc": "2026-11-20T13:01:52Z",
+      "latest_of": "nisar_l_sea_rgb",
+      "rgb_of": "nisar_l_sea_20261120_t48_vv",
+      "shows": "Sea and coast radar colour composite, 20 Nov: red = VV, green = VH, blue = VV minus VH (dB)",
+      "limit": "two polarisations only: a hint about the kind of surface, not proof; a rough sea looks bright, it is not a flood; not a Freeman-Durden decomposition",
+      "source": "SpaceBros dual-pol composite",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_sea_rgb_20261120.png",
+      "bounds": [
+        [
+          15.29757,
+          81.27202
+        ],
+        [
+          18.04115,
+          84.4841
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "VV+VH",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.9,
+      "status": "ready",
+      "id": "nisar_l_sea_rgb_20261120",
+      "processing_level": "validated",
+      "name": "Sea radar colour composite (VV, VH), 20 Nov",
+      "bounds_source": "H5 subset footprint warped to lat/lon (data/web/nisar_l_sea_rgb_20261120.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_SEA_20261120_T048.h5"
+      ],
+      "rgb": {
+        "channels": {
+          "R": "VV",
+          "G": "VH",
+          "B": "VV minus VH (dB)"
+        },
+        "stretch": {
+          "R": {
+            "lo": -20.16,
+            "hi": -4.05
+          },
+          "G": {
+            "lo": -27.29,
+            "hi": -10.34
+          },
+          "B": {
+            "lo": 3.65,
+            "hi": 15.54
+          }
+        },
+        "gamma": {
+          "R": 2.0,
+          "G": 1.0,
+          "B": 3.0
+        }
+      }
+    },
+    {
+      "group": "after",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
       "date": "2026-11-08",
       "time_utc": "2026-11-08T13:01:51Z",
       "latest_of": "nisar_l_sea_rgb",
@@ -1533,16 +1608,16 @@
         },
         "stretch": {
           "R": {
-            "lo": -21.35,
-            "hi": -3.8
+            "lo": -20.16,
+            "hi": -4.05
           },
           "G": {
-            "lo": -27.25,
-            "hi": -10.15
+            "lo": -27.29,
+            "hi": -10.34
           },
           "B": {
-            "lo": 3.46,
-            "hi": 15.42
+            "lo": 3.65,
+            "hi": 15.54
           }
         },
         "gamma": {
@@ -1607,16 +1682,16 @@
         },
         "stretch": {
           "R": {
-            "lo": -21.35,
-            "hi": -3.8
+            "lo": -20.16,
+            "hi": -4.05
           },
           "G": {
-            "lo": -27.25,
-            "hi": -10.15
+            "lo": -27.29,
+            "hi": -10.34
           },
           "B": {
-            "lo": 3.46,
-            "hi": 15.42
+            "lo": 3.65,
+            "hi": 15.54
           }
         },
         "gamma": {
@@ -1681,16 +1756,16 @@
         },
         "stretch": {
           "R": {
-            "lo": -21.35,
-            "hi": -3.8
+            "lo": -20.16,
+            "hi": -4.05
           },
           "G": {
-            "lo": -27.25,
-            "hi": -10.15
+            "lo": -27.29,
+            "hi": -10.34
           },
           "B": {
-            "lo": 3.46,
-            "hi": 15.42
+            "lo": 3.65,
+            "hi": 15.54
           }
         },
         "gamma": {
@@ -1755,16 +1830,16 @@
         },
         "stretch": {
           "R": {
-            "lo": -21.35,
-            "hi": -3.8
+            "lo": -20.16,
+            "hi": -4.05
           },
           "G": {
-            "lo": -27.25,
-            "hi": -10.15
+            "lo": -27.29,
+            "hi": -10.34
           },
           "B": {
-            "lo": 3.46,
-            "hi": 15.42
+            "lo": 3.65,
+            "hi": 15.54
           }
         },
         "gamma": {
@@ -1773,6 +1848,54 @@
           "B": 3.0
         }
       }
+    },
+    {
+      "type": "nisar",
+      "chip": "nisar",
+      "kind": "image",
+      "shows": "Sea-surface roughness: radar brightness, VV (γ⁰, dB)",
+      "source_id": "asf_nisar_l",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "url_template": null,
+      "band": "L",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "opacity": 0.85,
+      "group": "after",
+      "date": "2026-11-20",
+      "time_utc": "2026-11-20T13:01:52Z",
+      "latest_of": "nisar_l_sea_vv",
+      "limit": "single look; compare with other dates of the same track",
+      "source": "T48 F80 · NASA/ISRO via ASF",
+      "png": "data/web/nisar_l_sea_20261120_t48_vv.png",
+      "bounds": [
+        [
+          15.29757,
+          81.27202
+        ],
+        [
+          18.04115,
+          84.4841
+        ]
+      ],
+      "bounds_inferred": false,
+      "pol": "VV",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "default_on": false,
+      "status": "ready",
+      "placeholder": null,
+      "id": "nisar_l_sea_20261120_t48_vv",
+      "name": "Sea surface, 2026-11-20 (T48)",
+      "processing_level": "validated",
+      "h5": "data/h5/L_SEA_20261120_T048.h5"
     },
     {
       "group": "during",

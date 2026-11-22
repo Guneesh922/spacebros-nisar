@@ -1,6 +1,6 @@
 {
  "schema": "spacebros-h5-catalog-v1",
- "generated_utc": "2026-11-14T11:20:34Z",
+ "generated_utc": "2026-11-22T13:29:35Z",
  "scenes": [
   {
    "file": "data/h5/L_SEA_20261003_T048.h5",
@@ -305,6 +305,45 @@
     ]
    ],
    "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  {
+   "file": "data/h5/L_SEA_20261120_T048.h5",
+   "scene_id": "L_SEA_20261120_T048",
+   "band": "L",
+   "role": "SEA",
+   "date": "2026-11-20",
+   "start_utc": "2026-11-20T13:01:52Z",
+   "track": 48,
+   "frame": 80,
+   "direction": "D",
+   "product_status": "VALIDATED",
+   "source_granule": "NISAR_L2_PR_GCOV_036_048_D_080_2005_DVDV_A_20261120T130152_20261120T130209_P05036_N_P_J_001",
+   "source_collection": "NISAR_L2_GCOV_V1",
+   "pols": [
+    "VH",
+    "VV"
+   ],
+   "posting_m": 100.0,
+   "multilook": 5,
+   "shape": [
+    3006,
+    3398
+   ],
+   "epsg": 32644,
+   "size_bytes": 6704911,
+   "sha256": "0be85f9138458aa30bb91cda3861519c2e68977dbce8fb57eaf2250fb4151ed9",
+   "bounds_latlon": [
+    [
+     15.297569,
+     81.272022
+    ],
+    [
+     18.04115,
+     84.484096
+    ]
+   ],
+   "available_utc": "2026-11-22T08:02:47Z",
+   "cataloged_utc": "2026-11-22T13:29:35Z"
   }
  ]
 }
