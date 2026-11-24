@@ -414,6 +414,54 @@
       "h5": "data/h5/L_COAST_20261004_T055.h5"
     },
     {
+      "type": "nisar",
+      "chip": "nisar",
+      "kind": "image",
+      "shows": "Sea-surface roughness: radar brightness, VV (γ⁰, dB)",
+      "source_id": "asf_nisar_l",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "url_template": null,
+      "band": "L",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "opacity": 0.85,
+      "group": "after",
+      "date": "2026-11-20",
+      "time_utc": "2026-11-20T13:01:52Z",
+      "latest_of": "nisar_l_sea_vv",
+      "limit": "single look; compare with other dates of the same track",
+      "source": "T48 F80 · NASA/ISRO via ASF",
+      "png": "data/web/nisar_l_sea_20261120_t48_vv.png",
+      "bounds": [
+        [
+          15.29757,
+          81.27202
+        ],
+        [
+          18.04115,
+          84.4841
+        ]
+      ],
+      "bounds_inferred": false,
+      "pol": "VV",
+      "track": 48,
+      "frame": 80,
+      "direction": "descending",
+      "default_on": false,
+      "status": "ready",
+      "placeholder": null,
+      "id": "nisar_l_sea_20261120_t48_vv",
+      "name": "Sea surface, 2026-11-20 (T48)",
+      "processing_level": "validated",
+      "h5": "data/h5/L_SEA_20261120_T048.h5"
+    },
+    {
       "group": "after",
       "type": "nisar",
       "chip": "nisar",
@@ -1848,54 +1896,6 @@
           "B": 3.0
         }
       }
-    },
-    {
-      "type": "nisar",
-      "chip": "nisar",
-      "kind": "image",
-      "shows": "Sea-surface roughness: radar brightness, VV (γ⁰, dB)",
-      "source_id": "asf_nisar_l",
-      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
-      "url_template": null,
-      "band": "L",
-      "regions": [
-        "ap_coast",
-        "konaseema",
-        "west_godavari",
-        "kakinada"
-      ],
-      "event_id": null,
-      "classes": null,
-      "opacity": 0.85,
-      "group": "after",
-      "date": "2026-11-20",
-      "time_utc": "2026-11-20T13:01:52Z",
-      "latest_of": "nisar_l_sea_vv",
-      "limit": "single look; compare with other dates of the same track",
-      "source": "T48 F80 · NASA/ISRO via ASF",
-      "png": "data/web/nisar_l_sea_20261120_t48_vv.png",
-      "bounds": [
-        [
-          15.29757,
-          81.27202
-        ],
-        [
-          18.04115,
-          84.4841
-        ]
-      ],
-      "bounds_inferred": false,
-      "pol": "VV",
-      "track": 48,
-      "frame": 80,
-      "direction": "descending",
-      "default_on": false,
-      "status": "ready",
-      "placeholder": null,
-      "id": "nisar_l_sea_20261120_t48_vv",
-      "name": "Sea surface, 2026-11-20 (T48)",
-      "processing_level": "validated",
-      "h5": "data/h5/L_SEA_20261120_T048.h5"
     },
     {
       "group": "during",

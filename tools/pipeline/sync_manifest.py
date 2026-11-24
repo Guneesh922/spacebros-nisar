@@ -103,9 +103,12 @@ def sync(manifest, catalog, web_dir):
             tmpl = next((x for x in reversed(layers) if x.get("type") == "nisar" and x.get("band") == "L"
                          and x.get("pol") == POL[e["role"]] and x.get("id", "").startswith(f"nisar_l_{e['role'].lower()}_")), None)
             nl = new_layer(e, lid, bounds, tmpl)
-            last = max((i for i, x in enumerate(layers) if x.get("id", "").startswith(f"nisar_l_{e['role'].lower()}_")),
-                       default=len(layers) - 1)
-            layers.insert(last + 1, nl)
+            # newest first, next to the grey NISAR layers of this role; the derived nisar_l_<role>_rgb_* and
+            # _change_* ids share the prefix, so match on type too (check_manifest: NISAR layers come first)
+            nis = [i for i, x in enumerate(layers) if x.get("type") == "nisar"]
+            pos = min((i for i in nis if layers[i].get("id", "").startswith(f"nisar_l_{e['role'].lower()}_")),
+                      default=(max(nis) + 1 if nis else 0))
+            layers.insert(pos, nl)
             by_id[lid] = nl
             changes.append(f"ADD {lid}")
             continue

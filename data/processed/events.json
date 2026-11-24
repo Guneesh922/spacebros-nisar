@@ -1,6 +1,6 @@
 {
  "schema": "events-v1",
- "updated_utc": "2026-11-21T13:39:21Z",
+ "updated_utc": "2026-11-24T18:24:27Z",
  "events": [
   {
    "id": "arnab_2026",
@@ -52,6 +52,13 @@
      "role": "COAST",
      "relation": "after",
      "radar_finding": "change_seen"
+    },
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
     }
    ],
    "description": "Cyclone Arnab reached Andhra Pradesh as a very severe cyclonic storm. IMD says it crossed the Andhra Pradesh and Yanam coasts between Bapatla and Visakhapatnam, near 16.45 N 81.9 E, during 0200 to 0800 hours IST on 28 October 2026, with maximum sustained wind 125 to 135 km/h gusting to 150 km/h (IMD press release 6, 28 Oct). NISAR looked at the sea on 27 Oct and at the Godavari delta coast on 28 Oct, then again on 8 and 9 Nov.",
@@ -217,6 +224,11 @@
      "utc": "2026-11-14T15:05:40Z",
      "by": "pipeline",
      "what": "radar_finding L_COAST_1028: change_seen -> no_clear_change"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ]
   },
@@ -258,6 +270,13 @@
      "role": "COAST",
      "relation": "after",
      "radar_finding": "change_seen"
+    },
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
     }
    ],
    "description": "Cyclone Murasu",
@@ -293,6 +312,11 @@
      "utc": "2026-11-15T00:22:57Z",
      "by": "pipeline",
      "what": "updated from GDACS alert 1001346: display name"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ],
    "source_name": "Tropical Cyclone MURASU-26"
@@ -423,10 +447,18 @@
     "as_given": "Met",
     "by": "Andhra Pradesh SDMA"
    },
-   "status": "alert_only",
-   "status_text": "Alert only, not yet seen by radar",
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
    "reviewed_by_human": false,
-   "linked_passes": [],
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
+    }
+   ],
    "description": "Due to the impact of Cyclone Akwan in the Bay of Bengal, heavy rains accompanied by strong winds are likely in your area tomorrow. The public is advised to remain alert and take necessary precautions -Government of Andhra Pradesh",
    "cannot_tell": [
     "This is an alert from an outside source. Radar has not been checked against it yet."
@@ -445,6 +477,11 @@
      "utc": "2026-11-18T14:21:38Z",
      "by": "pipeline",
      "what": "draft created from SACHET alert 1795002709049008"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ]
   },
@@ -470,10 +507,18 @@
     "as_given": "Met",
     "by": "IMD Visakhapatnam"
    },
-   "status": "alert_only",
-   "status_text": "Alert only, not yet seen by radar",
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
    "reviewed_by_human": false,
-   "linked_passes": [],
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
+    }
+   ],
    "description": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1130 IST of 18.11.26 near latitude 13.1N and longitude 85.4E, 540 Km southeast of Narsapur, Andhra Pradesh. Cyclone Warning for Alluri Sitharama Raju, Anakapalli, Srikakulam, Visakhapatnam, Vizianagaram.",
    "cannot_tell": [
     "This is an alert from an outside source. Radar has not been checked against it yet."
@@ -492,6 +537,11 @@
      "utc": "2026-11-18T14:21:38Z",
      "by": "pipeline",
      "what": "draft created from SACHET alert 1795000640273008"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ]
   },
@@ -517,10 +567,18 @@
     "as_given": "Met",
     "by": "Andhra Pradesh SDMA"
    },
-   "status": "alert_only",
-   "status_text": "Alert only, not yet seen by radar",
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
    "reviewed_by_human": false,
-   "linked_passes": [],
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
+    }
+   ],
    "description": "Cyclone is Likely to occur over Srikakulam district of Andhra Pradesh. Please follow SDMA guidelines.",
    "cannot_tell": [
     "This is an alert from an outside source. Radar has not been checked against it yet."
@@ -539,6 +597,11 @@
      "utc": "2026-11-19T14:31:57Z",
      "by": "pipeline",
      "what": "draft created from SACHET alert 1795078209488008"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ]
   },
@@ -564,10 +627,18 @@
     "as_given": "Met",
     "by": "Andhra Pradesh SDMA"
    },
-   "status": "alert_only",
-   "status_text": "Alert only, not yet seen by radar",
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
    "reviewed_by_human": false,
-   "linked_passes": [],
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
+    }
+   ],
    "description": "Cyclone is Likely to occur over Vizianagaram district of Andhra Pradesh. Please follow SDMA guidelines.",
    "cannot_tell": [
     "This is an alert from an outside source. Radar has not been checked against it yet."
@@ -586,6 +657,11 @@
      "utc": "2026-11-19T14:31:57Z",
      "by": "pipeline",
      "what": "draft created from SACHET alert 1795072648185008"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ]
   },
@@ -611,10 +687,18 @@
     "as_given": "Met",
     "by": "IMD Visakhapatnam"
    },
-   "status": "alert_only",
-   "status_text": "Alert only, not yet seen by radar",
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
    "reviewed_by_human": false,
-   "linked_passes": [],
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
+    }
+   ],
    "description": "SCS AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 0530 IST of 19.11.26 440 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, Anakapalli, Konaseema, EG, Kakinada, Parvathipuram Manyam, Polavaram, Srikakulam, Visakhapatnam, Vizianagaram, WG",
    "cannot_tell": [
     "This is an alert from an outside source. Radar has not been checked against it yet."
@@ -633,6 +717,11 @@
      "utc": "2026-11-19T14:31:57Z",
      "by": "pipeline",
      "what": "draft created from SACHET alert 1795069769169008"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ]
   },
@@ -658,10 +747,18 @@
     "as_given": "Met",
     "by": "Andhra Pradesh SDMA"
    },
-   "status": "alert_only",
-   "status_text": "Alert only, not yet seen by radar",
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
    "reviewed_by_human": false,
-   "linked_passes": [],
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
+    }
+   ],
    "description": "Cyclone is Likely to occur over heavy_rainfall_2026-11-19. Please follow SDMA guidelines.",
    "cannot_tell": [
     "This is an alert from an outside source. Radar has not been checked against it yet."
@@ -680,6 +777,11 @@
      "utc": "2026-11-19T14:31:57Z",
      "by": "pipeline",
      "what": "draft created from SACHET alert 1795063890471008"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ]
   },
@@ -705,10 +807,18 @@
     "as_given": "Met",
     "by": "IMD Visakhapatnam"
    },
-   "status": "alert_only",
-   "status_text": "Alert only, not yet seen by radar",
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
    "reviewed_by_human": false,
-   "linked_passes": [],
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
+    }
+   ],
    "description": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 2330 IST of 18.11.26 near latitude 13.9N and longitude 85.3E, 510 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, PVP Manyam, Srikakulam, VSKP, Vizianagaram, AKP.",
    "cannot_tell": [
     "This is an alert from an outside source. Radar has not been checked against it yet."
@@ -727,6 +837,11 @@
      "utc": "2026-11-19T14:31:57Z",
      "by": "pipeline",
      "what": "draft created from SACHET alert 1795039977725008"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ]
   },
@@ -752,10 +867,18 @@
     "as_given": "Met",
     "by": "IMD Visakhapatnam"
    },
-   "status": "alert_only",
-   "status_text": "Alert only, not yet seen by radar",
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
    "reviewed_by_human": false,
-   "linked_passes": [],
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
+    }
+   ],
    "description": "SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1730 IST of 18.11.26 near latitude 13.6N and longitude 85.3E, 540 Km of Kalingapatnam, Cyclone Warning for ASR, Anakapalli, Parvathipuram Manyam, Srikakulam, Visakhapatnam, Vizianagaram.",
    "cannot_tell": [
     "This is an alert from an outside source. Radar has not been checked against it yet."
@@ -774,6 +897,11 @@
      "utc": "2026-11-19T14:31:57Z",
      "by": "pipeline",
      "what": "draft created from SACHET alert 1795018909404008"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ]
   },
@@ -799,10 +927,18 @@
     "as_given": "Met",
     "by": "IMD Visakhapatnam"
    },
-   "status": "alert_only",
-   "status_text": "Alert only, not yet seen by radar",
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
    "reviewed_by_human": false,
-   "linked_passes": [],
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "during",
+     "radar_finding": "sea_no_public_finding"
+    }
+   ],
    "description": "The CYCLONIC STORM Akvan with maximum wind speed of 80-90 gusting to 100 Kmph lays centred at 0530 IST of 20.11.26 near latitude 18.3N and longitude 84.8E, 70 Km east of Kalingapatnam, Andhra Pradesh. Cyclone Warning for Parvathipuram Manyam, Srikakulam.",
    "cannot_tell": [
     "This is an alert from an outside source. Radar has not been checked against it yet."
@@ -821,6 +957,11 @@
      "utc": "2026-11-20T14:11:29Z",
      "by": "pipeline",
      "what": "draft created from SACHET alert 1795141515464008"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ]
   },
@@ -846,10 +987,18 @@
     "as_given": "Green alert",
     "by": "GDACS"
    },
-   "status": "alert_only",
-   "status_text": "Alert only, not yet seen by radar",
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
    "reviewed_by_human": false,
-   "linked_passes": [],
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_20261120_T048",
+     "date": "2026-11-20",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
+    }
+   ],
    "description": "Cyclone Akvan",
    "cannot_tell": [
     "This is an alert from an outside source. Radar has not been checked against it yet."
@@ -868,6 +1017,11 @@
      "utc": "2026-11-21T13:36:09Z",
      "by": "pipeline",
      "what": "draft created from GDACS alert 1001351"
+    },
+    {
+     "utc": "2026-11-24T18:23:05Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_20261120_T048"
     }
    ]
   }

@@ -9,7 +9,10 @@
   var SHARE_MAX = 15, GRAY = [-25, 0];
   var NISAR_CREDIT = 'NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)';
   var DERIVED_CREDIT = 'Derived by SpaceBros from NISAR data';
-  var MODES = [['share', 'Flood share'], ['radar', 'Radar, after'], ['swipe', 'Before and after'], ['eye', 'Cyclone eye'], ['sband', 'S-band']];
+  /* SBAND_ON: the two S-band pictures belong to Cyclone Arnab only and are not part of the update pipeline, so they are
+     off in the live view (user, 24 Nov). The frozen Arnab view (git tag arnab-view-2026-11-21) still has them. */
+  var SBAND_ON = false;
+  var MODES = [['share', 'Flood share'], ['radar', 'Radar, after'], ['swipe', 'Before and after'], ['eye', 'Cyclone eye']].concat(SBAND_ON ? [['sband', 'S-band']] : []);
 
   /* S-band, Cyclone Arnab: two STATIC colour pictures as map layers. Event material only: they are defined here, added to the
      layer list in memory after the manifest loads, and never written to manifest.json, the H5 store or the pipeline.
@@ -130,7 +133,7 @@
                soft(D + 'events.json'), soft('../../config/areas.json'),
                soft('../strings/story.en.json'), soft('../strings/strings.en.json')])
     .then(function (a) {
-      X.manifest = a[0]; X.manifest.layers = X.manifest.layers.concat(SBAND.layers); X.mandals = a[1]; X.rank = a[2]; X.profile = a[3]; X.alerts = a[4]; X.track = a[5]; X.catalog = a[6];
+      X.manifest = a[0]; if (SBAND_ON) X.manifest.layers = X.manifest.layers.concat(SBAND.layers); X.mandals = a[1]; X.rank = a[2]; X.profile = a[3]; X.alerts = a[4]; X.track = a[5]; X.catalog = a[6];
       X.story = a[7]; X.latest = a[7]; X.events = (a[8] && a[8].events) || []; X.cfg = a[9]; X.str = a[10] || {}; X.ui = a[11] || {};
       if (!X.story) console.warn('No findings file and no story.json: the home tab shows the neutral message.');
       return loadLayerJSON();
@@ -752,6 +755,7 @@
     return '<b class="legend__t">S-band radar colour (HH, HV)</b><span class="legend__rec" role="group" aria-label="Channel recipe">' + rc('R', 'HH') + rc('G', 'HV') + rc('B', 'HH − HV') + '</span>' + sbandSw(SBAND.land.concat(SBAND.sea));
   }
   function sbandCard() {
+    if (!SBAND_ON) return '';
     return '<div class="card" id="sband"><div><span class="eyebrow">A second radar · Cyclone Arnab</span><h2>The cyclone in S-band</h2></div>' +
       '<p class="small">NISAR carries two radars. The other map views use the L-band radar (24 cm waves). For Cyclone Arnab we also hold two colour pictures from the S-band radar (9 cm waves), built by ISRO: the coast on 16 Oct 2026, and on 28 Oct 2026, the day the cyclone came ashore.</p>' +
       '<ul class="small note__l note__l--card"><li><b>The sea turns bright blue.</b> On 16 Oct it is dark and smooth. On 28 Oct the cyclone wind has roughened it almost everywhere.</li>' +
@@ -759,6 +763,7 @@
       '<div class="row"><button type="button" class="btn" data-act="sband">Show S-band on the map</button><button type="button" class="btn" data-act="sbandcmp">Before and after</button></div></div>';
   }
   function sbandKeyCard() {
+    if (!SBAND_ON) return '';
     return '<div class="card" id="d-sband"><div><h2>S-band pictures, Cyclone Arnab</h2><p class="small">Two S-band HH / HV colour pictures of the coast (track 55, frame 10, ascending): ' + SBAND.layers.map(function (l) { return esc(dshort(l.date)); }).join(' and ') + '. They are static event layers: tick them in the Layers list (group "S-band colour pictures"). There is no H5 file or statistic behind them and the update pipeline does not touch them.</p></div>' +
       '<div class="key__g"><h3>S-band coast: HH / HV</h3><ul class="key__ch small"><li><b>Red</b> = HH (co-polarised): strong over flat surfaces and double bounce</li><li><b>Green</b> = HV (cross-polarised): strong over plant canopies</li><li><b>Blue</b> = HH minus HV, in dB (co to cross ratio): high over smooth wet surfaces and wind-roughened sea</li></ul><div class="key__sw">' + sbandSw(SBAND.land.concat(SBAND.sea)) + '</div></div>' +
       '<p class="small muted">Scale limits are those of the pictures as supplied, not the pooled limits of the L-band layers, so colours are not comparable with the L-band colour pictures. Placed on the map from the product grid (UTM 44N) and swath corners in the scene catalogue. ' + esc(SBAND.credit) + '.</p></div>';
@@ -1764,7 +1769,7 @@
     st = st || {};
     var notes = [];
     var tab = st.tab === 'data' ? 'data' : 'happened';
-    var mode = ['share', 'radar', 'swipe', 'eye', 'sband'].indexOf(st.mode) >= 0 ? st.mode : 'share';
+    var mode = MODES.map(function (x) { return x[0]; }).indexOf(st.mode) >= 0 ? st.mode : 'share';
     S.role = (st.role === 'sea' || st.role === 'coast') && X.scenes[st.role].length ? st.role : X.def.role;
     ROLES.forEach(function (r) { S.dates[r] = { after: X.def.after[r], before: X.def.before[r] }; });
     S.dEye = X.def.eye; S.shareD = null; S.colour = false;

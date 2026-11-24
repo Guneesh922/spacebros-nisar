@@ -1,7 +1,7 @@
 {
  "schema": "findings-v1",
- "built_utc": "2026-11-21T13:39:21Z",
- "built_text": "21 Nov 2026, 19:09 IST",
+ "built_utc": "2026-11-24T18:24:27Z",
+ "built_text": "24 Nov 2026, 23:54 IST",
  "event_id": "arnab_2026",
  "official_banner": "This is not an official warning. For alerts, follow IMD, APSDMA and your district officers.",
  "official_links": [
@@ -32,24 +32,24 @@
   "basemap": "Map data: Esri, HERE, Garmin, OpenStreetMap contributors",
   "disclaimer": "Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service."
  },
- "data_as_of": "2026-11-09T00:01:07Z",
- "data_as_of_text": "Radar picture taken 9 Nov 2026, 05:31, IST",
+ "data_as_of": "2026-11-20T13:01:52Z",
+ "data_as_of_text": "Radar picture taken 20 Nov 2026, 18:31, IST",
  "timestamps": {
-  "picture": "Radar picture taken 9 Nov 2026, 05:31, IST",
-  "built": "Summary updated 21 Nov 2026, 19:09 IST"
+  "picture": "Radar picture taken 20 Nov 2026, 18:31, IST",
+  "built": "Summary updated 24 Nov 2026, 23:54 IST"
  },
  "stale": false,
  "next_pass": {
   "role": "COAST",
   "track": 55,
   "last_pass": "2026-11-09",
-  "date": "2026-11-21",
-  "expected_utc": "2026-11-21T00:01:07Z",
+  "date": "2026-12-03",
+  "expected_utc": "2026-12-03T00:01:07Z",
   "first_expected": "2026-11-21",
-  "days_until": 0,
-  "overdue": false,
+  "days_until": 9,
+  "overdue": true,
   "basis": "last pass of the same track + n x 12 days (NISAR repeat), first date on or after today",
-  "text": "Next radar pass expected about 21 Nov. This is a schedule estimate. It can shift."
+  "text": "A radar pass was expected about 21 Nov but is not in the catalogue yet. The next one is about 3 Dec. Dates can shift."
  },
  "next_passes": [
   {
@@ -62,9 +62,9 @@
   {
    "role": "SEA",
    "track": 48,
-   "last_pass": "2026-11-08",
-   "date": "2026-11-20",
-   "expected_utc": "2026-11-20T13:01:51Z"
+   "last_pass": "2026-11-20",
+   "date": "2026-12-02",
+   "expected_utc": "2026-12-02T13:01:52Z"
   }
  ],
  "state": "recovery",
@@ -1052,6 +1052,28 @@
  },
  "updates": [
   {
+   "id": "2026-11-20",
+   "kind": "sea",
+   "date": "2026-11-20",
+   "scene_ids": [
+    "L_SEA_20261120_T048"
+   ],
+   "days_after_landfall": 23,
+   "status": "VALIDATED",
+   "headline_key": "sea_after",
+   "headline": "Radar picture of the sea on 20 Nov.",
+   "text": "Radar picture of the sea on 20 Nov.",
+   "since_last": null,
+   "confounders": [],
+   "permalink": "#tab=happened&mode=radar&role=sea&d=2026-11-20",
+   "hash": "tab=happened&mode=radar&role=sea&d=2026-11-20",
+   "map_layer_id": "nisar_l_sea_20261120_t48_vv",
+   "start_utc": "2026-11-20T13:01:52Z",
+   "cataloged_utc": "2026-11-22T13:29:35Z",
+   "big_numbers": [],
+   "class_summary": null
+  },
+  {
    "id": "2026-11-09",
    "kind": "coast",
    "date": "2026-11-09",
@@ -1553,12 +1575,12 @@
   }
  ],
  "age": {
-  "days_since_pass": 12,
-  "text": "Last radar pass 12 days ago."
+  "days_since_pass": 15,
+  "text": "Last radar pass 15 days ago."
  },
  "archive": false,
  "alerts_ref": "data/processed/alerts.json",
- "revision": 11,
+ "revision": 12,
  "revision_log": [
   {
    "revision": 2,
@@ -1641,11 +1663,19 @@
     "class_stats"
    ],
    "reason": "inputs changed: new-water numbers changed"
+  },
+  {
+   "revision": 12,
+   "utc": "2026-11-24T18:24:27Z",
+   "changed": [
+    "class_stats"
+   ],
+   "reason": "inputs changed: new-water numbers changed"
   }
  ],
  "inputs_detail": {
   "by_date": "2bba30d341a29605838c8dd946f5e7668efc04eb90699faafe707b2fa105fc86",
-  "class_stats": "1e06925da5aa053ac9c5798709905547bb0ecd975f405b929c987976506ba55e",
+  "class_stats": "7af376192d78225a5f2fc8e69a68e5e686ce40af5529d94ad0dce72279b09358",
   "catalog": "4de61ca976e7c376b4563f064b9c1bf852c2d4d1b7dae30e120f1b41d2f4015a",
   "events": "181ca0fb9ff787b3eaed2d7f6c46311b584bb7e11ada11415faaf9ee51d064c1",
   "templates": "56fed20c859bd857d4bf5423ce73305200378f8d8cccccf464449e174627b675",
@@ -1654,5 +1684,5 @@
   "baseline": "837adb1a918e3fe4dc560ebd017699fed522a11ccc256fa16726f64fe24e994a",
   "builder": "010f4579d37ac9409e3324c71306385d7be210f5879c9cbab8e8df3193c1d395"
  },
- "inputs_sha256": "119c539c9a580064db86bf4e320af2116a54edf8707578e7f198dbd6f83e8b60"
+ "inputs_sha256": "c49c6436d89109efb755959a71228cd4c92baaf4745e61b592cf1f05b9259c88"
 }
