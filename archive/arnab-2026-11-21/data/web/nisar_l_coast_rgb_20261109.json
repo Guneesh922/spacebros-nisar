@@ -1,0 +1,120 @@
+{
+ "layer_id": "nisar_l_coast_rgb_20261109",
+ "rgb_of": "nisar_l_coast_20261109_t55_hh",
+ "png": "data/web/nisar_l_coast_rgb_20261109.png",
+ "bounds": [
+  [
+   16.1949,
+   81.59718
+  ],
+  [
+   17.10546,
+   82.60745
+  ]
+ ],
+ "kind": "rgb_composite_dual_pol",
+ "role": "COAST",
+ "band": "L",
+ "pol": "HH+HV",
+ "polarisation": "HH+HV",
+ "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+ "acquisition_date": "2026-11-09",
+ "track": 55,
+ "product_status": "VALIDATED",
+ "scene_id": "L_COAST_1109",
+ "source_granule": "NISAR_L2_PR_GCOV_035_055_A_010_4005_DHDH_A_20261109T000107_20261109T000130_P05036_N_P_J_001",
+ "definition": "R = HH, G = HV, B = HH minus HV (dB, the co/cross ratio); each channel stretched between fixed pooled 2 and 98 percent limits of all L-band coast dates, then gamma. Two polarisations only: NOT a Freeman-Durden or Yamaguchi decomposition.",
+ "channels": {
+  "R": "HH",
+  "G": "HV",
+  "B": "HH minus HV (dB)"
+ },
+ "stretch": {
+  "R": {
+   "lo": -21.14,
+   "hi": -1.64,
+   "unit": "dB",
+   "channel": "HH (dB)",
+   "gamma": 2.0,
+   "percentiles": [
+    2.0,
+    98.0
+   ]
+  },
+  "G": {
+   "lo": -26.85,
+   "hi": -10.63,
+   "unit": "dB",
+   "channel": "HV (dB)",
+   "gamma": 1.0,
+   "percentiles": [
+    2.0,
+    98.0
+   ]
+  },
+  "B": {
+   "lo": 3.95,
+   "hi": 14.72,
+   "unit": "dB",
+   "channel": "HH minus HV, i.e. the co/cross ratio (dB)",
+   "gamma": 2.0,
+   "percentiles": [
+    2.0,
+    98.0
+   ]
+  }
+ },
+ "gamma": {
+  "R": 2.0,
+  "G": 1.0,
+  "B": 2.0
+ },
+ "legend": [
+  {
+   "id": "water",
+   "label": "Smooth water",
+   "colour_word": "Dark",
+   "meaning": "smooth water",
+   "hex": "#030E0F",
+   "rule": "HH < -18 dB",
+   "share_of_pixels_pct": 20.15
+  },
+  {
+   "id": "vegetation",
+   "label": "Vegetation",
+   "colour_word": "Green",
+   "meaning": "vegetation",
+   "hex": "#7BB71A",
+   "rule": "HH -12 to -6 dB and HV -18 to -13 dB",
+   "share_of_pixels_pct": 18.76
+  },
+  {
+   "id": "bright_weak_cross",
+   "label": "Very bright with weak cross-pol",
+   "colour_word": "Red or magenta",
+   "meaning": "very bright with weak cross-pol, possible double bounce (flooded vegetation, buildings)",
+   "hex": "#FFB5E7",
+   "rule": "HH > -3 dB and HH minus HV > 11 dB",
+   "share_of_pixels_pct": 3.25
+  },
+  {
+   "id": "smooth_ground",
+   "label": "Smooth bare or wet ground",
+   "colour_word": "Bluish",
+   "meaning": "smooth bare or wet ground",
+   "hex": "#151944",
+   "rule": "HH -17 to -12 dB and HH minus HV > 9 dB",
+   "share_of_pixels_pct": 2.06
+  }
+ ],
+ "legend_note": "swatch = median colour of the pixels that follow the dB rule (all dates of this group pooled); a hint about what a colour often means, not a class",
+ "stretch_scope": "pooled valid pixels of all 4 L-band coast dates (2026-10-04, 2026-10-16, 2026-10-28, 2026-11-09), 84473364 pixels; a new date moves the limits on the next build",
+ "smoothing_px": 3,
+ "h5": "data/h5/L_COAST_20261109_T055.h5",
+ "image_px": [
+  502,
+  472
+ ],
+ "png_kb": 528.6,
+ "built_utc": "2026-11-25T05:23:29Z"
+}

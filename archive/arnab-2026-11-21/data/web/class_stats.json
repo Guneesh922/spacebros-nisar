@@ -1,0 +1,330 @@
+{
+ "schema": "spacebros-class-stats-v1",
+ "created_utc": "2026-11-25T05:23:00Z",
+ "analysis_id": "ap_delta_oct_nov_2026",
+ "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+ "acquisition_date": "2026-11-09",
+ "track": 55,
+ "polarisation": "HH+HV",
+ "product_status": "VALIDATED",
+ "colours": {
+  "new_water": "#3FA7F5",
+  "wet_crops": "#F2A93B",
+  "no_change": "#C4D0D2"
+ },
+ "class_alpha": {
+  "new_water": 235,
+  "wet_crops": 210,
+  "no_change": 36
+ },
+ "baseline_dates": [
+  "20261004",
+  "20261016"
+ ],
+ "event_dates": [
+  "20261028",
+  "20261109"
+ ],
+ "latest_date": "20261109",
+ "scenes": {
+  "2026-10-04": {
+   "scene_id": "L_COAST_1004",
+   "product_status": "PROVISIONAL",
+   "start_utc": "2026-10-04T00:01:06Z",
+   "track": 55,
+   "h5": "data/h5/L_COAST_20261004_T055.h5",
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  "2026-10-16": {
+   "scene_id": "L_COAST_1016",
+   "product_status": "PROVISIONAL",
+   "start_utc": "2026-10-16T00:01:06Z",
+   "track": 55,
+   "h5": "data/h5/L_COAST_20261016_T055.h5",
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  "2026-10-28": {
+   "scene_id": "L_COAST_1028",
+   "product_status": "VALIDATED",
+   "start_utc": "2026-10-28T00:01:07Z",
+   "track": 55,
+   "h5": "data/h5/L_COAST_20261028_T055.h5",
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  "2026-11-09": {
+   "scene_id": "L_COAST_1109",
+   "product_status": "VALIDATED",
+   "start_utc": "2026-11-09T00:01:07Z",
+   "track": 55,
+   "h5": "data/h5/L_COAST_20261109_T055.h5",
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  }
+ },
+ "h5_sources": {
+  "20261004": "data/h5/L_COAST_20261004_T055.h5",
+  "20261016": "data/h5/L_COAST_20261016_T055.h5",
+  "20261028": "data/h5/L_COAST_20261028_T055.h5",
+  "20261109": "data/h5/L_COAST_20261109_T055.h5"
+ },
+ "grid": {
+  "epsg": 32644,
+  "posting_m": 20.0,
+  "shape": [
+   5008,
+   5360
+  ],
+  "pixel_km2": 0.0004,
+  "png_bounds_latlon": [
+   [
+    16.1949,
+    81.59718
+   ],
+   [
+    17.10546,
+    82.60745
+   ]
+  ],
+  "png_px": [
+   3000,
+   2822
+  ]
+ },
+ "method": {
+  "smoothing": "3x3 boxcar in linear power before classifying",
+  "edge_buffer_px": 2,
+  "valid": "baseline: finite HH and HV on both baseline dates and aux/mask == 1; each event date: the same on that date",
+  "baseline": "mean of the two pre-event dates in linear power",
+  "permanent_water": "smoothed HH below the water threshold on BOTH baseline dates (excluded from all shares)",
+  "new_water": "baseline HH >= T, event HH < T, HH and HV both fall by >= k sigma (after removing the normal-fortnight median)",
+  "wet_crops": "not new water, event HH >= T, HH rises >= k sigma and HV rises >= 1.0 sigma",
+  "no_change": "every other valid land pixel",
+  "sigma_source": "robust (MAD) sigma of the 4 to 16 Oct difference over land",
+  "error": "shares recomputed at k = 2.0, 3.0, 4.0 sigma; error = largest shift from the k = 3.0 result"
+ },
+ "thresholds": {
+  "water_hh_db": -12.3,
+  "otsu_hh_db": -12.3,
+  "histogram_valley_hh_db": -14.45,
+  "histogram_modes_hh_db": [
+   -18.8,
+   -5.2
+  ],
+  "k_sigma": 3.0,
+  "hv_crops_sigma": 1.0,
+  "sigma_hh_db": 0.883,
+  "sigma_hv_db": 0.928,
+  "normal_median_hh_db": 0.111,
+  "normal_median_hv_db": 0.194,
+  "change_hh_db": 2.65,
+  "change_hv_db": 2.78,
+  "crops_hv_rise_db": 0.93
+ },
+ "event_median_shifts_vs_baseline": {
+  "20261028": {
+   "median_dHH_vs_baseline_db": 0.05,
+   "median_dHV_vs_baseline_db": 1.93
+  },
+  "20261109": {
+   "median_dHH_vs_baseline_db": -0.34,
+   "median_dHV_vs_baseline_db": 0.84
+  }
+ },
+ "sensitivity_to_water_threshold": {
+  "20261028": {
+   "threshold_hh_db": -14.45,
+   "new_water_km2": 4.89,
+   "wet_crops_km2": 154.21,
+   "new_water_pct_of_land": 0.091,
+   "wet_crops_pct_of_land": 2.854,
+   "permanent_water_km2": 2936.7
+  },
+  "20261109": {
+   "threshold_hh_db": -14.45,
+   "new_water_km2": 59.85,
+   "wet_crops_km2": 50.01,
+   "new_water_pct_of_land": 1.108,
+   "wet_crops_pct_of_land": 0.926,
+   "permanent_water_km2": 3042.2
+  },
+  "normal": {
+   "threshold_hh_db": -14.45,
+   "new_water_km2": 1.21,
+   "wet_crops_km2": 117.02,
+   "new_water_pct_of_land": 0.022,
+   "wet_crops_pct_of_land": 2.166,
+   "permanent_water_km2": 3055.5
+  }
+ },
+ "classes": {
+  "20261028|k=2.0": {
+   "valid_px": 20848373,
+   "land_px": 13102779,
+   "permanent_water_px": 7745594,
+   "new_water_px": 31312,
+   "wet_crops_px": 1127900,
+   "no_change_px": 11943567,
+   "new_water_km2": 12.525,
+   "wet_crops_km2": 451.16,
+   "no_change_km2": 4777.427,
+   "permanent_water_km2": 3098.238,
+   "new_water_pct_of_land": 0.239,
+   "wet_crops_pct_of_land": 8.608,
+   "no_change_pct_of_land": 91.153,
+   "valid_km2": 8339.3
+  },
+  "20261028|k=3.0": {
+   "valid_px": 20848373,
+   "land_px": 13102779,
+   "permanent_water_px": 7745594,
+   "new_water_px": 19227,
+   "wet_crops_px": 349172,
+   "no_change_px": 12734380,
+   "new_water_km2": 7.691,
+   "wet_crops_km2": 139.669,
+   "no_change_km2": 5093.752,
+   "permanent_water_km2": 3098.238,
+   "new_water_pct_of_land": 0.147,
+   "wet_crops_pct_of_land": 2.665,
+   "no_change_pct_of_land": 97.188,
+   "valid_km2": 8339.3
+  },
+  "20261028|k=4.0": {
+   "valid_px": 20848373,
+   "land_px": 13102779,
+   "permanent_water_px": 7745594,
+   "new_water_px": 11361,
+   "wet_crops_px": 93442,
+   "no_change_px": 12997976,
+   "new_water_km2": 4.544,
+   "wet_crops_km2": 37.377,
+   "no_change_km2": 5199.19,
+   "permanent_water_km2": 3098.238,
+   "new_water_pct_of_land": 0.087,
+   "wet_crops_pct_of_land": 0.713,
+   "no_change_pct_of_land": 99.2,
+   "valid_km2": 8339.3
+  },
+  "20261109|k=2.0": {
+   "valid_px": 21112433,
+   "land_px": 13102985,
+   "permanent_water_px": 8009448,
+   "new_water_px": 269314,
+   "wet_crops_px": 334867,
+   "no_change_px": 12498804,
+   "new_water_km2": 107.726,
+   "wet_crops_km2": 133.947,
+   "no_change_km2": 4999.522,
+   "permanent_water_km2": 3203.779,
+   "new_water_pct_of_land": 2.055,
+   "wet_crops_pct_of_land": 2.556,
+   "no_change_pct_of_land": 95.389,
+   "valid_km2": 8445.0
+  },
+  "20261109|k=3.0": {
+   "valid_px": 21112433,
+   "land_px": 13102985,
+   "permanent_water_px": 8009448,
+   "new_water_px": 209387,
+   "wet_crops_px": 118869,
+   "no_change_px": 12774729,
+   "new_water_km2": 83.755,
+   "wet_crops_km2": 47.548,
+   "no_change_km2": 5109.892,
+   "permanent_water_km2": 3203.779,
+   "new_water_pct_of_land": 1.598,
+   "wet_crops_pct_of_land": 0.907,
+   "no_change_pct_of_land": 97.495,
+   "valid_km2": 8445.0
+  },
+  "20261109|k=4.0": {
+   "valid_px": 21112433,
+   "land_px": 13102985,
+   "permanent_water_px": 8009448,
+   "new_water_px": 152745,
+   "wet_crops_px": 43987,
+   "no_change_px": 12906253,
+   "new_water_km2": 61.098,
+   "wet_crops_km2": 17.595,
+   "no_change_km2": 5162.501,
+   "permanent_water_km2": 3203.779,
+   "new_water_pct_of_land": 1.166,
+   "wet_crops_pct_of_land": 0.336,
+   "no_change_pct_of_land": 98.499,
+   "valid_km2": 8445.0
+  },
+  "normal|k=2.0": {
+   "valid_px": 21145634,
+   "land_px": 13102985,
+   "permanent_water_px": 8042649,
+   "new_water_px": 11217,
+   "wet_crops_px": 461058,
+   "no_change_px": 12630710,
+   "new_water_km2": 4.487,
+   "wet_crops_km2": 184.423,
+   "no_change_km2": 5052.284,
+   "permanent_water_km2": 3217.06,
+   "new_water_pct_of_land": 0.086,
+   "wet_crops_pct_of_land": 3.519,
+   "no_change_pct_of_land": 96.396,
+   "valid_km2": 8458.3
+  },
+  "normal|k=3.0": {
+   "valid_px": 21145634,
+   "land_px": 13102985,
+   "permanent_water_px": 8042649,
+   "new_water_px": 4610,
+   "wet_crops_px": 281019,
+   "no_change_px": 12817356,
+   "new_water_km2": 1.844,
+   "wet_crops_km2": 112.408,
+   "no_change_km2": 5126.942,
+   "permanent_water_km2": 3217.06,
+   "new_water_pct_of_land": 0.035,
+   "wet_crops_pct_of_land": 2.145,
+   "no_change_pct_of_land": 97.82,
+   "valid_km2": 8458.3
+  },
+  "normal|k=4.0": {
+   "valid_px": 21145634,
+   "land_px": 13102985,
+   "permanent_water_px": 8042649,
+   "new_water_px": 3079,
+   "wet_crops_px": 188640,
+   "no_change_px": 12911266,
+   "new_water_km2": 1.232,
+   "wet_crops_km2": 75.456,
+   "no_change_km2": 5164.506,
+   "permanent_water_km2": 3217.06,
+   "new_water_pct_of_land": 0.023,
+   "wet_crops_pct_of_land": 1.44,
+   "no_change_pct_of_land": 98.537,
+   "valid_km2": 8458.3
+  }
+ },
+ "files": {
+  "20261028/new_water": {
+   "png": "data/web/class_20261028_new_water.png",
+   "png_kb": 43.5
+  },
+  "20261028/wet_crops": {
+   "png": "data/web/class_20261028_wet_crops.png",
+   "png_kb": 170.3
+  },
+  "20261028/no_change": {
+   "png": "data/web/class_20261028_no_change.png",
+   "png_kb": 373.5
+  },
+  "20261109/new_water": {
+   "png": "data/web/class_20261109_new_water.png",
+   "png_kb": 95.4
+  },
+  "20261109/wet_crops": {
+   "png": "data/web/class_20261109_wet_crops.png",
+   "png_kb": 87.4
+  },
+  "20261109/no_change": {
+   "png": "data/web/class_20261109_no_change.png",
+   "png_kb": 335.0
+  }
+ }
+}

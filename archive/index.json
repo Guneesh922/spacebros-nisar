@@ -1,0 +1,13 @@
+[
+  {
+    "id": "arnab-2026-11-21",
+    "label": "Cyclone Arnab, as the site showed it on 21 Nov 2026 (radar scenes up to 9 Nov 2026)",
+    "path": "archive/arnab-2026-11-21/app/dashboard-mockup/",
+    "ref": "15f94d00092b507bcbe792b36decbde0ea190c10",
+    "saved_utc": "2026-11-25T05:23:44Z",
+    "latest": {
+      "coast": "2026-11-09",
+      "sea": "2026-11-08"
+    }
+  }
+]

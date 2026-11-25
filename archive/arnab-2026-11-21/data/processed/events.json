@@ -1,0 +1,875 @@
+{
+ "schema": "events-v1",
+ "updated_utc": "2026-11-21T13:39:21Z",
+ "events": [
+  {
+   "id": "arnab_2026",
+   "name": "Cyclone Arnab",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-10-24",
+   "end": "2026-10-28",
+   "aftermath_days": 45,
+   "window_source": "IMD press release No. 5 (docs/imd_bulletins/20261027_0300UTC_press_release_27Oct.pdf, issued 1400 IST 27 Oct) and No. 6 (docs/imd_bulletins/20261028_0300UTC_press_release_28Oct.pdf, issued 1430 IST 28 Oct). START 24 Oct: the observed-track chart in both releases labels the first track point '24/12, 25KT, D' (depression, 24 Oct 1200 UTC); the 27 Oct text starts with 'cyclonic storm \"Arnab\"' on 26 Oct. END 28 Oct: the bulletins in the folder give no observed end (no 'weakened into a depression' observation), only forecasts: No. 6 forecasts a 'Well Marked Low Pressure Area' by 29.10.26/1730 IST, and 'crossed ... coasts ... during 0200 - 0800 hours IST today, the 28th October' with 'the landfall process completed ... by 0800 hrs IST'. So end = 28 Oct, the date of the last bulletin in docs/imd_bulletins/ (not an IMD-stated end). Only the two press releases were read in full for this window; the other 13 files in the folder are same-period bulletins and advisories dated 27 Oct 1200 UTC to 28 Oct 0300 UTC. aftermath_days 45 = the old monitor_days (45) of data/events/arnab-2026.json, counted from the end date (end = landfall day).",
+   "source": {
+    "name": "IMD",
+    "url": "https://mausam.imd.gov.in/",
+    "ids": []
+   },
+   "credit": "India Meteorological Department",
+   "severity": {
+    "as_given": "Very Severe Cyclonic Storm",
+    "by": "IMD"
+   },
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
+   "reviewed_by_human": true,
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_EYE_1027",
+     "date": "2026-10-27",
+     "role": "SEA",
+     "relation": "during",
+     "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_1028",
+     "date": "2026-10-28",
+     "role": "COAST",
+     "relation": "during",
+     "radar_finding": "no_clear_change"
+    },
+    {
+     "scene_id": "L_SEA_AFTER_1108",
+     "date": "2026-11-08",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_1109",
+     "date": "2026-11-09",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
+    }
+   ],
+   "description": "Cyclone Arnab reached Andhra Pradesh as a very severe cyclonic storm. IMD says it crossed the Andhra Pradesh and Yanam coasts between Bapatla and Visakhapatnam, near 16.45 N 81.9 E, during 0200 to 0800 hours IST on 28 October 2026, with maximum sustained wind 125 to 135 km/h gusting to 150 km/h (IMD press release 6, 28 Oct). NISAR looked at the sea on 27 Oct and at the Godavari delta coast on 28 Oct, then again on 8 and 9 Nov.",
+   "cannot_tell": [
+    "Radar does not measure wind speed in km/h. The wind numbers here are IMD's, not derived from the satellite.",
+    "The 'wet or flooded crops' class is weak: it cannot be told apart from normal change in fields, so it is not a public finding (docs/METHODS.md).",
+    "There is no ground truth: no field survey, tide gauge or flood map was compared with the radar result.",
+    "The 9 Nov coast picture mixes Cyclone Arnab, Cyclone Murasu (1 to 3 Nov) and the Godavari river peak (about 2 Nov). Radar cannot separate them.",
+    "Radar cannot say how deep the water was, how long it stayed, or whether homes or crops were damaged.",
+    "The 4 and 16 Oct coast scenes and the 15 Oct sea scene used as the 'normal' reference are PROVISIONAL products.",
+    "The sea difference map (27 Oct minus 15 Oct) may include a calibration offset from the provisional reference scene, so read its pattern, not its level.",
+    "The eye is faint in the radar picture and sits about 10 km from the IMD fix.",
+    "The landfall time is not settled: IMD gives a window (0200 to 0800 IST, 28 Oct), so the time stays empty here.",
+    "No S-band scene has been processed yet; every result is from L-band only."
+   ],
+   "confounders": [
+    {
+     "id": "murasu_2026",
+     "name": "Cyclone Murasu",
+     "kind": "cyclone",
+     "from": "2026-11-01",
+     "to": "2026-11-03",
+     "affects_dates": [
+      "2026-11-09"
+     ],
+     "limit_text": "Cyclone Murasu (1-3 Nov) and the river peak",
+     "text": "Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone.",
+     "note": "Human-written. affects_dates lists the radar scene dates the note applies to; add a date when a later scene is still affected."
+    }
+   ],
+   "story": {
+    "landfall_caption": "Landfall point on the map: near 16.45 N, 81.9 E (Narasapuram and Razole area). IMD gives a window of 02:00 to 08:00 IST on 28 October.",
+    "eye_profile": "The calm eye was about {eye} km from centre to edge, give or take {eye_err} km. The roughest sea was about {peak} km from the centre of the eye. Radar sees how rough the sea is. It does not measure wind speed in km/h. The wind numbers come from IMD, not from the satellite. The eye is small and weak in this radar view (about 5 km core, bright ring near 14 km).",
+    "before_after": "Cyclone Arnab crossed the Andhra Pradesh coast on 28 October 2026, in a window IMD gives as 02:00 to 08:00 IST. A radar satellite called NISAR looked at the land before and after. It shows where the land was probably under water. The left side is the coast on {before}. The right side is the newest radar pass, on {after}.",
+    "murasu_caveat": "Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone.",
+    "wind": "About 125 to 135 km/h wind near landfall, with gusts to about 150 km/h (IMD).",
+    "sea_caveat": "The brightness-rise chart compares 27 Oct with a provisional calm scene (15 Oct) that has dark patches, so read its shape, not its level.",
+    "case_start": "On {date}, the NISAR radar satellite (a NASA and ISRO mission) passed over the Bay of Bengal. This was hours before {name} reached land near Narsapur. Clouds hid the storm from normal cameras. Radar can see through cloud, so it caught the eye of the storm."
+   },
+   "story_from": {
+    "landfall_caption": "app/dashboard-mockup/js/findings.js cyclone.where + intro.landfall_unknown (also app/strings/strings.en.json events.landfall_pending / state.landfall_pending)",
+    "eye_profile": "app/dashboard-mockup/js/findings.js cyclone.eye + cyclone.rough + cyclone.cannot (templates: slots {eye} {eye_err} {peak} come from data/processed/profile.json eye_radius_km, eye_radius_err, peak r_km); last sentence from app/strings/case.en.json case.about.limit7",
+    "before_after": "app/dashboard-mockup/js/findings.js intro.lead (Arnab-specific wording) + app/strings/case.en.json case.shore.body (slots {before} {after} are scene dates)",
+    "murasu_caveat": "data/events/arnab-2026.json confounders[0].text (same sentence is shown in the lead through data/web/story.json 'confounder')",
+    "wind": "data/events/arnab-2026.json imd.wind_text; also findings.js cyclone.wind",
+    "sea_caveat": "app/strings/case.en.json case.about.limit7 (second sentence)",
+    "case_start": "app/strings/case.en.json case.start.body (slots {date} {name}); case.start.title is 'Radar saw the eye of {name} through the clouds'"
+   },
+   "landfall": {
+    "lat": 16.45,
+    "lon": 81.9,
+    "date": "2026-10-28",
+    "time_utc": null,
+    "note": "time being confirmed (IMD)",
+    "where_text": "Landfall point on the map: near 16.45 N, 81.9 E (Narasapuram and Razole area)."
+   },
+   "imd": {
+    "category": "Very Severe Cyclonic Storm",
+    "category_short": "VSCS",
+    "wind_kmh": [
+     125,
+     135
+    ],
+    "gust_kmh": 150,
+    "wind_text": "About 125 to 135 km/h wind near landfall, with gusts to about 150 km/h (IMD).",
+    "source": "IMD",
+    "bulletin_urls": [],
+    "bulletin_dir": "docs/imd_bulletins"
+   },
+   "baseline": {
+    "scenes": [
+     {
+      "scene_id": "L_COAST_1004",
+      "role": "COAST",
+      "date": "2026-10-04"
+     },
+     {
+      "scene_id": "L_COAST_1016",
+      "role": "COAST",
+      "date": "2026-10-16"
+     },
+     {
+      "scene_id": "L_SEA_CALM_1015",
+      "role": "SEA",
+      "date": "2026-10-15"
+     }
+    ],
+    "note": "Calm-period scenes. The 15 Oct sea scene is PROVISIONAL; check it against 3 Oct before quoting numbers."
+   },
+   "official_links": [
+    {
+     "name": "IMD",
+     "url": "https://mausam.imd.gov.in/",
+     "what": "India Meteorological Department"
+    },
+    {
+     "name": "APSDMA",
+     "url": "https://apsdma.ap.gov.in/",
+     "what": "Andhra Pradesh State Disaster Management Authority"
+    },
+    {
+     "name": "SACHET",
+     "url": "https://sachet.ndma.gov.in/",
+     "what": "NDMA alert portal"
+    }
+   ],
+   "migrated_from": {
+    "file": "data/events/arnab-2026.json",
+    "note": "hazard->type, region 'konaseema' -> area_id 'godavari', dates.landfall_day kept in landfall.date, monitor_days 45 -> aftermath_days 45 (end = landfall day), dates.closed null (not closed). That file is left in place until the readers are switched.",
+    "status_old": "active",
+    "region_old": "konaseema",
+    "dates_old": {
+     "landfall_day": "2026-10-28",
+     "closed": null
+    },
+    "monitor_days_old": 45
+   },
+   "alert_refs": [
+    {
+     "source": "GDACS",
+     "id": "1001345",
+     "issued": "2026-10-26T00:00:00Z",
+     "headline": "Tropical Cyclone ARNAB-26"
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-14T14:30:00Z",
+     "by": "human",
+     "what": "migrated from data/events/arnab-2026.json (all fields), window set from IMD press releases 5 and 6, story wording copied from app/strings and findings.js"
+    },
+    {
+     "utc": "2026-11-15T00:00:00Z",
+     "by": "human",
+     "what": "story.landfall_caption and story.before_after reworded: the caption said the landfall time was still being confirmed while the description gives IMD's window of 0200 to 0800 IST on 28 October, and before_after said 27 and 28 October. Both now follow the IMD window (28 October). time_utc stays null."
+    },
+    {
+     "utc": "2026-11-14T14:30:00Z",
+     "by": "pipeline",
+     "what": "added alert_ref GDACS 1001345 (same event)"
+    },
+    {
+     "utc": "2026-11-14T14:30:00Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_EYE_1027, L_COAST_1028, L_SEA_AFTER_1108, L_COAST_1109"
+    },
+    {
+     "utc": "2026-11-14T14:35:00Z",
+     "by": "human",
+     "what": "radar_finding L_COAST_1109: numbers_coming -> change_seen"
+    },
+    {
+     "utc": "2026-11-14T16:00:00Z",
+     "by": "human-review via Opus",
+     "what": "hedged the Murasu and river-peak confounder text (confounders[0].text and story.murasu_caveat): 'probably also put water on the land'. Human-written context from data/events/arnab-2026.json, not from the GDACS draft; the same fix was made in that file."
+    },
+    {
+     "utc": "2026-11-14T15:01:12Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_1028: numbers_coming -> change_seen"
+    },
+    {
+     "utc": "2026-11-14T15:05:40Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_1028: change_seen -> no_clear_change"
+    }
+   ]
+  },
+  {
+   "id": "auto_GDACS_1001346",
+   "name": "Cyclone Murasu",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-01",
+   "end": "2026-11-03",
+   "aftermath_days": 30,
+   "window_source": "GDACS alert 1001346: from 2026-11-01 to 2026-11-03 (as published; not checked by a person)",
+   "source": {
+    "name": "GDACS",
+    "url": "https://www.gdacs.org/report.aspx?eventid=1001346&episodeid=10&eventtype=TC",
+    "ids": [
+     "1001346"
+    ]
+   },
+   "credit": "GDACS (EC JRC / UN OCHA)",
+   "severity": {
+    "as_given": "Red alert",
+    "by": "GDACS"
+   },
+   "status": "radar_linked",
+   "status_text": "Radar passes linked",
+   "reviewed_by_human": false,
+   "linked_passes": [
+    {
+     "scene_id": "L_SEA_AFTER_1108",
+     "date": "2026-11-08",
+     "role": "SEA",
+     "relation": "after",
+     "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_1109",
+     "date": "2026-11-09",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
+    }
+   ],
+   "description": "Cyclone Murasu",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "GDACS",
+     "id": "1001346",
+     "issued": "2026-11-01T00:00:00Z",
+     "headline": "Tropical Cyclone MURASU-26"
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-14T14:29:12Z",
+     "by": "pipeline",
+     "what": "draft created from GDACS alert 1001346"
+    },
+    {
+     "utc": "2026-11-14T14:29:12Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_AFTER_1108, L_COAST_1109"
+    },
+    {
+     "utc": "2026-11-14T15:01:12Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_1109: numbers_coming -> change_seen"
+    },
+    {
+     "utc": "2026-11-15T00:22:57Z",
+     "by": "pipeline",
+     "what": "updated from GDACS alert 1001346: display name"
+    }
+   ],
+   "source_name": "Tropical Cyclone MURASU-26"
+  },
+  {
+   "id": "auto_GDACS_1104248",
+   "name": "Flood in India",
+   "type": "flood",
+   "area_id": "godavari",
+   "start": "2026-10-20",
+   "end": "2026-11-04",
+   "aftermath_days": 30,
+   "window_source": "GDACS alert 1104248: from 2026-10-20 to 2026-11-04 (as published; not checked by a person)",
+   "source": {
+    "name": "GDACS",
+    "url": "https://www.gdacs.org/report.aspx?eventid=1104248&episodeid=4&eventtype=FL",
+    "ids": [
+     "1104248"
+    ]
+   },
+   "credit": "GDACS (EC JRC / UN OCHA)",
+   "severity": {
+    "as_given": "Green alert",
+    "by": "GDACS"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, outside the radar area",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "Flood in India",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet.",
+    "GDACS flood alerts here come from a river-flow model (GloFAS) and give a point or a small area, not a flood map. The alert is a model estimate and is not confirmed by radar.",
+    "This alert is about 168 km from the radar area (measured from its affected area)."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "GDACS",
+     "id": "1104248",
+     "issued": "2026-10-20T01:00:00Z",
+     "headline": "Flood in India"
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-14T14:29:12Z",
+     "by": "pipeline",
+     "what": "draft created from GDACS alert 1104248"
+    },
+    {
+     "utc": "2026-11-14T14:29:12Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_SEA_EYE_1027, L_COAST_1028, L_SEA_AFTER_1108, L_COAST_1109"
+    },
+    {
+     "utc": "2026-11-14T15:01:12Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_1028: numbers_coming -> change_seen"
+    },
+    {
+     "utc": "2026-11-14T15:01:12Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_1109: numbers_coming -> change_seen"
+    },
+    {
+     "utc": "2026-11-14T15:05:40Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_1028: change_seen -> no_clear_change"
+    },
+    {
+     "utc": "2026-11-14T23:35:21Z",
+     "by": "pipeline",
+     "what": "flood footprint: 174.8 km from the radar area (point)"
+    },
+    {
+     "utc": "2026-11-14T23:35:21Z",
+     "by": "pipeline",
+     "what": "removed 4 linked pass(es): alert is 175 km from the radar area (limit 50 km)"
+    },
+    {
+     "utc": "2026-11-15T00:02:50Z",
+     "by": "pipeline",
+     "what": "flood footprint: 168.2 km from the radar area (affected_area)"
+    },
+    {
+     "utc": "2026-11-15T00:22:57Z",
+     "by": "pipeline",
+     "what": "updated from GDACS alert 1104248: display name"
+    }
+   ],
+   "footprint": {
+    "point": [
+     80.1661,
+     15.446
+    ],
+    "affected_bbox": [
+     80.1211,
+     15.4009,
+     80.2112,
+     15.491
+    ],
+    "source_model": "GLOFAS",
+    "distance_km": 168.2,
+    "basis": "affected_area"
+   },
+   "source_name": "Flood in India"
+  },
+  {
+   "id": "auto_SACHET_1795002709049008",
+   "name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "source_name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-18",
+   "end": "2026-11-18",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795002709049008: from 2026-11-18 to 2026-11-18 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795002709049008",
+    "ids": [
+     "1795002709049008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "Andhra Pradesh SDMA"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "Due to the impact of Cyclone Akwan in the Bay of Bengal, heavy rains accompanied by strong winds are likely in your area tomorrow. The public is advised to remain alert and take necessary precautions -Government of Andhra Pradesh",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795002709049008",
+     "issued": "2026-11-18T17:23:10+05:30",
+     "headline": "Due to the impact of Cyclone Akwan in the Bay of Bengal, heavy rains accompanied by strong winds are likely in your area tomorrow. The public is advised to remain alert and take necessary precautions -Government of Andhra Pradesh"
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-18T14:21:38Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795002709049008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795000640273008",
+   "name": "Cyclone alert (IMD Visakhapatnam)",
+   "source_name": "Cyclone alert (IMD Visakhapatnam)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-18",
+   "end": "2026-11-18",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795000640273008: from 2026-11-18 to 2026-11-18 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795000640273008",
+    "ids": [
+     "1795000640273008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "IMD Visakhapatnam"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1130 IST of 18.11.26 near latitude 13.1N and longitude 85.4E, 540 Km southeast of Narsapur, Andhra Pradesh. Cyclone Warning for Alluri Sitharama Raju, Anakapalli, Srikakulam, Visakhapatnam, Vizianagaram.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795000640273008",
+     "issued": "2026-11-18T16:47:26+05:30",
+     "headline": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1130 IST of 18.11.26 near latitude 13.1N and longitude 85.4E, 540 Km southeast of Narsapur, Andhra Pradesh. Cyclone Warning for Alluri Sitharama Raju, Anakapalli, Srikakulam, Visakhapatnam, Vizianagaram."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-18T14:21:38Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795000640273008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795078209488008",
+   "name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "source_name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795078209488008: from 2026-11-19 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795078209488008",
+    "ids": [
+     "1795078209488008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "Andhra Pradesh SDMA"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "Cyclone is Likely to occur over Srikakulam district of Andhra Pradesh. Please follow SDMA guidelines.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795078209488008",
+     "issued": "2026-11-19T14:21:04+05:30",
+     "headline": "Cyclone is Likely to occur over Srikakulam district of Andhra Pradesh. Please follow SDMA guidelines."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795078209488008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795072648185008",
+   "name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "source_name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795072648185008: from 2026-11-19 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795072648185008",
+    "ids": [
+     "1795072648185008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "Andhra Pradesh SDMA"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "Cyclone is Likely to occur over Vizianagaram district of Andhra Pradesh. Please follow SDMA guidelines.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795072648185008",
+     "issued": "2026-11-19T12:49:18+05:30",
+     "headline": "Cyclone is Likely to occur over Vizianagaram district of Andhra Pradesh. Please follow SDMA guidelines."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795072648185008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795069769169008",
+   "name": "Cyclone alert (IMD Visakhapatnam)",
+   "source_name": "Cyclone alert (IMD Visakhapatnam)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795069769169008: from 2026-11-19 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795069769169008",
+    "ids": [
+     "1795069769169008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "IMD Visakhapatnam"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "SCS AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 0530 IST of 19.11.26 440 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, Anakapalli, Konaseema, EG, Kakinada, Parvathipuram Manyam, Polavaram, Srikakulam, Visakhapatnam, Vizianagaram, WG",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795069769169008",
+     "issued": "2026-11-19T11:59:33+05:30",
+     "headline": "SCS AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 0530 IST of 19.11.26 440 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, Anakapalli, Konaseema, EG, Kakinada, Parvathipuram Manyam, Polavaram, Srikakulam, Visakhapatnam, Vizianagaram, WG"
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795069769169008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795063890471008",
+   "name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "source_name": "Cyclone alert (Andhra Pradesh SDMA)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795063890471008: from 2026-11-19 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795063890471008",
+    "ids": [
+     "1795063890471008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "Andhra Pradesh SDMA"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "Cyclone is Likely to occur over heavy_rainfall_2026-11-19. Please follow SDMA guidelines.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795063890471008",
+     "issued": "2026-11-19T10:22:31+05:30",
+     "headline": "Cyclone is Likely to occur over heavy_rainfall_2026-11-19. Please follow SDMA guidelines."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795063890471008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795039977725008",
+   "name": "Cyclone alert (IMD Visakhapatnam)",
+   "source_name": "Cyclone alert (IMD Visakhapatnam)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795039977725008: from 2026-11-19 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795039977725008",
+    "ids": [
+     "1795039977725008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "IMD Visakhapatnam"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 2330 IST of 18.11.26 near latitude 13.9N and longitude 85.3E, 510 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, PVP Manyam, Srikakulam, VSKP, Vizianagaram, AKP.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795039977725008",
+     "issued": "2026-11-19T03:43:07+05:30",
+     "headline": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 2330 IST of 18.11.26 near latitude 13.9N and longitude 85.3E, 510 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, PVP Manyam, Srikakulam, VSKP, Vizianagaram, AKP."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795039977725008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795018909404008",
+   "name": "Cyclone alert (IMD Visakhapatnam)",
+   "source_name": "Cyclone alert (IMD Visakhapatnam)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-18",
+   "end": "2026-11-18",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795018909404008: from 2026-11-18 to 2026-11-18 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795018909404008",
+    "ids": [
+     "1795018909404008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "IMD Visakhapatnam"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1730 IST of 18.11.26 near latitude 13.6N and longitude 85.3E, 540 Km of Kalingapatnam, Cyclone Warning for ASR, Anakapalli, Parvathipuram Manyam, Srikakulam, Visakhapatnam, Vizianagaram.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795018909404008",
+     "issued": "2026-11-18T21:51:58+05:30",
+     "headline": "SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1730 IST of 18.11.26 near latitude 13.6N and longitude 85.3E, 540 Km of Kalingapatnam, Cyclone Warning for ASR, Anakapalli, Parvathipuram Manyam, Srikakulam, Visakhapatnam, Vizianagaram."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-19T14:31:57Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795018909404008"
+    }
+   ]
+  },
+  {
+   "id": "auto_SACHET_1795141515464008",
+   "name": "Cyclone alert (IMD Visakhapatnam)",
+   "source_name": "Cyclone alert (IMD Visakhapatnam)",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-20",
+   "end": "2026-11-20",
+   "aftermath_days": 30,
+   "window_source": "SACHET alert 1795141515464008: from 2026-11-20 to 2026-11-20 (as published; not checked by a person)",
+   "source": {
+    "name": "SACHET",
+    "url": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795141515464008",
+    "ids": [
+     "1795141515464008"
+    ]
+   },
+   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
+   "severity": {
+    "as_given": "Met",
+    "by": "IMD Visakhapatnam"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "The CYCLONIC STORM Akvan with maximum wind speed of 80-90 gusting to 100 Kmph lays centred at 0530 IST of 20.11.26 near latitude 18.3N and longitude 84.8E, 70 Km east of Kalingapatnam, Andhra Pradesh. Cyclone Warning for Parvathipuram Manyam, Srikakulam.",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "SACHET",
+     "id": "1795141515464008",
+     "issued": "2026-11-20T07:55:17+05:30",
+     "headline": "The CYCLONIC STORM Akvan with maximum wind speed of 80-90 gusting to 100 Kmph lays centred at 0530 IST of 20.11.26 near latitude 18.3N and longitude 84.8E, 70 Km east of Kalingapatnam, Andhra Pradesh. Cyclone Warning for Parvathipuram Manyam, Srikakulam."
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-20T14:11:29Z",
+     "by": "pipeline",
+     "what": "draft created from SACHET alert 1795141515464008"
+    }
+   ]
+  },
+  {
+   "id": "auto_GDACS_1001351",
+   "name": "Cyclone Akvan",
+   "source_name": "Tropical Cyclone AKVAN-26",
+   "type": "cyclone",
+   "area_id": "godavari",
+   "start": "2026-11-16",
+   "end": "2026-11-19",
+   "aftermath_days": 30,
+   "window_source": "GDACS alert 1001351: from 2026-11-16 to 2026-11-19 (as published; not checked by a person)",
+   "source": {
+    "name": "GDACS",
+    "url": "https://www.gdacs.org/report.aspx?eventid=1001351&episodeid=13&eventtype=TC",
+    "ids": [
+     "1001351"
+    ]
+   },
+   "credit": "GDACS (EC JRC / UN OCHA)",
+   "severity": {
+    "as_given": "Green alert",
+    "by": "GDACS"
+   },
+   "status": "alert_only",
+   "status_text": "Alert only, not yet seen by radar",
+   "reviewed_by_human": false,
+   "linked_passes": [],
+   "description": "Cyclone Akvan",
+   "cannot_tell": [
+    "This is an alert from an outside source. Radar has not been checked against it yet."
+   ],
+   "confounders": [],
+   "alert_refs": [
+    {
+     "source": "GDACS",
+     "id": "1001351",
+     "issued": "2026-11-16T18:00:00Z",
+     "headline": "Tropical Cyclone AKVAN-26"
+    }
+   ],
+   "edit_log": [
+    {
+     "utc": "2026-11-21T13:36:09Z",
+     "by": "pipeline",
+     "what": "draft created from GDACS alert 1001351"
+    }
+   ]
+  }
+ ]
+}

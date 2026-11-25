@@ -1,0 +1,14 @@
+{
+  "ref": "a94b3f8bf2a44f0b0aba3c988b6cd759c1335ab2",
+  "scenes": [
+    "data/h5/L_COAST_20261004_T055.h5",
+    "data/h5/L_COAST_20261016_T055.h5",
+    "data/h5/L_COAST_20261028_T055.h5",
+    "data/h5/L_COAST_20261109_T055.h5",
+    "data/h5/L_SEA_20261003_T048.h5",
+    "data/h5/L_SEA_20261015_T048.h5",
+    "data/h5/L_SEA_20261027_T048.h5",
+    "data/h5/L_SEA_20261108_T048.h5",
+    "data/h5/L_SEA_20261120_T048.h5"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+ "layer_id": "nisar_l_coast_change_20261109_hh",
+ "png": "data/web/nisar_l_coast_change_20261109_hh.png",
+ "bounds": [
+  [
+   16.1949,
+   81.59718
+  ],
+  [
+   17.10546,
+   82.60745
+  ]
+ ],
+ "pol": "HH",
+ "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+ "acquisition_date": "2026-11-09",
+ "track": 55,
+ "polarisation": "HH",
+ "product_status": "VALIDATED",
+ "reference_product_status": [
+  "PROVISIONAL",
+  "PROVISIONAL"
+ ],
+ "kind": "difference_db",
+ "definition": "event HH minus baseline HH, dB (baseline = mean of 2026-10-04 and 2026-10-16 in linear power; 3 x 3 smoothed in linear power; land only)",
+ "ramp_db": [
+  -6.0,
+  6.0
+ ],
+ "ramp": {
+  "name": "blue-white-orange (colour-blind safe)",
+  "kind": "diverging",
+  "unit": "dB",
+  "colour_blind_safe": true,
+  "centre": 0.0,
+  "symmetric": true,
+  "stops": [
+   {
+    "value": -6.0,
+    "hex": "#2F7DC4",
+    "label": "darker"
+   },
+   {
+    "value": -3.0,
+    "hex": "#8FBFE8",
+    "label": null
+   },
+   {
+    "value": 0.0,
+    "hex": "#F7F7F7",
+    "label": "no clear change"
+   },
+   {
+    "value": 3.0,
+    "hex": "#F6B48A",
+    "label": null
+   },
+   {
+    "value": 6.0,
+    "hex": "#D9541E",
+    "label": "brighter"
+   }
+  ],
+  "words": {
+   "darker": "darker",
+   "no_change": "no clear change",
+   "brighter": "brighter"
+  },
+  "saturation_limit_db": 6.0,
+  "saturation_rule": "min(3 x P99 of |change|, 6 dB)",
+  "p99_abs_change_db": 9.781,
+  "three_p99_db": 29.34,
+  "cap_db": 6.0,
+  "p99_basis": "valid non-permanent-water pixels of this date",
+  "sigma_db": 0.883,
+  "sigma": {
+   "source": "robust (MAD) sigma of the normal-fortnight difference, 16 Oct minus 4 Oct, HH, over land (docs/METHODS.md step 6)",
+   "baseline_dates": [
+    "2026-10-04",
+    "2026-10-16"
+   ],
+   "note": "the event-minus-baseline difference uses a two-date mean baseline, so its true noise is a little smaller: 1 sigma is a cautious grey band"
+  },
+  "grey": {
+   "hex": "#9BA1A7",
+   "alpha": 175,
+   "band_db": [
+    -0.883,
+    0.883
+   ],
+   "label": "no clear change",
+   "rule": "pixels with |change| < 1 sigma are drawn grey, not coloured"
+  },
+  "note": "negative = darker than the reference, positive = brighter; white = no change; grey = change smaller than 1 sigma of normal variation"
+ },
+ "p2": -7.87,
+ "p50": -0.34,
+ "p98": 2.56,
+ "mean": -0.97,
+ "n_valid_px": 13102985,
+ "grid": {
+  "epsg": 32644,
+  "posting_m": 20.0,
+  "same_as": "data/web/class_stats.json"
+ },
+ "after": {
+  "h5": "data/h5/L_COAST_20261109_T055.h5",
+  "date": "2026-11-09",
+  "start_utc": "2026-11-09T00:01:07Z",
+  "product_status": "VALIDATED"
+ },
+ "before": {
+  "h5": [
+   "data/h5/L_COAST_20261004_T055.h5",
+   "data/h5/L_COAST_20261016_T055.h5"
+  ],
+  "dates": [
+   "2026-10-04",
+   "2026-10-16"
+  ]
+ },
+ "note": "difference of calibrated backscatter on the class grid; negative = darker (e.g. new open water), positive = brighter. Not a flood map by itself.",
+ "image_px": [
+  1228,
+  1155
+ ],
+ "png_kb": 469.6,
+ "built_utc": "2026-11-25T05:23:04Z"
+}
