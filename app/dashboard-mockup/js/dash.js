@@ -4,7 +4,7 @@
   var D = '../../data/processed/';
   var F = window.FINDINGS;
   var SAMPLE = 'Sample values', QUICK = 'Quick-look sample';
-  var ROLES = ['coast', 'sea'], STORE_KEY = 'spacebros.nisar.savedDays.v1';
+  var ROLES = ['coast', 'sea'], STORE_KEY = 'spacebros.nisar.savedDays.v1', ARCH_SEEN_KEY = 'spacebros.nisar.archiveSeen.v1', ARCH_INDEX = '../../archive/index.json';
   var DELTA = [[16.2, 81.5], [17.25, 82.7]], SEA = [[15.3, 81.5], [17.7, 84.0]];
   var SHARE_MAX = 15, GRAY = [-25, 0];
   var NISAR_CREDIT = 'NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)';
@@ -188,6 +188,7 @@
     buildData();
     bindUI();
     buildDayCard(); bindDay();
+    loadArchive();
     if (X.warn.length) {
       var b = $('#banner'); b.hidden = false; b.setAttribute('role', 'status');
       b.textContent = 'Some parts of this page are still loading. The rest works as usual.';
@@ -1817,6 +1818,26 @@
     try { localStorage.setItem(STORE_KEY, JSON.stringify(S.saved)); S.storeOK = true; return true; } catch (e) { S.storeOK = false; return false; }
   }
   function findSaved(id) { return S.saved.filter(function (r) { return r.id === id; })[0]; }
+  /* Saved copies of the site: every time the radar scenes change, the update bot keeps a frozen copy of the version it
+     replaces (tools/pipeline/archive_view.py, branch site-archive, published at archive/). Each copy is added to Saved
+     days ONCE, by default; a viewer can remove it like any saved day and it does not come back (ids in ARCH_SEEN_KEY). */
+  function loadArchive() {
+    fetch(ARCH_INDEX).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; }).then(function (idx) {
+      if (!Array.isArray(idx) || !idx.length) return;
+      var seen = [];
+      try { seen = JSON.parse(localStorage.getItem(ARCH_SEEN_KEY) || '[]'); } catch (e) { seen = []; }
+      if (!Array.isArray(seen)) seen = [];
+      var add = idx.filter(function (a) { return a && a.id && a.path && seen.indexOf(a.id) < 0 && !findSaved('archive:' + a.id); }).reverse();
+      if (!add.length) return;
+      add.forEach(function (a) {
+        S.saved.unshift({ id: 'archive:' + a.id, label: 'Earlier version: ' + (a.label || a.id), mode: 'archive', path: a.path, date: null, view: {}, saved_at: a.saved_utc || null });
+        seen.push(a.id);
+      });
+      persist();
+      try { localStorage.setItem(ARCH_SEEN_KEY, JSON.stringify(seen)); } catch (e) { /* storage blocked: shown again next visit */ }
+      renderSaved();
+    });
+  }
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
   function say(t, html) { var el = $('#dc-msg'); if (!el) return; if (html) el.innerHTML = t; else el.textContent = t || ''; el.hidden = !t; }
 
@@ -1844,6 +1865,7 @@
     el.textContent = t;
   }
   function savedSub(r) {
+    if (r.mode === 'archive') return 'Saved copy of the whole site · ' + (r.saved_at ? 'saved ' + dshort(r.saved_at.slice(0, 10)) : '');
     var v = r.view || {}, bits = [r.date ? dshort(r.date) : '', r.mode === 'custom' ? 'Layer list' : modeName(r.mode)];
     if ((r.mode === 'radar' || r.mode === 'swipe') && v.role) bits.push(v.role === 'sea' ? 'sea' : 'coast');
     var gone = [];
@@ -1884,6 +1906,7 @@
   }
   function openSaved(id) {
     var r = findSaved(id); if (!r) return;
+    if (r.mode === 'archive' && r.path) { location.href = '../../' + r.path; return; }
     var v = r.view || {};
     applyView({ tab: r.mode === 'custom' ? 'data' : v.tab, mode: r.mode, role: v.role, look: v.look, d: r.date, b: v.before, mandal: v.mandal, c: v.c, z: v.z, layers: v.layers });
     writeHash(true);

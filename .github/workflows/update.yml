@@ -38,6 +38,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           lfs: true   # data/h5/*.h5 may be in Git LFS
+          fetch-depth: 0   # archive_view.py rebuilds the previous live version from its commit
 
       - uses: actions/setup-python@v5
         with:
@@ -119,6 +120,20 @@ jobs:
           git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
           echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      # Keep the version that was live until now: when the scene list changed, build a frozen copy of the previous live
+      # version into the site-archive branch (published at <site>/archive/, listed in Saved days by default).
+      - name: Save the previous version
+        if: ${{ steps.run.outputs.code == '0' && steps.commit.outputs.pushed == 'true' && !inputs.dry_run }}
+        run: |
+          A="$RUNNER_TEMP/site-archive"
+          if git fetch -q origin site-archive; then git worktree add -q "$A" FETCH_HEAD; git -C "$A" checkout -q -B site-archive
+          else git worktree add -q --detach "$A"; git -C "$A" checkout -q --orphan site-archive; git -C "$A" rm -rfq . ; fi
+          python tools/pipeline/archive_view.py rotate --archive-dir "$A" --ref HEAD
+          git -C "$A" add -A archive
+          if git -C "$A" diff --cached --quiet; then echo "archive unchanged"; exit 0; fi
+          git -C "$A" commit -qm "archive: $(date -u +%F) $(git rev-parse --short HEAD)"
+          git -C "$A" push -q origin site-archive
 
       # Deploy only when everything passed AND something was committed.
       - name: Redeploy Pages

@@ -78,6 +78,13 @@ jobs:
           HTML
           fi
           touch _site/.nojekyll
+          # saved copies of earlier versions (branch site-archive, made by tools/pipeline/archive_view.py) -> _site/archive/
+          if git fetch -q --depth 1 origin site-archive 2>/dev/null; then
+            git archive FETCH_HEAD archive | tar -x -C _site
+            echo "archive: $(ls _site/archive | grep -vc json) saved copies"
+          else
+            echo "no site-archive branch yet"
+          fi
           du -sh _site
 
       - uses: actions/upload-pages-artifact@v3
