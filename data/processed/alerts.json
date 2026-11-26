@@ -1,9 +1,9 @@
 {
  "schema": "alerts-v2",
  "area_id": "godavari",
- "built_utc": "2026-11-25T15:49:47Z",
+ "built_utc": "2026-11-26T15:28:56Z",
  "gdacs": {
-  "fetched_utc": "2026-11-25T15:49:47Z",
+  "fetched_utc": "2026-11-26T15:28:56Z",
   "ok": true,
   "error": null,
   "url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH",
@@ -83,12 +83,21 @@
   ]
  },
  "sachet": {
-  "snapshot_utc": "2026-11-25T15:49:47Z",
+  "snapshot_utc": "2026-11-26T15:28:56Z",
   "ok": true,
   "error": null,
   "url": "https://sachet.ndma.gov.in/cap_public_website/rss/rss_india.xml",
   "credit": "NDMA SACHET (CAP Integrated Alert System); feed states copyright 'public domain'",
   "items": [
+   {
+    "id": "1795705804048008",
+    "headline": "Lightning is Very Likely to occur over atp-uravakonda Mandal . Please follow SDMA guidelines.",
+    "area": "atp-uravakonda Mandal",
+    "issued": "2026-11-26T20:41:04+05:30",
+    "source": "Andhra Pradesh SDMA",
+    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795705804048008",
+    "category": "Met"
+   },
    {
     "id": "1795617034725008",
     "headline": "Lightning is Likely to occur over plv-yramavaram Mandal . Please follow SDMA guidelines.",
@@ -682,164 +691,11 @@
     "source": "Andhra Pradesh SDMA",
     "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795584846086008",
     "category": "Met"
-   },
-   {
-    "id": "1795554530117008",
-    "headline": "Lightning is Likely to occur over tpt-pellakur Mandal . Please follow SDMA guidelines.",
-    "area": "tpt-pellakur Mandal",
-    "issued": "2026-11-25T02:39:57+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795554530117008",
-    "category": "Met"
-   },
-   {
-    "id": "1795536928824008",
-    "headline": "Lightning is Likely to occur over anm-peddathippasamudram Mandal . Please follow SDMA guidelines.",
-    "area": "anm-peddathippasamudram Mandal",
-    "issued": "2026-11-24T21:46:51+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795536928824008",
-    "category": "Met"
-   },
-   {
-    "id": "1795529550054008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "sss-tanakal, sss-rolla mandals",
-    "issued": "2026-11-24T19:43:12+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795529550054008",
-    "category": "Met"
-   },
-   {
-    "id": "1795526950837008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "sss-kadiri Mandal",
-    "issued": "2026-11-24T19:01:01+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795526950837008",
-    "category": "Met"
-   },
-   {
-    "id": "1795526560563008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "sss-obuladevaracheruvu Mandal",
-    "issued": "2026-11-24T18:53:25+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795526560563008",
-    "category": "Met"
-   },
-   {
-    "id": "1795526456582008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "sss-amadagur, sss-nallacheruvu mandals",
-    "issued": "2026-11-24T18:51:44+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795526456582008",
-    "category": "Met"
-   },
-   {
-    "id": "1795525856773008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "anm-kalikiri Mandal",
-    "issued": "2026-11-24T18:41:38+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795525856773008",
-    "category": "Met"
-   },
-   {
-    "id": "1795525331664008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "sss-roddam Mandal",
-    "issued": "2026-11-24T18:33:03+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795525331664008",
-    "category": "Met"
-   },
-   {
-    "id": "1795525109145008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "ysr-rajampet Mandal",
-    "issued": "2026-11-24T18:29:01+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795525109145008",
-    "category": "Met"
-   },
-   {
-    "id": "1795524209484008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "tpt-chitvel, sss-madakasira mandals",
-    "issued": "2026-11-24T18:14:24+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795524209484008",
-    "category": "Met"
-   },
-   {
-    "id": "1795523973441008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "sss-nambulipulikunta Mandal",
-    "issued": "2026-11-24T18:10:04+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795523973441008",
-    "category": "Met"
-   },
-   {
-    "id": "1795523859776008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "pln-ipur Mandal",
-    "issued": "2026-11-24T18:08:10+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795523859776008",
-    "category": "Met"
-   },
-   {
-    "id": "1795523704022008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "anm-kalakada Mandal",
-    "issued": "2026-11-24T18:05:33+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795523704022008",
-    "category": "Met"
-   },
-   {
-    "id": "1795523167384008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "anm-kambhamvaripalle Mandal",
-    "issued": "2026-11-24T17:56:50+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795523167384008",
-    "category": "Met"
-   },
-   {
-    "id": "1795522805855008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "anm-somala Mandal",
-    "issued": "2026-11-24T17:51:03+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795522805855008",
-    "category": "Met"
-   },
-   {
-    "id": "1795522056057008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "ctr-irala Mandal",
-    "issued": "2026-11-24T17:38:11+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795522056057008",
-    "category": "Met"
-   },
-   {
-    "id": "1795521958262008",
-    "headline": "There is a possibility of lightning in your area. During thunderstorms, avoid trees, towers, poles, fields, and open spaces. Seek shelter in safe buildings - Andhra Pradesh Government.",
-    "area": "6 Mandals",
-    "issued": "2026-11-24T17:36:37+05:30",
-    "source": "Andhra Pradesh SDMA",
-    "link": "https://sachet.ndma.gov.in/cap_public_website/FetchXMLFile?identifier=1795521958262008",
-    "category": "Met"
    }
   ],
   "feed_item_count": 100,
   "feed_pubdate": "Wed, 18 Nov 2026 11:22:18 GMT",
-  "feed_newest_item": "2026-11-25T20:20:19+05:30"
+  "feed_newest_item": "2026-11-26T20:41:04+05:30"
  },
  "none_text": "No current alerts for this area from GDACS or SACHET."
 }

@@ -1,7 +1,7 @@
 {
  "schema": "findings-v1",
- "built_utc": "2026-11-25T15:53:24Z",
- "built_text": "25 Nov 2026, 21:23 IST",
+ "built_utc": "2026-11-26T15:32:53Z",
+ "built_text": "26 Nov 2026, 21:02 IST",
  "event_id": "arnab_2026",
  "official_banner": "This is not an official warning. For alerts, follow IMD, APSDMA and your district officers.",
  "official_links": [
@@ -36,7 +36,7 @@
  "data_as_of_text": "Radar picture taken 20 Nov 2026, 18:31, IST",
  "timestamps": {
   "picture": "Radar picture taken 20 Nov 2026, 18:31, IST",
-  "built": "Summary updated 25 Nov 2026, 21:23 IST"
+  "built": "Summary updated 26 Nov 2026, 21:02 IST"
  },
  "stale": false,
  "next_pass": {
@@ -46,7 +46,7 @@
   "date": "2026-12-03",
   "expected_utc": "2026-12-03T00:01:07Z",
   "first_expected": "2026-11-21",
-  "days_until": 8,
+  "days_until": 7,
   "overdue": true,
   "basis": "last pass of the same track + n x 12 days (NISAR repeat), first date on or after today",
   "text": "A radar pass was expected about 21 Nov but is not in the catalogue yet. The next one is about 3 Dec. Dates can shift."
@@ -1575,8 +1575,8 @@
   }
  ],
  "age": {
-  "days_since_pass": 16,
-  "text": "Last radar pass 16 days ago."
+  "days_since_pass": 17,
+  "text": "Last radar pass 17 days ago."
  },
  "archive": false,
  "alerts_ref": "data/processed/alerts.json",
