@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matsya</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="css/dash.css">
+</head>
+<body>
+<div id="archive-banner" style="position:fixed;left:12px;bottom:12px;z-index:9999;max-width:min(560px,calc(100vw - 24px));background:#0f2a33;color:#fff;font:14px/1.4 system-ui,sans-serif;padding:8px 12px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.35)">Saved copy: radar scenes up to 20 Nov 2026, before the 21 Nov 2026 update. <a href="../../../../app/dashboard-mockup/" style="color:#7fe0d4;font-weight:600">Go to the live site</a></div>
+<a class="skip-link" href="#panel">Skip to the panel</a>
+
+<header class="hdr">
+  <div class="hdr__top">
+    <span class="hdr__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" focusable="false"><path d="M2.5 12c3-4.2 7.2-6 11-4.6 2 .7 3.700 2.200 4.900 4.600-1.200 2.400-2.900 3.900-4.900 4.600-3.800 1.400-8-.4-11-4.600z" fill="currentColor"/><path d="M17.500 12l4-3.600v7.200z" fill="currentColor"/><circle cx="7.400" cy="11" r="1.100" fill="var(--teal-tint)"/><path d="M11 9.500c1 .8 1 4.200 0 5" fill="none" stroke="var(--teal-tint)" stroke-width="1.100" stroke-linecap="round"/></svg></span>
+    <div class="hdr__titles">
+      <p class="hdr__org">Team SpaceBros</p>
+      <h1 class="hdr__title">Matsya</h1>
+      <p class="hdr__sub">What the newest NISAR radar passes show on the coast, next to official alerts.</p>
+    </div>
+    <div class="hdr__meta is-loading" id="hdr-meta">Loading data&hellip;</div>
+  </div>
+  <div class="tabs" role="tablist" aria-label="Choose a section">
+    <button type="button" role="tab" id="tab-happened" aria-controls="sec-happened" aria-selected="true">What happened</button>
+    <button type="button" role="tab" id="tab-data" aria-controls="sec-data" aria-selected="false" tabindex="-1">Data for officials and researchers</button>
+  </div>
+</header>
+
+<main class="main" id="main" data-section="happened">
+  <aside class="panel" id="panel" aria-label="Findings and data">
+    <div class="panel__bar"><button type="button" class="panel__x" id="panel-close" aria-expanded="true" aria-controls="panel" aria-label="Close the side panel (the map button brings it back)"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Close panel</button></div>
+    <div class="banner" id="banner" hidden></div>
+    <div class="card daycard" id="daycard" aria-label="Save, share or download this view"></div>
+    <section id="sec-happened" role="tabpanel" aria-labelledby="tab-happened" class="sec" aria-busy="true">
+      <div class="skel" aria-hidden="true"><div class="skel__b" style="height:190px"></div><div class="skel__b" style="height:260px"></div><div class="skel__b" style="height:160px"></div></div>
+      <p class="visually-hidden" role="status">Loading findings</p>
+    </section>
+    <section id="sec-data" role="tabpanel" aria-labelledby="tab-data" class="sec" hidden></section>
+    <p class="small muted site-foot" id="site-foot" style="padding:0 var(--s-4) var(--s-5)">Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service.</p>
+  </aside>
+
+  <div class="stage">
+    <div id="map" class="app-map map-dark" role="region" aria-label="Map of the study area"></div>
+    <div class="maptools">
+      <button type="button" class="mt-btn" id="panel-toggle" aria-label="Hide panel" aria-expanded="true" aria-controls="panel">
+        <svg class="mt-ico" id="panel-toggle-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> <span id="panel-toggle-txt">Hide panel</span>
+      </button>
+      <div class="seg" id="map-modes" role="group" aria-label="What the map shows"></div>
+    </div>
+    <div class="tl" id="tl" hidden aria-label="Choose the radar scene date"></div>
+    <div class="swipe" id="swipe" hidden>
+      <span class="swipe__l">Before</span>
+      <input type="range" min="0" max="100" value="50" id="swipe-range" aria-label="Move to compare before and after radar">
+      <span class="swipe__r">After</span>
+    </div>
+    <div class="swipe-line" id="swipe-line" hidden></div>
+    <div class="legend" id="legend"></div>
+    <div class="caption" id="caption" aria-live="polite"></div>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="js/findings.js"></script>
+<script src="../vendor/fflate-0.8.2.min.js"></script>
+<script src="js/export.js"></script>
+<script src="js/dash.js"></script>
+</body>
+</html>

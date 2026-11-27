@@ -1,0 +1,65 @@
+{
+ "version": "https://jsonfeed.org/version/1.1",
+ "title": "Matsya: Cyclone Arnab: radar updates",
+ "home_page_url": "https://guneesh922.github.io/spacebros-nisar/app/dashboard-mockup/",
+ "feed_url": "https://guneesh922.github.io/spacebros-nisar/data/web/feed.json",
+ "description": "This is not an official warning. For alerts, follow IMD, APSDMA and your district officers.",
+ "language": "en",
+ "items": [
+  {
+   "id": "spacebros-nisar:arnab_2026:sea:2026-11-20",
+   "url": "https://guneesh922.github.io/spacebros-nisar/app/dashboard-mockup/#tab=happened&mode=radar&role=sea&d=2026-11-20",
+   "title": "Radar picture of the sea on 20 Nov.",
+   "content_text": "Radar picture of the sea on 20 Nov.",
+   "summary": "Radar picture of the sea on 20 Nov.",
+   "date_published": "2026-11-22T13:29:35Z",
+   "tags": [
+    "sea"
+   ]
+  },
+  {
+   "id": "spacebros-nisar:arnab_2026:coast:2026-11-09",
+   "url": "https://guneesh922.github.io/spacebros-nisar/app/dashboard-mockup/#tab=happened&mode=share&d=2026-11-09",
+   "title": "More land is probably flooded than on the last radar pass.",
+   "content_text": "The satellite looked again on 9 Nov, 12 days after landfall. Radar points to about 84 square km of new open water (61 to 108 with other settings). That is more than ten times a normal fortnight.",
+   "summary": "More land is probably flooded than on the last radar pass.",
+   "date_published": "2026-11-14T10:53:41Z",
+   "tags": [
+    "coast"
+   ]
+  },
+  {
+   "id": "spacebros-nisar:arnab_2026:sea:2026-11-08",
+   "url": "https://guneesh922.github.io/spacebros-nisar/app/dashboard-mockup/#tab=happened&mode=radar&role=sea&d=2026-11-08",
+   "title": "Radar picture of the sea on 8 Nov.",
+   "content_text": "Radar picture of the sea on 8 Nov.",
+   "summary": "Radar picture of the sea on 8 Nov.",
+   "date_published": "2026-11-14T10:53:41Z",
+   "tags": [
+    "sea"
+   ]
+  },
+  {
+   "id": "spacebros-nisar:arnab_2026:coast:2026-10-28",
+   "url": "https://guneesh922.github.io/spacebros-nisar/app/dashboard-mockup/#tab=happened&mode=radar&role=coast&d=2026-10-28",
+   "title": "No mandal looks probably flooded in this radar picture.",
+   "content_text": "NISAR looked at the coast on 28 Oct, the day Cyclone Arnab reached land. Radar shows only small patches of likely new open water, too few to call any mandal flooded. Radar points to about 8 square km of new open water (5 to 13 with other settings). That is about 4 times a normal fortnight.",
+   "summary": "No mandal looks probably flooded in this radar picture.",
+   "date_published": "2026-11-14T10:53:41Z",
+   "tags": [
+    "coast"
+   ]
+  },
+  {
+   "id": "spacebros-nisar:arnab_2026:sea:2026-10-27",
+   "url": "https://guneesh922.github.io/spacebros-nisar/app/dashboard-mockup/#tab=happened&mode=eye&d=2026-10-27",
+   "title": "Radar picture of the sea on 27 Oct, with the calm centre (eye) of Cyclone Arnab.",
+   "content_text": "Radar picture of the sea on 27 Oct, with the calm centre (eye) of Cyclone Arnab.",
+   "summary": "Radar picture of the sea on 27 Oct, with the calm centre (eye) of Cyclone Arnab.",
+   "date_published": "2026-11-14T10:53:41Z",
+   "tags": [
+    "sea"
+   ]
+  }
+ ]
+}

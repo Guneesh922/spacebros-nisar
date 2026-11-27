@@ -1,0 +1,349 @@
+{
+ "schema": "spacebros-h5-catalog-v1",
+ "generated_utc": "2026-11-22T13:29:35Z",
+ "scenes": [
+  {
+   "file": "data/h5/L_SEA_20261003_T048.h5",
+   "scene_id": "L_SEA_CALM_1003",
+   "band": "L",
+   "role": "SEA",
+   "date": "2026-10-03",
+   "start_utc": "2026-10-03T13:01:33Z",
+   "track": 48,
+   "frame": 80,
+   "direction": "D",
+   "product_status": "PROVISIONAL",
+   "source_granule": "NISAR_L2_PR_GCOV_032_048_D_080_2005_QPDH_A_20261003T130133_20261003T130207_P05023_N_F_J_001",
+   "source_collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+   "pols": [
+    "HV",
+    "VV"
+   ],
+   "posting_m": 100.0,
+   "multilook": 5,
+   "shape": [
+    3006,
+    3398
+   ],
+   "epsg": 32644,
+   "size_bytes": 14078319,
+   "sha256": "4b7f5ceee8c12da712c373f41cd83ba734cc02ced870a799dab26ca304414e9d",
+   "bounds_latlon": [
+    [
+     15.297569,
+     81.272022
+    ],
+    [
+     18.04115,
+     84.484096
+    ]
+   ],
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  {
+   "file": "data/h5/L_COAST_20261004_T055.h5",
+   "scene_id": "L_COAST_1004",
+   "band": "L",
+   "role": "COAST",
+   "date": "2026-10-04",
+   "start_utc": "2026-10-04T00:01:06Z",
+   "track": 55,
+   "frame": 10,
+   "direction": "A",
+   "product_status": "PROVISIONAL",
+   "source_granule": "NISAR_L2_PR_GCOV_032_055_A_010_4005_DHDH_A_20261004T000106_20261004T000129_P05023_N_P_J_001",
+   "source_collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+   "pols": [
+    "HH",
+    "HV"
+   ],
+   "posting_m": 20.0,
+   "multilook": 2,
+   "shape": [
+    5008,
+    5360
+   ],
+   "epsg": 32644,
+   "size_bytes": 56192550,
+   "sha256": "5bb9b65d7354c40017a4d7daa58535670c6ccbf3e2b16bc7c30f26154d3b85f2",
+   "bounds_latlon": [
+    [
+     16.194896,
+     81.597178
+    ],
+    [
+     17.105461,
+     82.607451
+    ]
+   ],
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  {
+   "file": "data/h5/L_SEA_20261015_T048.h5",
+   "scene_id": "L_SEA_CALM_1015",
+   "band": "L",
+   "role": "SEA",
+   "date": "2026-10-15",
+   "start_utc": "2026-10-15T13:01:50Z",
+   "track": 48,
+   "frame": 80,
+   "direction": "D",
+   "product_status": "PROVISIONAL",
+   "source_granule": "NISAR_L2_PR_GCOV_033_048_D_080_2005_DVDV_A_20261015T130150_20261015T130208_P05023_N_P_J_001",
+   "source_collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+   "pols": [
+    "VH",
+    "VV"
+   ],
+   "posting_m": 100.0,
+   "multilook": 5,
+   "shape": [
+    3006,
+    3398
+   ],
+   "epsg": 32644,
+   "size_bytes": 7500088,
+   "sha256": "f282976a23bb7dff1252a2b1e455c46622ca81fd92cfe2b535e6b4c0d6803ecc",
+   "bounds_latlon": [
+    [
+     15.297569,
+     81.272022
+    ],
+    [
+     18.04115,
+     84.484096
+    ]
+   ],
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  {
+   "file": "data/h5/L_COAST_20261016_T055.h5",
+   "scene_id": "L_COAST_1016",
+   "band": "L",
+   "role": "COAST",
+   "date": "2026-10-16",
+   "start_utc": "2026-10-16T00:01:06Z",
+   "track": 55,
+   "frame": 10,
+   "direction": "A",
+   "product_status": "PROVISIONAL",
+   "source_granule": "NISAR_L2_PR_GCOV_033_055_A_010_4005_DHDH_A_20261016T000106_20261016T000129_P05023_N_P_J_001",
+   "source_collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+   "pols": [
+    "HH",
+    "HV"
+   ],
+   "posting_m": 20.0,
+   "multilook": 2,
+   "shape": [
+    5008,
+    5360
+   ],
+   "epsg": 32644,
+   "size_bytes": 57245377,
+   "sha256": "2ba4bc78dcfaecafc2b2b5d01b2507005c5539f18e1a1e21891e2d64467437ff",
+   "bounds_latlon": [
+    [
+     16.194896,
+     81.597178
+    ],
+    [
+     17.105461,
+     82.607451
+    ]
+   ],
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  {
+   "file": "data/h5/L_SEA_20261027_T048.h5",
+   "scene_id": "L_SEA_EYE_1027",
+   "band": "L",
+   "role": "SEA",
+   "date": "2026-10-27",
+   "start_utc": "2026-10-27T13:01:51Z",
+   "track": 48,
+   "frame": 80,
+   "direction": "D",
+   "product_status": "VALIDATED",
+   "source_granule": "NISAR_L2_PR_GCOV_034_048_D_080_2005_DVDV_A_20261027T130151_20261027T130208_P05036_N_P_J_001",
+   "source_collection": "NISAR_L2_GCOV_V1",
+   "pols": [
+    "VH",
+    "VV"
+   ],
+   "posting_m": 100.0,
+   "multilook": 5,
+   "shape": [
+    3006,
+    3398
+   ],
+   "epsg": 32644,
+   "size_bytes": 7112904,
+   "sha256": "edc43cdd293458bc35e0c80a279f1deec147e59d5f797361a873809c5d90be9c",
+   "bounds_latlon": [
+    [
+     15.297569,
+     81.272022
+    ],
+    [
+     18.04115,
+     84.484096
+    ]
+   ],
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  {
+   "file": "data/h5/L_COAST_20261028_T055.h5",
+   "scene_id": "L_COAST_1028",
+   "band": "L",
+   "role": "COAST",
+   "date": "2026-10-28",
+   "start_utc": "2026-10-28T00:01:07Z",
+   "track": 55,
+   "frame": 10,
+   "direction": "A",
+   "product_status": "VALIDATED",
+   "source_granule": "NISAR_L2_PR_GCOV_034_055_A_010_4005_DHDH_A_20261028T000107_20261028T000129_P05036_N_P_J_001",
+   "source_collection": "NISAR_L2_GCOV_V1",
+   "pols": [
+    "HH",
+    "HV"
+   ],
+   "posting_m": 20.0,
+   "multilook": 2,
+   "shape": [
+    5008,
+    5360
+   ],
+   "epsg": 32644,
+   "size_bytes": 54138952,
+   "sha256": "d245325b97335a2ddc2f7dcb96f2a2bfe2b398f203d11f10d1a846f853a2b133",
+   "bounds_latlon": [
+    [
+     16.194896,
+     81.597178
+    ],
+    [
+     17.105461,
+     82.607451
+    ]
+   ],
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  {
+   "file": "data/h5/L_SEA_20261108_T048.h5",
+   "scene_id": "L_SEA_AFTER_1108",
+   "band": "L",
+   "role": "SEA",
+   "date": "2026-11-08",
+   "start_utc": "2026-11-08T13:01:51Z",
+   "track": 48,
+   "frame": 80,
+   "direction": "D",
+   "product_status": "VALIDATED",
+   "source_granule": "NISAR_L2_PR_GCOV_035_048_D_080_2005_DVDV_A_20261108T130151_20261108T130208_P05036_N_P_J_001",
+   "source_collection": "NISAR_L2_GCOV_V1",
+   "pols": [
+    "VH",
+    "VV"
+   ],
+   "posting_m": 100.0,
+   "multilook": 5,
+   "shape": [
+    3006,
+    3398
+   ],
+   "epsg": 32644,
+   "size_bytes": 6868222,
+   "sha256": "e48107e891729532cefabff67e6ddff077a35b6f7b7095ad12fbedcf16546424",
+   "bounds_latlon": [
+    [
+     15.297569,
+     81.272022
+    ],
+    [
+     18.04115,
+     84.484096
+    ]
+   ],
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  {
+   "file": "data/h5/L_COAST_20261109_T055.h5",
+   "scene_id": "L_COAST_1109",
+   "band": "L",
+   "role": "COAST",
+   "date": "2026-11-09",
+   "start_utc": "2026-11-09T00:01:07Z",
+   "track": 55,
+   "frame": 10,
+   "direction": "A",
+   "product_status": "VALIDATED",
+   "source_granule": "NISAR_L2_PR_GCOV_035_055_A_010_4005_DHDH_A_20261109T000107_20261109T000130_P05036_N_P_J_001",
+   "source_collection": "NISAR_L2_GCOV_V1",
+   "pols": [
+    "HH",
+    "HV"
+   ],
+   "posting_m": 20.0,
+   "multilook": 2,
+   "shape": [
+    5008,
+    5360
+   ],
+   "epsg": 32644,
+   "size_bytes": 56038515,
+   "sha256": "cc5b8a02b194a54f5f8ba69326b0324334945830aeb5354b6cd9e7f9c327997a",
+   "bounds_latlon": [
+    [
+     16.194896,
+     81.597178
+    ],
+    [
+     17.105461,
+     82.607451
+    ]
+   ],
+   "cataloged_utc": "2026-11-14T10:53:41Z"
+  },
+  {
+   "file": "data/h5/L_SEA_20261120_T048.h5",
+   "scene_id": "L_SEA_20261120_T048",
+   "band": "L",
+   "role": "SEA",
+   "date": "2026-11-20",
+   "start_utc": "2026-11-20T13:01:52Z",
+   "track": 48,
+   "frame": 80,
+   "direction": "D",
+   "product_status": "VALIDATED",
+   "source_granule": "NISAR_L2_PR_GCOV_036_048_D_080_2005_DVDV_A_20261120T130152_20261120T130209_P05036_N_P_J_001",
+   "source_collection": "NISAR_L2_GCOV_V1",
+   "pols": [
+    "VH",
+    "VV"
+   ],
+   "posting_m": 100.0,
+   "multilook": 5,
+   "shape": [
+    3006,
+    3398
+   ],
+   "epsg": 32644,
+   "size_bytes": 6704911,
+   "sha256": "0be85f9138458aa30bb91cda3861519c2e68977dbce8fb57eaf2250fb4151ed9",
+   "bounds_latlon": [
+    [
+     15.297569,
+     81.272022
+    ],
+    [
+     18.04115,
+     84.484096
+    ]
+   ],
+   "available_utc": "2026-11-22T08:02:47Z",
+   "cataloged_utc": "2026-11-22T13:29:35Z"
+  }
+ ]
+}

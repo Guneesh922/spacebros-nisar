@@ -1,0 +1,1774 @@
+{
+ "schema": "mangrove-change-v0",
+ "status": "EXPERIMENTAL: analysis only, not in run_all, not wired into the UI",
+ "credit": "Global Mangrove Watch (CC BY 4.0)",
+ "citation": "Bunting, P., Hilarides, L., Rosenqvist, A., Zanaga, D., Van De Kerchove, R., Lucas, R., Castro Brandao Vaz dos Santos, P. (2024). Global Mangrove Watch: Annual Mangrove Extent (Version 4.0.19) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.12756047. CC BY 4.0.",
+ "citation_note": "Citation wording is built from the Zenodo record metadata (docs/PLAN_P1_P2.md B.1); confirm on globalmangrovewatch.org before submission.",
+ "allowed_wording": {
+  "overall": "Experimental, analysis only. Global Mangrove Watch 2020 mangrove extent used as the mask. No ground truth. Tide state not controlled. Only the verdict string of each date may be quoted; no damage, loss, die-back, area or cause.",
+  "event_28Oct": "Experimental. Area mapped as mangrove by Global Mangrove Watch (2020 extent), L-band HV minus HH, 28 Oct against the early-October baseline. The size and sign of the difference depend on the reference used (uncorrected +0.0 dB, land-wide corrected -1.9 dB, matched corrected -1.1 dB), so any change cannot be separated from calibration differences between the scenes. No ground truth was used, tide state was not controlled, and the baseline scenes are provisional.",
+  "event_9Nov": "Experimental. Area mapped as mangrove by Global Mangrove Watch (2020 extent), L-band HV minus HH, 9 Nov (also contains Murasu and the river peak) against the early-October baseline. The size and sign of the difference depend on the reference used (uncorrected +0.1 dB, land-wide corrected -1.2 dB, matched corrected -0.8 dB), so any change cannot be separated from calibration differences between the scenes. No ground truth was used, tide state was not controlled, and the baseline scenes are provisional."
+ },
+ "must_state": [
+  "experimental",
+  "no ground truth",
+  "tide state not controlled (no tide source retrieved)",
+  "baselines (4 and 16 Oct) are PROVISIONAL products, events are VALIDATED",
+  "9 Nov pass also contains Cyclone Murasu and the Godavari river peak",
+  "GMW 2020 extent is 6 years old; GMW accuracy is global and varies locally",
+  "post-cyclone canopy and soil wetness and standing water change HH and HV (not tested here)",
+  "reference land (agriculture) and target (mangrove) have different seasonal drivers"
+ ],
+ "not_allowed": [
+  "damage",
+  "loss",
+  "die-back",
+  "deforestation",
+  "cause (cyclone)",
+  "area in km2 or percent of mangrove affected",
+  "healthy"
+ ],
+ "verdict": {
+  "event_28Oct": {
+   "code": "not_separable_from_calibration",
+   "three_corrections_agree_in_sign": false,
+   "signs": {
+    "uncorrected": 1,
+    "landwide": -1,
+    "matched": -1
+   },
+   "by_block_size": {
+    "L1000m": {
+     "paired_event_minus_control_excludes_zero": true,
+     "event_delta_excludes_zero": true
+    },
+    "L500m": {
+     "paired_event_minus_control_excludes_zero": true,
+     "event_delta_excludes_zero": true
+    },
+    "L2000m": {
+     "paired_event_minus_control_excludes_zero": true,
+     "event_delta_excludes_zero": true
+    }
+   },
+   "rule": "change_detected_experimental only if the matched-corrected event-minus-control paired 95% interval excludes 0 at all block sizes (500 m, 1 km, 2 km) AND uncorrected, land-wide and matched deltas agree in sign; not_separable_from_calibration if separated from the control at 1 km but the corrections disagree in sign; otherwise no_detectable_change"
+  },
+  "event_9Nov": {
+   "code": "not_separable_from_calibration",
+   "three_corrections_agree_in_sign": false,
+   "signs": {
+    "uncorrected": 1,
+    "landwide": -1,
+    "matched": -1
+   },
+   "by_block_size": {
+    "L1000m": {
+     "paired_event_minus_control_excludes_zero": true,
+     "event_delta_excludes_zero": true
+    },
+    "L500m": {
+     "paired_event_minus_control_excludes_zero": true,
+     "event_delta_excludes_zero": true
+    },
+    "L2000m": {
+     "paired_event_minus_control_excludes_zero": true,
+     "event_delta_excludes_zero": true
+    }
+   },
+   "rule": "change_detected_experimental only if the matched-corrected event-minus-control paired 95% interval excludes 0 at all block sizes (500 m, 1 km, 2 km) AND uncorrected, land-wide and matched deltas agree in sign; not_separable_from_calibration if separated from the control at 1 km but the corrections disagree in sign; otherwise no_detectable_change"
+  }
+ },
+ "statistic": "R = HV_dB - HH_dB after 3x3 linear-power boxcar; D = R(event) - R(baseline); baseline = linear-power mean of 4 and 16 Oct. Control: R(16 Oct) - R(4 Oct) (baseline of one date, so its noise is slightly higher).",
+ "point_estimates": {
+  "control_16Oct_vs_4Oct": {
+   "n_mangrove_px": 453180,
+   "mangrove_area_km2_valid": 181.3,
+   "n_reference_px": 11660106,
+   "median_change_in_mangrove_db": 0.017,
+   "median_change_reference_landwide_db": 0.091,
+   "median_change_reference_matched_db": 0.008,
+   "delta_uncorrected_db": 0.017,
+   "delta_landwide_db": -0.074,
+   "delta_matched_db": 0.01,
+   "mangrove_px_in_matched_strata_pct": 100.0,
+   "median_mangrove_in_matched_strata_db": 0.017,
+   "components_point_estimates_db": {
+    "HH_change_median_mangrove": 0.446,
+    "HV_change_median_mangrove": 0.465,
+    "HH_change_median_reference_landwide": 0.077,
+    "HV_change_median_reference_landwide": 0.166
+   },
+   "baseline_hv_median_mangrove_db": -15.04,
+   "baseline_hv_median_reference_db": -15.96
+  },
+  "event_28Oct": {
+   "n_mangrove_px": 453180,
+   "mangrove_area_km2_valid": 181.3,
+   "n_reference_px": 11659909,
+   "median_change_in_mangrove_db": 0.004,
+   "median_change_reference_landwide_db": 1.881,
+   "median_change_reference_matched_db": 1.075,
+   "delta_uncorrected_db": 0.004,
+   "delta_landwide_db": -1.878,
+   "delta_matched_db": -1.071,
+   "mangrove_px_in_matched_strata_pct": 100.0,
+   "median_mangrove_in_matched_strata_db": 0.004,
+   "components_point_estimates_db": {
+    "HH_change_median_mangrove": 1.903,
+    "HV_change_median_mangrove": 1.906,
+    "HH_change_median_reference_landwide": -0.081,
+    "HV_change_median_reference_landwide": 2.064
+   },
+   "baseline_hv_median_mangrove_db": -15.04,
+   "baseline_hv_median_reference_db": -15.96
+  },
+  "event_9Nov": {
+   "n_mangrove_px": 453180,
+   "mangrove_area_km2_valid": 181.3,
+   "n_reference_px": 11660106,
+   "median_change_in_mangrove_db": 0.134,
+   "median_change_reference_landwide_db": 1.331,
+   "median_change_reference_matched_db": 0.904,
+   "delta_uncorrected_db": 0.134,
+   "delta_landwide_db": -1.196,
+   "delta_matched_db": -0.77,
+   "mangrove_px_in_matched_strata_pct": 100.0,
+   "median_mangrove_in_matched_strata_db": 0.134,
+   "components_point_estimates_db": {
+    "HH_change_median_mangrove": 0.96,
+    "HV_change_median_mangrove": 1.103,
+    "HH_change_median_reference_landwide": -0.475,
+    "HV_change_median_reference_landwide": 0.867
+   },
+   "baseline_hv_median_mangrove_db": -15.04,
+   "baseline_hv_median_reference_db": -15.96
+  }
+ },
+ "bootstrap": {
+  "L1000m": {
+   "info": {
+    "block_side_m": 1000,
+    "cells_per_block_side": 50,
+    "mangrove_blocks": 408,
+    "reference_blocks": 5283
+   },
+   "interval_quoted": true,
+   "control_16Oct_vs_4Oct": {
+    "uncorrected": {
+     "ci95": [
+      0.007,
+      0.028
+     ],
+     "se": 0.005
+    },
+    "landwide": {
+     "ci95": [
+      -0.087,
+      -0.06
+     ],
+     "se": 0.007
+    },
+    "matched": {
+     "ci95": [
+      -0.023,
+      0.043
+     ],
+     "se": 0.017
+    }
+   },
+   "event_28Oct": {
+    "uncorrected": {
+     "ci95": [
+      -0.021,
+      0.027
+     ],
+     "se": 0.012
+    },
+    "landwide": {
+     "ci95": [
+      -1.979,
+      -1.786
+     ],
+     "se": 0.049
+    },
+    "matched": {
+     "ci95": [
+      -1.241,
+      -0.925
+     ],
+     "se": 0.083
+    }
+   },
+   "event_9Nov": {
+    "uncorrected": {
+     "ci95": [
+      0.113,
+      0.156
+     ],
+     "se": 0.012
+    },
+    "landwide": {
+     "ci95": [
+      -1.262,
+      -1.135
+     ],
+     "se": 0.034
+    },
+    "matched": {
+     "ci95": [
+      -0.902,
+      -0.644
+     ],
+     "se": 0.069
+    }
+   },
+   "paired_event_minus_control_event_28Oct": {
+    "uncorrected": {
+     "ci95": [
+      -0.034,
+      0.007
+     ],
+     "se": 0.011,
+     "share_of_resamples_event_above_control": 0.109
+    },
+    "landwide": {
+     "ci95": [
+      -1.905,
+      -1.713
+     ],
+     "se": 0.049,
+     "share_of_resamples_event_above_control": 0.0
+    },
+    "matched": {
+     "ci95": [
+      -1.243,
+      -0.933
+     ],
+     "se": 0.082,
+     "share_of_resamples_event_above_control": 0.0
+    }
+   },
+   "paired_event_minus_control_event_9Nov": {
+    "uncorrected": {
+     "ci95": [
+      0.096,
+      0.138
+     ],
+     "se": 0.011,
+     "share_of_resamples_event_above_control": 1.0
+    },
+    "landwide": {
+     "ci95": [
+      -1.188,
+      -1.058
+     ],
+     "se": 0.034,
+     "share_of_resamples_event_above_control": 0.0
+    },
+    "matched": {
+     "ci95": [
+      -0.913,
+      -0.652
+     ],
+     "se": 0.069,
+     "share_of_resamples_event_above_control": 0.0
+    }
+   }
+  },
+  "L500m": {
+   "info": {
+    "block_side_m": 500,
+    "cells_per_block_side": 25,
+    "mangrove_blocks": 1220,
+    "reference_blocks": 20419
+   },
+   "interval_quoted": true,
+   "control_16Oct_vs_4Oct": {
+    "uncorrected": {
+     "ci95": [
+      0.008,
+      0.025
+     ],
+     "se": 0.004
+    },
+    "landwide": {
+     "ci95": [
+      -0.084,
+      -0.064
+     ],
+     "se": 0.005
+    },
+    "matched": {
+     "ci95": [
+      -0.013,
+      0.035
+     ],
+     "se": 0.012
+    }
+   },
+   "event_28Oct": {
+    "uncorrected": {
+     "ci95": [
+      -0.011,
+      0.019
+     ],
+     "se": 0.008
+    },
+    "landwide": {
+     "ci95": [
+      -1.936,
+      -1.824
+     ],
+     "se": 0.028
+    },
+    "matched": {
+     "ci95": [
+      -1.174,
+      -0.981
+     ],
+     "se": 0.047
+    }
+   },
+   "event_9Nov": {
+    "uncorrected": {
+     "ci95": [
+      0.12,
+      0.149
+     ],
+     "se": 0.008
+    },
+    "landwide": {
+     "ci95": [
+      -1.237,
+      -1.157
+     ],
+     "se": 0.02
+    },
+    "matched": {
+     "ci95": [
+      -0.853,
+      -0.694
+     ],
+     "se": 0.04
+    }
+   },
+   "paired_event_minus_control_event_28Oct": {
+    "uncorrected": {
+     "ci95": [
+      -0.03,
+      0.002
+     ],
+     "se": 0.008,
+     "share_of_resamples_event_above_control": 0.043
+    },
+    "landwide": {
+     "ci95": [
+      -1.861,
+      -1.752
+     ],
+     "se": 0.028,
+     "share_of_resamples_event_above_control": 0.0
+    },
+    "matched": {
+     "ci95": [
+      -1.183,
+      -0.996
+     ],
+     "se": 0.048,
+     "share_of_resamples_event_above_control": 0.0
+    }
+   },
+   "paired_event_minus_control_event_9Nov": {
+    "uncorrected": {
+     "ci95": [
+      0.101,
+      0.133
+     ],
+     "se": 0.008,
+     "share_of_resamples_event_above_control": 1.0
+    },
+    "landwide": {
+     "ci95": [
+      -1.162,
+      -1.085
+     ],
+     "se": 0.02,
+     "share_of_resamples_event_above_control": 0.0
+    },
+    "matched": {
+     "ci95": [
+      -0.863,
+      -0.703
+     ],
+     "se": 0.041,
+     "share_of_resamples_event_above_control": 0.0
+    }
+   }
+  },
+  "L2000m": {
+   "info": {
+    "block_side_m": 2000,
+    "cells_per_block_side": 100,
+    "mangrove_blocks": 146,
+    "reference_blocks": 1401
+   },
+   "interval_quoted": true,
+   "control_16Oct_vs_4Oct": {
+    "uncorrected": {
+     "ci95": [
+      0.001,
+      0.035
+     ],
+     "se": 0.009
+    },
+    "landwide": {
+     "ci95": [
+      -0.095,
+      -0.05
+     ],
+     "se": 0.011
+    },
+    "matched": {
+     "ci95": [
+      -0.037,
+      0.061
+     ],
+     "se": 0.024
+    }
+   },
+   "event_28Oct": {
+    "uncorrected": {
+     "ci95": [
+      -0.039,
+      0.045
+     ],
+     "se": 0.022
+    },
+    "landwide": {
+     "ci95": [
+      -2.07,
+      -1.715
+     ],
+     "se": 0.091
+    },
+    "matched": {
+     "ci95": [
+      -1.368,
+      -0.832
+     ],
+     "se": 0.14
+    }
+   },
+   "event_9Nov": {
+    "uncorrected": {
+     "ci95": [
+      0.097,
+      0.178
+     ],
+     "se": 0.02
+    },
+    "landwide": {
+     "ci95": [
+      -1.325,
+      -1.077
+     ],
+     "se": 0.063
+    },
+    "matched": {
+     "ci95": [
+      -1.012,
+      -0.565
+     ],
+     "se": 0.116
+    }
+   },
+   "paired_event_minus_control_event_28Oct": {
+    "uncorrected": {
+     "ci95": [
+      -0.049,
+      0.02
+     ],
+     "se": 0.017,
+     "share_of_resamples_event_above_control": 0.214
+    },
+    "landwide": {
+     "ci95": [
+      -1.993,
+      -1.644
+     ],
+     "se": 0.091,
+     "share_of_resamples_event_above_control": 0.0
+    },
+    "matched": {
+     "ci95": [
+      -1.371,
+      -0.849
+     ],
+     "se": 0.136,
+     "share_of_resamples_event_above_control": 0.0
+    }
+   },
+   "paired_event_minus_control_event_9Nov": {
+    "uncorrected": {
+     "ci95": [
+      0.086,
+      0.151
+     ],
+     "se": 0.016,
+     "share_of_resamples_event_above_control": 1.0
+    },
+    "landwide": {
+     "ci95": [
+      -1.251,
+      -1.01
+     ],
+     "se": 0.062,
+     "share_of_resamples_event_above_control": 0.0
+    },
+    "matched": {
+     "ci95": [
+      -1.017,
+      -0.57
+     ],
+     "se": 0.113,
+     "share_of_resamples_event_above_control": 0.0
+    }
+   }
+  }
+ },
+ "bootstrap_settings": {
+  "method": "block bootstrap on the UTM grid, blocks resampled with replacement; mangrove blocks and reference blocks resampled independently, the same resamples used for control and both events (paired); medians from 0.05 dB histograms (change clipped to +-10 dB)",
+  "resamples": 1000,
+  "seed": 20261115,
+  "primary_block_m": 1000,
+  "sensitivity_block_m": [
+   500,
+   2000
+  ],
+  "min_blocks_for_interval": 30,
+  "interval": "2.5 to 97.5 percentile"
+ },
+ "corrections": {
+  "uncorrected": "median of D over mangrove cells",
+  "landwide": "median D in mangrove minus median D over all valid non-permanent-water land at least 2000 m (square window) from the mangrove mask",
+  "matched": "as landwide, but the reference distribution is reweighted so that it has the same mix of (baseline HV 1 dB bin, 10 km ground-range band) as the mangrove cells; strata need >= 500 reference pixels, mangrove pixels in other strata (0.00% / 0.00% / 0.00% for control / 28 Oct / 9 Nov missing) are not used for the composition",
+  "assumption": "the offset between the provisional baseline and the validated event scenes is additive in dB, equal for mangrove and matched reference pixels, and not caused by the storm"
+ },
+ "mask": {
+  "source": "GMW v4.0.19 Annual Mangrove Extent, 2020 (Zenodo 10.5281/zenodo.12756047)",
+  "rule": "20 m UTM 44N cell (EPSG:32644, grid of data/h5/L_COAST_*.h5) is mangrove if >= 50% of the GMW 0.0001 deg source pixels whose centre falls in it are 1; eroded by 1 cell; permanent water (smoothed HH < Otsu T on both baseline dates) and invalid cells removed",
+  "cells_any_source_pixel_hit": 515334,
+  "cells_mask_before_erosion": 508186,
+  "area_km2_before_erosion": 203.3,
+  "cells_final_mask": 453180,
+  "area_km2_final": 181.3,
+  "tiles": [
+   {
+    "file": "GMW_N17E081_v4019_mng.tif",
+    "pixels_in_box": 32000000,
+    "mangrove_pixels_in_box": 22828,
+    "lon_range": [
+     81.6,
+     81.9999
+    ],
+    "lat_range": [
+     16.2001,
+     16.9999
+    ]
+   },
+   {
+    "file": "GMW_N17E082_v4019_mng.tif",
+    "pixels_in_box": 48000000,
+    "mangrove_pixels_in_box": 1676063,
+    "lon_range": [
+     82.0001,
+     82.6
+    ],
+    "lat_range": [
+     16.2001,
+     16.9999
+    ]
+   },
+   {
+    "file": "GMW_N18E082_v4019_mng.tif",
+    "pixels_in_box": 6000000,
+    "mangrove_pixels_in_box": 0,
+    "lon_range": [
+     82.0001,
+     82.6
+    ],
+    "lat_range": [
+     17.0001,
+     17.0999
+    ]
+   }
+  ],
+  "coast_box_lonlat": [
+   81.6,
+   16.2,
+   82.6,
+   17.1
+  ]
+ },
+ "reference": {
+  "rule": "valid, not permanent water, not in 2 km (square) buffer of the mangrove mask",
+  "n_pixels": 11660106,
+  "matching_strata_used": 91,
+  "strata": [
+   {
+    "baseline_hv_db_bin": [
+     -24,
+     -23
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 20,
+    "reference_px": 3606
+   },
+   {
+    "baseline_hv_db_bin": [
+     -23,
+     -22
+    ],
+    "range_band_km": [
+     -20,
+     -10
+    ],
+    "mangrove_px": 3,
+    "reference_px": 1399
+   },
+   {
+    "baseline_hv_db_bin": [
+     -23,
+     -22
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 6,
+    "reference_px": 1298
+   },
+   {
+    "baseline_hv_db_bin": [
+     -23,
+     -22
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 11,
+    "reference_px": 21968
+   },
+   {
+    "baseline_hv_db_bin": [
+     -23,
+     -22
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 1,
+    "reference_px": 2412
+   },
+   {
+    "baseline_hv_db_bin": [
+     -22,
+     -21
+    ],
+    "range_band_km": [
+     -20,
+     -10
+    ],
+    "mangrove_px": 7,
+    "reference_px": 9613
+   },
+   {
+    "baseline_hv_db_bin": [
+     -22,
+     -21
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 5,
+    "reference_px": 6442
+   },
+   {
+    "baseline_hv_db_bin": [
+     -22,
+     -21
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 14,
+    "reference_px": 20235
+   },
+   {
+    "baseline_hv_db_bin": [
+     -22,
+     -21
+    ],
+    "range_band_km": [
+     40,
+     50
+    ],
+    "mangrove_px": 1,
+    "reference_px": 15795
+   },
+   {
+    "baseline_hv_db_bin": [
+     -22,
+     -21
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 13,
+    "reference_px": 11377
+   },
+   {
+    "baseline_hv_db_bin": [
+     -22,
+     -21
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 17,
+    "reference_px": 2708
+   },
+   {
+    "baseline_hv_db_bin": [
+     -22,
+     -21
+    ],
+    "range_band_km": [
+     70,
+     80
+    ],
+    "mangrove_px": 5,
+    "reference_px": 2875
+   },
+   {
+    "baseline_hv_db_bin": [
+     -21,
+     -20
+    ],
+    "range_band_km": [
+     -20,
+     -10
+    ],
+    "mangrove_px": 2,
+    "reference_px": 27441
+   },
+   {
+    "baseline_hv_db_bin": [
+     -21,
+     -20
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 1,
+    "reference_px": 20703
+   },
+   {
+    "baseline_hv_db_bin": [
+     -21,
+     -20
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 16,
+    "reference_px": 39293
+   },
+   {
+    "baseline_hv_db_bin": [
+     -21,
+     -20
+    ],
+    "range_band_km": [
+     40,
+     50
+    ],
+    "mangrove_px": 19,
+    "reference_px": 35336
+   },
+   {
+    "baseline_hv_db_bin": [
+     -21,
+     -20
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 13,
+    "reference_px": 35183
+   },
+   {
+    "baseline_hv_db_bin": [
+     -21,
+     -20
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 27,
+    "reference_px": 11745
+   },
+   {
+    "baseline_hv_db_bin": [
+     -21,
+     -20
+    ],
+    "range_band_km": [
+     70,
+     80
+    ],
+    "mangrove_px": 11,
+    "reference_px": 7035
+   },
+   {
+    "baseline_hv_db_bin": [
+     -20,
+     -19
+    ],
+    "range_band_km": [
+     -20,
+     -10
+    ],
+    "mangrove_px": 1,
+    "reference_px": 46028
+   },
+   {
+    "baseline_hv_db_bin": [
+     -20,
+     -19
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 2,
+    "reference_px": 59988
+   },
+   {
+    "baseline_hv_db_bin": [
+     -20,
+     -19
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 10,
+    "reference_px": 87778
+   },
+   {
+    "baseline_hv_db_bin": [
+     -20,
+     -19
+    ],
+    "range_band_km": [
+     40,
+     50
+    ],
+    "mangrove_px": 46,
+    "reference_px": 76716
+   },
+   {
+    "baseline_hv_db_bin": [
+     -20,
+     -19
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 30,
+    "reference_px": 78379
+   },
+   {
+    "baseline_hv_db_bin": [
+     -20,
+     -19
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 45,
+    "reference_px": 30584
+   },
+   {
+    "baseline_hv_db_bin": [
+     -20,
+     -19
+    ],
+    "range_band_km": [
+     70,
+     80
+    ],
+    "mangrove_px": 8,
+    "reference_px": 10077
+   },
+   {
+    "baseline_hv_db_bin": [
+     -19,
+     -18
+    ],
+    "range_band_km": [
+     -20,
+     -10
+    ],
+    "mangrove_px": 3,
+    "reference_px": 67513
+   },
+   {
+    "baseline_hv_db_bin": [
+     -19,
+     -18
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 23,
+    "reference_px": 146990
+   },
+   {
+    "baseline_hv_db_bin": [
+     -19,
+     -18
+    ],
+    "range_band_km": [
+     40,
+     50
+    ],
+    "mangrove_px": 89,
+    "reference_px": 147995
+   },
+   {
+    "baseline_hv_db_bin": [
+     -19,
+     -18
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 40,
+    "reference_px": 125074
+   },
+   {
+    "baseline_hv_db_bin": [
+     -19,
+     -18
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 133,
+    "reference_px": 48065
+   },
+   {
+    "baseline_hv_db_bin": [
+     -19,
+     -18
+    ],
+    "range_band_km": [
+     70,
+     80
+    ],
+    "mangrove_px": 19,
+    "reference_px": 10406
+   },
+   {
+    "baseline_hv_db_bin": [
+     -18,
+     -17
+    ],
+    "range_band_km": [
+     -20,
+     -10
+    ],
+    "mangrove_px": 12,
+    "reference_px": 73907
+   },
+   {
+    "baseline_hv_db_bin": [
+     -18,
+     -17
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 1,
+    "reference_px": 251433
+   },
+   {
+    "baseline_hv_db_bin": [
+     -18,
+     -17
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 37,
+    "reference_px": 175776
+   },
+   {
+    "baseline_hv_db_bin": [
+     -18,
+     -17
+    ],
+    "range_band_km": [
+     20,
+     30
+    ],
+    "mangrove_px": 32,
+    "reference_px": 240774
+   },
+   {
+    "baseline_hv_db_bin": [
+     -18,
+     -17
+    ],
+    "range_band_km": [
+     40,
+     50
+    ],
+    "mangrove_px": 330,
+    "reference_px": 233672
+   },
+   {
+    "baseline_hv_db_bin": [
+     -18,
+     -17
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 292,
+    "reference_px": 151237
+   },
+   {
+    "baseline_hv_db_bin": [
+     -18,
+     -17
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 1720,
+    "reference_px": 49542
+   },
+   {
+    "baseline_hv_db_bin": [
+     -18,
+     -17
+    ],
+    "range_band_km": [
+     70,
+     80
+    ],
+    "mangrove_px": 168,
+    "reference_px": 9249
+   },
+   {
+    "baseline_hv_db_bin": [
+     -17,
+     -16
+    ],
+    "range_band_km": [
+     -20,
+     -10
+    ],
+    "mangrove_px": 233,
+    "reference_px": 67714
+   },
+   {
+    "baseline_hv_db_bin": [
+     -17,
+     -16
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 31,
+    "reference_px": 254473
+   },
+   {
+    "baseline_hv_db_bin": [
+     -17,
+     -16
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 222,
+    "reference_px": 172007
+   },
+   {
+    "baseline_hv_db_bin": [
+     -17,
+     -16
+    ],
+    "range_band_km": [
+     20,
+     30
+    ],
+    "mangrove_px": 229,
+    "reference_px": 271066
+   },
+   {
+    "baseline_hv_db_bin": [
+     -17,
+     -16
+    ],
+    "range_band_km": [
+     30,
+     40
+    ],
+    "mangrove_px": 7,
+    "reference_px": 274098
+   },
+   {
+    "baseline_hv_db_bin": [
+     -17,
+     -16
+    ],
+    "range_band_km": [
+     40,
+     50
+    ],
+    "mangrove_px": 2462,
+    "reference_px": 238983
+   },
+   {
+    "baseline_hv_db_bin": [
+     -17,
+     -16
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 6654,
+    "reference_px": 139240
+   },
+   {
+    "baseline_hv_db_bin": [
+     -17,
+     -16
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 38552,
+    "reference_px": 41202
+   },
+   {
+    "baseline_hv_db_bin": [
+     -17,
+     -16
+    ],
+    "range_band_km": [
+     70,
+     80
+    ],
+    "mangrove_px": 1562,
+    "reference_px": 8559
+   },
+   {
+    "baseline_hv_db_bin": [
+     -16,
+     -15
+    ],
+    "range_band_km": [
+     -20,
+     -10
+    ],
+    "mangrove_px": 153,
+    "reference_px": 59087
+   },
+   {
+    "baseline_hv_db_bin": [
+     -16,
+     -15
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 148,
+    "reference_px": 186715
+   },
+   {
+    "baseline_hv_db_bin": [
+     -16,
+     -15
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 592,
+    "reference_px": 178947
+   },
+   {
+    "baseline_hv_db_bin": [
+     -16,
+     -15
+    ],
+    "range_band_km": [
+     20,
+     30
+    ],
+    "mangrove_px": 434,
+    "reference_px": 206057
+   },
+   {
+    "baseline_hv_db_bin": [
+     -16,
+     -15
+    ],
+    "range_band_km": [
+     30,
+     40
+    ],
+    "mangrove_px": 11,
+    "reference_px": 209974
+   },
+   {
+    "baseline_hv_db_bin": [
+     -16,
+     -15
+    ],
+    "range_band_km": [
+     40,
+     50
+    ],
+    "mangrove_px": 9450,
+    "reference_px": 198578
+   },
+   {
+    "baseline_hv_db_bin": [
+     -16,
+     -15
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 37370,
+    "reference_px": 110979
+   },
+   {
+    "baseline_hv_db_bin": [
+     -16,
+     -15
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 131967,
+    "reference_px": 33993
+   },
+   {
+    "baseline_hv_db_bin": [
+     -16,
+     -15
+    ],
+    "range_band_km": [
+     70,
+     80
+    ],
+    "mangrove_px": 1358,
+    "reference_px": 7664
+   },
+   {
+    "baseline_hv_db_bin": [
+     -15,
+     -14
+    ],
+    "range_band_km": [
+     -20,
+     -10
+    ],
+    "mangrove_px": 6,
+    "reference_px": 54048
+   },
+   {
+    "baseline_hv_db_bin": [
+     -15,
+     -14
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 388,
+    "reference_px": 138111
+   },
+   {
+    "baseline_hv_db_bin": [
+     -15,
+     -14
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 285,
+    "reference_px": 230664
+   },
+   {
+    "baseline_hv_db_bin": [
+     -15,
+     -14
+    ],
+    "range_band_km": [
+     20,
+     30
+    ],
+    "mangrove_px": 596,
+    "reference_px": 186759
+   },
+   {
+    "baseline_hv_db_bin": [
+     -15,
+     -14
+    ],
+    "range_band_km": [
+     30,
+     40
+    ],
+    "mangrove_px": 11,
+    "reference_px": 176719
+   },
+   {
+    "baseline_hv_db_bin": [
+     -15,
+     -14
+    ],
+    "range_band_km": [
+     40,
+     50
+    ],
+    "mangrove_px": 5379,
+    "reference_px": 171637
+   },
+   {
+    "baseline_hv_db_bin": [
+     -15,
+     -14
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 42289,
+    "reference_px": 85845
+   },
+   {
+    "baseline_hv_db_bin": [
+     -15,
+     -14
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 106986,
+    "reference_px": 29807
+   },
+   {
+    "baseline_hv_db_bin": [
+     -15,
+     -14
+    ],
+    "range_band_km": [
+     70,
+     80
+    ],
+    "mangrove_px": 298,
+    "reference_px": 6146
+   },
+   {
+    "baseline_hv_db_bin": [
+     -14,
+     -13
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 130,
+    "reference_px": 137322
+   },
+   {
+    "baseline_hv_db_bin": [
+     -14,
+     -13
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 77,
+    "reference_px": 281808
+   },
+   {
+    "baseline_hv_db_bin": [
+     -14,
+     -13
+    ],
+    "range_band_km": [
+     20,
+     30
+    ],
+    "mangrove_px": 181,
+    "reference_px": 224001
+   },
+   {
+    "baseline_hv_db_bin": [
+     -14,
+     -13
+    ],
+    "range_band_km": [
+     40,
+     50
+    ],
+    "mangrove_px": 369,
+    "reference_px": 141861
+   },
+   {
+    "baseline_hv_db_bin": [
+     -14,
+     -13
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 14510,
+    "reference_px": 66037
+   },
+   {
+    "baseline_hv_db_bin": [
+     -14,
+     -13
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 32417,
+    "reference_px": 28480
+   },
+   {
+    "baseline_hv_db_bin": [
+     -14,
+     -13
+    ],
+    "range_band_km": [
+     70,
+     80
+    ],
+    "mangrove_px": 127,
+    "reference_px": 5381
+   },
+   {
+    "baseline_hv_db_bin": [
+     -13,
+     -12
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 32,
+    "reference_px": 137807
+   },
+   {
+    "baseline_hv_db_bin": [
+     -13,
+     -12
+    ],
+    "range_band_km": [
+     10,
+     20
+    ],
+    "mangrove_px": 24,
+    "reference_px": 172269
+   },
+   {
+    "baseline_hv_db_bin": [
+     -13,
+     -12
+    ],
+    "range_band_km": [
+     20,
+     30
+    ],
+    "mangrove_px": 23,
+    "reference_px": 217497
+   },
+   {
+    "baseline_hv_db_bin": [
+     -13,
+     -12
+    ],
+    "range_band_km": [
+     40,
+     50
+    ],
+    "mangrove_px": 27,
+    "reference_px": 107612
+   },
+   {
+    "baseline_hv_db_bin": [
+     -13,
+     -12
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 3045,
+    "reference_px": 53554
+   },
+   {
+    "baseline_hv_db_bin": [
+     -13,
+     -12
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 7963,
+    "reference_px": 28798
+   },
+   {
+    "baseline_hv_db_bin": [
+     -13,
+     -12
+    ],
+    "range_band_km": [
+     70,
+     80
+    ],
+    "mangrove_px": 30,
+    "reference_px": 5127
+   },
+   {
+    "baseline_hv_db_bin": [
+     -12,
+     -11
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 13,
+    "reference_px": 63798
+   },
+   {
+    "baseline_hv_db_bin": [
+     -12,
+     -11
+    ],
+    "range_band_km": [
+     20,
+     30
+    ],
+    "mangrove_px": 1,
+    "reference_px": 96059
+   },
+   {
+    "baseline_hv_db_bin": [
+     -12,
+     -11
+    ],
+    "range_band_km": [
+     40,
+     50
+    ],
+    "mangrove_px": 1,
+    "reference_px": 40267
+   },
+   {
+    "baseline_hv_db_bin": [
+     -12,
+     -11
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 1181,
+    "reference_px": 30667
+   },
+   {
+    "baseline_hv_db_bin": [
+     -12,
+     -11
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 1981,
+    "reference_px": 19990
+   },
+   {
+    "baseline_hv_db_bin": [
+     -11,
+     -10
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 26,
+    "reference_px": 18369
+   },
+   {
+    "baseline_hv_db_bin": [
+     -11,
+     -10
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 62,
+    "reference_px": 10806
+   },
+   {
+    "baseline_hv_db_bin": [
+     -11,
+     -10
+    ],
+    "range_band_km": [
+     60,
+     70
+    ],
+    "mangrove_px": 45,
+    "reference_px": 8513
+   },
+   {
+    "baseline_hv_db_bin": [
+     -10,
+     -9
+    ],
+    "range_band_km": [
+     -10,
+     0
+    ],
+    "mangrove_px": 1,
+    "reference_px": 7061
+   },
+   {
+    "baseline_hv_db_bin": [
+     -10,
+     -9
+    ],
+    "range_band_km": [
+     50,
+     60
+    ],
+    "mangrove_px": 1,
+    "reference_px": 3600
+   }
+  ],
+  "range_axis": {
+   "derived_from": "straight frame-end edge of the valid swath inside the box (perpendicular to the flight track), 1278 rows fitted",
+   "direction_deg_ccw_from_east_in_utm": 14.36,
+   "band_km": 10.0
+  }
+ },
+ "thresholds": {
+  "water_otsu_hh_db": -12.3,
+  "smooth_px": 3,
+  "edge_px": 2,
+  "min_mangrove_share": 0.5,
+  "buffer_m": 2000.0,
+  "stratum_hv_db": 1.0,
+  "range_band_km": 10.0,
+  "min_ref_px": 500
+ },
+ "provenance": {
+  "script": "tools/experimental/mangrove_change.py",
+  "created_utc": "2026-11-14T23:40:14Z",
+  "command": ".venv/bin/python -I tools/experimental/mangrove_change.py --resamples 1000 --seed 20261115",
+  "python": "3.14.7",
+  "numpy": "2.5.4",
+  "runtime_s": 124.0,
+  "peak_rss_mb": 2638.0,
+  "inputs_sha256": {
+   "data/external/gmw/GMW_N17E081_v4019_mng.tif": "3d1cbd4929bcce40eb06257247ef164c985d48d0b8d6c12b965e31c60ab5f263",
+   "data/external/gmw/GMW_N17E082_v4019_mng.tif": "111ec426e104bcb70a376f90e81dd18574b78dd9a401edcbaca265ce705446cc",
+   "data/external/gmw/GMW_N18E082_v4019_mng.tif": "a50d2f134dc0e28ce6814cae033620c1c84ab0ff7179cb37d4602af72aeaad4b",
+   "data/h5/L_COAST_20261004_T055.h5": "5bb9b65d7354c40017a4d7daa58535670c6ccbf3e2b16bc7c30f26154d3b85f2",
+   "data/h5/L_COAST_20261016_T055.h5": "2ba4bc78dcfaecafc2b2b5d01b2507005c5539f18e1a1e21891e2d64467437ff",
+   "data/h5/L_COAST_20261028_T055.h5": "d245325b97335a2ddc2f7dcb96f2a2bfe2b398f203d11f10d1a846f853a2b133",
+   "data/h5/L_COAST_20261109_T055.h5": "cc5b8a02b194a54f5f8ba69326b0324334945830aeb5354b6cd9e7f9c327997a"
+  },
+  "scenes": {
+   "20261004": {
+    "scene_id": "L_COAST_1004",
+    "product_status": "PROVISIONAL",
+    "start_utc": "2026-10-04T00:01:06Z"
+   },
+   "20261016": {
+    "scene_id": "L_COAST_1016",
+    "product_status": "PROVISIONAL",
+    "start_utc": "2026-10-16T00:01:06Z"
+   },
+   "20261028": {
+    "scene_id": "L_COAST_1028",
+    "product_status": "VALIDATED",
+    "start_utc": "2026-10-28T00:01:07Z"
+   },
+   "20261109": {
+    "scene_id": "L_COAST_1109",
+    "product_status": "VALIDATED",
+    "start_utc": "2026-11-09T00:01:07Z"
+   }
+  },
+  "radar_helpers": "tools/build_web.py (read_backscatter, _box_db, _erode, _read_mask, _otsu)"
+ },
+ "limitations": [
+  "no ground truth; tide not checked; mask is the 2020 extent",
+  "HV offset between provisional baselines and validated events is not uniform (docs/review/LBAND_TEST.md)",
+  "the control uses a one-date baseline, so its noise is slightly higher than the events'",
+  "range band is a proxy derived from the swath edge, not from incidence-angle metadata (none in the H5)"
+ ]
+}

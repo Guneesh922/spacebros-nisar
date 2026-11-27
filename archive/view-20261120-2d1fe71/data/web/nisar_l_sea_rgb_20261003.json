@@ -1,0 +1,120 @@
+{
+ "layer_id": "nisar_l_sea_rgb_20261003",
+ "rgb_of": "nisar_l_sea_20261003_t48_vv",
+ "png": "data/web/nisar_l_sea_rgb_20261003.png",
+ "bounds": [
+  [
+   15.29757,
+   81.27202
+  ],
+  [
+   18.04115,
+   84.4841
+  ]
+ ],
+ "kind": "rgb_composite_dual_pol",
+ "role": "SEA",
+ "band": "L",
+ "pol": "VV+HV",
+ "polarisation": "VV+HV",
+ "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+ "acquisition_date": "2026-10-03",
+ "track": 48,
+ "product_status": "PROVISIONAL",
+ "scene_id": "L_SEA_CALM_1003",
+ "source_granule": "NISAR_L2_PR_GCOV_032_048_D_080_2005_QPDH_A_20261003T130133_20261003T130207_P05023_N_F_J_001",
+ "definition": "R = VV, G = HV, B = VV minus HV (dB, the co/cross ratio); each channel stretched between fixed pooled 2 and 98 percent limits of all L-band sea dates, then gamma. Two polarisations only: NOT a Freeman-Durden or Yamaguchi decomposition.",
+ "channels": {
+  "R": "VV",
+  "G": "HV",
+  "B": "VV minus HV (dB)"
+ },
+ "stretch": {
+  "R": {
+   "lo": -20.16,
+   "hi": -4.05,
+   "unit": "dB",
+   "channel": "VV (dB)",
+   "gamma": 2.0,
+   "percentiles": [
+    2.0,
+    98.0
+   ]
+  },
+  "G": {
+   "lo": -27.29,
+   "hi": -10.34,
+   "unit": "dB",
+   "channel": "HV/VH (dB)",
+   "gamma": 1.0,
+   "percentiles": [
+    2.0,
+    98.0
+   ]
+  },
+  "B": {
+   "lo": 3.65,
+   "hi": 15.54,
+   "unit": "dB",
+   "channel": "VV minus HV/VH, i.e. the co/cross ratio (dB)",
+   "gamma": 3.0,
+   "percentiles": [
+    2.0,
+    98.0
+   ]
+  }
+ },
+ "gamma": {
+  "R": 2.0,
+  "G": 1.0,
+  "B": 3.0
+ },
+ "legend": [
+  {
+   "id": "calm_sea",
+   "label": "Calm or smooth sea",
+   "colour_word": "Dark",
+   "meaning": "calm or smooth sea",
+   "hex": "#001300",
+   "rule": "VV < -18 dB",
+   "share_of_pixels_pct": 3.15
+  },
+  {
+   "id": "moderate_sea",
+   "label": "Moderately rough sea",
+   "colour_word": "Dark purple",
+   "meaning": "moderately rough sea",
+   "hex": "#281B4F",
+   "rule": "VV -15 to -11 dB and VH < -22 dB",
+   "share_of_pixels_pct": 55.05
+  },
+  {
+   "id": "rough_sea",
+   "label": "Rough sea",
+   "colour_word": "Purple or violet",
+   "meaning": "rough, wind-driven sea (strong wind, waves)",
+   "hex": "#7B41B0",
+   "rule": "VV > -11 dB and VH < -21 dB",
+   "share_of_pixels_pct": 11.23
+  },
+  {
+   "id": "land_veg",
+   "label": "Land",
+   "colour_word": "Green or yellow",
+   "meaning": "land and vegetation",
+   "hex": "#B5D103",
+   "rule": "VH > -18 dB",
+   "share_of_pixels_pct": 19.39
+  }
+ ],
+ "legend_note": "swatch = median colour of the pixels that follow the dB rule (all dates of this group pooled); a hint about what a colour often means, not a class",
+ "stretch_scope": "pooled valid pixels of all 5 L-band sea dates (2026-10-03, 2026-10-15, 2026-10-27, 2026-11-08, 2026-11-20), 13109748 pixels; a new date moves the limits on the next build",
+ "smoothing_px": 1,
+ "h5": "data/h5/L_SEA_20261003_T048.h5",
+ "image_px": [
+  1228,
+  1094
+ ],
+ "png_kb": 464.1,
+ "built_utc": "2026-11-27T15:31:11Z"
+}

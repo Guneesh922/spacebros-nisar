@@ -1,0 +1,244 @@
+{
+ "note": "NISAR images are display-only greyscale (luminance of colour quick-look), not dB. bounds=[[S,W],[N,E]].",
+ "images": [
+  {
+   "file": "img/nisar_l_sea_20261003_t48_vv.png",
+   "source": "data/browse/nisar_arnab/2026-10-03T1301Z_T48_F80.png",
+   "width": 1200,
+   "height": 1182,
+   "source_width": 1888,
+   "source_height": 1860,
+   "bytes": 536590,
+   "bounds": [
+    [
+     15.29700264750999,
+     81.272021834518
+    ],
+    [
+     18.33073904937732,
+     84.48977175584287
+    ]
+   ],
+   "bounds_inferred": true,
+   "bounds_note": "bounds from KML of 2026-10-27T1301Z_T48_F80",
+   "display_only_greyscale": true
+  },
+  {
+   "file": "img/nisar_l_sea_20261015_t48_vv.png",
+   "source": "data/browse/nisar_arnab/2026-10-15T1301Z_T48_F80.png",
+   "width": 1400,
+   "height": 1379,
+   "source_width": 1888,
+   "source_height": 1860,
+   "bytes": 401038,
+   "bounds": [
+    [
+     15.29700264750999,
+     81.272021834518
+    ],
+    [
+     18.33073904937732,
+     84.48977175584287
+    ]
+   ],
+   "bounds_inferred": true,
+   "bounds_note": "bounds from KML of 2026-10-27T1301Z_T48_F80",
+   "display_only_greyscale": true
+  },
+  {
+   "file": "img/nisar_l_sea_20261027_t48_vv.png",
+   "source": "data/browse/nisar_arnab/2026-10-27T1301Z_T48_F80.png",
+   "width": 1400,
+   "height": 1379,
+   "source_width": 1888,
+   "source_height": 1860,
+   "bytes": 426532,
+   "bounds": [
+    [
+     15.29700264750999,
+     81.272021834518
+    ],
+    [
+     18.33073904937732,
+     84.48977175584287
+    ]
+   ],
+   "bounds_inferred": false,
+   "bounds_note": null,
+   "display_only_greyscale": true
+  },
+  {
+   "file": "img/nisar_l_sea_20261108_t48_vv.png",
+   "source": "data/browse/nisar_arnab/2026-11-08T1301Z_T48_F80.png",
+   "width": 1400,
+   "height": 1379,
+   "source_width": 1888,
+   "source_height": 1860,
+   "bytes": 399289,
+   "bounds": [
+    [
+     15.29700264750999,
+     81.272021834518
+    ],
+    [
+     18.33073904937732,
+     84.48977175584287
+    ]
+   ],
+   "bounds_inferred": false,
+   "bounds_note": null,
+   "display_only_greyscale": true
+  },
+  {
+   "file": "img/nisar_l_coast_20261004_t55_hh.png",
+   "source": "data/browse/nisar_arnab/2026-10-04T0001Z_T55_F10.png",
+   "width": 1200,
+   "height": 1182,
+   "source_width": 2011,
+   "source_height": 1980,
+   "bytes": 481040,
+   "bounds": [
+    [
+     15.289417736208744,
+     80.53360154529867
+    ],
+    [
+     18.337444233134367,
+     83.76801815174849
+    ]
+   ],
+   "bounds_inferred": true,
+   "bounds_note": "bounds from KML of 2026-10-28T0001Z_T55_F10",
+   "display_only_greyscale": true
+  },
+  {
+   "file": "img/nisar_l_coast_20261016_t55_hh.png",
+   "source": "data/browse/nisar_arnab/2026-10-16T0001Z_T55_F10.png",
+   "width": 1200,
+   "height": 1182,
+   "source_width": 2011,
+   "source_height": 1980,
+   "bytes": 469481,
+   "bounds": [
+    [
+     15.289417736208744,
+     80.53360154529867
+    ],
+    [
+     18.337444233134367,
+     83.76801815174849
+    ]
+   ],
+   "bounds_inferred": true,
+   "bounds_note": "bounds from KML of 2026-10-28T0001Z_T55_F10",
+   "display_only_greyscale": true
+  },
+  {
+   "file": "img/nisar_l_coast_20261028_t55_hh.png",
+   "source": "data/browse/nisar_arnab/2026-10-28T0001Z_T55_F10.png",
+   "width": 1200,
+   "height": 1182,
+   "source_width": 2011,
+   "source_height": 1980,
+   "bytes": 465643,
+   "bounds": [
+    [
+     15.289417736208744,
+     80.53360154529867
+    ],
+    [
+     18.337444233134367,
+     83.76801815174849
+    ]
+   ],
+   "bounds_inferred": false,
+   "bounds_note": null,
+   "display_only_greyscale": true
+  },
+  {
+   "file": "img/nisar_l_coast_20261109_t55_hh.png",
+   "source": "data/browse/nisar_arnab/2026-11-09T0001Z_T55_F10.png",
+   "width": 1200,
+   "height": 1182,
+   "source_width": 2011,
+   "source_height": 1980,
+   "bytes": 473928,
+   "bounds": [
+    [
+     15.289417736208744,
+     80.53360154529867
+    ],
+    [
+     18.337444233134367,
+     83.76801815174849
+    ]
+   ],
+   "bounds_inferred": false,
+   "bounds_note": null,
+   "display_only_greyscale": true
+  },
+  {
+   "file": "img/gibs_himawari_b13_20261027T1300Z_sea.png",
+   "source": "data/raw/gibs/himawari_b13_20261027T1300Z_sea.png",
+   "width": 1600,
+   "height": 1200,
+   "bytes": 92693,
+   "bounds": [
+    [
+     15,
+     81
+    ],
+    [
+     18,
+     85
+    ]
+   ],
+   "bounds_inferred": false,
+   "layer": "Himawari_AHI_Band13_Clean_Infrared",
+   "time": "2026-10-27T13:00:00Z",
+   "description": "Himawari B13 clean IR 2026-10-27 13:00Z, sea box"
+  },
+  {
+   "file": "img/gibs_imerg_daily_2026-10-27_sea.png",
+   "source": "data/raw/gibs/imerg_daily_2026-10-27_sea.png",
+   "width": 1600,
+   "height": 1200,
+   "bytes": 77306,
+   "bounds": [
+    [
+     15,
+     81
+    ],
+    [
+     18,
+     85
+    ]
+   ],
+   "bounds_inferred": false,
+   "layer": "IMERG_Precipitation_Rate",
+   "time": "2026-10-27",
+   "description": "IMERG daily precipitation 2026-10-27, sea box"
+  },
+  {
+   "file": "img/gibs_viirs_noaa21_truecolor_2026-10-27_sea.jpg",
+   "source": "data/raw/gibs/viirs_noaa21_truecolor_2026-10-27_sea.jpg",
+   "width": 1600,
+   "height": 1200,
+   "bytes": 43746,
+   "bounds": [
+    [
+     15,
+     81
+    ],
+    [
+     18,
+     85
+    ]
+   ],
+   "bounds_inferred": false,
+   "layer": "VIIRS_NOAA21_CorrectedReflectance_TrueColor",
+   "time": "2026-10-27",
+   "description": "VIIRS true colour 2026-10-27, sea box (highest std of 3 satellites)"
+  }
+ ]
+}

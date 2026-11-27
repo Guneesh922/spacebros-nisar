@@ -1,0 +1,122 @@
+{
+ "layer_id": "nisar_sea_diff_20261120_vs_20261015",
+ "png": "data/web/nisar_sea_diff_20261120_vs_20261015.png",
+ "bounds": [
+  [
+   15.29757,
+   81.27202
+  ],
+  [
+   18.04115,
+   84.4841
+  ]
+ ],
+ "pol": "VV",
+ "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+ "acquisition_date": "2026-11-20",
+ "track": 48,
+ "polarisation": "VV",
+ "product_status": "VALIDATED",
+ "reference_product_status": "PROVISIONAL",
+ "kind": "difference_db",
+ "definition": "VV(after) minus VV(before), dB",
+ "ramp_db": [
+  -6.0,
+  6.0
+ ],
+ "ramp": {
+  "name": "blue-white-orange (colour-blind safe)",
+  "kind": "diverging",
+  "unit": "dB",
+  "colour_blind_safe": true,
+  "centre": 0.0,
+  "symmetric": true,
+  "stops": [
+   {
+    "value": -6.0,
+    "hex": "#2F7DC4",
+    "label": "darker (smoother sea)"
+   },
+   {
+    "value": -3.0,
+    "hex": "#8FBFE8",
+    "label": null
+   },
+   {
+    "value": 0.0,
+    "hex": "#F7F7F7",
+    "label": "no clear change"
+   },
+   {
+    "value": 3.0,
+    "hex": "#F6B48A",
+    "label": null
+   },
+   {
+    "value": 6.0,
+    "hex": "#D9541E",
+    "label": "brighter (rougher sea)"
+   }
+  ],
+  "words": {
+   "darker": "darker",
+   "no_change": "no clear change",
+   "brighter": "brighter"
+  },
+  "saturation_limit_db": 6.0,
+  "saturation_rule": "min(3 x P99 of |change|, 6 dB)",
+  "p99_abs_change_db": 11.88,
+  "three_p99_db": 35.64,
+  "cap_db": 6.0,
+  "p99_basis": "offshore common valid pixels more than 1 km offshore",
+  "sigma_db": 1.29,
+  "sigma": {
+   "source": "robust (MAD) sigma of this difference over the common valid pixels more than 1 km offshore; no calm-fortnight pair exists for the sea (3 Oct is a different acquisition mode)",
+   "median_db": 1.24,
+   "n_pixels": 2457284
+  },
+  "grey": {
+   "hex": "#9BA1A7",
+   "alpha": 175,
+   "band_db": [
+    -1.29,
+    1.29
+   ],
+   "label": "no clear change",
+   "rule": "pixels with |change| < 1 sigma are drawn grey, not coloured"
+  },
+  "note": "negative = darker than the reference, positive = brighter; white = no change; grey = change smaller than 1 sigma of normal variation",
+  "previous_range_db": [
+   -15.0,
+   15.0
+  ],
+  "previous_range_note": "before 15 Nov 2026 the sea difference used a fixed -15..+15 dB stretch"
+ },
+ "p2": -3.6,
+ "p50": 0.98,
+ "p98": 10.82,
+ "mean": 1.53,
+ "nan_frac": 0.7029,
+ "grid_check": "grids identical",
+ "after": {
+  "h5": "data/h5/L_SEA_20261120_T048.h5",
+  "source_granule": "NISAR_L2_PR_GCOV_036_048_D_080_2005_DVDV_A_20261120T130152_20261120T130209_P05036_N_P_J_001",
+  "product_status": "VALIDATED",
+  "date": "2026-11-20",
+  "start_utc": "2026-11-20T13:01:52Z"
+ },
+ "before": {
+  "h5": "data/h5/L_SEA_20261015_T048.h5",
+  "source_granule": "NISAR_L2_PR_GCOV_033_048_D_080_2005_DVDV_A_20261015T130150_20261015T130208_P05023_N_P_J_001",
+  "product_status": "PROVISIONAL",
+  "date": "2026-10-15",
+  "start_utc": "2026-10-15T13:01:50Z"
+ },
+ "note": "difference of two calibrated backscatter images; wind-roughened sea appears brighter",
+ "image_px": [
+  1920,
+  1712
+ ],
+ "png_kb": 449.1,
+ "built_utc": "2026-11-27T15:29:37Z"
+}
