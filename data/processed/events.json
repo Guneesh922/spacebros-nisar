@@ -1,6 +1,6 @@
 {
  "schema": "events-v1",
- "updated_utc": "2026-11-26T15:32:53Z",
+ "updated_utc": "2026-11-27T15:28:05Z",
  "events": [
   {
    "id": "arnab_2026",
@@ -59,6 +59,13 @@
      "role": "SEA",
      "relation": "after",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "Cyclone Arnab reached Andhra Pradesh as a very severe cyclonic storm. IMD says it crossed the Andhra Pradesh and Yanam coasts between Bapatla and Visakhapatnam, near 16.45 N 81.9 E, during 0200 to 0800 hours IST on 28 October 2026, with maximum sustained wind 125 to 135 km/h gusting to 150 km/h (IMD press release 6, 28 Oct). NISAR looked at the sea on 27 Oct and at the Godavari delta coast on 28 Oct, then again on 8 and 9 Nov.",
@@ -229,6 +236,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ]
   },
@@ -277,6 +294,13 @@
      "role": "SEA",
      "relation": "after",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "Cyclone Murasu",
@@ -317,6 +341,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ],
    "source_name": "Tropical Cyclone MURASU-26"
@@ -457,6 +491,13 @@
      "role": "SEA",
      "relation": "after",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "Due to the impact of Cyclone Akwan in the Bay of Bengal, heavy rains accompanied by strong winds are likely in your area tomorrow. The public is advised to remain alert and take necessary precautions -Government of Andhra Pradesh",
@@ -482,6 +523,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ]
   },
@@ -517,6 +568,13 @@
      "role": "SEA",
      "relation": "after",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1130 IST of 18.11.26 near latitude 13.1N and longitude 85.4E, 540 Km southeast of Narsapur, Andhra Pradesh. Cyclone Warning for Alluri Sitharama Raju, Anakapalli, Srikakulam, Visakhapatnam, Vizianagaram.",
@@ -542,6 +600,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ]
   },
@@ -577,6 +645,13 @@
      "role": "SEA",
      "relation": "after",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "Cyclone is Likely to occur over Srikakulam district of Andhra Pradesh. Please follow SDMA guidelines.",
@@ -602,6 +677,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ]
   },
@@ -637,6 +722,13 @@
      "role": "SEA",
      "relation": "after",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "Cyclone is Likely to occur over Vizianagaram district of Andhra Pradesh. Please follow SDMA guidelines.",
@@ -662,6 +754,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ]
   },
@@ -697,6 +799,13 @@
      "role": "SEA",
      "relation": "after",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "SCS AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 0530 IST of 19.11.26 440 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, Anakapalli, Konaseema, EG, Kakinada, Parvathipuram Manyam, Polavaram, Srikakulam, Visakhapatnam, Vizianagaram, WG",
@@ -722,6 +831,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ]
   },
@@ -757,6 +876,13 @@
      "role": "SEA",
      "relation": "after",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "Cyclone is Likely to occur over heavy_rainfall_2026-11-19. Please follow SDMA guidelines.",
@@ -782,6 +908,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ]
   },
@@ -817,6 +953,13 @@
      "role": "SEA",
      "relation": "after",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "The SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 2330 IST of 18.11.26 near latitude 13.9N and longitude 85.3E, 510 Km south-southeast of Kalingapatnam, Andhra Pradesh. Cyclone Warning for ASR, PVP Manyam, Srikakulam, VSKP, Vizianagaram, AKP.",
@@ -842,6 +985,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ]
   },
@@ -877,6 +1030,13 @@
      "role": "SEA",
      "relation": "after",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "SEVERE CYCLONIC STORM AKVAN with maximum wind speed of 90-100 gusting to 110 Kmph lays centred at 1730 IST of 18.11.26 near latitude 13.6N and longitude 85.3E, 540 Km of Kalingapatnam, Cyclone Warning for ASR, Anakapalli, Parvathipuram Manyam, Srikakulam, Visakhapatnam, Vizianagaram.",
@@ -902,6 +1062,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ]
   },
@@ -937,6 +1107,13 @@
      "role": "SEA",
      "relation": "during",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "The CYCLONIC STORM Akvan with maximum wind speed of 80-90 gusting to 100 Kmph lays centred at 0530 IST of 20.11.26 near latitude 18.3N and longitude 84.8E, 70 Km east of Kalingapatnam, Andhra Pradesh. Cyclone Warning for Parvathipuram Manyam, Srikakulam.",
@@ -962,6 +1139,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ]
   },
@@ -997,6 +1184,13 @@
      "role": "SEA",
      "relation": "after",
      "radar_finding": "sea_no_public_finding"
+    },
+    {
+     "scene_id": "L_COAST_20261121_T055",
+     "date": "2026-11-21",
+     "role": "COAST",
+     "relation": "after",
+     "radar_finding": "change_seen"
     }
    ],
    "description": "Cyclone Akvan",
@@ -1022,6 +1216,16 @@
      "utc": "2026-11-24T18:23:05Z",
      "by": "pipeline",
      "what": "linked radar pass(es): L_SEA_20261120_T048"
+    },
+    {
+     "utc": "2026-11-27T15:23:55Z",
+     "by": "pipeline",
+     "what": "linked radar pass(es): L_COAST_20261121_T055"
+    },
+    {
+     "utc": "2026-11-27T15:28:05Z",
+     "by": "pipeline",
+     "what": "radar_finding L_COAST_20261121_T055: numbers_coming -> change_seen"
     }
    ]
   }

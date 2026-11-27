@@ -218,6 +218,54 @@
   ],
   "layers": [
     {
+      "type": "nisar",
+      "chip": "nisar",
+      "kind": "image",
+      "shows": "Land backscatter: radar brightness, HH (γ⁰, dB)",
+      "source_id": "asf_nisar_l",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "url_template": null,
+      "band": "L",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "event_id": null,
+      "classes": null,
+      "opacity": 0.85,
+      "group": "after",
+      "date": "2026-11-21",
+      "time_utc": "2026-11-21T00:01:08Z",
+      "latest_of": "nisar_l_coast_hh",
+      "limit": "single look; compare with other dates of the same track",
+      "source": "T55 F10 · NASA/ISRO via ASF",
+      "png": "data/web/nisar_l_coast_20261121_t55_hh.png",
+      "bounds": [
+        [
+          16.1949,
+          81.59718
+        ],
+        [
+          17.10546,
+          82.60745
+        ]
+      ],
+      "bounds_inferred": false,
+      "pol": "HH",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "default_on": false,
+      "status": "ready",
+      "placeholder": null,
+      "id": "nisar_l_coast_20261121_t55_hh",
+      "name": "Coast, 2026-11-21 (T55)",
+      "processing_level": "validated",
+      "h5": "data/h5/L_COAST_20261121_T055.h5"
+    },
+    {
       "group": "after",
       "type": "nisar",
       "chip": "nisar",
@@ -662,15 +710,15 @@
       "type": "derived",
       "chip": "nisar",
       "kind": "image",
-      "date": "2026-11-09",
+      "date": "2026-11-21",
       "time_utc": null,
       "latest_of": "nisar_class_new_water",
       "shows": "Where open water likely appeared between the before and after scenes",
-      "limit": "water under dense crops (it can be missed); wind-roughened water can look bright; 9 Nov also reflects Cyclone Murasu (1-3 Nov) and the river peak, not Arnab alone",
+      "limit": "water under dense crops (it can be missed); wind-roughened water can look bright",
       "source": "SpaceBros change map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",
-      "png": "data/web/class_20261109_new_water.png",
+      "png": "data/web/class_20261121_new_water.png",
       "bounds": [
         [
           16.1949,
@@ -713,7 +761,7 @@
       "name": "Likely new open water",
       "period": [
         "2026-10-16",
-        "2026-11-09"
+        "2026-11-21"
       ],
       "normal_period": [
         "2026-10-04",
@@ -725,25 +773,26 @@
         "data/h5/L_COAST_20261004_T055.h5",
         "data/h5/L_COAST_20261016_T055.h5",
         "data/h5/L_COAST_20261028_T055.h5",
-        "data/h5/L_COAST_20261109_T055.h5"
+        "data/h5/L_COAST_20261109_T055.h5",
+        "data/h5/L_COAST_20261121_T055.h5"
       ],
       "processing": "single-band L (HH+HV); baseline 4 and 16 Oct are PROVISIONAL products; thresholds in data/web/class_stats.json and docs/METHODS.md",
-      "class_date": "2026-11-09"
+      "class_date": "2026-11-21"
     },
     {
       "group": "after",
       "type": "derived",
       "chip": "nisar",
       "kind": "image",
-      "date": "2026-11-09",
+      "date": "2026-11-21",
       "time_utc": null,
       "latest_of": "nisar_class_wet_crops",
       "shows": "Where crop fields likely turned wet or flooded (radar brightness change)",
-      "limit": "water under dense crops; a normal fortnight (4-16 Oct) already flags 2.1% of land by the same rule, against 2.7% on 28 Oct and 0.9% on 9 Nov, so this class is not clearly above normal field change and is not proven flooding",
+      "limit": "water under dense crops; a normal fortnight (4-16 Oct) already flags 2.1% of land by the same rule, against 2.7% on 28 Oct, 0.9% on 9 Nov and 0.9% on 21 Nov, so this class is not clearly above normal field change and is not proven flooding",
       "source": "SpaceBros change map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",
-      "png": "data/web/class_20261109_wet_crops.png",
+      "png": "data/web/class_20261121_wet_crops.png",
       "bounds": [
         [
           16.1949,
@@ -786,7 +835,7 @@
       "name": "Likely wet or flooded crops",
       "period": [
         "2026-10-16",
-        "2026-11-09"
+        "2026-11-21"
       ],
       "normal_period": [
         "2026-10-04",
@@ -798,17 +847,18 @@
         "data/h5/L_COAST_20261004_T055.h5",
         "data/h5/L_COAST_20261016_T055.h5",
         "data/h5/L_COAST_20261028_T055.h5",
-        "data/h5/L_COAST_20261109_T055.h5"
+        "data/h5/L_COAST_20261109_T055.h5",
+        "data/h5/L_COAST_20261121_T055.h5"
       ],
       "processing": "single-band L (HH+HV); baseline 4 and 16 Oct are PROVISIONAL products; thresholds in data/web/class_stats.json and docs/METHODS.md",
-      "class_date": "2026-11-09"
+      "class_date": "2026-11-21"
     },
     {
       "group": "after",
       "type": "derived",
       "chip": "nisar",
       "kind": "image",
-      "date": "2026-11-09",
+      "date": "2026-11-21",
       "time_utc": null,
       "latest_of": "nisar_class_no_change",
       "shows": "Outline of areas with likely no change against the normal period",
@@ -816,7 +866,7 @@
       "source": "SpaceBros change map",
       "source_id": "spacebros_derived",
       "credit": "SpaceBros, from NISAR data",
-      "png": "data/web/class_20261109_no_change.png",
+      "png": "data/web/class_20261121_no_change.png",
       "bounds": [
         [
           16.1949,
@@ -858,7 +908,7 @@
       "name": "Likely no change (outline)",
       "period": [
         "2026-10-16",
-        "2026-11-09"
+        "2026-11-21"
       ],
       "normal_period": [
         "2026-10-04",
@@ -870,10 +920,11 @@
         "data/h5/L_COAST_20261004_T055.h5",
         "data/h5/L_COAST_20261016_T055.h5",
         "data/h5/L_COAST_20261028_T055.h5",
-        "data/h5/L_COAST_20261109_T055.h5"
+        "data/h5/L_COAST_20261109_T055.h5",
+        "data/h5/L_COAST_20261121_T055.h5"
       ],
       "processing": "single-band L (HH+HV); baseline 4 and 16 Oct are PROVISIONAL products; thresholds in data/web/class_stats.json and docs/METHODS.md",
-      "class_date": "2026-11-09"
+      "class_date": "2026-11-21"
     },
     {
       "group": "during",
@@ -999,6 +1050,121 @@
           15.0
         ],
         "previous_range_note": "before 15 Nov 2026 the sea difference used a fixed -15..+15 dB stretch"
+      }
+    },
+    {
+      "group": "after",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
+      "date": "2026-11-21",
+      "time_utc": "2026-11-21T00:01:08Z",
+      "latest_of": "nisar_l_coast_change_hh",
+      "shows": "Change in land radar brightness, HH, 21 Nov minus the 4 and 16 Oct baseline (dB); blue = darker, orange-red = brighter, grey = change smaller than normal",
+      "limit": "it is a brightness change, not a flood map; baseline scenes are PROVISIONAL products; crop and wind effects also change brightness",
+      "source": "SpaceBros difference map",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_coast_change_20261121_hh.png",
+      "bounds": [
+        [
+          16.1949,
+          81.59718
+        ],
+        [
+          17.10546,
+          82.60745
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "HH",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.85,
+      "status": "ready",
+      "id": "nisar_l_coast_change_20261121_hh",
+      "name": "Coast radar brightness change (21 Nov minus baseline)",
+      "bounds_source": "class grid warped to lat/lon from the NISAR T55 F10 H5 subsets (data/web/nisar_l_coast_change_20261121_hh.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_COAST_20261004_T055.h5",
+        "data/h5/L_COAST_20261016_T055.h5",
+        "data/h5/L_COAST_20261121_T055.h5"
+      ],
+      "change_date": "2026-11-21",
+      "ramp": {
+        "name": "blue-white-orange (colour-blind safe)",
+        "kind": "diverging",
+        "unit": "dB",
+        "colour_blind_safe": true,
+        "centre": 0.0,
+        "symmetric": true,
+        "stops": [
+          {
+            "value": -6.0,
+            "hex": "#2F7DC4",
+            "label": "darker"
+          },
+          {
+            "value": -3.0,
+            "hex": "#8FBFE8",
+            "label": null
+          },
+          {
+            "value": 0.0,
+            "hex": "#F7F7F7",
+            "label": "no clear change"
+          },
+          {
+            "value": 3.0,
+            "hex": "#F6B48A",
+            "label": null
+          },
+          {
+            "value": 6.0,
+            "hex": "#D9541E",
+            "label": "brighter"
+          }
+        ],
+        "words": {
+          "darker": "darker",
+          "no_change": "no clear change",
+          "brighter": "brighter"
+        },
+        "saturation_limit_db": 6.0,
+        "saturation_rule": "min(3 x P99 of |change|, 6 dB)",
+        "p99_abs_change_db": 6.887,
+        "three_p99_db": 20.66,
+        "cap_db": 6.0,
+        "p99_basis": "valid non-permanent-water pixels of this date",
+        "sigma_db": 0.883,
+        "sigma": {
+          "source": "robust (MAD) sigma of the normal-fortnight difference, 16 Oct minus 4 Oct, HH, over land (docs/METHODS.md step 6)",
+          "baseline_dates": [
+            "2026-10-04",
+            "2026-10-16"
+          ],
+          "note": "the event-minus-baseline difference uses a two-date mean baseline, so its true noise is a little smaller: 1 sigma is a cautious grey band"
+        },
+        "grey": {
+          "hex": "#9BA1A7",
+          "alpha": 175,
+          "band_db": [
+            -0.883,
+            0.883
+          ],
+          "label": "no clear change",
+          "rule": "pixels with |change| < 1 sigma are drawn grey, not coloured"
+        },
+        "note": "negative = darker than the reference, positive = brighter; white = no change; grey = change smaller than 1 sigma of normal variation"
       }
     },
     {
@@ -1236,6 +1402,80 @@
       "type": "derived",
       "chip": "nisar",
       "kind": "image",
+      "date": "2026-11-21",
+      "time_utc": "2026-11-21T00:01:08Z",
+      "latest_of": "nisar_l_coast_rgb",
+      "rgb_of": "nisar_l_coast_20261121_t55_hh",
+      "shows": "Land and sea radar colour composite, 21 Nov: red = HH, green = HV, blue = HH minus HV (dB)",
+      "limit": "two polarisations only: a hint about the kind of surface, not proof; a rough sea looks bright, it is not a flood; not a Freeman-Durden decomposition",
+      "source": "SpaceBros dual-pol composite",
+      "source_id": "spacebros_derived",
+      "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
+      "png": "data/web/nisar_l_coast_rgb_20261121.png",
+      "bounds": [
+        [
+          16.1949,
+          81.59718
+        ],
+        [
+          17.10546,
+          82.60745
+        ]
+      ],
+      "bounds_inferred": false,
+      "band": "L",
+      "pol": "HH+HV",
+      "track": 55,
+      "frame": 10,
+      "direction": "ascending",
+      "regions": [
+        "ap_coast",
+        "konaseema",
+        "west_godavari",
+        "kakinada"
+      ],
+      "default_on": false,
+      "opacity": 0.9,
+      "status": "ready",
+      "id": "nisar_l_coast_rgb_20261121",
+      "processing_level": "validated",
+      "name": "Coast radar colour composite (HH, HV), 21 Nov",
+      "bounds_source": "H5 subset footprint warped to lat/lon (data/web/nisar_l_coast_rgb_20261121.json, built by tools/build_web.py)",
+      "h5_sources": [
+        "data/h5/L_COAST_20261121_T055.h5"
+      ],
+      "rgb": {
+        "channels": {
+          "R": "HH",
+          "G": "HV",
+          "B": "HH minus HV (dB)"
+        },
+        "stretch": {
+          "R": {
+            "lo": -20.78,
+            "hi": -1.77
+          },
+          "G": {
+            "lo": -26.84,
+            "hi": -10.66
+          },
+          "B": {
+            "lo": 3.98,
+            "hi": 14.45
+          }
+        },
+        "gamma": {
+          "R": 2.0,
+          "G": 1.0,
+          "B": 2.0
+        }
+      }
+    },
+    {
+      "group": "after",
+      "type": "derived",
+      "chip": "nisar",
+      "kind": "image",
       "date": "2026-11-09",
       "time_utc": "2026-11-09T00:01:07Z",
       "latest_of": "nisar_l_coast_rgb",
@@ -1285,16 +1525,16 @@
         },
         "stretch": {
           "R": {
-            "lo": -21.14,
-            "hi": -1.64
+            "lo": -20.78,
+            "hi": -1.77
           },
           "G": {
-            "lo": -26.85,
-            "hi": -10.63
+            "lo": -26.84,
+            "hi": -10.66
           },
           "B": {
-            "lo": 3.95,
-            "hi": 14.72
+            "lo": 3.98,
+            "hi": 14.45
           }
         },
         "gamma": {
@@ -1359,16 +1599,16 @@
         },
         "stretch": {
           "R": {
-            "lo": -21.14,
-            "hi": -1.64
+            "lo": -20.78,
+            "hi": -1.77
           },
           "G": {
-            "lo": -26.85,
-            "hi": -10.63
+            "lo": -26.84,
+            "hi": -10.66
           },
           "B": {
-            "lo": 3.95,
-            "hi": 14.72
+            "lo": 3.98,
+            "hi": 14.45
           }
         },
         "gamma": {
@@ -1433,16 +1673,16 @@
         },
         "stretch": {
           "R": {
-            "lo": -21.14,
-            "hi": -1.64
+            "lo": -20.78,
+            "hi": -1.77
           },
           "G": {
-            "lo": -26.85,
-            "hi": -10.63
+            "lo": -26.84,
+            "hi": -10.66
           },
           "B": {
-            "lo": 3.95,
-            "hi": 14.72
+            "lo": 3.98,
+            "hi": 14.45
           }
         },
         "gamma": {
@@ -1507,16 +1747,16 @@
         },
         "stretch": {
           "R": {
-            "lo": -21.14,
-            "hi": -1.64
+            "lo": -20.78,
+            "hi": -1.77
           },
           "G": {
-            "lo": -26.85,
-            "hi": -10.63
+            "lo": -26.84,
+            "hi": -10.66
           },
           "B": {
-            "lo": 3.95,
-            "hi": 14.72
+            "lo": 3.98,
+            "hi": 14.45
           }
         },
         "gamma": {

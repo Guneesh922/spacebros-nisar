@@ -1,7 +1,7 @@
 {
  "schema": "findings-v1",
- "built_utc": "2026-11-26T15:32:53Z",
- "built_text": "26 Nov 2026, 21:02 IST",
+ "built_utc": "2026-11-27T15:28:05Z",
+ "built_text": "27 Nov 2026, 20:58 IST",
  "event_id": "arnab_2026",
  "official_banner": "This is not an official warning. For alerts, follow IMD, APSDMA and your district officers.",
  "official_links": [
@@ -23,7 +23,7 @@
  ],
  "credits": {
   "nisar": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
-  "nisar_line": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata); scene 2026-11-09, track 55, polarisation HH, VALIDATED",
+  "nisar_line": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata); scene 2026-11-21, track 55, polarisation HH, VALIDATED",
   "derived": "Maps and numbers: SpaceBros, derived from NISAR data",
   "imd": "IMD / RSMC New Delhi bulletins",
   "ndma_sachet": "NDMA SACHET",
@@ -32,32 +32,32 @@
   "basemap": "Map data: Esri, HERE, Garmin, OpenStreetMap contributors",
   "disclaimer": "Built by team SpaceBros for the NASA Space Apps Challenge 2026. Not an official NASA, ISRO, IMD or government product, and not a warning service."
  },
- "data_as_of": "2026-11-20T13:01:52Z",
- "data_as_of_text": "Radar picture taken 20 Nov 2026, 18:31, IST",
+ "data_as_of": "2026-11-21T00:01:08Z",
+ "data_as_of_text": "Radar picture taken 21 Nov 2026, 05:31, IST",
  "timestamps": {
-  "picture": "Radar picture taken 20 Nov 2026, 18:31, IST",
-  "built": "Summary updated 26 Nov 2026, 21:02 IST"
+  "picture": "Radar picture taken 21 Nov 2026, 05:31, IST",
+  "built": "Summary updated 27 Nov 2026, 20:58 IST"
  },
  "stale": false,
  "next_pass": {
   "role": "COAST",
   "track": 55,
-  "last_pass": "2026-11-09",
+  "last_pass": "2026-11-21",
   "date": "2026-12-03",
-  "expected_utc": "2026-12-03T00:01:07Z",
-  "first_expected": "2026-11-21",
-  "days_until": 7,
-  "overdue": true,
+  "expected_utc": "2026-12-03T00:01:08Z",
+  "first_expected": "2026-12-03",
+  "days_until": 6,
+  "overdue": false,
   "basis": "last pass of the same track + n x 12 days (NISAR repeat), first date on or after today",
-  "text": "A radar pass was expected about 21 Nov but is not in the catalogue yet. The next one is about 3 Dec. Dates can shift."
+  "text": "Next radar pass expected about 3 Dec. This is a schedule estimate. It can shift."
  },
  "next_passes": [
   {
    "role": "COAST",
    "track": 55,
-   "last_pass": "2026-11-09",
-   "date": "2026-11-21",
-   "expected_utc": "2026-11-21T00:01:07Z"
+   "last_pass": "2026-11-21",
+   "date": "2026-12-03",
+   "expected_utc": "2026-12-03T00:01:08Z"
   },
   {
    "role": "SEA",
@@ -81,94 +81,93 @@
   "sample": false
  },
  "provisional_text": "Early data. NISAR has not finished checking it. Numbers may change.",
- "headline": "More land is probably flooded than on the last radar pass.",
- "headline_key": "worse",
- "sub": "The satellite looked again on 9 Nov, 12 days after landfall. The numbers are likely to change as more radar pictures arrive. Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone. Early data. NISAR has not finished checking it. Numbers may change.",
- "lead": "The satellite looked again on 9 Nov, 12 days after landfall. The numbers are likely to change as more radar pictures arrive. Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone.",
+ "headline": "Most of the flooded land around Cyclone Arnab has probably drained.",
+ "headline_key": "recovery.most",
+ "sub": "The satellite looked again on 21 Nov, 24 days after landfall. The numbers are likely to change as more radar pictures arrive. Early data. NISAR has not finished checking it. Numbers may change.",
+ "lead": "The satellite looked again on 21 Nov, 24 days after landfall. The numbers are likely to change as more radar pictures arrive.",
  "since_last": {
-  "prev_date": "2026-10-28",
-  "this_date": "2026-11-09",
-  "prev_scene": "L_COAST_1028",
-  "this_scene": "L_COAST_1109",
+  "prev_date": "2026-11-09",
+  "this_date": "2026-11-21",
+  "prev_scene": "L_COAST_1109",
+  "this_scene": "L_COAST_20261121_T055",
   "days_apart": 12,
-  "flooded_mandals_prev": 0,
-  "flooded_mandals_now": 8,
-  "receded": 0,
+  "flooded_mandals_prev": 8,
+  "flooded_mandals_now": 0,
+  "receded": 7,
   "still": 1,
-  "worse": 7,
+  "worse": 0,
   "chips": {
    "down": "went down",
    "same": "about the same",
    "up": "went up"
   },
   "title": "Since the last pass",
-  "text": "On 28 Oct no mandal looked probably flooded. On 9 Nov, 8 do. 1 stayed about the same, 7 went up.",
+  "text": "On 9 Nov, 8 mandals looked probably flooded. On 21 Nov, none do. 7 went down, 1 stayed about the same.",
   "water_pct_change": {
-   "mandal": "Nidadavole",
-   "prev": 0.0,
-   "now": 10.9,
-   "change_pts": 10.9,
+   "mandal": "Rajahmundry (Urban)",
+   "prev": 0.54,
+   "now": 0.96,
+   "change_pts": 0.42,
    "source_file": "data/processed/mandal_rank.json"
-  }
+  },
+  "since_landfall": "Since the landfall pass, the share in Rajahmundry (Urban) has changed. It was about 0.1 then and is about 1.0 now, in every 100 acres."
  },
- "confounders": [
-  "Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone."
- ],
+ "confounders": [],
  "class_summary": {
-  "new_water_km2": 83.755,
-  "new_water_pct_of_land": 1.598,
+  "new_water_km2": 11.816,
+  "new_water_pct_of_land": 0.225,
   "range_km2": [
-   61.098,
-   107.726
+   7.005,
+   21.104
   ],
   "normal_new_water_pct_of_land": 0.035,
-  "times_normal": "more than ten times",
-  "text": "Radar points to about 84 square km of new open water (61 to 108 with other settings). That is more than ten times a normal fortnight.",
+  "times_normal": "about 6 times",
+  "text": "Radar points to about 12 square km of new open water (7 to 21 with other settings). That is about 6 times a normal fortnight.",
   "source_file": "data/web/class_stats.json"
  },
  "big_numbers": [
   {
    "id": "top_mandal",
-   "value": "11",
+   "value": "1.0",
    "unit": "in every 100 acres",
-   "label": "of Nidadavole was probably under water, give or take 2",
-   "mandal": "Nidadavole",
-   "raw": 10.9,
-   "err": 1.61,
+   "label": "of Rajahmundry (Urban) is likely new open water, the most of any mandal, give or take 1",
+   "mandal": "Rajahmundry (Urban)",
+   "raw": 0.96,
+   "err": 0.39,
    "source_file": "data/processed/mandal_rank.json",
    "fmt": "num",
-   "source": "data/processed/mandal_rank.json#by_date.2026-11-09.rows.60.water_pct",
-   "err_source": "data/processed/mandal_rank.json#by_date.2026-11-09.rows.60.err",
+   "source": "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.water_pct",
+   "err_source": "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.err",
    "err_fmt": "err_text"
   },
   {
    "id": "change",
-   "value": "+11",
+   "value": "+0.4",
    "unit": "points",
-   "label": "change in Nidadavole since the last radar pass",
-   "raw": 10.9,
+   "label": "change in Rajahmundry (Urban) since the last radar pass",
+   "raw": 0.42,
    "source_file": "data/processed/mandal_rank.json",
    "fmt": "signed",
    "source": {
     "derived": "difference",
     "inputs": [
-     "data/processed/mandal_rank.json#by_date.2026-11-09.rows.60.water_pct",
-     "data/processed/mandal_rank.json#by_date.2026-10-28.rows.60.water_pct"
+     "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.water_pct",
+     "data/processed/mandal_rank.json#by_date.2026-11-09.rows.11.water_pct"
     ]
    }
   },
   {
    "id": "days_after",
-   "value": "12",
+   "value": "24",
    "unit": "days",
    "label": "after the storm reached land, when this radar picture was taken",
-   "raw": 12,
+   "raw": 24,
    "source_file": "data/events/ (landfall_day) and data/h5/catalog.json",
    "fmt": "int",
    "source": {
     "derived": "days_between",
     "inputs": [
-     "data/processed/mandal_rank.json#by_date.2026-11-09.date",
+     "data/processed/mandal_rank.json#by_date.2026-11-21.date",
      "data/processed/events.json#events.0.landfall.date"
     ]
    }
@@ -178,147 +177,147 @@
  "map": {
   "layer_id": "nisar_class_new_water",
   "mode": "share",
-  "date": "2026-11-09",
+  "date": "2026-11-21",
   "caption_key": "share"
  },
  "mandal_sentences": {
-  "Thallarevu": "Little sign of new open water in Thallarevu: about 0.3 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Achanta": "Little sign of new open water in Achanta: about 0 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Karapa": "Little sign of new open water in Karapa: about 1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Alamuru": "Little sign of new open water in Alamuru: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Rayavaram": "Little sign of new open water in Rayavaram: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "P.Gannavaram": "Little sign of new open water in P.Gannavaram: about 0 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
+  "Thallarevu": "Little sign of new open water in Thallarevu: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Achanta": "Little sign of new open water in Achanta: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Karapa": "Little sign of new open water in Karapa: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Alamuru": "Little sign of new open water in Alamuru: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Rayavaram": "Little sign of new open water in Rayavaram: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "P.Gannavaram": "Little sign of new open water in P.Gannavaram: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
   "Jaggampeta": "The radar did not see enough of this mandal to say.",
-  "Ambajipeta": "Little sign of new open water in Ambajipeta: about 0 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
+  "Ambajipeta": "Little sign of new open water in Ambajipeta: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
   "Palacoderu": "The radar did not see enough of this mandal to say.",
-  "Ramachandrapuram": "Little sign of new open water in Ramachandrapuram: about 0.8 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Kajuluru": "Little sign of new open water in Kajuluru: about 0.7 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Rajahmundry (Urban)": "Little sign of new open water in Rajahmundry (Urban): about 0.5 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Ravulapalem": "Little sign of new open water in Ravulapalem: about 0 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Peravali": "Little sign of new open water in Peravali: about 0.5 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Ainavilli": "Little sign of new open water in Ainavilli: about 0.4 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Poduru": "Little sign of new open water in Poduru: about 0.2 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Peddapuram": "Little sign of new open water in Peddapuram: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
+  "Ramachandrapuram": "Little sign of new open water in Ramachandrapuram: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Kajuluru": "Little sign of new open water in Kajuluru: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Rajahmundry (Urban)": "Little sign of new open water in Rajahmundry (Urban): about 1.0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Ravulapalem": "Little sign of new open water in Ravulapalem: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Peravali": "Little sign of new open water in Peravali: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Ainavilli": "Little sign of new open water in Ainavilli: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Poduru": "Little sign of new open water in Poduru: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Peddapuram": "Little sign of new open water in Peddapuram: about 0.2 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
   "Gandepalle": "The radar did not see enough of this mandal to say.",
   "Pithapuram": "The radar did not see enough of this mandal to say.",
-  "Atreyapuram": "Little sign of new open water in Atreyapuram: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Rajanagaram": "Little sign of new open water in Rajanagaram: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "K Gangavaram": "Little sign of new open water in K Gangavaram: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
+  "Atreyapuram": "Little sign of new open water in Atreyapuram: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Rajanagaram": "Little sign of new open water in Rajanagaram: about 0.8 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "K Gangavaram": "Little sign of new open water in K Gangavaram: about 0.3 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
   "Devarapalle": "The radar did not see enough of this mandal to say.",
-  "Kapileswarapuram": "Little sign of new open water in Kapileswarapuram: about 0.4 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Rangampeta": "Little sign of new open water in Rangampeta: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Rajahmundry Rural": "Little sign of new open water in Rajahmundry Rural: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Uppalaguptam": "Little sign of new open water in Uppalaguptam: about 0.6 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
+  "Kapileswarapuram": "Little sign of new open water in Kapileswarapuram: about 0.2 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Rangampeta": "Little sign of new open water in Rangampeta: about 0.4 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Rajahmundry Rural": "Little sign of new open water in Rajahmundry Rural: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Uppalaguptam": "Little sign of new open water in Uppalaguptam: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
   "Korukonda": "The radar did not see enough of this mandal to say.",
-  "Mamidikuduru": "Little sign of new open water in Mamidikuduru: about 0.2 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Razole": "Little sign of new open water in Razole: about 0.7 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Malikipuram": "Little sign of new open water in Malikipuram: about 0.6 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Undrajavaram": "About 10 in every 100 acres of Undrajavaram were probably under water on 9 Nov, give or take 1. That is more than ten times a normal fortnight. The share here has probably gone up since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Biccavolu": "Little sign of new open water in Biccavolu: about 0 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
+  "Mamidikuduru": "Little sign of new open water in Mamidikuduru: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Razole": "Little sign of new open water in Razole: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Malikipuram": "Little sign of new open water in Malikipuram: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Undrajavaram": "Little sign of new open water in Undrajavaram: about 0 in every 100 acres, give or take 1. The share here has probably gone down since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Biccavolu": "Little sign of new open water in Biccavolu: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
   "Tallapudi": "The radar did not see enough of this mandal to say.",
-  "Kakinada (Rural)": "Little sign of new open water in Kakinada (Rural): about 2 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Kakinada (Urban)": "Little sign of new open water in Kakinada (Urban): about 1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
+  "Kakinada (Rural)": "Little sign of new open water in Kakinada (Rural): about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Kakinada (Urban)": "Little sign of new open water in Kakinada (Urban): about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
   "Seethanagaram": "The radar did not see enough of this mandal to say.",
-  "Palacole": "About 3 in every 100 acres of Palacole were probably under water on 9 Nov, give or take 2. That is more than ten times a normal fortnight. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Yelamanchili": "Little sign of new open water in Yelamanchili: about 0.7 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
+  "Palacole": "Little sign of new open water in Palacole: about 0.2 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Yelamanchili": "Little sign of new open water in Yelamanchili: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
   "Tadepalligudem": "The radar did not see enough of this mandal to say.",
-  "Katrenikona": "Little sign of new open water in Katrenikona: about 0.2 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Iragavaram": "Little sign of new open water in Iragavaram: about 1 in every 100 acres, give or take 1. The share here has probably gone up since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Kothapalle": "Little sign of new open water in Kothapalle: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Anaparthy": "Little sign of new open water in Anaparthy: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Kadiam": "Little sign of new open water in Kadiam: about 0.3 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
+  "Katrenikona": "Little sign of new open water in Katrenikona: about 0.3 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Iragavaram": "Little sign of new open water in Iragavaram: about 0 in every 100 acres, give or take 1. The share here has probably gone down since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Kothapalle": "Little sign of new open water in Kothapalle: about 0.2 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Anaparthy": "Little sign of new open water in Anaparthy: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Kadiam": "Little sign of new open water in Kadiam: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
   "Gopalapuram": "The radar did not see enough of this mandal to say.",
   "Mogalthur": "The radar did not see enough of this mandal to say.",
-  "Veeravasaram": "Little sign of new open water in Veeravasaram: about 3 in every 100 acres, give or take 2. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
+  "Veeravasaram": "Little sign of new open water in Veeravasaram: about 0.2 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
   "Attili": "The radar did not see enough of this mandal to say.",
-  "Penumantra": "About 6 in every 100 acres of Penumantra were probably under water on 9 Nov, give or take 2. That is more than ten times a normal fortnight. The share here has probably gone up since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Penugonda": "Little sign of new open water in Penugonda: about 0 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Tanuku": "About 10 in every 100 acres of Tanuku were probably under water on 9 Nov, give or take 1. That is more than ten times a normal fortnight. The share here has probably gone up since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Samalkota": "About 4 in every 100 acres of Samalkota were probably under water on 9 Nov, give or take 2. That is more than ten times a normal fortnight. The share here has probably gone up since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Allavaram": "Little sign of new open water in Allavaram: about 0.7 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Amalapuram": "Little sign of new open water in Amalapuram: about 0.8 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Kovvur": "About 4 in every 100 acres of Kovvur were probably under water on 9 Nov, give or take 1. That is more than ten times a normal fortnight. The share here has probably gone up since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Narasapuram": "Little sign of new open water in Narasapuram: about 2 in every 100 acres, give or take 2. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Chagallu": "Little sign of new open water in Chagallu: about 3 in every 100 acres, give or take 1. The share here has probably gone up since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Mandapeta": "Little sign of new open water in Mandapeta: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Mummidivaram": "Little sign of new open water in Mummidivaram: about 0.2 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Nidadavole": "About 11 in every 100 acres of Nidadavole were probably under water on 9 Nov, give or take 2. That is more than ten times a normal fortnight. The share here has probably gone up since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Sakhinetipalle": "Little sign of new open water in Sakhinetipalle: about 0.3 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Kothapeta": "Little sign of new open water in Kothapeta: about 0 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Pedapudi": "About 3 in every 100 acres of Pedapudi were probably under water on 9 Nov, give or take 1. That is more than ten times a normal fortnight. The share here has probably gone up since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "I. Polavaram": "Little sign of new open water in I. Polavaram: about 0.5 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials.",
-  "Yanam Taluk": "Little sign of new open water in Yanam Taluk: about 0 in every 100 acres, give or take 1. There is no clear change here since 28 Oct. This is a guide to where to look. Ask your local officials."
+  "Penumantra": "Little sign of new open water in Penumantra: about 0.1 in every 100 acres, give or take 1. The share here has probably gone down since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Penugonda": "Little sign of new open water in Penugonda: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Tanuku": "Little sign of new open water in Tanuku: about 0 in every 100 acres, give or take 1. The share here has probably gone down since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Samalkota": "Little sign of new open water in Samalkota: about 0.3 in every 100 acres, give or take 1. The share here has probably gone down since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Allavaram": "Little sign of new open water in Allavaram: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Amalapuram": "Little sign of new open water in Amalapuram: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Kovvur": "Little sign of new open water in Kovvur: about 0.4 in every 100 acres, give or take 1. The share here has probably gone down since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Narasapuram": "Little sign of new open water in Narasapuram: about 0.5 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Chagallu": "Little sign of new open water in Chagallu: about 0.2 in every 100 acres, give or take 1. The share here has probably gone down since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Mandapeta": "Little sign of new open water in Mandapeta: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Mummidivaram": "Little sign of new open water in Mummidivaram: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Nidadavole": "Little sign of new open water in Nidadavole: about 0.1 in every 100 acres, give or take 1. The share here has probably gone down since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Sakhinetipalle": "Little sign of new open water in Sakhinetipalle: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Kothapeta": "Little sign of new open water in Kothapeta: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Pedapudi": "Little sign of new open water in Pedapudi: about 0.1 in every 100 acres, give or take 1. The share here has probably gone down since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "I. Polavaram": "Little sign of new open water in I. Polavaram: about 0.1 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials.",
+  "Yanam Taluk": "Little sign of new open water in Yanam Taluk: about 0 in every 100 acres, give or take 1. There is no clear change here since 9 Nov. This is a guide to where to look. Ask your local officials."
  },
  "mandals": {
   "Thallarevu": {
-   "water_pct": 0.26,
-   "err": 0.18,
+   "water_pct": 0.12,
+   "err": 0.12,
    "normal_water_pct": 0.01,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 31,
+   "rank_water": 18,
    "area_km2": 293.4,
-   "water_km2": 0.764,
+   "water_km2": 0.356,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Achanta": {
-   "water_pct": 0.01,
+   "water_pct": 0.0,
    "err": 0.03,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 52,
+   "rank_water": 51,
    "area_km2": 85.5,
-   "water_km2": 0.007,
+   "water_km2": 0.004,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Karapa": {
-   "water_pct": 1.03,
-   "err": 0.75,
+   "water_pct": 0.02,
+   "err": 0.01,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 13,
+   "rank_water": 46,
    "area_km2": 78.4,
-   "water_km2": 0.806,
+   "water_km2": 0.016,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Alamuru": {
-   "water_pct": 0.06,
-   "err": 0.07,
+   "water_pct": 0.05,
+   "err": 0.04,
    "normal_water_pct": 0.01,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 46,
+   "rank_water": 33,
    "area_km2": 64.61,
-   "water_km2": 0.036,
+   "water_km2": 0.034,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Rayavaram": {
-   "water_pct": 0.07,
-   "err": 0.07,
+   "water_pct": 0.0,
+   "err": 0.0,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 45,
+   "rank_water": 54,
    "area_km2": 73.66,
-   "water_km2": 0.051,
+   "water_km2": 0.002,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "P.Gannavaram": {
-   "water_pct": 0.01,
-   "err": 0.03,
+   "water_pct": 0.02,
+   "err": 0.12,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 53,
+   "rank_water": 47,
    "area_km2": 96.79,
-   "water_km2": 0.006,
+   "water_km2": 0.019,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
@@ -335,698 +334,698 @@
    "confidence": "low"
   },
   "Ambajipeta": {
-   "water_pct": 0.02,
-   "err": 0.02,
+   "water_pct": 0.0,
+   "err": 0.01,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 50,
+   "rank_water": 53,
    "area_km2": 52.49,
-   "water_km2": 0.009,
+   "water_km2": 0.0,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Palacoderu": {
-   "water_pct": 3.09,
-   "err": 3.28,
+   "water_pct": 0.28,
+   "err": 0.15,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
    "rank_water": null,
    "area_km2": 2.86,
-   "water_km2": 0.088,
+   "water_km2": 0.008,
    "coverage_pct": 92.5,
    "confidence": "low"
   },
   "Ramachandrapuram": {
-   "water_pct": 0.82,
-   "err": 0.42,
+   "water_pct": 0.04,
+   "err": 0.01,
    "normal_water_pct": 0.01,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 17,
+   "rank_water": 36,
    "area_km2": 95.79,
-   "water_km2": 0.783,
+   "water_km2": 0.037,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Kajuluru": {
-   "water_pct": 0.71,
-   "err": 0.51,
+   "water_pct": 0.02,
+   "err": 0.06,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 18,
+   "rank_water": 45,
    "area_km2": 101.49,
-   "water_km2": 0.716,
+   "water_km2": 0.025,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Rajahmundry (Urban)": {
-   "water_pct": 0.54,
-   "err": 0.21,
+   "water_pct": 0.96,
+   "err": 0.39,
    "normal_water_pct": 0.05,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 24,
+   "rank_water": 1,
    "area_km2": 65.11,
-   "water_km2": 0.351,
+   "water_km2": 0.628,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Ravulapalem": {
-   "water_pct": 0.02,
-   "err": 0.04,
+   "water_pct": 0.08,
+   "err": 0.14,
    "normal_water_pct": 0.01,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 51,
+   "rank_water": 29,
    "area_km2": 76.76,
-   "water_km2": 0.018,
+   "water_km2": 0.062,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Peravali": {
-   "water_pct": 0.45,
-   "err": 0.16,
+   "water_pct": 0.06,
+   "err": 0.07,
    "normal_water_pct": 0.01,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 26,
+   "rank_water": 32,
    "area_km2": 109.26,
-   "water_km2": 0.492,
+   "water_km2": 0.068,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Ainavilli": {
-   "water_pct": 0.37,
-   "err": 0.23,
+   "water_pct": 0.09,
+   "err": 0.29,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 28,
+   "rank_water": 21,
    "area_km2": 84.47,
-   "water_km2": 0.315,
+   "water_km2": 0.072,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Poduru": {
-   "water_pct": 0.21,
-   "err": 0.18,
+   "water_pct": 0.01,
+   "err": 0.01,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 34,
+   "rank_water": 48,
    "area_km2": 88.4,
-   "water_km2": 0.184,
+   "water_km2": 0.006,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Peddapuram": {
-   "water_pct": 0.07,
-   "err": 0.02,
+   "water_pct": 0.18,
+   "err": 0.11,
    "normal_water_pct": 0.02,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 44,
+   "rank_water": 12,
    "area_km2": 92.77,
-   "water_km2": 0.064,
+   "water_km2": 0.17,
    "coverage_pct": 99.6,
    "confidence": "high"
   },
   "Gandepalle": {
-   "water_pct": 0.13,
-   "err": 0.12,
+   "water_pct": 0.89,
+   "err": 0.46,
    "normal_water_pct": 0.18,
    "trend": "flat",
    "flooded": false,
    "rank_water": null,
    "area_km2": 21.61,
-   "water_km2": 0.028,
+   "water_km2": 0.192,
    "coverage_pct": 98.0,
    "confidence": "low"
   },
   "Pithapuram": {
-   "water_pct": 0.09,
+   "water_pct": 0.1,
    "err": 0.04,
    "normal_water_pct": 0.19,
    "trend": "flat",
    "flooded": false,
    "rank_water": null,
    "area_km2": 31.92,
-   "water_km2": 0.028,
+   "water_km2": 0.033,
    "coverage_pct": 98.6,
    "confidence": "low"
   },
   "Atreyapuram": {
-   "water_pct": 0.09,
-   "err": 0.16,
+   "water_pct": 0.13,
+   "err": 0.25,
    "normal_water_pct": 0.1,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 42,
+   "rank_water": 15,
    "area_km2": 113.23,
-   "water_km2": 0.107,
+   "water_km2": 0.15,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Rajanagaram": {
-   "water_pct": 0.08,
-   "err": 0.05,
-   "normal_water_pct": 0.01,
-   "trend": "flat",
-   "flooded": false,
-   "rank_water": 43,
-   "area_km2": 189.65,
-   "water_km2": 0.144,
-   "coverage_pct": 99.9,
-   "confidence": "high"
-  },
-  "K Gangavaram": {
-   "water_pct": 0.12,
+   "water_pct": 0.81,
    "err": 0.25,
    "normal_water_pct": 0.01,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 39,
+   "rank_water": 2,
+   "area_km2": 189.65,
+   "water_km2": 1.528,
+   "coverage_pct": 99.9,
+   "confidence": "high"
+  },
+  "K Gangavaram": {
+   "water_pct": 0.26,
+   "err": 0.66,
+   "normal_water_pct": 0.01,
+   "trend": "flat",
+   "flooded": false,
+   "rank_water": 8,
    "area_km2": 98.7,
-   "water_km2": 0.118,
+   "water_km2": 0.254,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Devarapalle": {
-   "water_pct": 0.13,
-   "err": 0.22,
+   "water_pct": 0.18,
+   "err": 0.14,
    "normal_water_pct": 0.01,
    "trend": "flat",
    "flooded": false,
    "rank_water": null,
    "area_km2": 10.48,
-   "water_km2": 0.014,
+   "water_km2": 0.019,
    "coverage_pct": 98.5,
    "confidence": "low"
   },
   "Kapileswarapuram": {
-   "water_pct": 0.44,
-   "err": 0.29,
+   "water_pct": 0.17,
+   "err": 0.44,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 27,
+   "rank_water": 14,
    "area_km2": 95.67,
-   "water_km2": 0.426,
+   "water_km2": 0.159,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Rangampeta": {
-   "water_pct": 0.14,
-   "err": 0.16,
+   "water_pct": 0.42,
+   "err": 0.39,
    "normal_water_pct": 0.09,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 38,
+   "rank_water": 4,
    "area_km2": 124.23,
-   "water_km2": 0.174,
+   "water_km2": 0.519,
    "coverage_pct": 99.9,
    "confidence": "high"
   },
   "Rajahmundry Rural": {
-   "water_pct": 0.12,
-   "err": 0.06,
+   "water_pct": 0.01,
+   "err": 0.02,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 40,
+   "rank_water": 49,
    "area_km2": 42.05,
-   "water_km2": 0.052,
+   "water_km2": 0.006,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Uppalaguptam": {
-   "water_pct": 0.56,
-   "err": 0.63,
+   "water_pct": 0.04,
+   "err": 0.2,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 23,
+   "rank_water": 40,
    "area_km2": 79.42,
-   "water_km2": 0.442,
+   "water_km2": 0.032,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Korukonda": {
-   "water_pct": 0.77,
-   "err": 0.61,
+   "water_pct": 2.32,
+   "err": 0.74,
    "normal_water_pct": 0.03,
-   "trend": "flat",
+   "trend": "up",
    "flooded": false,
    "rank_water": null,
    "area_km2": 33.62,
-   "water_km2": 0.257,
+   "water_km2": 0.778,
    "coverage_pct": 99.1,
    "confidence": "low"
   },
   "Mamidikuduru": {
-   "water_pct": 0.19,
-   "err": 0.12,
+   "water_pct": 0.06,
+   "err": 0.1,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 35,
+   "rank_water": 30,
    "area_km2": 70.34,
-   "water_km2": 0.132,
+   "water_km2": 0.041,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Razole": {
-   "water_pct": 0.65,
-   "err": 0.49,
+   "water_pct": 0.04,
+   "err": 0.08,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 21,
+   "rank_water": 37,
    "area_km2": 85.56,
-   "water_km2": 0.56,
+   "water_km2": 0.037,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Malikipuram": {
-   "water_pct": 0.62,
-   "err": 0.62,
+   "water_pct": 0.08,
+   "err": 0.2,
    "normal_water_pct": 0.01,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 22,
+   "rank_water": 26,
    "area_km2": 91.4,
-   "water_km2": 0.569,
+   "water_km2": 0.071,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Undrajavaram": {
-   "water_pct": 9.83,
-   "err": 1.09,
+   "water_pct": 0.04,
+   "err": 0.04,
    "normal_water_pct": 0.0,
-   "trend": "up",
-   "flooded": true,
-   "rank_water": 3,
+   "trend": "down",
+   "flooded": false,
+   "rank_water": 39,
    "area_km2": 77.96,
-   "water_km2": 7.665,
+   "water_km2": 0.029,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Biccavolu": {
-   "water_pct": 0.03,
-   "err": 0.04,
+   "water_pct": 0.13,
+   "err": 0.05,
    "normal_water_pct": 0.03,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 48,
+   "rank_water": 16,
    "area_km2": 93.78,
-   "water_km2": 0.03,
+   "water_km2": 0.118,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Tallapudi": {
-   "water_pct": 8.88,
-   "err": 1.64,
+   "water_pct": 0.21,
+   "err": 0.22,
    "normal_water_pct": 0.02,
-   "trend": "up",
+   "trend": "down",
    "flooded": false,
    "rank_water": null,
    "area_km2": 26.66,
-   "water_km2": 2.367,
+   "water_km2": 0.056,
    "coverage_pct": 98.7,
    "confidence": "low"
   },
   "Kakinada (Rural)": {
-   "water_pct": 1.78,
-   "err": 1.03,
+   "water_pct": 0.09,
+   "err": 0.08,
    "normal_water_pct": 0.1,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 12,
+   "rank_water": 23,
    "area_km2": 104.24,
-   "water_km2": 1.851,
+   "water_km2": 0.093,
    "coverage_pct": 100.0,
-   "confidence": "medium"
+   "confidence": "high"
   },
   "Kakinada (Urban)": {
-   "water_pct": 1.02,
-   "err": 0.48,
+   "water_pct": 0.04,
+   "err": 0.03,
    "normal_water_pct": 0.03,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 15,
+   "rank_water": 35,
    "area_km2": 34.03,
-   "water_km2": 0.346,
+   "water_km2": 0.014,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Seethanagaram": {
-   "water_pct": 2.5,
-   "err": 1.21,
+   "water_pct": 2.94,
+   "err": 1.55,
    "normal_water_pct": 0.05,
    "trend": "flat",
    "flooded": false,
    "rank_water": null,
    "area_km2": 20.65,
-   "water_km2": 0.516,
+   "water_km2": 0.608,
    "coverage_pct": 98.2,
    "confidence": "low"
   },
   "Palacole": {
-   "water_pct": 3.22,
-   "err": 1.73,
+   "water_pct": 0.2,
+   "err": 0.18,
    "normal_water_pct": 0.01,
    "trend": "flat",
-   "flooded": true,
-   "rank_water": 8,
+   "flooded": false,
+   "rank_water": 10,
    "area_km2": 84.21,
-   "water_km2": 2.71,
+   "water_km2": 0.165,
    "coverage_pct": 100.0,
-   "confidence": "medium"
+   "confidence": "high"
   },
   "Yelamanchili": {
-   "water_pct": 0.7,
-   "err": 0.76,
-   "normal_water_pct": 0.01,
-   "trend": "flat",
-   "flooded": false,
-   "rank_water": 19,
-   "area_km2": 88.66,
-   "water_km2": 0.623,
-   "coverage_pct": 100.0,
-   "confidence": "high"
-  },
-  "Tadepalligudem": {
-   "water_pct": 19.1,
-   "err": 1.73,
-   "normal_water_pct": 0.01,
-   "trend": "up",
-   "flooded": false,
-   "rank_water": null,
-   "area_km2": 19.75,
-   "water_km2": 3.773,
-   "coverage_pct": 98.1,
-   "confidence": "low"
-  },
-  "Katrenikona": {
-   "water_pct": 0.22,
-   "err": 0.28,
-   "normal_water_pct": 0.03,
-   "trend": "flat",
-   "flooded": false,
-   "rank_water": 32,
-   "area_km2": 207.21,
-   "water_km2": 0.461,
-   "coverage_pct": 100.0,
-   "confidence": "high"
-  },
-  "Iragavaram": {
-   "water_pct": 1.02,
-   "err": 0.22,
-   "normal_water_pct": 0.0,
-   "trend": "up",
-   "flooded": false,
-   "rank_water": 14,
-   "area_km2": 66.59,
-   "water_km2": 0.678,
-   "coverage_pct": 100.0,
-   "confidence": "high"
-  },
-  "Kothapalle": {
-   "water_pct": 0.15,
-   "err": 0.17,
-   "normal_water_pct": 0.14,
-   "trend": "flat",
-   "flooded": false,
-   "rank_water": 36,
-   "area_km2": 63.28,
-   "water_km2": 0.092,
-   "coverage_pct": 99.3,
-   "confidence": "high"
-  },
-  "Anaparthy": {
-   "water_pct": 0.11,
-   "err": 0.14,
+   "water_pct": 0.03,
+   "err": 0.09,
    "normal_water_pct": 0.01,
    "trend": "flat",
    "flooded": false,
    "rank_water": 41,
+   "area_km2": 88.66,
+   "water_km2": 0.024,
+   "coverage_pct": 100.0,
+   "confidence": "high"
+  },
+  "Tadepalligudem": {
+   "water_pct": 0.12,
+   "err": 0.09,
+   "normal_water_pct": 0.01,
+   "trend": "down",
+   "flooded": false,
+   "rank_water": null,
+   "area_km2": 19.75,
+   "water_km2": 0.024,
+   "coverage_pct": 98.1,
+   "confidence": "low"
+  },
+  "Katrenikona": {
+   "water_pct": 0.35,
+   "err": 0.28,
+   "normal_water_pct": 0.03,
+   "trend": "flat",
+   "flooded": false,
+   "rank_water": 6,
+   "area_km2": 207.21,
+   "water_km2": 0.723,
+   "coverage_pct": 100.0,
+   "confidence": "high"
+  },
+  "Iragavaram": {
+   "water_pct": 0.02,
+   "err": 0.01,
+   "normal_water_pct": 0.0,
+   "trend": "down",
+   "flooded": false,
+   "rank_water": 43,
+   "area_km2": 66.59,
+   "water_km2": 0.015,
+   "coverage_pct": 100.0,
+   "confidence": "high"
+  },
+  "Kothapalle": {
+   "water_pct": 0.18,
+   "err": 0.2,
+   "normal_water_pct": 0.14,
+   "trend": "flat",
+   "flooded": false,
+   "rank_water": 11,
+   "area_km2": 63.28,
+   "water_km2": 0.114,
+   "coverage_pct": 99.3,
+   "confidence": "high"
+  },
+  "Anaparthy": {
+   "water_pct": 0.02,
+   "err": 0.01,
+   "normal_water_pct": 0.01,
+   "trend": "flat",
+   "flooded": false,
+   "rank_water": 42,
    "area_km2": 52.99,
-   "water_km2": 0.058,
+   "water_km2": 0.01,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Kadiam": {
-   "water_pct": 0.26,
-   "err": 0.14,
+   "water_pct": 0.02,
+   "err": 0.02,
    "normal_water_pct": 0.01,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 30,
+   "rank_water": 44,
    "area_km2": 61.94,
-   "water_km2": 0.162,
+   "water_km2": 0.013,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Gopalapuram": {
-   "water_pct": 26.52,
-   "err": 6.75,
+   "water_pct": 2.38,
+   "err": 1.56,
    "normal_water_pct": 0.05,
-   "trend": "up",
+   "trend": "down",
    "flooded": false,
    "rank_water": null,
    "area_km2": 2.33,
-   "water_km2": 0.619,
+   "water_km2": 0.056,
    "coverage_pct": 95.6,
    "confidence": "low"
   },
   "Mogalthur": {
-   "water_pct": 0.4,
-   "err": 0.52,
+   "water_pct": 0.07,
+   "err": 0.14,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
    "rank_water": null,
    "area_km2": 33.45,
-   "water_km2": 0.134,
+   "water_km2": 0.024,
    "coverage_pct": 98.4,
    "confidence": "low"
   },
   "Veeravasaram": {
-   "water_pct": 2.83,
-   "err": 2.13,
+   "water_pct": 0.21,
+   "err": 0.26,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
    "rank_water": 9,
    "area_km2": 67.13,
-   "water_km2": 1.898,
+   "water_km2": 0.139,
    "coverage_pct": 99.5,
-   "confidence": "medium"
+   "confidence": "high"
   },
   "Attili": {
-   "water_pct": 15.52,
-   "err": 1.19,
+   "water_pct": 0.01,
+   "err": 0.03,
    "normal_water_pct": 0.0,
-   "trend": "up",
+   "trend": "down",
    "flooded": false,
    "rank_water": null,
    "area_km2": 35.57,
-   "water_km2": 5.521,
+   "water_km2": 0.004,
    "coverage_pct": 98.1,
    "confidence": "low"
   },
   "Penumantra": {
-   "water_pct": 5.54,
-   "err": 1.74,
+   "water_pct": 0.11,
+   "err": 0.13,
    "normal_water_pct": 0.02,
-   "trend": "up",
-   "flooded": true,
-   "rank_water": 4,
+   "trend": "down",
+   "flooded": false,
+   "rank_water": 20,
    "area_km2": 79.14,
-   "water_km2": 4.382,
+   "water_km2": 0.089,
    "coverage_pct": 100.0,
-   "confidence": "medium"
+   "confidence": "high"
   },
   "Penugonda": {
-   "water_pct": 0.03,
-   "err": 0.03,
+   "water_pct": 0.08,
+   "err": 0.07,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 49,
+   "rank_water": 28,
    "area_km2": 70.48,
-   "water_km2": 0.019,
+   "water_km2": 0.055,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Tanuku": {
-   "water_pct": 10.24,
-   "err": 1.15,
+   "water_pct": 0.04,
+   "err": 0.02,
    "normal_water_pct": 0.02,
-   "trend": "up",
-   "flooded": true,
-   "rank_water": 2,
+   "trend": "down",
+   "flooded": false,
+   "rank_water": 38,
    "area_km2": 76.88,
-   "water_km2": 7.871,
+   "water_km2": 0.032,
    "coverage_pct": 99.7,
    "confidence": "high"
   },
   "Samalkota": {
-   "water_pct": 3.9,
-   "err": 1.61,
+   "water_pct": 0.29,
+   "err": 0.16,
    "normal_water_pct": 0.02,
-   "trend": "up",
-   "flooded": true,
-   "rank_water": 6,
+   "trend": "down",
+   "flooded": false,
+   "rank_water": 7,
    "area_km2": 130.75,
-   "water_km2": 5.1,
+   "water_km2": 0.373,
    "coverage_pct": 100.0,
-   "confidence": "medium"
+   "confidence": "high"
   },
   "Allavaram": {
-   "water_pct": 0.69,
-   "err": 0.67,
+   "water_pct": 0.05,
+   "err": 0.19,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 20,
+   "rank_water": 34,
    "area_km2": 98.42,
-   "water_km2": 0.676,
+   "water_km2": 0.052,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Amalapuram": {
-   "water_pct": 0.85,
-   "err": 0.41,
+   "water_pct": 0.0,
+   "err": 0.01,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 16,
+   "rank_water": 52,
    "area_km2": 71.95,
-   "water_km2": 0.614,
+   "water_km2": 0.002,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Kovvur": {
-   "water_pct": 4.46,
-   "err": 1.04,
+   "water_pct": 0.37,
+   "err": 0.21,
    "normal_water_pct": 0.05,
-   "trend": "up",
-   "flooded": true,
+   "trend": "down",
+   "flooded": false,
    "rank_water": 5,
    "area_km2": 125.88,
-   "water_km2": 5.611,
+   "water_km2": 0.468,
    "coverage_pct": 99.8,
    "confidence": "high"
   },
   "Narasapuram": {
-   "water_pct": 2.29,
-   "err": 1.6,
+   "water_pct": 0.5,
+   "err": 0.72,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 11,
+   "rank_water": 3,
    "area_km2": 149.95,
-   "water_km2": 3.431,
+   "water_km2": 0.754,
    "coverage_pct": 99.9,
-   "confidence": "medium"
+   "confidence": "high"
   },
   "Chagallu": {
-   "water_pct": 2.58,
-   "err": 0.5,
+   "water_pct": 0.17,
+   "err": 0.11,
    "normal_water_pct": 0.02,
-   "trend": "up",
+   "trend": "down",
    "flooded": false,
-   "rank_water": 10,
+   "rank_water": 13,
    "area_km2": 75.52,
-   "water_km2": 1.945,
+   "water_km2": 0.125,
    "coverage_pct": 99.6,
    "confidence": "high"
   },
   "Mandapeta": {
-   "water_pct": 0.14,
-   "err": 0.07,
+   "water_pct": 0.09,
+   "err": 0.04,
    "normal_water_pct": 0.05,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 37,
+   "rank_water": 24,
    "area_km2": 93.28,
-   "water_km2": 0.128,
+   "water_km2": 0.087,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Mummidivaram": {
-   "water_pct": 0.21,
-   "err": 0.25,
+   "water_pct": 0.08,
+   "err": 0.12,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 33,
+   "rank_water": 27,
    "area_km2": 74.91,
-   "water_km2": 0.161,
+   "water_km2": 0.058,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
   "Nidadavole": {
-   "water_pct": 10.9,
-   "err": 1.61,
+   "water_pct": 0.06,
+   "err": 0.05,
    "normal_water_pct": 0.04,
-   "trend": "up",
-   "flooded": true,
-   "rank_water": 1,
+   "trend": "down",
+   "flooded": false,
+   "rank_water": 31,
    "area_km2": 102.71,
-   "water_km2": 11.198,
+   "water_km2": 0.06,
    "coverage_pct": 99.9,
    "confidence": "high"
   },
   "Sakhinetipalle": {
-   "water_pct": 0.33,
-   "err": 0.36,
-   "normal_water_pct": 0.0,
-   "trend": "flat",
-   "flooded": false,
-   "rank_water": 29,
-   "area_km2": 109.08,
-   "water_km2": 0.355,
-   "coverage_pct": 100.0,
-   "confidence": "high"
-  },
-  "Kothapeta": {
-   "water_pct": 0.04,
-   "err": 0.13,
-   "normal_water_pct": 0.0,
-   "trend": "flat",
-   "flooded": false,
-   "rank_water": 47,
-   "area_km2": 76.38,
-   "water_km2": 0.034,
-   "coverage_pct": 100.0,
-   "confidence": "high"
-  },
-  "Pedapudi": {
-   "water_pct": 3.43,
-   "err": 1.36,
-   "normal_water_pct": 0.0,
-   "trend": "up",
-   "flooded": true,
-   "rank_water": 7,
-   "area_km2": 90.92,
-   "water_km2": 3.116,
-   "coverage_pct": 100.0,
-   "confidence": "medium"
-  },
-  "I. Polavaram": {
-   "water_pct": 0.45,
-   "err": 0.4,
+   "water_pct": 0.09,
+   "err": 0.23,
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
    "rank_water": 25,
+   "area_km2": 109.08,
+   "water_km2": 0.096,
+   "coverage_pct": 100.0,
+   "confidence": "high"
+  },
+  "Kothapeta": {
+   "water_pct": 0.13,
+   "err": 0.29,
+   "normal_water_pct": 0.0,
+   "trend": "flat",
+   "flooded": false,
+   "rank_water": 17,
+   "area_km2": 76.38,
+   "water_km2": 0.102,
+   "coverage_pct": 100.0,
+   "confidence": "high"
+  },
+  "Pedapudi": {
+   "water_pct": 0.11,
+   "err": 0.06,
+   "normal_water_pct": 0.0,
+   "trend": "down",
+   "flooded": false,
+   "rank_water": 19,
+   "area_km2": 90.92,
+   "water_km2": 0.096,
+   "coverage_pct": 100.0,
+   "confidence": "high"
+  },
+  "I. Polavaram": {
+   "water_pct": 0.09,
+   "err": 0.14,
+   "normal_water_pct": 0.0,
+   "trend": "flat",
+   "flooded": false,
+   "rank_water": 22,
    "area_km2": 100.05,
-   "water_km2": 0.452,
+   "water_km2": 0.089,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
@@ -1036,7 +1035,7 @@
    "normal_water_pct": 0.0,
    "trend": "flat",
    "flooded": false,
-   "rank_water": 54,
+   "rank_water": 50,
    "area_km2": 12.71,
    "water_km2": 0.001,
    "coverage_pct": 100.0,
@@ -1044,13 +1043,119 @@
   }
  },
  "scene": {
-  "date": "2026-11-09",
-  "scene_id": "L_COAST_1109",
+  "date": "2026-11-21",
+  "scene_id": "L_COAST_20261121_T055",
   "status": "VALIDATED",
-  "start_utc": "2026-11-09T00:01:07Z",
-  "days_after_landfall": 12
+  "start_utc": "2026-11-21T00:01:08Z",
+  "days_after_landfall": 24
  },
  "updates": [
+  {
+   "id": "2026-11-21",
+   "kind": "coast",
+   "date": "2026-11-21",
+   "scene_ids": [
+    "L_COAST_20261121_T055"
+   ],
+   "days_after_landfall": 24,
+   "status": "VALIDATED",
+   "headline_key": "recovery.most",
+   "headline": "Most of the flooded land around Cyclone Arnab has probably drained.",
+   "text": "The satellite looked again on 21 Nov, 24 days after landfall. The numbers are likely to change as more radar pictures arrive. Radar points to about 12 square km of new open water (7 to 21 with other settings). That is about 6 times a normal fortnight.",
+   "since_last": {
+    "prev_date": "2026-11-09",
+    "this_date": "2026-11-21",
+    "prev_scene": "L_COAST_1109",
+    "this_scene": "L_COAST_20261121_T055",
+    "days_apart": 12,
+    "flooded_mandals_prev": 8,
+    "flooded_mandals_now": 0,
+    "receded": 7,
+    "still": 1,
+    "worse": 0,
+    "chips": {
+     "down": "went down",
+     "same": "about the same",
+     "up": "went up"
+    },
+    "title": "Since the last pass",
+    "text": "On 9 Nov, 8 mandals looked probably flooded. On 21 Nov, none do. 7 went down, 1 stayed about the same.",
+    "water_pct_change": {
+     "mandal": "Rajahmundry (Urban)",
+     "prev": 0.54,
+     "now": 0.96,
+     "change_pts": 0.42,
+     "source_file": "data/processed/mandal_rank.json"
+    },
+    "since_landfall": "Since the landfall pass, the share in Rajahmundry (Urban) has changed. It was about 0.1 then and is about 1.0 now, in every 100 acres."
+   },
+   "confounders": [],
+   "permalink": "#tab=happened&mode=share&d=2026-11-21",
+   "hash": "tab=happened&mode=share&d=2026-11-21",
+   "map_layer_id": "nisar_class_new_water",
+   "start_utc": "2026-11-21T00:01:08Z",
+   "cataloged_utc": "2026-11-27T15:23:30Z",
+   "class_summary": {
+    "new_water_km2": 11.816,
+    "new_water_pct_of_land": 0.225,
+    "range_km2": [
+     7.005,
+     21.104
+    ],
+    "normal_new_water_pct_of_land": 0.035,
+    "times_normal": "about 6 times",
+    "text": "Radar points to about 12 square km of new open water (7 to 21 with other settings). That is about 6 times a normal fortnight.",
+    "source_file": "data/web/class_stats.json"
+   },
+   "big_numbers": [
+    {
+     "id": "top_mandal",
+     "value": "1.0",
+     "unit": "in every 100 acres",
+     "label": "of Rajahmundry (Urban) is likely new open water, the most of any mandal, give or take 1",
+     "mandal": "Rajahmundry (Urban)",
+     "raw": 0.96,
+     "err": 0.39,
+     "source_file": "data/processed/mandal_rank.json",
+     "fmt": "num",
+     "source": "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.water_pct",
+     "err_source": "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.err",
+     "err_fmt": "err_text"
+    },
+    {
+     "id": "change",
+     "value": "+0.4",
+     "unit": "points",
+     "label": "change in Rajahmundry (Urban) since the last radar pass",
+     "raw": 0.42,
+     "source_file": "data/processed/mandal_rank.json",
+     "fmt": "signed",
+     "source": {
+      "derived": "difference",
+      "inputs": [
+       "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.water_pct",
+       "data/processed/mandal_rank.json#by_date.2026-11-09.rows.11.water_pct"
+      ]
+     }
+    },
+    {
+     "id": "days_after",
+     "value": "24",
+     "unit": "days",
+     "label": "after the storm reached land, when this radar picture was taken",
+     "raw": 24,
+     "source_file": "data/events/ (landfall_day) and data/h5/catalog.json",
+     "fmt": "int",
+     "source": {
+      "derived": "days_between",
+      "inputs": [
+       "data/processed/mandal_rank.json#by_date.2026-11-21.date",
+       "data/processed/events.json#events.0.landfall.date"
+      ]
+     }
+    }
+   ]
+  },
   {
    "id": "2026-11-20",
    "kind": "sea",
@@ -1114,8 +1219,8 @@
    "confounders": [
     "Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone."
    ],
-   "permalink": "#tab=happened&mode=share&d=2026-11-09",
-   "hash": "tab=happened&mode=share&d=2026-11-09",
+   "permalink": "#tab=happened&mode=radar&role=coast&d=2026-11-09",
+   "hash": "tab=happened&mode=radar&role=coast&d=2026-11-09",
    "map_layer_id": "nisar_class_new_water",
    "start_utc": "2026-11-09T00:01:07Z",
    "cataloged_utc": "2026-11-14T10:53:41Z",
@@ -1324,33 +1429,32 @@
   ]
  },
  "caveats": [
-  "Early data. NISAR has not finished checking it. Numbers may change.",
-  "Cyclone Murasu (1 to 3 Nov) probably also put water on the land. The Godavari river peak (about 2 Nov) probably did too. This radar picture shows all of it together, not Cyclone Arnab alone."
+  "Early data. NISAR has not finished checking it. Numbers may change."
  ],
  "crop_stage": "kharif_harvest",
- "comparison_line": "About 84 square km of likely new open water, give or take 24. That is up from about 8 km² on 28 Oct. That is more than ten times a normal fortnight (about 2 km²).",
+ "comparison_line": "About 12 square km of likely new open water, give or take 9. That is down from about 84 km² on 9 Nov. That is about 6 times a normal fortnight (about 2 km²).",
  "three_numbers": [
   {
    "id": "new_water_km2",
-   "value": 84,
-   "err": 24,
+   "value": 12,
+   "err": 9,
    "unit": "km²",
-   "label": "of likely new open water, give or take 24",
-   "raw": 83.755,
+   "label": "of likely new open water, give or take 9",
+   "raw": 11.816,
    "fmt": "int",
-   "source": "data/web/class_stats.json#classes.20261109|k=3.0.new_water_km2"
+   "source": "data/web/class_stats.json#classes.20261121|k=3.0.new_water_km2"
   },
   {
    "id": "flooded_mandals",
-   "value": 8,
+   "value": 0,
    "unit": "mandals",
    "label": "mandals probably flooded",
-   "raw": 8,
+   "raw": 0,
    "fmt": "int",
    "source": {
     "derived": "count_flooded",
     "inputs": [
-     "data/processed/mandal_rank.json#by_date.2026-11-09.rows"
+     "data/processed/mandal_rank.json#by_date.2026-11-21.rows"
     ]
    }
   },
@@ -1367,34 +1471,34 @@
  "shown_numbers": [
   {
    "key": "three_numbers[0].value",
-   "text": "84",
-   "raw": 83.755,
+   "text": "12",
+   "raw": 11.816,
    "fmt": "int",
-   "source": "data/web/class_stats.json#classes.20261109|k=3.0.new_water_km2"
+   "source": "data/web/class_stats.json#classes.20261121|k=3.0.new_water_km2"
   },
   {
    "key": "three_numbers[0].err",
-   "text": "24",
-   "raw": 23.971000000000004,
+   "text": "9",
+   "raw": 9.287999999999998,
    "fmt": "err_text",
    "source": {
     "derived": "max_abs_diff",
     "inputs": [
-     "data/web/class_stats.json#classes.20261109|k=3.0.new_water_km2",
-     "data/web/class_stats.json#classes.20261109|k=4.0.new_water_km2",
-     "data/web/class_stats.json#classes.20261109|k=2.0.new_water_km2"
+     "data/web/class_stats.json#classes.20261121|k=3.0.new_water_km2",
+     "data/web/class_stats.json#classes.20261121|k=4.0.new_water_km2",
+     "data/web/class_stats.json#classes.20261121|k=2.0.new_water_km2"
     ]
    }
   },
   {
    "key": "three_numbers[1].value",
-   "text": "8",
-   "raw": 8,
+   "text": "0",
+   "raw": 0,
    "fmt": "int",
    "source": {
     "derived": "count_flooded",
     "inputs": [
-     "data/processed/mandal_rank.json#by_date.2026-11-09.rows"
+     "data/processed/mandal_rank.json#by_date.2026-11-21.rows"
     ]
    }
   },
@@ -1407,29 +1511,29 @@
   },
   {
    "key": "comparison_line.prev_km2",
-   "text": "8",
-   "raw": 7.691,
-   "fmt": "num",
-   "source": "data/web/class_stats.json#classes.20261028|k=3.0.new_water_km2"
-  },
-  {
-   "key": "comparison_line.km2",
    "text": "84",
    "raw": 83.755,
-   "fmt": "int",
+   "fmt": "num",
    "source": "data/web/class_stats.json#classes.20261109|k=3.0.new_water_km2"
   },
   {
+   "key": "comparison_line.km2",
+   "text": "12",
+   "raw": 11.816,
+   "fmt": "int",
+   "source": "data/web/class_stats.json#classes.20261121|k=3.0.new_water_km2"
+  },
+  {
    "key": "comparison_line.err",
-   "text": "24",
-   "raw": 23.971000000000004,
+   "text": "9",
+   "raw": 9.287999999999998,
    "fmt": "err_text",
    "source": {
     "derived": "max_abs_diff",
     "inputs": [
-     "data/web/class_stats.json#classes.20261109|k=3.0.new_water_km2",
-     "data/web/class_stats.json#classes.20261109|k=4.0.new_water_km2",
-     "data/web/class_stats.json#classes.20261109|k=2.0.new_water_km2"
+     "data/web/class_stats.json#classes.20261121|k=3.0.new_water_km2",
+     "data/web/class_stats.json#classes.20261121|k=4.0.new_water_km2",
+     "data/web/class_stats.json#classes.20261121|k=2.0.new_water_km2"
     ]
    }
   },
@@ -1442,86 +1546,86 @@
   },
   {
    "key": "big_numbers[0].value",
-   "text": "11",
-   "raw": 10.9,
+   "text": "1.0",
+   "raw": 0.96,
    "fmt": "num",
-   "source": "data/processed/mandal_rank.json#by_date.2026-11-09.rows.60.water_pct"
+   "source": "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.water_pct"
   },
   {
    "key": "big_numbers[0].err",
-   "text": "2",
-   "raw": 1.61,
+   "text": "1",
+   "raw": 0.39,
    "fmt": "err_text",
-   "source": "data/processed/mandal_rank.json#by_date.2026-11-09.rows.60.err"
+   "source": "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.err"
   },
   {
    "key": "big_numbers[1].value",
-   "text": "+11",
-   "raw": 10.9,
+   "text": "+0.4",
+   "raw": 0.42,
    "fmt": "signed",
    "source": {
     "derived": "difference",
     "inputs": [
-     "data/processed/mandal_rank.json#by_date.2026-11-09.rows.60.water_pct",
-     "data/processed/mandal_rank.json#by_date.2026-10-28.rows.60.water_pct"
+     "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.water_pct",
+     "data/processed/mandal_rank.json#by_date.2026-11-09.rows.11.water_pct"
     ]
    }
   },
   {
    "key": "big_numbers[2].value",
-   "text": "12",
-   "raw": 12,
+   "text": "24",
+   "raw": 24,
    "fmt": "int",
    "source": {
     "derived": "days_between",
     "inputs": [
-     "data/processed/mandal_rank.json#by_date.2026-11-09.date",
+     "data/processed/mandal_rank.json#by_date.2026-11-21.date",
      "data/processed/events.json#events.0.landfall.date"
     ]
    }
   }
  ],
  "sources": {
-  "three_numbers[0].value": "data/web/class_stats.json#classes.20261109|k=3.0.new_water_km2",
+  "three_numbers[0].value": "data/web/class_stats.json#classes.20261121|k=3.0.new_water_km2",
   "three_numbers[0].err": {
    "derived": "max_abs_diff",
    "inputs": [
-    "data/web/class_stats.json#classes.20261109|k=3.0.new_water_km2",
-    "data/web/class_stats.json#classes.20261109|k=4.0.new_water_km2",
-    "data/web/class_stats.json#classes.20261109|k=2.0.new_water_km2"
+    "data/web/class_stats.json#classes.20261121|k=3.0.new_water_km2",
+    "data/web/class_stats.json#classes.20261121|k=4.0.new_water_km2",
+    "data/web/class_stats.json#classes.20261121|k=2.0.new_water_km2"
    ]
   },
   "three_numbers[1].value": {
    "derived": "count_flooded",
    "inputs": [
-    "data/processed/mandal_rank.json#by_date.2026-11-09.rows"
+    "data/processed/mandal_rank.json#by_date.2026-11-21.rows"
    ]
   },
   "three_numbers[2].value": "data/web/class_stats.json#classes.normal|k=3.0.new_water_km2",
-  "comparison_line.prev_km2": "data/web/class_stats.json#classes.20261028|k=3.0.new_water_km2",
-  "comparison_line.km2": "data/web/class_stats.json#classes.20261109|k=3.0.new_water_km2",
+  "comparison_line.prev_km2": "data/web/class_stats.json#classes.20261109|k=3.0.new_water_km2",
+  "comparison_line.km2": "data/web/class_stats.json#classes.20261121|k=3.0.new_water_km2",
   "comparison_line.err": {
    "derived": "max_abs_diff",
    "inputs": [
-    "data/web/class_stats.json#classes.20261109|k=3.0.new_water_km2",
-    "data/web/class_stats.json#classes.20261109|k=4.0.new_water_km2",
-    "data/web/class_stats.json#classes.20261109|k=2.0.new_water_km2"
+    "data/web/class_stats.json#classes.20261121|k=3.0.new_water_km2",
+    "data/web/class_stats.json#classes.20261121|k=4.0.new_water_km2",
+    "data/web/class_stats.json#classes.20261121|k=2.0.new_water_km2"
    ]
   },
   "comparison_line.normal_km2": "data/web/class_stats.json#classes.normal|k=3.0.new_water_km2",
-  "big_numbers[0].value": "data/processed/mandal_rank.json#by_date.2026-11-09.rows.60.water_pct",
-  "big_numbers[0].err": "data/processed/mandal_rank.json#by_date.2026-11-09.rows.60.err",
+  "big_numbers[0].value": "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.water_pct",
+  "big_numbers[0].err": "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.err",
   "big_numbers[1].value": {
    "derived": "difference",
    "inputs": [
-    "data/processed/mandal_rank.json#by_date.2026-11-09.rows.60.water_pct",
-    "data/processed/mandal_rank.json#by_date.2026-10-28.rows.60.water_pct"
+    "data/processed/mandal_rank.json#by_date.2026-11-21.rows.11.water_pct",
+    "data/processed/mandal_rank.json#by_date.2026-11-09.rows.11.water_pct"
    ]
   },
   "big_numbers[2].value": {
    "derived": "days_between",
    "inputs": [
-    "data/processed/mandal_rank.json#by_date.2026-11-09.date",
+    "data/processed/mandal_rank.json#by_date.2026-11-21.date",
     "data/processed/events.json#events.0.landfall.date"
    ]
   }
@@ -1530,12 +1634,12 @@
  "radar_finding": "change_seen",
  "area_id": "godavari",
  "pass": {
-  "date": "2026-11-09",
-  "time_utc": "2026-11-09T00:01:07Z",
-  "time_ist_text": "9 Nov 2026, 05:31 IST",
+  "date": "2026-11-21",
+  "time_utc": "2026-11-21T00:01:08Z",
+  "time_ist_text": "21 Nov 2026, 05:31 IST",
   "role": "COAST",
   "track": 55,
-  "scene_id": "L_COAST_1109",
+  "scene_id": "L_COAST_20261121_T055",
   "product_status": "VALIDATED"
  },
  "event_chips": [
@@ -1549,6 +1653,66 @@
    "event_id": "auto_GDACS_1001346",
    "relation": "after",
    "text": "After Cyclone Murasu (alert, not reviewed)",
+   "reviewed": false
+  },
+  {
+   "event_id": "auto_GDACS_1001351",
+   "relation": "after",
+   "text": "After Cyclone Akvan (alert, not reviewed)",
+   "reviewed": false
+  },
+  {
+   "event_id": "auto_SACHET_1795141515464008",
+   "relation": "after",
+   "text": "After Cyclone alert (IMD Visakhapatnam) (alert, not reviewed)",
+   "reviewed": false
+  },
+  {
+   "event_id": "auto_SACHET_1795078209488008",
+   "relation": "after",
+   "text": "After Cyclone alert (Andhra Pradesh SDMA) (alert, not reviewed)",
+   "reviewed": false
+  },
+  {
+   "event_id": "auto_SACHET_1795072648185008",
+   "relation": "after",
+   "text": "After Cyclone alert (Andhra Pradesh SDMA) (alert, not reviewed)",
+   "reviewed": false
+  },
+  {
+   "event_id": "auto_SACHET_1795069769169008",
+   "relation": "after",
+   "text": "After Cyclone alert (IMD Visakhapatnam) (alert, not reviewed)",
+   "reviewed": false
+  },
+  {
+   "event_id": "auto_SACHET_1795063890471008",
+   "relation": "after",
+   "text": "After Cyclone alert (Andhra Pradesh SDMA) (alert, not reviewed)",
+   "reviewed": false
+  },
+  {
+   "event_id": "auto_SACHET_1795039977725008",
+   "relation": "after",
+   "text": "After Cyclone alert (IMD Visakhapatnam) (alert, not reviewed)",
+   "reviewed": false
+  },
+  {
+   "event_id": "auto_SACHET_1795002709049008",
+   "relation": "after",
+   "text": "After Cyclone alert (Andhra Pradesh SDMA) (alert, not reviewed)",
+   "reviewed": false
+  },
+  {
+   "event_id": "auto_SACHET_1795000640273008",
+   "relation": "after",
+   "text": "After Cyclone alert (IMD Visakhapatnam) (alert, not reviewed)",
+   "reviewed": false
+  },
+  {
+   "event_id": "auto_SACHET_1795018909404008",
+   "relation": "after",
+   "text": "After Cyclone alert (IMD Visakhapatnam) (alert, not reviewed)",
    "reviewed": false
   }
  ],
@@ -1564,133 +1728,34 @@
  },
  "evidence_layers": [
   {
-   "layer_id": "nisar_l_coast_20261109_t55_hh",
-   "png": "data/web/nisar_l_coast_20261109_t55_hh.png",
-   "h5": "data/h5/L_COAST_20261109_T055.h5"
+   "layer_id": "nisar_l_coast_20261121_t55_hh",
+   "png": "data/web/nisar_l_coast_20261121_t55_hh.png",
+   "h5": "data/h5/L_COAST_20261121_T055.h5"
   },
   {
    "layer_id": "nisar_class_new_water",
-   "png": "data/web/class_20261109_new_water.png",
-   "h5": "data/h5/L_COAST_20261109_T055.h5"
+   "png": "data/web/class_20261121_new_water.png",
+   "h5": "data/h5/L_COAST_20261121_T055.h5"
   }
  ],
  "age": {
-  "days_since_pass": 17,
-  "text": "Last radar pass 17 days ago."
+  "days_since_pass": 6,
+  "text": "Last radar pass 6 days ago."
  },
  "archive": false,
  "alerts_ref": "data/processed/alerts.json",
- "revision": 13,
- "revision_log": [
-  {
-   "revision": 2,
-   "utc": "2026-11-14T15:01:12Z",
-   "changed": [
-    "class_stats"
-   ],
-   "reason": "inputs changed"
-  },
-  {
-   "revision": 3,
-   "utc": "2026-11-14T15:05:40Z",
-   "changed": [
-    "rules"
-   ],
-   "reason": "inputs changed"
-  },
-  {
-   "revision": 4,
-   "utc": "2026-11-14T15:33:44Z",
-   "changed": [
-    "events",
-    "templates"
-   ],
-   "reason": "inputs changed"
-  },
-  {
-   "revision": 5,
-   "utc": "2026-11-14T23:36:28Z",
-   "changed": [
-    "events"
-   ],
-   "reason": "inputs changed"
-  },
-  {
-   "revision": 6,
-   "utc": "2026-11-15T00:24:13Z",
-   "changed": [
-    "events",
-    "templates"
-   ],
-   "reason": "inputs changed: event record wording changed (landfall caption, names or edit log); English templates changed (since-last sentence: a zero start now reads 'On 28 Oct no mandal looked probably flooded. On 9 Nov, 8 do.'; Cyclone Murasu shown as Cyclone Murasu; IMD window wording)"
-  },
-  {
-   "revision": 7,
-   "utc": "2026-11-15T00:38:36Z",
-   "changed": [
-    "class_stats"
-   ],
-   "reason": "inputs changed: new-water numbers changed"
-  },
-  {
-   "revision": 8,
-   "utc": "2026-11-17T14:46:14Z",
-   "changed": [
-    "class_stats"
-   ],
-   "reason": "inputs changed: new-water numbers changed"
-  },
-  {
-   "revision": 9,
-   "utc": "2026-11-19T14:34:18Z",
-   "changed": [
-    "class_stats"
-   ],
-   "reason": "inputs changed: new-water numbers changed"
-  },
-  {
-   "revision": 10,
-   "utc": "2026-11-20T14:15:34Z",
-   "changed": [
-    "class_stats"
-   ],
-   "reason": "inputs changed: new-water numbers changed"
-  },
-  {
-   "revision": 11,
-   "utc": "2026-11-21T13:39:21Z",
-   "changed": [
-    "class_stats"
-   ],
-   "reason": "inputs changed: new-water numbers changed"
-  },
-  {
-   "revision": 12,
-   "utc": "2026-11-24T18:24:27Z",
-   "changed": [
-    "class_stats"
-   ],
-   "reason": "inputs changed: new-water numbers changed"
-  },
-  {
-   "revision": 13,
-   "utc": "2026-11-25T15:53:24Z",
-   "changed": [
-    "class_stats"
-   ],
-   "reason": "inputs changed: new-water numbers changed"
-  }
- ],
+ "revision": 1,
+ "revision_log": [],
  "inputs_detail": {
-  "by_date": "2bba30d341a29605838c8dd946f5e7668efc04eb90699faafe707b2fa105fc86",
-  "class_stats": "1e06925da5aa053ac9c5798709905547bb0ecd975f405b929c987976506ba55e",
-  "catalog": "4de61ca976e7c376b4563f064b9c1bf852c2d4d1b7dae30e120f1b41d2f4015a",
-  "events": "181ca0fb9ff787b3eaed2d7f6c46311b584bb7e11ada11415faaf9ee51d064c1",
+  "by_date": "c67a047283804e3e2e93f3aea12e353e383f8a233a850f89238bae0d59c696ec",
+  "class_stats": "b2d2b0c0fc02a6e3608437601e5783fa32ac659ac08c393e5943e26326b0619e",
+  "catalog": "b788c7107364142101c263061e7dd0d3d7ebff347e894c7aec76b756bf3b7ebd",
+  "events": "07dd938e4449915307470e652be6c761f2ae040d46c99cd4ddddf8a3007df8a3",
   "templates": "56fed20c859bd857d4bf5423ce73305200378f8d8cccccf464449e174627b675",
   "rules": "f7d99448034094cdd3b1dbde5eee7252875b85c16aced1029aef71723e8892d9",
   "seasons": "8d75e9d4ba5b7047baa2fbf6f8929f67f383b37bd9e5682a013ef51e25402855",
   "baseline": "837adb1a918e3fe4dc560ebd017699fed522a11ccc256fa16726f64fe24e994a",
   "builder": "010f4579d37ac9409e3324c71306385d7be210f5879c9cbab8e8df3193c1d395"
  },
- "inputs_sha256": "119c539c9a580064db86bf4e320af2116a54edf8707578e7f198dbd6f83e8b60"
+ "inputs_sha256": "53240dcd2c81d0cb48aa7be5189fe5d9127e92fddd128f821062dd97228ef0ed"
 }

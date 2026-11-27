@@ -1288,7 +1288,7 @@
   ]
  },
  "provenance": {
-  "created_utc": "2026-11-26T15:32:51Z",
+  "created_utc": "2026-11-27T15:28:03Z",
   "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
   "tool": "tools/build_web.py (build_profile)",
   "h5_sources": [

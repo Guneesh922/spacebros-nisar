@@ -1,6 +1,6 @@
 {
  "schema": "spacebros-h5-catalog-v1",
- "generated_utc": "2026-11-22T13:29:35Z",
+ "generated_utc": "2026-11-27T15:23:30Z",
  "scenes": [
   {
    "file": "data/h5/L_SEA_20261003_T048.h5",
@@ -344,6 +344,45 @@
    ],
    "available_utc": "2026-11-22T08:02:47Z",
    "cataloged_utc": "2026-11-22T13:29:35Z"
+  },
+  {
+   "file": "data/h5/L_COAST_20261121_T055.h5",
+   "scene_id": "L_COAST_20261121_T055",
+   "band": "L",
+   "role": "COAST",
+   "date": "2026-11-21",
+   "start_utc": "2026-11-21T00:01:08Z",
+   "track": 55,
+   "frame": 10,
+   "direction": "A",
+   "product_status": "VALIDATED",
+   "source_granule": "NISAR_L2_PR_GCOV_036_055_A_010_4005_DHDH_A_20261121T000108_20261121T000131_P05036_N_P_J_001",
+   "source_collection": "NISAR_L2_GCOV_V1",
+   "pols": [
+    "HH",
+    "HV"
+   ],
+   "posting_m": 20.0,
+   "multilook": 2,
+   "shape": [
+    5008,
+    5360
+   ],
+   "epsg": 32644,
+   "size_bytes": 53892566,
+   "sha256": "eb86abcf6b5317f809bbd602fbb7fc6b34791b4b06a5c393aac8db9b05e588cb",
+   "bounds_latlon": [
+    [
+     16.194896,
+     81.597178
+    ],
+    [
+     17.105461,
+     82.607451
+    ]
+   ],
+   "available_utc": "2026-11-26T20:22:35Z",
+   "cataloged_utc": "2026-11-27T15:23:30Z"
   }
  ]
 }
