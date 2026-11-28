@@ -1265,9 +1265,9 @@
    "no_change_pct": 99.62,
    "land_km2": 93.28,
    "area_km2": 93.28,
-   "water_km2": 0.087,
+   "water_km2": 0.086,
    "crops_km2": 0.268,
-   "flooded_km2": 0.355,
+   "flooded_km2": 0.354,
    "frac_in_footprint": 1.0,
    "oct28": {
     "water_pct": 0.01,
@@ -7318,9 +7318,9 @@
      "no_change_pct": 99.62,
      "land_km2": 93.28,
      "area_km2": 93.28,
-     "water_km2": 0.087,
+     "water_km2": 0.086,
      "crops_km2": 0.268,
-     "flooded_km2": 0.355,
+     "flooded_km2": 0.354,
      "frac_in_footprint": 1.0
     },
     {
@@ -7511,7 +7511,7 @@
  },
  "boundaries_credit": "geoBoundaries gbOpen IND ADM3 (ODbL 1.0)",
  "provenance": {
-  "created_utc": "2026-11-27T15:28:01Z",
+  "created_utc": "2026-11-28T14:26:49Z",
   "credit": "NISAR L2 GCOV, NASA/JPL-Caltech and ISRO, via ASF DAAC (NASA Earthdata)",
   "tool": "tools/build_web.py (build_mandal_rank)",
   "h5_sources": {

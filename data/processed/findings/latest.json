@@ -1,7 +1,7 @@
 {
  "schema": "findings-v1",
- "built_utc": "2026-11-27T15:28:05Z",
- "built_text": "27 Nov 2026, 20:58 IST",
+ "built_utc": "2026-11-28T14:26:54Z",
+ "built_text": "28 Nov 2026, 19:56 IST",
  "event_id": "arnab_2026",
  "official_banner": "This is not an official warning. For alerts, follow IMD, APSDMA and your district officers.",
  "official_links": [
@@ -36,7 +36,7 @@
  "data_as_of_text": "Radar picture taken 21 Nov 2026, 05:31, IST",
  "timestamps": {
   "picture": "Radar picture taken 21 Nov 2026, 05:31, IST",
-  "built": "Summary updated 27 Nov 2026, 20:58 IST"
+  "built": "Summary updated 28 Nov 2026, 19:56 IST"
  },
  "stale": false,
  "next_pass": {
@@ -46,7 +46,7 @@
   "date": "2026-12-03",
   "expected_utc": "2026-12-03T00:01:08Z",
   "first_expected": "2026-12-03",
-  "days_until": 6,
+  "days_until": 5,
   "overdue": false,
   "basis": "last pass of the same track + n x 12 days (NISAR repeat), first date on or after today",
   "text": "Next radar pass expected about 3 Dec. This is a schedule estimate. It can shift."
@@ -953,7 +953,7 @@
    "flooded": false,
    "rank_water": 24,
    "area_km2": 93.28,
-   "water_km2": 0.087,
+   "water_km2": 0.086,
    "coverage_pct": 100.0,
    "confidence": "high"
   },
@@ -1739,16 +1739,26 @@
   }
  ],
  "age": {
-  "days_since_pass": 6,
-  "text": "Last radar pass 6 days ago."
+  "days_since_pass": 7,
+  "text": "Last radar pass 7 days ago."
  },
  "archive": false,
  "alerts_ref": "data/processed/alerts.json",
- "revision": 1,
- "revision_log": [],
+ "revision": 2,
+ "revision_log": [
+  {
+   "revision": 2,
+   "utc": "2026-11-28T14:26:54Z",
+   "changed": [
+    "by_date",
+    "class_stats"
+   ],
+   "reason": "inputs changed: by_date; new-water numbers changed"
+  }
+ ],
  "inputs_detail": {
-  "by_date": "c67a047283804e3e2e93f3aea12e353e383f8a233a850f89238bae0d59c696ec",
-  "class_stats": "b2d2b0c0fc02a6e3608437601e5783fa32ac659ac08c393e5943e26326b0619e",
+  "by_date": "5c4da4c42f9e8362a425309227f829bcfc43b9045b8c6561b64d7c61533f88ae",
+  "class_stats": "a542b272d2df55b40dd79a8143e03cb75a2d3d6972448ca8b8372fe9735d8cb7",
   "catalog": "b788c7107364142101c263061e7dd0d3d7ebff347e894c7aec76b756bf3b7ebd",
   "events": "07dd938e4449915307470e652be6c761f2ae040d46c99cd4ddddf8a3007df8a3",
   "templates": "56fed20c859bd857d4bf5423ce73305200378f8d8cccccf464449e174627b675",
@@ -1757,5 +1767,5 @@
   "baseline": "837adb1a918e3fe4dc560ebd017699fed522a11ccc256fa16726f64fe24e994a",
   "builder": "010f4579d37ac9409e3324c71306385d7be210f5879c9cbab8e8df3193c1d395"
  },
- "inputs_sha256": "53240dcd2c81d0cb48aa7be5189fe5d9127e92fddd128f821062dd97228ef0ed"
+ "inputs_sha256": "a6129dcd85f6aebde23784d2d0a47d4f5997a6169851685cd15ce9bab38dd67a"
 }
